@@ -41,16 +41,41 @@ function datamaq_lp_translate_string( $translated, $text, $domain ) {
 add_filter( 'gettext', 'datamaq_lp_translate_string', 20, 3 );
 
 function datamaq_lp_translate_plural( $translated, $single, $plural, $number, $domain ) {
-	if ( '%d student' === $single && '%d students' === $plural ) {
+	if ( ( '%d student' === $single && '%d students' === $plural ) || ( '%d Student' === $single && '%d Students' === $plural ) ) {
 		return _n( '%d estudiante', '%d estudiantes', $number, 'default' );
 	}
-	if ( '%d lesson' === $single && '%d lessons' === $plural ) {
+	if ( ( '%d lesson' === $single && '%d lessons' === $plural ) || ( '%d Lesson' === $single && '%d Lessons' === $plural ) ) {
 		return _n( '%d lecci?n', '%d lecciones', $number, 'default' );
 	}
-	if ( '%d quiz' === $single && '%d quizzes' === $plural ) {
+	if ( ( '%d quiz' === $single && '%d quizzes' === $plural ) || ( '%d Quiz' === $single && '%d Quizzes' === $plural ) ) {
 		return _n( '%d cuestionario', '%d cuestionarios', $number, 'default' );
 	}
 
 	return $translated;
 }
 add_filter( 'ngettext', 'datamaq_lp_translate_plural', 20, 5 );
+
+function datamaq_lp_buffer_replace( $html ) {
+	if ( ! is_string( $html ) || $html === '' ) {
+		return $html;
+	}
+
+	// Catch non-gettext labels injected by some LearnPress widgets/templates.
+	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
+	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
+	$html = preg_replace( '/\bby\s+([^<]{1,80})/u', 'por $1', $html );
+
+	return $html;
+}
+
+function datamaq_lp_start_buffer() {
+	if ( is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+		return;
+	}
+
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+	if ( strpos( $request_uri, '/courses' ) !== false || strpos( $request_uri, '/course' ) !== false || strpos( $request_uri, '/lp-' ) !== false ) {
+		ob_start( 'datamaq_lp_buffer_replace' );
+	}
+}
+add_action( 'template_redirect', 'datamaq_lp_start_buffer', 0 );
