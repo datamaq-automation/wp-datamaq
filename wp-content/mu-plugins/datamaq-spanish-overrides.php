@@ -28,6 +28,10 @@ function datamaq_lp_translate_string( $translated, $text, $domain ) {
 		'Quizzes' => 'Cuestionarios',
 		'Student:' => 'Estudiante:',
 		'Student' => 'Estudiante',
+		'Instructor' => 'Instructor',
+		'User Avatar' => 'Avatar de usuario',
+		'Course' => 'Curso',
+		'Courses' => 'Cursos',
 		'Students' => 'Estudiantes',
 		'Level:' => 'Nivel:',
 		'Level' => 'Nivel',
@@ -63,8 +67,8 @@ function datamaq_lp_buffer_replace( $html ) {
 	}
 
 	$html = str_replace(
-		array( 'Home', 'Last updated:' ),
-		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:" ),
+		array( 'Home', 'Last updated:', 'Instructor', 'User Avatar' ),
+		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", 'Instructor', 'Avatar de usuario' ),
 		$html
 	);
 	$html = str_replace(
@@ -75,8 +79,11 @@ function datamaq_lp_buffer_replace( $html ) {
 
 	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
+	$html = preg_replace( '/(\d+)\s+Student\b/u', '$1 Estudiante', $html );
 	$html = preg_replace( '/(\d+)\s+Weeks\b/u', '$1 Semanas', $html );
 	$html = preg_replace( '/(\d+)\s+Quizzes\b/u', '$1 Cuestionarios', $html );
+	$html = preg_replace( '/(\d+)\s+Courses\b/u', '$1 Cursos', $html );
+	$html = preg_replace( '/(\d+)\s+Course\b/u', '$1 Curso', $html );
 	$html = preg_replace( '/\b[Bb]y\s+([^<]{1,80})/u', 'por $1', $html );
 
 	$months = array(
