@@ -63,8 +63,8 @@ function datamaq_lp_buffer_replace( $html ) {
 	}
 
 	$html = str_replace(
-		array( 'Home', 'Last updated:' ),
-		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:" ),
+		array( 'Home', 'Last updated:', '<p>?ltima actualizaci?n:</p>' ),
+		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", '' ),
 		$html
 	);
 
@@ -96,17 +96,19 @@ function datamaq_lp_start_buffer() {
 }
 add_action( 'template_redirect', 'datamaq_lp_start_buffer', 0 );
 
-function datamaq_lp_hide_share_and_featured_review() {
+function datamaq_lp_hide_unwanted_blocks() {
 	if ( is_admin() ) {
 		return;
 	}
 	?>
-	<style id="datamaq-lp-hide-share-featured-review">
+	<style id="datamaq-lp-hide-ui-blocks">
 		.wp-block-learnpress-course-share,
-		.wp-block-learnpress-course-feature-review {
+		.wp-block-learnpress-course-feature-review,
+		.wp-block-learnpress-course-instructor,
+		.wp-block-post-date__modified-date {
 			display: none !important;
 		}
 	</style>
 	<?php
 }
-add_action( 'wp_head', 'datamaq_lp_hide_share_and_featured_review', 99 );
+add_action( 'wp_head', 'datamaq_lp_hide_unwanted_blocks', 99 );
