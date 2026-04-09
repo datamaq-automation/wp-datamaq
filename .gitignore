@@ -23,3 +23,6 @@ wp-content/upgrade/
 Thumbs.db
 .vscode/
 .idea/
+
+# Generated translation files
+wp-content/languages/
