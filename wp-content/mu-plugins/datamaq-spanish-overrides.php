@@ -221,25 +221,56 @@ function datamaq_lp_theme_bridge_styles() {
 		}
 
 		.learn-press-courses .course-readmore a,
+		.lp-single-instructor .course-readmore a,
+		.lp-profile-content .course-readmore a,
 		.wp-block-learnpress-course-button-read-more a,
 		.learn-press-courses a.lp-button,
-		.learn-press-courses .lp-button {
+		.lp-single-instructor a.lp-button,
+		.learn-press-courses .lp-button,
+		.lp-single-instructor .lp-button,
+		.course-button-read-more button.wp-block-learnpress-course-button-read-more,
+		button.wp-block-learnpress-course-button-read-more,
+		.wp-block-learnpress-course-button-read-more {
 			display: inline-flex;
 			align-items: center;
 			justify-content: center;
 			gap: .35rem;
 			padding: .62rem .92rem;
 			border-radius: 10px;
-			border: 1px solid #d85800;
-			background: linear-gradient(180deg, var(--dm-accent) 0%, #e85d00 100%);
+			border: 1px solid #d85800 !important;
+			background: linear-gradient(180deg, var(--dm-accent) 0%, #e85d00 100%) !important;
 			color: #fff !important;
 			font-weight: 700;
-			text-decoration: none;
+			text-decoration: none !important;
 		}
 
 		.learn-press-courses .course-readmore a:hover,
-		.wp-block-learnpress-course-button-read-more a:hover {
-			filter: brightness(1.03);
+		.learn-press-courses .course-readmore a:focus,
+		.learn-press-courses .course-readmore a:active,
+		.lp-single-instructor .course-readmore a:hover,
+		.lp-single-instructor .course-readmore a:focus,
+		.lp-single-instructor .course-readmore a:active,
+		.lp-profile-content .course-readmore a:hover,
+		.lp-profile-content .course-readmore a:focus,
+		.lp-profile-content .course-readmore a:active,
+		.wp-block-learnpress-course-button-read-more a:hover,
+		.wp-block-learnpress-course-button-read-more a:focus,
+		.wp-block-learnpress-course-button-read-more a:active,
+		.course-button-read-more button.wp-block-learnpress-course-button-read-more:hover,
+		.course-button-read-more button.wp-block-learnpress-course-button-read-more:focus,
+		.course-button-read-more button.wp-block-learnpress-course-button-read-more:active,
+		button.wp-block-learnpress-course-button-read-more:hover,
+		button.wp-block-learnpress-course-button-read-more:focus,
+		button.wp-block-learnpress-course-button-read-more:active,
+		.wp-block-learnpress-course-button-read-more:hover,
+		.wp-block-learnpress-course-button-read-more:focus,
+		.wp-block-learnpress-course-button-read-more:active {
+			background: linear-gradient(180deg, #ff7a1f 0%, #f06600 100%) !important;
+			border-color: #d85800 !important;
+			color: #fff !important;
+			text-decoration: none !important;
+			filter: none !important;
+			outline: none;
 		}
 
 		.lp-course-curriculum .course-toggle-all-sections,
