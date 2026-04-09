@@ -67,6 +67,11 @@ function datamaq_lp_buffer_replace( $html ) {
 		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:" ),
 		$html
 	);
+	$html = str_replace(
+		array( '<label>by</label>', '<label>By</label>' ),
+		array( '<label>por</label>', '<label>por</label>' ),
+		$html
+	);
 
 	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
