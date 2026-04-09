@@ -35,6 +35,12 @@ function datamaq_lp_translate_string( $translated, $text, $domain ) {
 		'Students' => 'Estudiantes',
 		'Level:' => 'Nivel:',
 		'Level' => 'Nivel',
+		'Collapse all sections' => 'Contraer todas las secciones',
+		'Expand all sections' => 'Expandir todas las secciones',
+		'Sections' => 'Secciones',
+		'Curriculum' => 'Plan de estudio',
+		'Related Courses' => 'Cursos relacionados',
+		'Related Course' => 'Curso relacionado',
 		'Enrollment in the course is not mandatory. You can access course for learning now.' => "La inscripci\xC3\xB3n en el curso no es obligatoria. Ya pod\xC3\xA9s acceder al curso para aprender.",
 	);
 
@@ -79,6 +85,8 @@ function datamaq_lp_buffer_replace( $html ) {
 
 	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
+	$html = preg_replace( '/(\d+)\s+Sections\b/u', '$1 Secciones', $html );
+	$html = preg_replace( '/(\d+)\s+Section\b/u', '$1 SecciÃ³n', $html );
 	$html = preg_replace( '/(\d+)\s+Student\b/u', '$1 Estudiante', $html );
 	$html = preg_replace( '/(\d+)\s+Weeks\b/u', '$1 Semanas', $html );
 	$html = preg_replace( '/(\d+)\s+Quizzes\b/u', '$1 Cuestionarios', $html );
