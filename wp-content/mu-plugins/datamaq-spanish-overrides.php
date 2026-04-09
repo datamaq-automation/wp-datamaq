@@ -62,10 +62,12 @@ function datamaq_lp_buffer_replace( $html ) {
 		return $html;
 	}
 
-	// Direct replacements for plain text labels rendered by block templates.
-	$html = str_replace( array( 'Home', 'Last updated:' ), array( 'Inicio', '?ltima actualizaci?n:' ), $html );
+	$html = str_replace(
+		array( 'Home', 'Last updated:' ),
+		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:" ),
+		$html
+	);
 
-	// Catch non-gettext labels injected by some LearnPress widgets/templates.
 	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
 	$html = preg_replace( '/(\d+)\s+Weeks\b/u', '$1 Semanas', $html );
