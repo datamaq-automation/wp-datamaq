@@ -120,6 +120,53 @@ function datamaq_lp_theme_bridge_styles() {
 			background: radial-gradient(circle at 100% 0%, #f4f7ff 0%, #ffffff 45%);
 		}
 
+		/* Global navigation rhythm */
+		.wp-site-blocks > header.wp-block-template-part {
+			position: sticky;
+			top: 0;
+			z-index: 40;
+			backdrop-filter: blur(10px);
+			background: rgba(255, 255, 255, 0.88);
+			border-bottom: 1px solid var(--dm-line);
+		}
+
+		.wp-site-blocks > header.wp-block-template-part .alignwide {
+			padding-top: .7rem !important;
+			padding-bottom: .7rem !important;
+		}
+
+		.wp-site-blocks > header.wp-block-template-part .wp-block-site-title a {
+			font-weight: 800;
+			letter-spacing: -.01em;
+			color: var(--dm-ink);
+			text-decoration: none;
+		}
+
+		.wp-site-blocks > header.wp-block-template-part .wp-block-navigation .wp-block-navigation-item__content {
+			color: var(--dm-ink);
+			font-weight: 600;
+			padding: .38rem .62rem;
+			border-radius: 9px;
+			text-decoration: none;
+		}
+
+		.wp-site-blocks > header.wp-block-template-part .wp-block-navigation .wp-block-navigation-item__content:hover,
+		.wp-site-blocks > header.wp-block-template-part .wp-block-navigation .wp-block-navigation-item__content:focus-visible {
+			background: #eef3ff;
+			color: #14367a;
+			outline: none;
+		}
+
+		/* Main spacing */
+		main.wp-block-group {
+			padding-top: .35rem;
+		}
+
+		main .alignwide,
+		main .is-layout-constrained {
+			max-width: 1180px;
+		}
+
 		.learn-press-courses .course-item,
 		.lp-single-instructor .course-item,
 		.lp-course-curriculum,
@@ -208,10 +255,34 @@ function datamaq_lp_theme_bridge_styles() {
 			padding: .35rem .6rem;
 		}
 
+		/* Footer harmonization */
+		.wp-site-blocks > footer.wp-block-template-part {
+			margin-top: 2.2rem;
+			background: linear-gradient(180deg, #f7f9fd 0%, #eef3fb 100%);
+			border-top: 1px solid var(--dm-line);
+		}
+
+		.wp-site-blocks > footer.wp-block-template-part .alignwide {
+			padding-top: 1rem !important;
+			padding-bottom: 1rem !important;
+		}
+
+		.wp-site-blocks > footer.wp-block-template-part .wp-block-site-title a,
+		.wp-site-blocks > footer.wp-block-template-part p,
+		.wp-site-blocks > footer.wp-block-template-part a {
+			color: var(--dm-muted);
+		}
+
 		@media (max-width: 768px) {
 			.learn-press-courses .course-content,
 			.lp-single-instructor .course-content {
 				padding: .85rem .85rem 1rem;
+			}
+
+			.wp-site-blocks > header.wp-block-template-part .alignwide,
+			.wp-site-blocks > footer.wp-block-template-part .alignwide {
+				padding-left: .8rem !important;
+				padding-right: .8rem !important;
 			}
 		}
 	</style>
