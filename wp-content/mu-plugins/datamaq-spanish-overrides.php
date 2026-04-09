@@ -13,13 +13,13 @@ function datamaq_lp_translate_string( $translated, $text, $domain ) {
 		'Free' => 'Gratis',
 		'Start Learning' => 'Comenzar curso',
 		'Share' => 'Compartir',
-		'Featured Review' => 'Rese?a destacada',
+		'Featured Review' => "Rese\xC3\xB1a destacada",
 		'All levels' => 'Todos los niveles',
 		'All Levels' => 'Todos los niveles',
-		'Duration:' => 'Duraci?n:',
-		'Duration' => 'Duraci?n',
-		'Lesson:' => 'Lecci?n:',
-		'Lesson' => 'Lecci?n',
+		'Duration:' => "Duraci\xC3\xB3n:",
+		'Duration' => "Duraci\xC3\xB3n",
+		'Lesson:' => "Lecci\xC3\xB3n:",
+		'Lesson' => "Lecci\xC3\xB3n",
 		'Lessons' => 'Lecciones',
 		'Quiz:' => 'Cuestionario:',
 		'Quiz' => 'Cuestionario',
@@ -29,7 +29,7 @@ function datamaq_lp_translate_string( $translated, $text, $domain ) {
 		'Students' => 'Estudiantes',
 		'Level:' => 'Nivel:',
 		'Level' => 'Nivel',
-		'Enrollment in the course is not mandatory. You can access course for learning now.' => 'La inscripci?n en el curso no es obligatoria. Ya pod?s acceder al curso para aprender.',
+		'Enrollment in the course is not mandatory. You can access course for learning now.' => "La inscripci\xC3\xB3n en el curso no es obligatoria. Ya pod\xC3\xA9s acceder al curso para aprender.",
 	);
 
 	if ( isset( $map[ $text ] ) ) {
@@ -45,7 +45,7 @@ function datamaq_lp_translate_plural( $translated, $single, $plural, $number, $d
 		return _n( '%d estudiante', '%d estudiantes', $number, 'default' );
 	}
 	if ( ( '%d lesson' === $single && '%d lessons' === $plural ) || ( '%d Lesson' === $single && '%d Lessons' === $plural ) ) {
-		return _n( '%d lecci?n', '%d lecciones', $number, 'default' );
+		return _n( "%d lecci\xC3\xB3n", '%d lecciones', $number, 'default' );
 	}
 	if ( ( '%d quiz' === $single && '%d quizzes' === $plural ) || ( '%d Quiz' === $single && '%d Quizzes' === $plural ) ) {
 		return _n( '%d cuestionario', '%d cuestionarios', $number, 'default' );
@@ -63,6 +63,8 @@ function datamaq_lp_buffer_replace( $html ) {
 	// Catch non-gettext labels injected by some LearnPress widgets/templates.
 	$html = preg_replace( '/(\d+)\s+Lessons\b/u', '$1 Lecciones', $html );
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
+	$html = preg_replace( '/(\d+)\s+Weeks\b/u', '$1 Semanas', $html );
+	$html = preg_replace( '/(\d+)\s+Quizzes\b/u', '$1 Cuestionarios', $html );
 	$html = preg_replace( '/\bby\s+([^<]{1,80})/u', 'por $1', $html );
 
 	return $html;
