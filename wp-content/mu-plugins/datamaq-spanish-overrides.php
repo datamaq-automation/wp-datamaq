@@ -56,7 +56,7 @@ function datamaq_lp_strip_courses_controls_html( $block_content, $block ) {
 		return $block_content;
 	}
 
-	if ( ! is_array( $block ) || ( $block['blockName'] ?? '' ) !== 'learnpress/list-courses' ) {
+	if ( ! is_array( $block ) || ( isset( $block['blockName'] ) ? $block['blockName'] : '' ) !== 'learnpress/list-courses' ) {
 		return $block_content;
 	}
 
@@ -98,7 +98,8 @@ function datamaq_lp_theme_bridge_styles() {
 		return;
 	}
 
-	$is_lp_surface = is_post_type_archive( 'lp_course' ) || is_singular( 'lp_course' ) || is_page( 'courses' ) || is_page( 'instructor' ) || is_page( 'instructors' ) || strpos( (string) ( $_SERVER['REQUEST_URI'] ?? '' ), '/instructor/' ) !== false;
+	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+	$is_lp_surface = is_post_type_archive( 'lp_course' ) || is_singular( 'lp_course' ) || is_page( 'courses' ) || is_page( 'instructor' ) || is_page( 'instructors' ) || strpos( $request_uri, '/instructor/' ) !== false;
 	if ( ! $is_lp_surface ) {
 		return;
 	}
