@@ -289,3 +289,19 @@ function datamaq_lp_theme_bridge_styles() {
 	<?php
 }
 add_action( 'wp_head', 'datamaq_lp_theme_bridge_styles', 110 );
+
+/**
+ * Force local avatar for instructor profile page/user card.
+ */
+function datamaq_lp_force_instructor_avatar_src( $uploaded_avatar_src, $user ) {
+	if ( ! is_object( $user ) || ! method_exists( $user, 'get_id' ) ) {
+		return $uploaded_avatar_src;
+	}
+
+	if ( 2 === (int) $user->get_id() ) {
+		return 'https://cursos.datamaq.com.ar/wp-content/uploads/2026/04/agustinbustos-avatar-250.webp';
+	}
+
+	return $uploaded_avatar_src;
+}
+add_filter( 'learn-press/user/upload-avatar-src', 'datamaq_lp_force_instructor_avatar_src', 20, 2 );
