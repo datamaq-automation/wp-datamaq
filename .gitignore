@@ -1,0 +1,25 @@
+# Secrets / env
+wp-config.php
+.env
+.env.*
+
+# Generated runtime content
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+
+# Logs / dumps / backups
+*.log
+*.sql
+*.sql.gz
+*.zip
+*.tar
+*.tar.gz
+*.bak
+*.bak-*
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
