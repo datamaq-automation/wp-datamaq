@@ -10,6 +10,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function datamaq_lp_translate_string( $translated, $text, $domain ) {
 	$map = array(
+		'Home' => 'Inicio',
+		'Last updated:' => "\xC3\x9Altima actualizaci\xC3\xB3n:",
 		'Free' => 'Gratis',
 		'Start Learning' => 'Comenzar curso',
 		'Share' => 'Compartir',
@@ -65,7 +67,14 @@ function datamaq_lp_buffer_replace( $html ) {
 	$html = preg_replace( '/(\d+)\s+Students\b/u', '$1 Estudiantes', $html );
 	$html = preg_replace( '/(\d+)\s+Weeks\b/u', '$1 Semanas', $html );
 	$html = preg_replace( '/(\d+)\s+Quizzes\b/u', '$1 Cuestionarios', $html );
-	$html = preg_replace( '/\bby\s+([^<]{1,80})/u', 'por $1', $html );
+	$html = preg_replace( '/\b[Bb]y\s+([^<]{1,80})/u', 'por $1', $html );
+
+	$months = array(
+		'January' => 'enero', 'February' => 'febrero', 'March' => 'marzo', 'April' => 'abril',
+		'May' => 'mayo', 'June' => 'junio', 'July' => 'julio', 'August' => 'agosto',
+		'September' => 'septiembre', 'October' => 'octubre', 'November' => 'noviembre', 'December' => 'diciembre',
+	);
+	$html = strtr( $html, $months );
 
 	return $html;
 }
