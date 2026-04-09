@@ -130,3 +130,21 @@ function datamaq_lp_hide_share_and_featured_review() {
 	<?php
 }
 add_action( 'wp_head', 'datamaq_lp_hide_share_and_featured_review', 99 );
+
+function datamaq_lp_hide_home_search_and_orderby() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	if ( is_front_page() || is_home() || is_post_type_archive( 'lp_course' ) || is_page( 'courses' ) ) {
+		?>
+		<style id="datamaq-lp-hide-home-filters">
+			.wp-block-learnpress-course-search,
+			.courses-order-by-wrapper {
+				display: none !important;
+			}
+		</style>
+		<?php
+	}
+}
+add_action( 'wp_head', 'datamaq_lp_hide_home_search_and_orderby', 100 );
