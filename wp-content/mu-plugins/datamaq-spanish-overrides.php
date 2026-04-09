@@ -73,8 +73,8 @@ function datamaq_lp_buffer_replace( $html ) {
 	}
 
 	$html = str_replace(
-		array( 'Home', 'Last updated:', 'Instructor', 'User Avatar' ),
-		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", 'Instructor', 'Avatar de usuario' ),
+		array( 'Home', 'Last updated:', 'Instructor', 'User Avatar', 'Related Course', 'Related Courses' ),
+		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", 'Instructor', 'Avatar de usuario', 'Curso relacionado', 'Cursos relacionados' ),
 		$html
 	);
 	$html = str_replace(
