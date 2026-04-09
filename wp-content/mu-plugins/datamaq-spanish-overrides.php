@@ -73,8 +73,8 @@ function datamaq_lp_buffer_replace( $html ) {
 	}
 
 	$html = str_replace(
-		array( 'Home', 'Last updated:', 'Instructor', 'User Avatar', 'Related Course', 'Related Courses' ),
-		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", 'Instructor', 'Avatar de usuario', 'Curso relacionado', 'Cursos relacionados' ),
+		array( 'Home', 'Last updated:', 'Instructor', 'User Avatar', 'Related Course', 'Related Courses', 'Course thumbnail', 'course thumbnail' ),
+		array( 'Inicio', "\xC3\x9Altima actualizaci\xC3\xB3n:", 'Instructor', 'Avatar de usuario', 'Curso relacionado', 'Cursos relacionados', 'Miniatura del curso', 'miniatura del curso' ),
 		$html
 	);
 	$html = str_replace(
@@ -110,7 +110,7 @@ function datamaq_lp_start_buffer() {
 	}
 
 	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
-	if ( strpos( $request_uri, '/courses' ) !== false || strpos( $request_uri, '/course' ) !== false || strpos( $request_uri, '/lp-' ) !== false ) {
+	if ( strpos( $request_uri, '/courses' ) !== false || strpos( $request_uri, '/course' ) !== false || strpos( $request_uri, '/instructor' ) !== false || strpos( $request_uri, '/instructors' ) !== false || strpos( $request_uri, '/lp-' ) !== false ) {
 		ob_start( 'datamaq_lp_buffer_replace' );
 	}
 }
