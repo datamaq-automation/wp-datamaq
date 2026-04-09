@@ -95,3 +95,18 @@ function datamaq_lp_start_buffer() {
 	}
 }
 add_action( 'template_redirect', 'datamaq_lp_start_buffer', 0 );
+
+function datamaq_lp_hide_share_and_featured_review() {
+	if ( is_admin() ) {
+		return;
+	}
+	?>
+	<style id="datamaq-lp-hide-share-featured-review">
+		.wp-block-learnpress-course-share,
+		.wp-block-learnpress-course-feature-review {
+			display: none !important;
+		}
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'datamaq_lp_hide_share_and_featured_review', 99 );
