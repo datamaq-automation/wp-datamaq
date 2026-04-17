@@ -81,7 +81,8 @@ function datamaq_lp_hide_share_and_featured_review() {
 	?>
 	<style id="datamaq-lp-hide-share-featured-review">
 		.wp-block-learnpress-course-share,
-		.wp-block-learnpress-course-feature-review {
+		.wp-block-learnpress-course-feature-review,
+		.course-featured-review {
 			display: none !important;
 		}
 	</style>
@@ -337,3 +338,89 @@ function datamaq_lp_force_instructor_avatar_src( $uploaded_avatar_src, $user ) {
 	return $uploaded_avatar_src;
 }
 add_filter( 'learn-press/user/upload-avatar-src', 'datamaq_lp_force_instructor_avatar_src', 20, 2 );
+
+/**
+ * Keep the public course archive canonical on /course/ even if LearnPress
+ * requests the native post type archive link.
+ */
+function datamaq_lp_course_archive_link( $link, $post_type ) {
+	if ( 'lp_course' !== $post_type ) {
+		return $link;
+	}
+
+	return home_url( '/courses/' );
+}
+add_filter( 'post_type_archive_link', 'datamaq_lp_course_archive_link', 20, 2 );
+
+/**
+ * The LearnPress courses page stays in draft, but any permalink request for that
+ * page should resolve to the public archive alias.
+ */
+function datamaq_courses_page_permalink( $link, $post_id, $sample ) {
+	if ( 7 !== (int) $post_id ) {
+		return $link;
+	}
+
+	return home_url( '/courses/' );
+}
+add_filter( 'page_link', 'datamaq_courses_page_permalink', 20, 3 );
+
+/**
+ * Hide instructor link on course listing cards (archive, shortcodes, related).
+ * Keep it visible on single course pages.
+ */
+function datamaq_hide_instructor_on_course_listings() {
+	if ( is_admin() ) {
+		return;
+	}
+	if ( is_singular( 'lp_course' ) ) {
+		return;
+	}
+	?>
+	<style id="datamaq-hide-listing-instructor">
+		.learn-press-courses .course-instructor-category,
+		.lp-list-courses-default .course-instructor-category,
+		.lp-single-instructor .course-instructor-category {
+			display: none !important;
+		}
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'datamaq_hide_instructor_on_course_listings', 120 );
+
+/**
+ * Layout app-like: header y footer siempre visibles, scroll interno en main.
+ */
+function datamaq_app_like_layout() {
+	if ( is_admin() ) {
+		return;
+	}
+	?>
+	<style id="datamaq-app-like-layout">
+		html, body {
+			height: 100vh;
+			overflow: hidden;
+		}
+		body {
+			display: flex;
+			flex-direction: column;
+		}
+		header#header.ct-header,
+		footer#footer.ct-footer {
+			flex-shrink: 0;
+		}
+		main#main.site-main,
+		main {
+			flex: 1 1 auto;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+		/* Asegurar que modales y offcanvas no se rompan */
+		.ct-panel,
+		#search-modal {
+			position: fixed !important;
+		}
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'datamaq_app_like_layout', 130 );

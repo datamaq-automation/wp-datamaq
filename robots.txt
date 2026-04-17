@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://datamaq.com.ar/sitemap.xml

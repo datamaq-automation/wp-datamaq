@@ -26,3 +26,33 @@ Thumbs.db
 
 # Generated translation files
 wp-content/languages/
+
+# Local symlink to SPA landing build
+landing
+
+# Third-party plugins (re-installable via WP-CLI)
+wp-content/plugins/*
+!wp-content/plugins/.gitkeep
+
+# Third-party themes (re-installable via WP-CLI)
+wp-content/themes/*
+!wp-content/themes/.gitkeep
+
+# But keep our custom code
+!wp-content/mu-plugins/
+!wp-content/mu-plugins/**/
+
+# WordPress runtime / temp
+.user.ini
+wordfence-waf.php
+wp-content/wflogs/
+wp-content/upgrade-temp-backup/
+wp-content/backup-db/
+wp-content/backups/
+wp-content/managewp/
+wp-content/updraft/
+wp-content/et-cache/
+wp-content/advanced-cache.php
+.maintenance
+php_errorlog
+error_log

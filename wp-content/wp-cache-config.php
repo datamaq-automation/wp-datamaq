@@ -1,6 +1,8 @@
 <?php
+$wp_cache_debug_log = '7ac658d3b7476418017a2753e722b9ce.php';
+$wp_cache_debug_username = '63c0d501bda44c89f3aa1de35ebea467';
 if ( ! defined( 'WPCACHEHOME' ) ) {
-	define( 'WPCACHEHOME', '/home/datamaq/public_html/cursos/wp-content/plugins/wp-super-cache/' );
+	define( 'WPCACHEHOME', '/home/datamaq/public_html/wp-content/plugins/wp-super-cache/' );
 }
 
 $cache_enabled = true;
@@ -64,7 +66,7 @@ $cached_direct_pages = array();
 $wpsc_served_header = false;
 $wpsc_save_headers = 0;
 $wp_super_cache_comments = 1;
-$wpsc_version = 172;
+$wpsc_version = 169;
 
 if ( '/' != substr( $cache_path, -1 ) ) {
 	$cache_path .= '/';
