@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: DataMaq Design System Vue Migration
- * Version: 1.8
- * Description: Full 32+ variable design system, sticky header fix, cross-selector compatibility, and dock styling.
+ * Version: 1.9
+ * Description: Full 32+ variable design system, sticky header fix (increased specificity), cross-selector compatibility, and dock styling.
  */
 add_action('wp_enqueue_scripts', function() {
     // Enqueue Inter Font
@@ -63,7 +63,7 @@ add_action('wp_enqueue_scripts', function() {
 
         /*
            Header: Fixed -> Sticky per SRS Spec
-           Using multiple selectors with higher specificity to ensure victory over theme JS/CSS
+           Using higher specificity selectors to ensure victory over theme JS/CSS
         */
         body .ct-header, body .site-header, body header.wp-block-template-part {
             background: var(--dm-bg-dark) !important;
