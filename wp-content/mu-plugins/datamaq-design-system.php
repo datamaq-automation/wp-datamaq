@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: DataMaq Design System Vue Migration
- * Version: 1.4
- * Description: Full 29-variable design system, sticky header fix, and cross-selector compatibility.
+ * Version: 1.5
+ * Description: Full 32-variable design system, sticky header fix, and cross-selector compatibility.
  */
 add_action('wp_enqueue_scripts', function() {
     // Enqueue Inter Font
@@ -10,7 +10,7 @@ add_action('wp_enqueue_scripts', function() {
 
     // Try multiple handles for inline style injection
     $handles = ['ct-main-styles', 'blocksy-dynamic-global', 'blocksy-style', 'learnpress'];
-    
+
     $css = '
         :root {
             /* Full set of 29 variables from Audit VM439 / Staging Bridge */
@@ -28,7 +28,7 @@ add_action('wp_enqueue_scripts', function() {
             --dm-radius-lg: 28px;
             --dm-shadow: 0 1.4rem 3rem rgba(12, 9, 47, 0.35);
             --ui-font-family-base: "Inter", system-ui, -apple-system, sans-serif;
-            
+
             /* Extended tokens found in staging/Vue bridge */
             --dm-accent: #ff6a00;
             --dm-accent-2: #ff9a4d;
@@ -44,6 +44,14 @@ add_action('wp_enqueue_scripts', function() {
             --dm-radius-1: 14px;
             --dm-overlay-vignette: radial-gradient(circle, transparent 40%, rgba(12, 9, 47, 0.4) 100%);
 
+            /* SRS Phase 2 Specific Variables */
+            --mobile-card-text: rgba(226, 233, 243, 0.82);
+            --mobile-card-surface: rgba(12, 9, 47, 0.92);
+            --section-mobile-gap: 1.75rem;
+            --section-mobile-padding: 3.25rem;
+            --mobile-card-border: rgba(226, 233, 243, 0.18);
+            --dock-columns: 2;
+
             /* SRS compat variables */
             --dm-bg-dark: rgba(12, 9, 47, 0.82);
             --dm-bg-solid: var(--dm-bg-0);
@@ -53,14 +61,14 @@ add_action('wp_enqueue_scripts', function() {
             --dm-section-margin: 28px;
         }
 
-        body { 
-            background: #0c092f !important; 
+        body {
+            background: #0c092f !important;
             color: var(--dm-text-0) !important;
             font-family: var(--ui-font-family-base) !important;
         }
 
-        /* 
-           Header: Fixed -> Sticky per SRS Spec 
+        /*
+           Header: Fixed -> Sticky per SRS Spec
            Using multiple selectors to ensure victory over theme JS/CSS
         */
         .ct-header, .site-header, header.wp-block-template-part {
@@ -73,7 +81,7 @@ add_action('wp_enqueue_scripts', function() {
             z-index: 1040 !important;
             display: block !important; /* Ensure it stays in flow */
         }
-        
+
         .ct-header *, .site-header * { color: var(--dm-text) !important; }
 
         /* Footer Fixes */
@@ -106,7 +114,7 @@ add_action('wp_enqueue_scripts', function() {
             $injected = true;
         }
     }
-    
+
     // Always inject in head as well to be absolutely sure
     add_action('wp_head', function() use ($css) {
         echo '<style id="dm-design-system-core">' . $css . '</style>';

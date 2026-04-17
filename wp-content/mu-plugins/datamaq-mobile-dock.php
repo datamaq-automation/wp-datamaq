@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: DataMaq Mobile Dock (Phase 2)
- * Version: 1.0
- * Description: Implements a native-like floating navigation dock for mobile devices.
+ * Version: 1.1
+ * Description: Implements a native-like floating navigation dock matching Vue.js architecture.
  */
 
 add_action('wp_enqueue_scripts', function() {
@@ -13,91 +13,84 @@ add_action('wp_enqueue_scripts', function() {
 add_action('wp_footer', function() {
     ?>
     <!-- DataMaq Mobile Dock -->
-    <nav class="c-mobile-dock">
-        <div class="c-mobile-dock__container">
-            <a href="/" class="c-mobile-dock__item <?php echo is_front_page() ? 'is-active' : ''; ?>">
+    <nav class="c-home-dock" aria-label="Navegación rápida" style="--dock-columns: 2;">
+        <div class="c-home-dock__container">
+            <a href="#hero" class="c-home-dock__item">
                 <i class="bi bi-house-door"></i>
                 <span>Inicio</span>
             </a>
-            <a href="/course/" class="c-mobile-dock__item <?php echo (is_post_type_archive('lp_course') || is_tax('course_category')) ? 'is-active' : ''; ?>">
-                <i class="bi bi-book"></i>
-                <span>Cursos</span>
-            </a>
-            <a href="https://wa.me/datamaq" class="c-mobile-dock__item">
-                <i class="bi bi-whatsapp"></i>
-                <span>WhatsApp</span>
-            </a>
-            <a href="/perfil/" class="c-mobile-dock__item <?php echo is_page('lp-profile') ? 'is-active' : ''; ?>">
-                <i class="bi bi-person-circle"></i>
+            <a href="#perfil" class="c-home-dock__item">
+                <i class="bi bi-person-badge"></i>
                 <span>Perfil</span>
+            </a>
+            <a href="#servicios" class="c-home-dock__item">
+                <i class="bi bi-gear-wide-connected"></i>
+                <span>Servicios</span>
+            </a>
+            <a href="#contacto" class="c-home-dock__item">
+                <i class="bi bi-chat-dots"></i>
+                <span>Contacto</span>
             </a>
         </div>
     </nav>
 
     <style>
-        .c-mobile-dock {
+        .c-home-dock {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 48px);
-            max-width: 420px;
-            height: 72px;
-            background: var(--dm-bg-dark, rgba(12, 9, 47, 0.82));
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--dm-border-0, rgba(226, 233, 243, 0.12));
-            border-radius: 20px;
-            z-index: 9999;
-            display: none; /* Hidden by default, shown on mobile */
+            bottom: 12px;
+            left: 13.6px;
+            right: 13.6px;
+            height: 87.59375px;
+            z-index: 1045;
+            background: rgba(15, 27, 58, 0.9) !important;
+            backdrop-filter: blur(18px) !important;
+            -webkit-backdrop-filter: blur(18px) !important;
+            border: 1px solid var(--mobile-card-border, rgba(226, 233, 243, 0.18)) !important;
+            border-radius: 24px !important;
             box-shadow: var(--dm-shadow, 0 10px 30px rgba(0,0,0,0.3));
+            display: grid !important;
+            grid-template-columns: repeat(var(--dock-columns, 2), 1fr);
+            gap: 8px;
+            padding: 12px;
         }
 
-        @media (max-width: 1024px) {
-            .c-mobile-dock {
-                display: flex;
-                align-items: center;
-                justify-content: center;
+        @media (min-width: 1024px) {
+            .c-home-dock {
+                display: none !important;
             }
         }
 
-        .c-mobile-dock__container {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 12px;
+        .c-home-dock__container {
+            display: contents; /* Rely on parent grid */
         }
 
-        .c-mobile-dock__item {
+        .c-home-dock__item {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-decoration: none !important;
-            color: var(--dm-text-muted, #99a9d1) !important;
-            font-size: 10px;
+            color: var(--mobile-card-text, rgba(226, 233, 243, 0.82)) !important;
+            font-size: 11px;
             font-weight: 600;
             transition: all 0.2s ease;
-            flex: 1;
             gap: 4px;
+            background: var(--mobile-card-surface, rgba(12, 9, 47, 0.92));
+            border-radius: 14px;
         }
 
-        .c-mobile-dock__item i {
-            font-size: 22px;
+        .c-home-dock__item i {
+            font-size: 20px;
             line-height: 1;
         }
 
-        .c-mobile-dock__item.is-active {
-            color: var(--dm-accent-orange, #ff9a4d) !important;
+        .c-home-dock__item:active {
+            transform: scale(0.95);
+            background: var(--dm-accent-orange, #ff9a4d);
+            color: var(--dm-bg-0, #0c092f) !important;
         }
 
-        .c-mobile-dock__item:active {
-            transform: scale(0.92);
-        }
-
-        /* Adjust footer space if needed - Already handled by SRS 2.3 118px padding */
+        /* Active state based on hash if needed, or just hover/active */
     </style>
     <?php
-});
+}, 100);
