@@ -331,7 +331,7 @@ function datamaq_lp_force_instructor_avatar_src( $uploaded_avatar_src, $user ) {
 	}
 
 	if ( 2 === (int) $user->get_id() ) {
-		return 'https://cursos.datamaq.com.ar/wp-content/uploads/2026/04/agustinbustos-avatar-250.webp';
+		return 'https://datamaq.com.ar/wp-content/uploads/2026/04/agustinbustos-avatar-250.webp';
 	}
 
 	return $uploaded_avatar_src;
