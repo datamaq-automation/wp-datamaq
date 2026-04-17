@@ -1,13 +1,13 @@
 <?php
 /**
  * Plugin Name: DataMaq Design System Vue Migration
- * Version: 1.7
+ * Version: 1.8
  * Description: Full 32+ variable design system, sticky header fix, cross-selector compatibility, and dock styling.
  */
 add_action('wp_enqueue_scripts', function() {
     // Enqueue Inter Font
     wp_enqueue_style('dm-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap', [], null);
-    // Enqueue Bootstrap Icons (already enqueued by dock plugin, but good for completeness)
+    // Enqueue Bootstrap Icons
     wp_enqueue_style('bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css', [], null);
 
     // Try multiple handles for inline style injection
@@ -63,9 +63,9 @@ add_action('wp_enqueue_scripts', function() {
 
         /*
            Header: Fixed -> Sticky per SRS Spec
-           Using multiple selectors to ensure victory over theme JS/CSS
+           Using multiple selectors with higher specificity to ensure victory over theme JS/CSS
         */
-        .ct-header, .site-header, header.wp-block-template-part {
+        body .ct-header, body .site-header, body header.wp-block-template-part {
             background: var(--dm-bg-dark) !important;
             backdrop-filter: blur(16px) !important;
             -webkit-backdrop-filter: blur(16px) !important;
@@ -76,7 +76,7 @@ add_action('wp_enqueue_scripts', function() {
             display: block !important; /* Ensure it stays in flow */
         }
 
-        .ct-header *, .site-header * { color: var(--dm-text) !important; }
+        body .ct-header *, body .site-header * { color: var(--dm-text) !important; }
 
         /* Footer Fixes */
         .ct-footer, .site-footer {
