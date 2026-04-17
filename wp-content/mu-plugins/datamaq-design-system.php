@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: DataMaq Design System Vue Migration
- * Version: 1.6
+ * Version: 1.7
  * Description: Full 32+ variable design system, sticky header fix, cross-selector compatibility, and dock styling.
  */
 add_action('wp_enqueue_scripts', function() {

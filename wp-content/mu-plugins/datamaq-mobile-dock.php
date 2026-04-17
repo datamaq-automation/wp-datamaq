@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: DataMaq Mobile Dock (Phase 2)
- * Version: 1.2
+ * Version: 1.3
  * Description: Implements a native-like floating navigation dock matching Vue.js architecture.
  */
 
