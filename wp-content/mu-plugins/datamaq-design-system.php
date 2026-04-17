@@ -1,12 +1,14 @@
 <?php
 /**
  * Plugin Name: DataMaq Design System Vue Migration
- * Version: 1.5
- * Description: Full 32-variable design system, sticky header fix, and cross-selector compatibility.
+ * Version: 1.6
+ * Description: Full 32+ variable design system, sticky header fix, cross-selector compatibility, and dock styling.
  */
 add_action('wp_enqueue_scripts', function() {
     // Enqueue Inter Font
     wp_enqueue_style('dm-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap', [], null);
+    // Enqueue Bootstrap Icons (already enqueued by dock plugin, but good for completeness)
+    wp_enqueue_style('bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css', [], null);
 
     // Try multiple handles for inline style injection
     $handles = ['ct-main-styles', 'blocksy-dynamic-global', 'blocksy-style', 'learnpress'];
@@ -37,20 +39,12 @@ add_action('wp_enqueue_scripts', function() {
             --dm-line: #e5e8f0;
             --dm-surface: #ffffff;
             --dm-surface-soft: #f7f9fc;
-            --dm-surface-1: rgba(30, 41, 67, 0.85);
-            --dm-border-1: rgba(226, 233, 243, 0.25);
-            --dm-whatsapp-green: #25d366;
-            --dm-line-blueprint: rgba(var(--dm-accent-orange-rgb), 0.2);
-            --dm-radius-1: 14px;
-            --dm-overlay-vignette: radial-gradient(circle, transparent 40%, rgba(12, 9, 47, 0.4) 100%);
-
-            /* SRS Phase 2 Specific Variables */
-            --mobile-card-text: rgba(226, 233, 243, 0.82);
-            --mobile-card-surface: rgba(12, 9, 47, 0.92);
-            --section-mobile-gap: 1.75rem;
-            --section-mobile-padding: 3.25rem;
-            --mobile-card-border: rgba(226, 233, 243, 0.18);
-            --dock-columns: 2;
+            --dm-surface-1: rgba(30, 41, 67, 0.85); /* New */
+            --dm-border-1: rgba(226, 233, 243, 0.25); /* New */
+            --dm-whatsapp-green: #25d366; /* New */
+            --dm-line-blueprint: rgba(var(--dm-accent-orange-rgb), 0.2); /* New */
+            --dm-radius-1: 14px; /* New */
+            --dm-overlay-vignette: radial-gradient(circle, transparent 40%, rgba(12, 9, 47, 0.4) 100%); /* New */
 
             /* SRS compat variables */
             --dm-bg-dark: rgba(12, 9, 47, 0.82);

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: DataMaq Mobile Dock (Phase 2)
- * Version: 1.1
+ * Version: 1.2
  * Description: Implements a native-like floating navigation dock matching Vue.js architecture.
  */
 
@@ -36,12 +36,12 @@ add_action('wp_footer', function() {
 
     <style>
         .c-home-dock {
-            position: fixed;
-            bottom: 12px;
-            left: 13.6px;
-            right: 13.6px;
-            height: 87.59375px;
-            z-index: 1045;
+            position: fixed !important;
+            bottom: 12px !important;
+            left: 13.6px !important;
+            right: 13.6px !important;
+            height: 87.59375px !important;
+            z-index: 1045 !important;
             background: rgba(15, 27, 58, 0.9) !important;
             backdrop-filter: blur(18px) !important;
             -webkit-backdrop-filter: blur(18px) !important;
@@ -89,8 +89,6 @@ add_action('wp_footer', function() {
             background: var(--dm-accent-orange, #ff9a4d);
             color: var(--dm-bg-0, #0c092f) !important;
         }
-
-        /* Active state based on hash if needed, or just hover/active */
     </style>
     <?php
 }, 100);
