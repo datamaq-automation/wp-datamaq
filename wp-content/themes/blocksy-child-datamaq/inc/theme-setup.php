@@ -10,10 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 add_action( 'wp_enqueue_scripts', 'dm_child_enqueue_styles', 999 );
 function dm_child_enqueue_styles() {
-    $version = '2.2.0'; // Increment for cache busting
+    $version = '2.2.1'; // Increment for cache busting
     
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_uri(), array('parent-style'), $version );
+    
+    // Bootstrap Icons
+    wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
     
     // Tailwind v4 Dist
     wp_enqueue_style( 'tailwind-styles', get_stylesheet_directory_uri() . '/assets/css/tailwind-dist.css', array(), $version );

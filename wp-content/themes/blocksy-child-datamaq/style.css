@@ -2,46 +2,190 @@
  Theme Name:   Blocksy Child Datamaq
  Template:     blocksy
  Author:       Agustin Madygraf
- Version:      2.1.0
+ Version:      2.2.2
 */
 
-/* --- GLOBAL SCROLL & PARITY --- */
+:root {
+  color-scheme: dark;
+  --dm-bg-0: #0c092f;
+  --dm-bg-0-rgb: 12, 9, 47;
+  --dm-surface-0: #0f1b3a;
+  --dm-surface-0-rgb: 15, 27, 58;
+  --dm-surface-1: #132449;
+  --dm-surface-1-rgb: 19, 36, 73;
+  --dm-text-0: #e2e9f3;
+  --dm-text-0-rgb: 226, 233, 243;
+  --dm-text-muted: #99a9d1;
+  --dm-text-muted-rgb: 153, 169, 209;
+  --dm-accent-orange: #ff9a4d;
+  --dm-accent-orange-rgb: 255, 154, 77;
+  --dm-primary: #ff6a00;
+  --dm-primary-rgb: 255, 106, 0;
+  --dm-whatsapp-green: #25d366;
+  --dm-whatsapp-green-rgb: 37, 211, 102;
+  --dm-shadow-rgb: 12, 9, 47;
+  --dm-line-blueprint-rgb: 153, 169, 209;
+  --dm-data-cyan-rgb: 255, 106, 0;
+
+  --dm-radius-1: 0.75rem;
+}
+
+/* --- GLOBAL SETTINGS --- */
 
 html, body {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     height: auto !important;
     scroll-behavior: smooth;
-    background-color: #0c092f !important;
-}
-
-#primary, .content-area, main.site-main {
-    overflow: visible !important;
-    display: block !important;
-}
-
-header#dm-main-header.is-scrolled {
-    background-color: rgba(12, 9, 47, 0.95) !important;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5) !important;
-    backdrop-filter: blur(20px);
-}
-
-section[id] {
-    scroll-margin-top: 5rem !important;
+    background-color: var(--dm-bg-0) !important;
+    color: var(--dm-text-0);
 }
 
 #primary * {
-    color: #ffffff;
+    color: inherit;
 }
 
-.c-home-eyebrow, 
-.tw\:text-dm-primary {
-    color: #ff9a4d !important;
+/* --- HEADER PARITY --- */
+
+header#dm-main-header {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(var(--dm-bg-0-rgb), 0.82) !important;
+    border-bottom: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
 }
 
-/* --- FLOATING ACTION BUTTONS (FAB) --- */
+.tw\:btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--dm-accent-orange);
+  color: var(--dm-bg-0);
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: none;
+}
 
-/* Base FAB class */
+.tw\:btn-primary:hover {
+  background-color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 154, 77, 0.3);
+}
+
+.tw\:btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--dm-text-0);
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(var(--dm-text-0-rgb), 0.2);
+}
+
+.tw\:btn-outline:hover {
+  border-color: var(--dm-accent-orange);
+  background: rgba(var(--dm-accent-orange-rgb), 0.12);
+}
+
+/* --- SECTIONS (HOME PARITY) --- */
+
+.section-mobile {
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.c-home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.38rem 0.85rem;
+  margin-bottom: 1rem;
+  background: rgba(var(--dm-accent-orange-rgb), 0.14);
+  color: var(--dm-accent-orange);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* Hero Section */
+.c-home-hero {
+  position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(circle at top left, rgba(var(--dm-primary-rgb), 0.16), transparent 30%),
+    linear-gradient(180deg, var(--dm-bg-0) 0%, var(--dm-surface-0) 100%);
+}
+
+/* Surface cards parity */
+.c-home-hero__copy,
+.c-home-panel {
+  border: 1px solid rgba(var(--dm-text-0-rgb), 0.12);
+  border-radius: 1.5rem;
+  background: rgba(var(--dm-surface-0-rgb), 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* --- MOBILE DOCK (1x4 Bar Parity) --- */
+
+.c-parity-dock {
+  position: fixed;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
+  z-index: 99999;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.45rem;
+  border: 1px solid rgba(var(--dm-text-0-rgb), 0.15);
+  border-radius: 1.45rem;
+  background: rgba(var(--dm-surface-0-rgb), 0.9);
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.c-parity-dock__link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 4rem;
+  border-radius: 0.95rem;
+  color: rgba(var(--dm-text-0-rgb), 0.7);
+  text-decoration: none;
+  font-size: 0.625rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.c-parity-dock__link:hover {
+  color: var(--dm-accent-orange);
+  background: rgba(var(--dm-accent-orange-rgb), 0.1);
+}
+
+.c-parity-dock__link i {
+  font-size: 1.35rem;
+}
+
+.c-parity-dock__link--emergency {
+    color: var(--dm-whatsapp-green);
+}
+
+/* --- FAB AND FIXES --- */
+
 .c-dm-fab {
     position: fixed;
     z-index: 9999;
@@ -54,65 +198,28 @@ section[id] {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     border: none;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: var(--dm-whatsapp-green);
+    color: #fff;
+    bottom: 2rem;
+    right: 2rem;
 }
 
-/* WhatsApp FAB (Right side - Parity Priority) */
-#whatsapp-fab {
-    background-color: #25d366;
-    color: #ffffff;
-    bottom: 1.5rem;
-    right: 1.5rem;
-}
-
-#whatsapp-fab:hover {
-    background-color: #ffffff;
-    color: #25d366;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
-}
-
-#whatsapp-fab svg {
-    width: 1.8rem;
-    height: 1.8rem;
-}
-
-/* Scroll to Top FAB (Left side - To avoid collision) */
-#scroll-to-top {
-    background-color: #ff9a4d;
-    color: #0c092f;
-    bottom: 1.5rem;
-    left: 1.5rem; /* Moved to left for desktop parity with usability */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(30px);
-}
-
-#scroll-to-top.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-#scroll-to-top:hover {
-    background-color: #ffffff;
-    transform: translateY(-5px) scale(1.1);
-    box-shadow: 0 15px 30px rgba(255, 154, 77, 0.4);
-}
-
-#scroll-to-top i {
-    font-size: 1.8rem;
-    font-weight: bold;
-}
-
-/* Mobile Adjustments (Avoid Bottom Dock) */
-@media (max-width: 1024px) {
+@media (max-width: 991.98px) {
     #whatsapp-fab {
-        bottom: 6rem; /* Above the dock */
-        right: 1rem;
+        bottom: 6.75rem !important;
+        right: 1.25rem !important;
     }
     #scroll-to-top {
-        bottom: 6rem;
-        left: 1rem;
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+    .c-home-hero { padding-top: 5rem; }
+}
+
+@media (min-width: 992px) {
+    .c-parity-dock {
+        display: none !important;
     }
 }

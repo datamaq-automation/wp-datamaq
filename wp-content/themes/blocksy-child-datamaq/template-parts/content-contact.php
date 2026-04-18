@@ -9,7 +9,7 @@ $brand = get_datamaq_site_data()['brand'];
 ?>
 <section id="contacto" class="section-mobile tw:py-32 tw:bg-[#0c092f]">
     <div class="tw:container tw:mx-auto tw:px-4">
-        <article class="tw:max-w-4xl tw:mx-auto tw:p-8 lg:tw:p-16 tw:bg-[#1a1c3d]/94 tw:backdrop-blur-xl tw:rounded-[3rem] tw:border tw:border-white/10 tw:shadow-2xl">
+        <article class="tw:max-w-4xl tw:mx-auto tw:p-8 lg:tw:p-16 tw:bg-[#0f1b3a]/94 tw:backdrop-blur-xl tw:rounded-[3rem] tw:border tw:border-white/10 tw:shadow-2xl">
             
             <!-- Stepper Progress -->
             <div id="dm-stepper-progress" class="tw:mb-12">
@@ -38,7 +38,7 @@ $brand = get_datamaq_site_data()['brand'];
                     <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-8">
                         <div class="tw:space-y-3">
                             <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Nombre</label>
-                            <input type="text" name="first_name" required class="dm-input" placeholder="Ej: Agustín">
+                            <input type="text" name="first_name" required class="dm-input" placeholder="Ej: Agust??n">
                         </div>
                         <div class="tw:space-y-3">
                             <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Apellido</label>
@@ -54,8 +54,8 @@ $brand = get_datamaq_site_data()['brand'];
                         <input type="text" name="company" required class="dm-input" placeholder="Nombre de la empresa">
                     </div>
                     <div class="tw:space-y-3">
-                        <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Detalle el desafío... (Opcional)</label>
-                        <textarea name="message" rows="4" class="dm-input" placeholder="Medición de kWh, integración IoT..."></textarea>
+                        <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Detalle el desaf??o... (Opcional)</label>
+                        <textarea name="message" rows="4" class="dm-input" placeholder="Medici??n de kWh, integraci??n IoT..."></textarea>
                     </div>
                 </div>
 
@@ -67,7 +67,7 @@ $brand = get_datamaq_site_data()['brand'];
                             <input type="email" name="email" required class="dm-input" placeholder="tu@email.com">
                         </div>
                         <div class="tw:space-y-3">
-                            <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Teléfono</label>
+                            <label class="tw:block tw:text-xs tw:font-black tw:text-white/30 tw:uppercase tw:tracking-[0.2em]">Tel??fono</label>
                             <input type="tel" name="phone" class="dm-input" placeholder="+54 9 11 ...">
                         </div>
                     </div>
@@ -88,10 +88,10 @@ $brand = get_datamaq_site_data()['brand'];
 
                 <!-- Actions -->
                 <div class="tw:mt-12 tw:flex tw:justify-between tw:gap-4">
-                    <button type="button" id="dm-prev-btn" class="tw:hidden tw:btn-outline tw:px-8 tw:py-4">Volvé</button>
+                    <button type="button" id="dm-prev-btn" class="tw:hidden tw:btn-outline tw:px-8 tw:py-4">Volv??</button>
                     <div class="tw:flex-1"></div>
-                    <button type="button" id="dm-next-btn" class="tw:btn-primary tw:px-12 tw:py-4 tw:text-lg tw:font-black">Continuá</button>
-                    <button type="submit" id="dm-submit-btn" class="tw:hidden tw:btn-primary tw:px-12 tw:py-4 tw:text-lg tw:font-black">Enviá tu solicitud</button>
+                    <button type="button" id="dm-next-btn" class="tw:btn-primary tw:px-12 tw:py-4 tw:text-lg tw:font-black">Continu??</button>
+                    <button type="submit" id="dm-submit-btn" class="tw:hidden tw:btn-primary tw:px-12 tw:py-4 tw:text-lg tw:font-black">Envi?? tu solicitud</button>
                 </div>
 
                 <p id="dm-form-feedback" class="tw:mt-8 tw:text-center tw:text-xl tw:font-bold tw:hidden"></p>
@@ -155,11 +155,11 @@ $brand = get_datamaq_site_data()['brand'];
                 
                 submitBtn.disabled = true; 
                 fb.classList.remove('tw:hidden');
-                fb.textContent = 'Procesando tu solicitud técnica...'; 
+                fb.textContent = 'Procesando tu solicitud t??cnica...'; 
                 fb.style.color = '#fff';
                 
                 try {
-                    const res = await fetch('https://datamaq.com.ar/wp-admin/admin-ajax.php', {
+                    const res = await fetch('/wp-admin/admin-ajax.php', {
                         method: 'POST',
                         body: new FormData(form)
                     });
@@ -175,7 +175,7 @@ $brand = get_datamaq_site_data()['brand'];
                         }, 5000);
                     }
                 } catch (err) { 
-                    fb.textContent = 'Error de conexión. Intentá por WhatsApp.'; 
+                    fb.textContent = 'Error de conexi??n. Intent?? por WhatsApp.'; 
                     fb.style.color = '#ef4444'; 
                 } finally { 
                     submitBtn.disabled = false; 
