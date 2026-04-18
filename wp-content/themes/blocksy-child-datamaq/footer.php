@@ -25,15 +25,15 @@
                 <div>
                     <h4 class="tw:font-bold tw:text-white tw:mb-6 tw:uppercase tw:tracking-widest tw:text-sm">Contacto</h4>
                     <ul class="tw:space-y-4 tw:text-lg">
-                        <li>Garín, GBA Norte, Argentina</li>
+                        <li>Garín (GBA Norte)</li>
                         <li><a href="mailto:info@datamaq.com.ar" class="hover:tw:text-[#ff9a4d] tw:transition-colors">info@datamaq.com.ar</a></li>
-                        <li><a href="https://wa.me/5491156297160" class="hover:tw:text-[#ff9a4d] tw:transition-colors">WhatsApp Directo</a></li>
+                        <li><a href="https://wa.me/5491156297160?text=Hola%20DataMaq%2C%20necesito%20asistencia%20t%C3%A9cnica%20para%20%5BTipo%20de%20Maquina%5D." class="hover:tw:text-[#ff9a4d] tw:transition-colors">WhatsApp Directo</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="tw:pt-10 tw:border-t tw:border-white/5 tw:flex tw:flex-col md:tw:flex-row tw:justify-between tw:items-center tw:gap-6">
-                <p class="tw:text-sm">© <?php echo date('Y'); ?> DataMaq. Ingeniería de Datos Operativos.</p>
+                <p class="tw:text-sm">(c) <?php echo date('Y'); ?> DataMaq | Garín (GBA Norte)</p>
                 <div class="tw:flex tw:gap-8 tw:text-sm">
                     <a href="#" class="hover:tw:text-white">Privacidad</a>
                     <a href="#" class="hover:tw:text-white">Términos</a>
