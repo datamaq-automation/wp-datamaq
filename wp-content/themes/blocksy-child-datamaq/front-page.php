@@ -1,25 +1,35 @@
 <?php
 /**
- * The template for displaying the home page.
+ * The template for displaying the front page.
+ * SOLID Refactoring - Template Fragments
  */
 
 get_header();
 ?>
 
-<div id="primary" class="content-area">
-	<main id="main" class="site-main">
-		<div class="entry-content ct-container-full">
-			<?php
-			// Bulletproof Section Injection
-			blocksy_child_inject_hero();
-			blocksy_child_inject_profile();
-			blocksy_child_inject_services();
-			blocksy_child_inject_footer_sections();
-			blocksy_child_inject_contact_form();
-			?>
-		</div>
-	</main>
-</div>
+<main id="primary" class="site-main dm-modern-structure">
+
+    <?php 
+    // Hero Section
+    get_template_part('template-parts/content', 'hero'); 
+
+    // Profile Section
+    get_template_part('template-parts/content', 'profile'); 
+
+    // Services Section
+    get_template_part('template-parts/content', 'services'); 
+
+    // Process Section
+    get_template_part('template-parts/content', 'proceso'); 
+
+    // FAQ Section
+    get_template_part('template-parts/content', 'faq'); 
+
+    // Contact Section
+    get_template_part('template-parts/content', 'contact'); 
+    ?>
+
+</main>
 
 <?php
 get_footer();
