@@ -75,3 +75,25 @@ function dm_child_global_scripts() {
     </script>
     <?php
 }
+
+/**
+ * Register DataMaq Shortcodes
+ */
+add_action('init', 'dm_register_shortcodes');
+function dm_register_shortcodes() {
+    add_shortcode('datamaq_whatsapp', function() {
+        $data = get_datamaq_site_data();
+        return esc_url($data['brand']['whatsapp']);
+    });
+
+    add_shortcode('datamaq_email', function() {
+        $data = get_datamaq_site_data();
+        return esc_html($data['brand']['email']);
+    });
+
+    add_shortcode('datamaq_contact_form', function() {
+        ob_start();
+        get_template_part('template-parts/content', 'contact');
+        return ob_get_clean();
+    });
+}
