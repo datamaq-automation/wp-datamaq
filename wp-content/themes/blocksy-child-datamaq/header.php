@@ -20,7 +20,9 @@
         }
         
         /* Layout Compensation */
+        <?php if ( ! is_page_template( 'page-contact.php' ) ) : ?>
         body { padding-top: 64px !important; }
+        <?php endif; ?>
         
         /* Mobile Reset */
         
@@ -83,9 +85,10 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if ( ! is_page_template( 'page-contact.php' ) ) : ?>
 <header id="dm-main-header" class="tw:bg-[#0c092f] tw:backdrop-blur-md tw:border-b tw:border-white/10" role="banner">
     <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
-        <a class="tw:text-xl tw:font-bold tw:text-white" href="https://datamaq.com.ar/" aria-label="DataMaq Home">DataMaq</a>
+        <a class="tw:text-xl tw:font-bold tw:text-white" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">DataMaq</a>
         
         <button
             id="mobile-menu-toggle"
@@ -100,16 +103,17 @@
 
         <nav class="tw:hidden tw:lg:flex tw:ml-auto">
             <ul class="tw:flex tw:items-center tw:gap-8">
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="#servicios">Solución</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="#proceso">Proceso</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="#faq">FAQ</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#servicios'); ?>">Solución</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
                 <li class="tw:ml-4">
-                    <a class="tw:btn-primary" href="#contacto">Escribime</a>
+                    <a class="tw:btn-primary" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
                 </li>
             </ul>
         </nav>
     </div>
 </header>
+<?php endif; ?>
 
 <!-- Mobile Offcanvas -->
 <div id="mobile-offcanvas" class="tw:fixed tw:inset-0 tw:z-[10000]">
