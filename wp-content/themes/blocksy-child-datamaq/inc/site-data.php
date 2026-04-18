@@ -89,34 +89,6 @@ function get_datamaq_site_data() {
                 ['label' => 'Perfil técnico', 'href' => home_url('#perfil')],
                 ['label' => 'FAQ', 'href' => home_url('#faq')]
             ]
-        ],
-        'escobarLanding' => [
-            'eyebrow' => 'Captura automática',
-            'headline' => 'Medición de Consumo y Eficiencia Industrial',
-            'lead' => 'Implementamos sistemas de captura automática para monitorear variables críticas en tiempo real.',
-            'summaryTitle' => 'Alcance del servicio',
-            'summary' => [
-                'Captura de kWh, potencia y factor de potencia.',
-                'Vinculación con Powermate o dashboards propios.',
-                'Datos ordenados para seguimiento operativo y diagnóstico.'
-            ],
-            'includesTitle' => 'Incluye',
-            'includes' => [
-                'Relevamiento inicial y checklist técnico.',
-                'Instalación y configuración básica de la solución.',
-                'Integración inicial si el alcance lo contempla.',
-                'Transferencia técnica inicial o capacitación breve.'
-            ],
-            'processTitle' => 'Proceso de Trabajo',
-            'processSteps' => [
-                'Definición del caso. Revisamos tablero, equipo y conectividad.',
-                'Implementación. Montaje y configuración de la comunicación.',
-                'Validación. Verificación de lecturas antes del cierre técnico.'
-            ],
-            'faqs' => [
-                ['question' => '¿Qué necesito para empezar?', 'answer' => 'Fotos del tablero principal y definir qué variables quieres monitorear.'],
-                ['question' => '¿La instalación requiere corte de energía?', 'answer' => 'Depende del tipo de sensores, pero priorizamos métodos no invasivos (TCs abiertos).']
-            ]
         ]
     ];
 }
