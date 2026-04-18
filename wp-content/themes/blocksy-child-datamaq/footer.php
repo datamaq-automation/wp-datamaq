@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * The template for displaying the footer.
  *
@@ -31,7 +31,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="tw:pt-10 tw:border-t tw:border-white/5 tw:flex tw:flex-col md:tw:flex-row tw:justify-between tw:items-center tw:gap-6">
                 <p class="tw:text-sm">(c) <?php echo date('Y'); ?> DataMaq | Garín (GBA Norte)</p>
                 <div class="tw:flex tw:gap-8 tw:text-sm">
@@ -42,19 +42,21 @@
         </div>
     </footer>
 
-    <!-- WhatsApp FAB (Parity) -->
-    <a 
-        id="whatsapp-fab" 
-        class="c-dm-fab" 
-        href="https://wa.me/5491156297160" 
-        target="_blank" 
-        rel="noopener noreferrer" 
+    <!-- WhatsApp FAB (Hidden in favor of Chatwoot) -->
+    <!--
+    <a
+        id="whatsapp-fab"
+        class="c-dm-fab"
+        href="https://wa.me/5491156297160"
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="Abrir WhatsApp para pedir coordinación"
     >
         <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 2a9.8 9.8 0 0 0-8.38 14.87L2 22l5.28-1.57A9.8 9.8 0 1 0 12 2Zm0 17.65a7.9 7.9 0 0 1-4.03-1.1l-.3-.18-3.14.94.97-3.06-.2-.31A7.9 7.9 0 1 1 12 19.65Zm4.34-5.91c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.23-.62.77-.76.92-.14.15-.28.18-.52.06-.24-.12-1-.38-1.92-1.2a7.2 7.2 0 0 1-1.33-1.64c-.14-.23 0-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.38.08-.15.04-.29-.02-.41-.06-.12-.54-1.31-.74-1.79-.2-.48-.41-.41-.56-.42h-.48a.92.92 0 0 0-.66.31c-.22.24-.84.82-.84 2s.86 2.31.98 2.47c.12.16 1.69 2.57 4.09 3.6.57.25 1.01.4 1.36.51.57.18 1.08.16 1.49.1.46-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.09-.22-.15-.46-.27Z"/>
         </svg>
     </a>
+    -->
 
     <!-- Scroll to Top Button (FAB) -->
     <button id="scroll-to-top" class="c-dm-fab" aria-label="Volver arriba">
