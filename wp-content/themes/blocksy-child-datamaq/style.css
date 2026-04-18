@@ -1,0 +1,118 @@
+/*
+ Theme Name:   Blocksy Child Datamaq
+ Template:     blocksy
+ Author:       Agustin Madygraf
+ Version:      2.1.0
+*/
+
+/* --- GLOBAL SCROLL & PARITY --- */
+
+html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    scroll-behavior: smooth;
+    background-color: #0c092f !important;
+}
+
+#primary, .content-area, main.site-main {
+    overflow: visible !important;
+    display: block !important;
+}
+
+header#dm-main-header.is-scrolled {
+    background-color: rgba(12, 9, 47, 0.95) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(20px);
+}
+
+section[id] {
+    scroll-margin-top: 5rem !important;
+}
+
+#primary * {
+    color: #ffffff;
+}
+
+.c-home-eyebrow, 
+.tw\:text-dm-primary {
+    color: #ff9a4d !important;
+}
+
+/* --- FLOATING ACTION BUTTONS (FAB) --- */
+
+/* Base FAB class */
+.c-dm-fab {
+    position: fixed;
+    z-index: 9999;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    border: none;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* WhatsApp FAB (Right side - Parity Priority) */
+#whatsapp-fab {
+    background-color: #25d366;
+    color: #ffffff;
+    bottom: 1.5rem;
+    right: 1.5rem;
+}
+
+#whatsapp-fab:hover {
+    background-color: #ffffff;
+    color: #25d366;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+}
+
+#whatsapp-fab svg {
+    width: 1.8rem;
+    height: 1.8rem;
+}
+
+/* Scroll to Top FAB (Left side - To avoid collision) */
+#scroll-to-top {
+    background-color: #ff9a4d;
+    color: #0c092f;
+    bottom: 1.5rem;
+    left: 1.5rem; /* Moved to left for desktop parity with usability */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px);
+}
+
+#scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#scroll-to-top:hover {
+    background-color: #ffffff;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 15px 30px rgba(255, 154, 77, 0.4);
+}
+
+#scroll-to-top i {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Mobile Adjustments (Avoid Bottom Dock) */
+@media (max-width: 1024px) {
+    #whatsapp-fab {
+        bottom: 6rem; /* Above the dock */
+        right: 1rem;
+    }
+    #scroll-to-top {
+        bottom: 6rem;
+        left: 1rem;
+    }
+}
