@@ -105,6 +105,8 @@
             <ul class="tw:flex tw:items-center tw:gap-8">
                 <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#servicios'); ?>">Solución</a></li>
                 <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#tarifas'); ?>">Alcance</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#cobertura'); ?>">Cobertura</a></li>
                 <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
                 <li class="tw:ml-4">
                     <a class="tw:btn-primary" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
@@ -116,7 +118,7 @@
 <?php endif; ?>
 
 <!-- Mobile Offcanvas -->
-<div id="mobile-offcanvas" class="tw:fixed tw:inset-0 tw:z-[10000]">
+<div id="mobile-offcanvas" class="tw:hidden tw:fixed tw:inset-0 tw:z-[10000]">
     <div id="offcanvas-overlay" class="tw:fixed tw:inset-0 tw:bg-black/80 tw:backdrop-blur-md"></div>
     <div class="tw:fixed tw:right-0 tw:top-0 tw:bottom-0 tw:w-full tw:max-w-xs tw:bg-[#0c092f] tw:p-8 tw:shadow-2xl tw:flex tw:flex-col">
         <div class="tw:flex tw:items-center tw:justify-between tw:mb-12">

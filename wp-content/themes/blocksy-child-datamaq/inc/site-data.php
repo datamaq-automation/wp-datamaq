@@ -53,9 +53,16 @@ function get_datamaq_site_data() {
         'profile' => [
             'name' => 'Agustin Bustos', 
             'role' => 'Técnico a cargo',
+            'eyebrow' => 'Perfil profesional',
+            'sectionLabel' => 'Enfoque técnico',
             'lead' => 'DataMaq trabaja sobre captura automática de datos operativos, con foco en energía eléctrica y producción.',
-            'detail' => 'El servicio combina relevamiento en campo, implementación técnica e integración para seguimiento y diagnóstico.',
-            'photo' => $theme_url . '/assets/media/tecnico-a-cargo.webp'
+            'bullets' => [
+                'Relevamiento en sitio y criterio de implementación.',
+                'Instalación, integración y puesta en marcha para captura automática de datos.',
+                'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.'
+            ],
+            'photo' => $theme_url . '/assets/media/tecnico-a-cargo.webp',
+            'whatsappLabel' => 'Escribime directo por WhatsApp'
         ],
         'process' => [
             'title' => 'Cómo trabajamos',
