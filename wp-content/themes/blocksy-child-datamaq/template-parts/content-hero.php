@@ -6,7 +6,7 @@
 $data = get_datamaq_site_data()['hero']; 
 ?>
 <section class="section-mobile c-home-hero tw:relative tw:bg-[#0c092f] tw:bg-center tw:bg-no-repeat tw:bg-cover tw:overflow-hidden" 
-         style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo esc_url($data['image']); ?>'); padding-block: clamp(4rem, 10vw, 8rem); min-height: 90vh; display:flex; align-items:center;">
+         style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo esc_url($data['image']); ?>'); padding-block: clamp(4rem, 6vw, 6.5rem); min-height: 90vh; display:flex; align-items:center;">
     <div class="tw:container tw:mx-auto tw:px-4 tw:relative tw:z-10">
         <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-12 tw:gap-8">
             <div class="tw:col-span-12">

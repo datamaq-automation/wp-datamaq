@@ -10,7 +10,7 @@ $data = get_datamaq_site_data()['services'];
         <h2 class="tw:text-5xl lg:tw:text-6xl tw:tracking-tighter tw:text-white tw:mb-16">
             <?php echo esc_html($data['title']); ?>
         </h2>
-        <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-3 tw:gap-10">
+        <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-3 tw:gap-8">
             <?php foreach ($data['cards'] as $card): ?>
             <article class="tw:p-12 tw:bg-[#1a1c3d]/60 tw:backdrop-blur-md tw:border tw:border-white/10 tw:rounded-[2.5rem] tw:shadow-xl tw:transition-all hover:tw:border-[#ff9a4d]/50 hover:tw:translate-y-[-8px]">
                 <h3 class="tw:text-2xl tw:font-bold tw:text-white tw:mb-2"><?php echo esc_html($card['title']); ?></h3>
