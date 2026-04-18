@@ -37,6 +37,7 @@ wp-content/plugins/*
 # Third-party themes (re-installable via WP-CLI)
 wp-content/themes/*
 !wp-content/themes/.gitkeep
+!wp-content/themes/blocksy-child-datamaq/
 
 # But keep our custom code
 !wp-content/mu-plugins/
