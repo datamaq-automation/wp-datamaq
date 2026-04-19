@@ -1,26 +1,35 @@
 <?php
 /**
- * Template part for displaying the Proceso section
+ * Template part for displaying the Proceso section with V6 Absolute Parity.
  */
-
 $process = get_datamaq_site_data()['process']; 
 ?>
-<section id="proceso" class="section-mobile tw:py-24 tw:bg-[#0c092f]">
+<section id="proceso" class="c-home-process section-mobile tw:py-32 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
+    <!-- Subtle ambient glow -->
+    <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-20%] tw:right-[-10%] tw:opacity-[0.05]"></div>
+
     <div class="tw:container tw:mx-auto tw:px-4">
-         <h2 class="tw:text-5xl tw:tracking-tighter tw:text-white tw:mb-16">
-            <?php echo esc_html($process['title']); ?>
-         </h2>
+         <div class="tw:max-w-5xl tw:mb-20">
+            <span class="c-home-process__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1.5rem; display: inline-block;">
+                <?php echo $process['eyebrow'] ?? 'C&oacute;mo trabajamos'; ?>
+            </span>
+            <h2 class="tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">
+                <?php echo esc_html($process['title']); ?>
+            </h2>
+         </div>
+
          <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-4 tw:gap-14">
             <?php foreach ($process['steps'] as $step): ?>
-            <article class="tw:group tw:relative">
+            <article class="c-home-process__step tw:group tw:relative">
                 <!-- Parity Fix: Ultra-subtle background numbers -->
-                <span class="tw:text-8xl tw:font-black tw:text-white/[0.03] tw:mb-4 tw:block tw:transition-colors group-hover:tw:text-[#ff9a4d]/10">
+                <span class="tw:text-8xl tw:font-black tw:text-white/[0.04] tw:mb-6 tw:block tw:transition-colors group-hover:tw:text-[#ff9a4d]/10 tw:tracking-tighter">
                     <?php echo esc_html($step['order']); ?>
                 </span>
-                <h3 class="tw:text-2xl tw:font-bold tw:text-white tw:mb-4"><?php echo esc_html($step['title']); ?></h3>
-                <p class="tw:text-white/60 tw:text-lg tw:leading-relaxed"><?php echo esc_html($step['desc']); ?></p>
+                <h3 class="tw:text-3xl tw:font-bold tw:text-white tw:mb-6 tw:tracking-tight"><?php echo esc_html($step['title']); ?></h3>
+                <p class="tw:text-white/60 tw:text-xl tw:leading-relaxed"><?php echo esc_html($step['description']); ?></p>
             </article>
             <?php endforeach; ?>
          </div>
     </div>
 </section>
+

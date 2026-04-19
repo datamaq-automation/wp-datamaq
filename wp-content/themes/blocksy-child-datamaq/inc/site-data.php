@@ -46,6 +46,32 @@ function get_datamaq_site_data() {
                 ]
             ]
         ],
+        'process' => [
+            'eyebrow' => 'C&oacute;mo trabajamos',
+            'title' => 'Flujo de implementaci&oacute;n t??cnica',
+            'steps' => [
+                [
+                    'order' => '01',
+                    'title' => 'Relevamiento y definici&oacute;n del caso',
+                    'description' => 'Revisamos tablero, equipo, proceso, conectividad, variables a capturar y objetivo t&eacute;cnico para definir una implementaci&oacute;n razonable.'
+                ],
+                [
+                    'order' => '02',
+                    'title' => 'Instalaci&oacute;n y configuraci&oacute;n',
+                    'description' => 'Montamos la soluci&oacute;n, configuramos comunicaci&oacute;n e integraci&oacute;n inicial y dejamos el esquema b&aacute;sico de captura funcionando.'
+                ],
+                [
+                    'order' => '03',
+                    'title' => 'Pruebas y validaci&oacute;n',
+                    'description' => 'Verificamos lecturas, comunicaciones y condiciones m&iacute;nimas de funcionamiento antes del cierre t&eacute;cnico.'
+                ],
+                [
+                    'order' => '04',
+                    'title' => 'Cierre t&eacute;cnico y pr&oacute;ximos pasos',
+                    'description' => 'Entregamos observaciones, pendientes y recomendaciones para estabilizar la captura y ordenar los datos.'
+                ]
+            ]
+        ],
         'profile' => [
             'name' => 'Agust&iacute;n Bustos',
             'lead' => 'DataMaq trabaja sobre captura autom&aacute;tica de datos operativos, con foco en energ&iacute;a el&eacute;ctrica y producci&oacute;n.',
