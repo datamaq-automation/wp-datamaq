@@ -53,9 +53,12 @@
         <nav class="tw:hidden tw:lg:flex tw:ml-auto">
             <ul class="tw:flex tw:items-center tw:gap-8">
                 <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#tarifas'); ?>">Alcance</a></li>
+                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#cobertura'); ?>">Cobertura</a></li>
                 <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
                 <li class="tw:ml-4">
-                    <a class="tw:btn-primary" href="<?php echo home_url('#contacto'); ?>">Contacto</a>
+                    <a class="tw:btn-primary" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
                 </li>
             </ul>
         </nav>
@@ -80,6 +83,9 @@
         <nav>
             <ul class="tw:flex tw:flex-col tw:gap-8">
                 <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#servicios">Soluci&oacute;n</a></li>
+                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#proceso">Proceso</a></li>
+                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#tarifas">Alcance</a></li>
+                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#cobertura">Cobertura</a></li>
                 <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#faq">FAQ</a></li>
             </ul>
         </nav>
