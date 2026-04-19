@@ -112,6 +112,11 @@ function get_datamaq_site_data() {
                 ]
             ]
         ],
+        'primaryContactForm' => [
+            'title' => 'Inici&aacute; una consulta t&eacute;cnica',
+            'subtitle' => 'Dejanos el contexto del caso y te respondemos con el siguiente paso.',
+            'submitLabel' => 'Envi&aacute; tu consulta'
+        ],
         'contactPage' => [
             'eyebrow' => 'Contacto',
             'title' => 'Inici&aacute; una consulta t&eacute;cnica',
