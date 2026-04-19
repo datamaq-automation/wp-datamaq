@@ -10,10 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 add_action( 'wp_enqueue_scripts', 'dm_child_enqueue_styles', 999 );
 function dm_child_enqueue_styles() {
-    $version = '2.2.1'; // Increment for cache busting
+    $version = '2.2.5'; // Increment for cache busting
     
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_uri(), array('parent-style'), $version );
+    
+    // Google Fonts - Inter
+    wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap', array(), null );
     
     // Bootstrap Icons
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );

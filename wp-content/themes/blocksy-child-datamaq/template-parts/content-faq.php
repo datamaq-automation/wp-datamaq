@@ -1,27 +1,42 @@
 <?php
 /**
- * Template part for displaying the FAQ section
+ * Template part for displaying FAQ section.
  */
-
-$faq = get_datamaq_site_data()['faq']; 
+$data = get_datamaq_site_data();
+$faq = $data['faq'];
 ?>
-<section id="faq" class="section-mobile tw:py-32 tw:bg-[#111229]">
+<section id="faq" class="tw:py-24 tw:bg-[#0c092f]">
     <div class="tw:container tw:mx-auto tw:px-4">
-        <h2 class="tw:text-5xl tw:tracking-tighter tw:text-white tw:mb-16">
-            <?php echo esc_html($faq['title']); ?>
-        </h2>
-        <div class="tw:max-w-4xl tw:space-y-6">
-            <?php foreach ($faq['items'] as $item): ?>
-            <details class="tw:group tw:p-6 tw:bg-[#1a1c3d] tw:rounded-[2rem] tw:border tw:border-white/10 tw:transition-colors open:tw:border-[#ff9a4d]/30">
-                <summary class="tw:text-2xl tw:font-bold tw:text-white tw:cursor-pointer tw:flex tw:justify-between tw:items-center list-none tw:pl-6">
-                    <?php echo esc_html($item['q']); ?>
-                    <span class="tw:text-[#ff9a4d] tw:text-3xl tw:transition-transform group-open:tw:rotate-45">+</span>
-                </summary>
-                <div class="tw:mt-6 tw:text-white/70 tw:text-xl tw:leading-relaxed">
-                    <?php echo esc_html($item['a']); ?>
-                </div>
-            </details>
-            <?php endforeach; ?>
+        <div class="tw:max-w-3xl tw:mx-auto tw:text-center tw:mb-16">
+            <span class="c-home-eyebrow">Dudas comunes</span>
+            <h2 class="tw:text-4xl md:tw:text-5xl tw:font-black tw:text-white tw:mb-6">
+                <?php echo esc_html($faq['title']); ?>
+            </h2>
+            <p class="tw:text-xl tw:text-[#99a9d1]">
+                Todo lo que necesit&aacute;s saber sobre nuestras soluciones y metodolog&iacute;a.
+            </p>
+        </div>
+
+        <div class="tw:max-w-4xl tw:mx-auto tw:space-y-4">
+            <?php if (!empty($faq['items'])): ?>
+                <?php foreach ($faq['items'] as $index => $item): ?>
+                    <div class="c-faq-card tw:glass-card tw:glow-border">
+                        <details class="tw:group">
+                            <summary class="c-faq-card__header tw:list-none">
+                                <h4 class="tw:font-bold tw:text-white tw:pr-8">
+                                    <?php echo esc_html($item['q']); ?>
+                                </h4>
+                                <div class="c-faq-card__icon tw:transition-transform tw:duration-300 group-open:tw:rotate-45">
+                                    <i class="bi bi-plus-lg"></i>
+                                </div>
+                            </summary>
+                            <div class="c-faq-card__content tw:border-t tw:border-white/5 tw:pt-4">
+                                <p><?php echo esc_html($item['a']); ?></p>
+                            </div>
+                        </details>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>

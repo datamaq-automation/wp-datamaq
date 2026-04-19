@@ -2,7 +2,7 @@
  Theme Name:   Blocksy Child Datamaq
  Template:     blocksy
  Author:       Agustin Madygraf
- Version:      2.2.2
+ Version:      2.3.0
 */
 
 :root {
@@ -30,7 +30,16 @@
   --dm-radius-1: 0.75rem;
 }
 
-/* --- GLOBAL SETTINGS --- */
+/* --- GLOBAL SETTINGS & TYPOGRAPHY --- */
+
+body, button, input, select, textarea {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 800;
+}
 
 html, body {
     overflow-x: hidden !important;
@@ -41,11 +50,27 @@ html, body {
     color: var(--dm-text-0);
 }
 
-#primary * {
-    color: inherit;
+/* --- GLOW & GLASS UTILITIES --- */
+
+.tw\:glass-card {
+    background: rgba(var(--dm-surface-0-rgb), 0.7) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* --- HEADER PARITY --- */
+.tw\:glow-border {
+    position: relative;
+    border: 1px solid rgba(var(--dm-accent-orange-rgb), 0.2) !important;
+}
+
+.tw\:glow-border:hover {
+    border-color: rgba(var(--dm-accent-orange-rgb), 0.5) !important;
+    box-shadow: 0 0 15px rgba(var(--dm-accent-orange-rgb), 0.1);
+}
+
+/* --- HEADER --- */
 
 header#dm-main-header {
     backdrop-filter: blur(16px);
@@ -54,50 +79,31 @@ header#dm-main-header {
     border-bottom: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
 }
 
-.tw\:btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--dm-accent-orange);
-  color: var(--dm-bg-0);
-  font-weight: 700;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border: none;
+/* --- PROFILE SECTION PARITY --- */
+
+.c-profile-image-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 0 auto;
 }
 
-.tw\:btn-primary:hover {
-  background-color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 154, 77, 0.3);
+.c-profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% !important;
+    border: 4px solid var(--dm-accent-orange);
+    box-shadow: 0 0 30px rgba(var(--dm-accent-orange-rgb), 0.2);
 }
 
-.tw\:btn-outline {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background-color: transparent;
-  color: var(--dm-text-0);
-  font-weight: 700;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.2);
+.c-profile-list i {
+    color: var(--dm-accent-orange);
+    font-size: 1.4rem;
+    margin-right: 0.75rem;
 }
 
-.tw\:btn-outline:hover {
-  border-color: var(--dm-accent-orange);
-  background: rgba(var(--dm-accent-orange-rgb), 0.12);
-}
-
-/* --- SECTIONS (HOME PARITY) --- */
-
-.section-mobile {
-  padding-block: clamp(2.5rem, 5vw, 4rem);
-}
+/* --- SERVICES SECTION PARITY --- */
 
 .c-home-eyebrow {
   display: inline-flex;
@@ -113,26 +119,54 @@ header#dm-main-header {
   letter-spacing: 0.14em;
 }
 
-/* Hero Section */
-.c-home-hero {
-  position: relative;
-  overflow: hidden;
-  background: 
-    radial-gradient(circle at top left, rgba(var(--dm-primary-rgb), 0.16), transparent 30%),
-    linear-gradient(180deg, var(--dm-bg-0) 0%, var(--dm-surface-0) 100%);
+.c-service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Surface cards parity */
-.c-home-hero__copy,
-.c-home-panel {
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.12);
-  border-radius: 1.5rem;
-  background: rgba(var(--dm-surface-0-rgb), 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+.c-service-card:hover {
+    transform: translateY(-8px);
+    background: rgba(var(--dm-surface-1-rgb), 0.9) !important;
 }
 
-/* --- MOBILE DOCK (1x4 Bar Parity) --- */
+/* --- FAQ SECTION PARITY --- */
+
+.c-faq-card {
+    border-radius: 1.25rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.c-faq-card__header {
+    padding: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.c-faq-card__header:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.c-faq-card__header h4 {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.c-faq-card__icon {
+    color: var(--dm-accent-orange);
+    font-size: 1.5rem;
+}
+
+.c-faq-card__content {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--dm-text-muted);
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* --- DOCK PARITY --- */
 
 .c-parity-dock {
   position: fixed;
@@ -171,55 +205,17 @@ header#dm-main-header {
   transition: all 0.2s ease;
 }
 
-.c-parity-dock__link:hover {
-  color: var(--dm-accent-orange);
-  background: rgba(var(--dm-accent-orange-rgb), 0.1);
-}
-
-.c-parity-dock__link i {
-  font-size: 1.35rem;
-}
-
-.c-parity-dock__link--emergency {
-    color: var(--dm-whatsapp-green);
-}
-
-/* --- FAB AND FIXES --- */
-
-.c-dm-fab {
-    position: fixed;
-    z-index: 9999;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    border: none;
-    background-color: var(--dm-whatsapp-green);
-    color: #fff;
-    bottom: 2rem;
-    right: 2rem;
-}
+/* --- MOBILE HIDES --- */
 
 @media (max-width: 991.98px) {
-    #whatsapp-fab {
-        bottom: 6.75rem !important;
-        right: 1.25rem !important;
-    }
     #scroll-to-top {
         display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-        pointer-events: none !important;
     }
-    .c-home-hero { padding-top: 5rem; }
+    #whatsapp-fab {
+        bottom: 6.75rem !important;
+    }
 }
 
 @media (min-width: 992px) {
-    .c-parity-dock {
-        display: none !important;
-    }
+    .c-parity-dock { display: none !important; }
 }
