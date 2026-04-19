@@ -1,3 +1,8 @@
+<?php
+/**
+ * Template part for displaying the header with V6 Absolute Parity.
+ */
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -62,7 +67,7 @@
         
         <button
             id="mobile-menu-toggle"
-            class="tw:lg:hidden tw:p-2 tw:text-white"
+            class="tw:p-2 tw:text-white tw:lg:hidden"
             type="button"
             aria-label="Abrir navegaci&oacute;n"
         >
@@ -75,8 +80,7 @@
             <ul class="tw:flex tw:items-center tw:gap-8">
                 <li><a class="dm-nav-link" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
                 <li><a class="dm-nav-link" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
-                <li><a class="dm-nav-link" href="<?php echo home_url('#tarifas'); ?>">Alcance</a></li>
-                <li><a class="dm-nav-link" href="<?php echo home_url('#cobertura'); ?>">Cobertura</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#perfil'); ?>">Perfil</a></li>
                 <li><a class="dm-nav-link" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
                 <li class="tw:ml-4">
                     <a class="tw:btn dm-btn-cta" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
@@ -105,8 +109,7 @@
             <ul class="tw:flex tw:flex-col tw:gap-8">
                 <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#servicios">Soluci&oacute;n</a></li>
                 <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#proceso">Proceso</a></li>
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#tarifas">Alcance</a></li>
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#cobertura">Cobertura</a></li>
+                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#perfil">Perfil</a></li>
                 <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#faq">FAQ</a></li>
             </ul>
         </nav>
