@@ -4,9 +4,10 @@
 
 | Campo | Valor |
 |---|---|
+| Commit de cierre | 1cf552e |
 | ID | MA-015 |
 | Archivo | docs/microauditorias/thanks-page-template.md |
-| Estado | En progreso |
+| Estado | Cerrada |
 | Prioridad | Media |
 | Fecha de inicio | 2026-04-19 |
 | Usuario responsable | Antigravity |
@@ -21,6 +22,7 @@
 *   Crear el archivo de template `page-gracias.php`.
 *   Implementar la cabecera simplificada (Cerrar / "X").
 *   Replicar la est??tica de `ThanksView.vue` incluyendo el resplandor (`glow`) y el icono de ??xito.
+*   Resultado: Resuelto
 
 ## 4. Investigaci??n t??cnica
 

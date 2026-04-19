@@ -4,9 +4,10 @@
 
 | Campo | Valor |
 |---|---|
+| Commit de cierre | ee05792 |
 | ID | MA-013 |
 | Archivo | docs/microauditorias/contact-page-template.md |
-| Estado | En progreso |
+| Estado | Cerrada (Resuelto) |
 | Prioridad | Alta |
 | Fecha de inicio | 2026-04-19 |
 | Usuario responsable | Antigravity |
