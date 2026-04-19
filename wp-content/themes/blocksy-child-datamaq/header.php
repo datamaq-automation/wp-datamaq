@@ -20,6 +20,32 @@
             font-weight: 700;
             font-size: 20px;
         }
+        /* Nav link typography adjustments */
+        .dm-nav-link {
+            font-size: 15.68px;
+            font-weight: 400;
+            color: rgba(226, 233, 243, 0.88) !important;
+            transition: color 0.2s ease;
+        }
+        .dm-nav-link:hover {
+            color: #ff6a00 !important;
+        }
+        /* CTA Typography and Shape */
+        .dm-btn-cta {
+            background-color: #ff6a00 !important;
+            border-color: #ff6a00 !important;
+            color: #0c092f !important;
+            font-weight: 500 !important;
+            border-radius: 12px !important;
+            font-size: 16px !important;
+            padding: 0.5rem 1.25rem;
+            transition: all 0.2s ease;
+        }
+        .dm-btn-cta:hover {
+            background-color: #ff8533 !important;
+            border-color: #ff8533 !important;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 
@@ -47,13 +73,13 @@
 
         <nav class="tw:hidden tw:lg:flex tw:ml-auto">
             <ul class="tw:flex tw:items-center tw:gap-8">
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#tarifas'); ?>">Alcance</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#cobertura'); ?>">Cobertura</a></li>
-                <li><a class="tw:text-white/90 hover:tw:text-[#ff9a4d] tw:transition-colors" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#tarifas'); ?>">Alcance</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#cobertura'); ?>">Cobertura</a></li>
+                <li><a class="dm-nav-link" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
                 <li class="tw:ml-4">
-                    <a class="tw:btn-primary" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
+                    <a class="tw:btn dm-btn-cta" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
                 </li>
             </ul>
         </nav>
@@ -85,7 +111,7 @@
             </ul>
         </nav>
         <div class="tw:mt-auto">
-            <a class="tw:btn-primary tw:w-full tw:py-4" href="#contacto">Escribime</a>
+            <a class="tw:btn dm-btn-cta tw:w-full tw:py-4" style="text-align: center;" href="#contacto">Escribime</a>
         </div>
     </div>
 </div>
