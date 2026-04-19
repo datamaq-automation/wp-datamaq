@@ -25,7 +25,9 @@ function get_datamaq_site_data() {
             'image' => $theme_url . '/assets/media/hero-energy.svg'
         ],
         'services' => [
+            'eyebrow' => 'Servicios',
             'title' => 'Servicios t&eacute;cnicos sobre captura, integraci&oacute;n y uso de datos',
+            'intro' => 'Servicios orientados a captura autom&aacute;tica de datos, integraci&oacute;n t&eacute;cnica y formaci&oacute;n aplicada sobre casos reales.',
             'cards' => [
                 [
                     'id' => 'iot', 'title' => 'Instalaci&oacute;n IoT', 'subtitle' => 'Captura y Comunicaci&oacute;n',
