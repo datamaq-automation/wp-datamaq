@@ -11,7 +11,51 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
     <style>
-        /* Logo Icon Specific Styles to ensure Parity without relying on Tailwind compile */
+        /* V6 Absolute Parity: Design Tokens & Typography */
+        :root {
+            --dm-accent-orange-rgb: 255, 106, 0;
+            --dm-data-cyan-rgb: 34, 211, 238;
+            --dm-line-blueprint-rgb: 226, 233, 243;
+        }
+
+        /* Typography Tracking & Weights */
+        .c-home-hero__title, .c-home-section-title {
+            letter-spacing: -0.03em !important;
+            line-height: 0.98 !important;
+        }
+        .c-home-eyebrow {
+            letter-spacing: 0.14em !important;
+            font-weight: 800 !important;
+            text-transform: uppercase;
+        }
+        
+        /* Button Weight Standardization */
+        .tw:btn-primary, .dm-btn-cta, .tw:btn {
+            font-weight: 700 !important; /* Bold 700 to match Vue */
+        }
+
+        /* V6 Ambient Lighting (The 'Atmosphere') */
+        .app-shell--home {
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.16), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 106, 0, 0.08), transparent 40%),
+                #0c092f !important;
+        }
+
+        /* Blueprint Grid Pattern */
+        .c-home-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(226, 233, 243, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(226, 233, 243, 0.05) 1px, transparent 1px);
+            background-size: 56px 56px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Logo Icon Specific Styles */
         .c-logo-icon {
             background-color: #f97316;
             color: #0c092f;
@@ -40,10 +84,10 @@
             background-color: #ff6a00 !important;
             border-color: #ff6a00 !important;
             color: #0c092f !important;
-            font-weight: 500 !important;
+            font-weight: 700 !important; /* Bold 700 */
             border-radius: 12px !important;
             font-size: 16px !important;
-            padding: 0.5rem 1.25rem;
+            padding: 0.5rem 1.6rem !important; /* Slightly wider to match Vue */
             transition: all 0.2s ease;
         }
         .dm-btn-cta:hover {
