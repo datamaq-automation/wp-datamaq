@@ -1,7 +1,7 @@
 <?php
 /**
  * DataMaq Site Data Repository
- * DEFINITIVE EDITION - 100% Entities for Parity.
+ * GOLD MASTER EDITION - 100% Content & Navigation Parity.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -57,9 +57,30 @@ function get_datamaq_site_data() {
         'faq' => [
             'title' => 'Preguntas frecuentes',
             'items' => [
-                ['q' => '&iquest;Qu&eacute; tipo de datos se pueden capturar?', 'a' => 'Variables el&eacute;ctricas o operativas (kilos, unidades).'],
-                ['q' => '&iquest;Trabaj&aacute;s solo con energ&iacute;a el&eacute;ctrica?', 'a' => 'No. Tambi&eacute;n datos de producci&oacute;n.'],
-                ['q' => '&iquest;Qu&eacute; necesit&aacute;s evaluar?', 'a' => 'Zona, fotos, variables y sistema de destino.']
+                [
+                    'q' => '&iquest;Qu&eacute; tipo de datos se pueden capturar?', 
+                    'a' => 'Seg&uacute;n el caso, variables el&eacute;ctricas como kWh, potencia, factor de potencia y distorsi&oacute;n arm&oacute;nica, o variables operativas como kilos, unidades, metros, velocidades y estados.'
+                ],
+                [
+                    'q' => '&iquest;Trabaj&aacute;s solo con energ&iacute;a el&eacute;ctrica?', 
+                    'a' => 'No. La energ&iacute;a es una de las aplicaciones principales, pero tambi&eacute;n se pueden implementar soluciones para captura de datos de producci&oacute;n u otras variables operativas relevantes.'
+                ],
+                [
+                    'q' => '&iquest;Us&aacute;s Powermeter y Automate?', 
+                    'a' => 'S&iacute;. Seg&uacute;n el proyecto, la soluci&oacute;n puede apoyarse en Powermeter para medici&oacute;n el&eacute;ctrica y en Automate para captura e integraci&oacute;n de se&ntilde;ales y datos operativos.'
+                ],
+                [
+                    'q' => '&iquest;Tambi&eacute;n brind&aacute;s asesoramiento sobre los datos capturados?', 
+                    'a' => 'S&iacute;. El acompa&ntilde;amiento puede incluir estructuraci&oacute;n, an&aacute;lisis e interpretaci&oacute;n t&eacute;cnica de datos operativos y energ&eacute;ticos, seg&uacute;n la necesidad del caso.'
+                ],
+                [
+                    'q' => '&iquest;Tambi&eacute;n brind&aacute;s capacitaciones?', 
+                    'a' => 'S&iacute;. Las capacitaciones est&aacute;n orientadas a equipos que necesiten trabajar con datos reales usando Python, bases de datos, APIs o integraciones, no a formaci&oacute;n gen&eacute;rica desvinculada del caso.'
+                ],
+                [
+                    'q' => '&iquest;Qu&eacute; necesit&aacute;s para evaluar el caso?', 
+                    'a' => 'Como base: zona, fotos del tablero o equipo, variables a capturar, objetivo del proyecto, conectividad disponible y sistema al que haya que integrar, si aplica.'
+                ]
             ]
         ],
         'contactPage' => [

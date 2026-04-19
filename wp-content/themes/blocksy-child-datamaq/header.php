@@ -11,7 +11,7 @@
 <?php wp_body_open(); ?>
 
 <?php if ( ! is_page_template( 'page-contact.php' ) ) : ?>
-<header id="dm-main-header" class="tw:bg-[#0c092f] tw:backdrop-blur-md tw:border-b tw:border-white/10" role="banner">
+<header id="dm-main-header" class="tw:bg-[#0c092f] tw:backdrop-blur-md tw:border-b tw:border-white/10" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; height: 60px; display: flex; align-items: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);" role="banner">
     <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
         <a class="tw:text-xl tw:font-bold tw:text-white" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">DataMaq</a>
         
@@ -37,6 +37,7 @@
         </nav>
     </div>
 </header>
+<div class="header-spacer" style="height: 60px;"></div>
 <?php endif; ?>
 
 <!-- Mobile Offcanvas -->

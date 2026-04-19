@@ -2,10 +2,11 @@
  Theme Name:   Blocksy Child Datamaq
  Template:     blocksy
  Author:       Agustin Madygraf
- Version:      2.8.0
+ Version:      4.0.0
 */
 
 :root {
+  color-scheme: dark;
   --dm-bg-0: #0c092f;
   --dm-surface-0: #13142d;
   --dm-surface-1: #1a1c3d;
@@ -14,40 +15,33 @@
   --dm-radius-huge: 4rem;
 }
 
-/* --- V-ULTIMATE TYPOGRAPHY --- */
-
+/* --- TYPOGRAPHY PARITY --- */
 body, button, input {
     font-family: 'Inter', sans-serif !important;
     -webkit-font-smoothing: antialiased;
 }
 
-/* Extreme H1 Scale to match Local */
-h1, .c-home-hero__title, #dm-main-header + section h1 {
+h1, .c-home-hero__title {
     font-size: clamp(3.5rem, 8.5vw, 10rem) !important;
     font-weight: 900 !important;
     letter-spacing: -0.05em !important;
     line-height: 0.9 !important;
 }
 
-/* --- DOCK V-ULTIMATE (FORCE VISIBILITY) --- */
-
-body nav.c-parity-dock, 
-html body nav.c-parity-dock {
+/* --- MOBILE DOCK PARITY --- */
+body nav.c-parity-dock {
   position: fixed !important;
   left: 1rem !important;
   right: 1rem !important;
   bottom: 1.5rem !important;
-  z-index: 2147483647 !important; /* Maximum possible z-index */
+  z-index: 2147483647 !important;
   display: flex !important;
   background: rgba(19, 20, 45, 0.95) !important;
   backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-radius: 2.5rem !important;
   padding: 0.75rem 0.5rem !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: space-around !important;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.7) !important;
 }
 
 .c-parity-dock__link {
@@ -57,7 +51,6 @@ html body nav.c-parity-dock {
     align-items: center !important;
     gap: 0.4rem !important;
     color: rgba(255, 255, 255, 0.8) !important;
-    text-decoration: none !important;
     font-size: 0.65rem !important;
     font-weight: 900 !important;
     text-transform: uppercase !important;
@@ -68,26 +61,27 @@ html body nav.c-parity-dock {
     color: var(--dm-accent-orange) !important;
 }
 
-/* --- HIDE ON DESKTOP --- */
+/* Responsive visibility */
 @media (min-width: 992px) {
     body nav.c-parity-dock { display: none !important; }
 }
 
 @media (max-width: 991.98px) {
-    #whatsapp-fab {
-        bottom: 8.5rem !important;
-    }
+    #whatsapp-fab { bottom: 8.5rem !important; }
 }
 
-/* --- CARDS V-ULTIMATE --- */
+/* --- CARDS & GLASS --- */
 .tw\:glass-card-intensive {
     border-radius: 4rem !important;
-    padding: 4rem !important; /* Huge p-16 equivalent */
+    padding: 4rem !important;
+    background: rgba(26, 28, 61, 0.7) !important;
+    backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 @media (max-width: 767.98px) {
     .tw\:glass-card-intensive {
-        padding: 2.5rem !important;
+        padding: 2rem !important;
         border-radius: 2.5rem !important;
     }
 }
