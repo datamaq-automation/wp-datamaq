@@ -21,7 +21,8 @@ function get_datamaq_site_data() {
             'title' => 'Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n',
             'subtitle' => 'Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.',
             'primaryCta' => ['label' => 'Escribime por WhatsApp', 'href' => 'https://wa.me/5491156297160'],
-            'secondaryCta' => ['label' => 'Ver alcance t&eacute;cnico', 'href' => '#servicios']
+            'secondaryCta' => ['label' => 'Ver alcance t&eacute;cnico', 'href' => '#servicios'],
+            'image' => $theme_url . '/assets/media/hero-energy.svg'
         ],
         'services' => [
             'title' => 'Servicios t&eacute;cnicos sobre captura, integraci&oacute;n y uso de datos',
@@ -94,3 +95,4 @@ function get_datamaq_site_data() {
         ]
     ];
 }
+

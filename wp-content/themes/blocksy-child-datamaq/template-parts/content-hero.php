@@ -4,7 +4,7 @@
  */
 $data = get_datamaq_site_data()['hero'];
 ?>
-<section class="tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
+<section id="hero" class="c-home-hero tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
     <!-- Vibrant ambient glows -->
     <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-10%] tw:left-[-10%] tw:opacity-[0.12]"></div>
     <div class="c-ambient-glow tw:bg-[#4299e1] tw:bottom-[-20%] tw:right-[-10%] tw:opacity-[0.08]"></div>
@@ -13,7 +13,7 @@ $data = get_datamaq_site_data()['hero'];
         <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-24 tw:items-center">
             
             <div class="tw:max-w-4xl">
-                <span class="c-home-hero__eyebrow">Captura autom&aacute;tica de datos operativos</span>
+                <span class="c-home-hero__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.05em;">Captura autom&aacute;tica de datos operativos</span>
                 <h1 class="c-home-hero__title tw:text-white tw:mb-10">
                     Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n
                 </h1>
@@ -21,10 +21,10 @@ $data = get_datamaq_site_data()['hero'];
                     Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.
                 </p>
                 <div class="tw:flex tw:flex-wrap tw:gap-8">
-                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-12 tw:py-6 tw:text-xl tw:font-black">
+                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-12 tw:py-6 tw:text-xl tw:font-black" style="background-color: #ff6a00; border-color: #ff6a00; border-radius: 12px;">
                         Escribime por WhatsApp
                     </a>
-                    <a href="#servicios" class="tw:btn-outline tw:px-12 tw:py-6 tw:text-xl tw:font-bold">
+                    <a href="#servicios" class="tw:btn-outline tw:px-12 tw:py-6 tw:text-xl tw:font-bold" style="border-radius: 12px; border-color: rgba(255,255,255,0.2); color: white;">
                         Ver alcance t&eacute;cnico
                     </a>
                 </div>
@@ -50,3 +50,4 @@ $data = get_datamaq_site_data()['hero'];
         </div>
     </div>
 </section>
+
