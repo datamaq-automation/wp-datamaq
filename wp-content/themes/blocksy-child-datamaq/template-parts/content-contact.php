@@ -5,14 +5,20 @@
 $data = get_datamaq_site_data();
 $contact_page = $data['contactPage'];
 $primary_form = $data['primaryContactForm'];
+
+// Check if we are on the dedicated contact page to avoid duplicating the hero/intro
+$is_contact_page = is_page_template('page-contact.php');
 ?>
-<section id="contacto" class="c-home-contact tw:py-32 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
+<section id="contacto" class="<?php echo $is_contact_page ? 'c-page-contact-form' : 'c-home-contact tw:py-32 tw:bg-[#0c092f]'; ?> tw:relative tw:overflow-hidden">
+    <?php if (!$is_contact_page) : ?>
     <!-- Ambient glow -->
     <div class="c-ambient-glow tw:bg-[#4299e1] tw:bottom-[-20%] tw:right-[-10%] tw:opacity-[0.1]"></div>
+    <?php endif; ?>
 
     <div class="tw:container tw:mx-auto tw:px-4">
-        <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-24">
+        <div class="tw:grid tw:grid-cols-1 <?php echo $is_contact_page ? '' : 'lg:tw:grid-cols-2 tw:gap-24'; ?>">
             
+            <?php if (!$is_contact_page) : ?>
             <div class="tw:space-y-12">
                 <div>
                     <span class="c-home-contact__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1.5rem; display: inline-block;">
@@ -38,8 +44,9 @@ $primary_form = $data['primaryContactForm'];
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
-            <div class="tw:glass-card-intensive tw:p-12 tw:rounded-[3.5rem] tw:border-white/10" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);">
+            <div class="<?php echo $is_contact_page ? 'tw:max-w-3xl tw:mx-auto' : ''; ?> tw:glass-card-intensive tw:p-12 tw:rounded-[3.5rem] tw:border-white/10" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
                 <form id="dm-contact-form" class="tw:space-y-8">
                     <div class="tw:space-y-3">
                         <label class="tw:text-white/60 tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">Nombre</label>
@@ -58,4 +65,3 @@ $primary_form = $data['primaryContactForm'];
         </div>
     </div>
 </section>
-

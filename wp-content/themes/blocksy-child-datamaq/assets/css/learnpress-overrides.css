@@ -1,65 +1,101 @@
 /*
- * LearnPress & Theme Overrides for DataMaq
- * Aesthetic: Industrial, Dark, High-Contrast
+ * LearnPress & Theme Overrides for DataMaq - V6 Absolute Parity (REFINED)
  */
 
-/* Global Contrast Fixes */
-.c-home-hero, 
-.c-home-services, 
-.c-home-profile, 
-.c-home-faq, 
-.c-contact {
-    color: #ffffff !important;
-}
-
-.c-home-eyebrow {
-    color: #ff9a4d !important; /* var(--dm-accent-orange) */
-}
-
-/* Ensure paragraph visibility */
-.tw\:text-white\/72,
-.tw\:text-white\/70,
-.tw\:text-white\/60 {
-    color: rgba(255, 255, 255, 0.85) !important;
-}
-
-/* Fix Section Spacing and Overflows */
-section.section-mobile {
-    position: relative !important;
-    overflow: visible !important;
-    z-index: 10 !important;
-}
-
-/* Fix Header Overlap */
-header.tw\:sticky {
-    z-index: 2000 !important;
-}
-
-/* LearnPress Specific Archive/Single */
+/* 1. Global Layout & Colors */
 .learn-press-courses,
 .lp-archive-courses,
-.single-lp_course {
+.single-lp_course,
+#learn-press-course {
     background-color: #0c092f !important;
     color: #ffffff !important;
-    min-height: 100vh;
 }
 
-.lp-course-card, .course-item {
-    background-color: #1a1c3d !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+/* 2. Archive Header & Breadcrumbs */
+.learn-press-breadcrumb, 
+.lp-breadcrumb {
+    padding: 2.5rem 0 1rem !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 14px !important;
+}
+
+.learn-press-breadcrumb a,
+.lp-breadcrumb a {
+    color: #ff6a00 !important;
+}
+
+.learn-press-courses-header h1,
+.lp-archive-courses-title {
+    font-size: clamp(2.5rem, 6vw, 4rem) !important;
+    font-weight: 900 !important;
+    color: #ffffff !important;
+    margin-top: 1rem !important;
+    letter-spacing: -0.04em !important;
+}
+
+/* 3. Search & Filters Bar */
+.lp-courses-bar {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 1.5rem !important;
     border-radius: 1.5rem !important;
+    margin-bottom: 4rem !important;
+    backdrop-filter: blur(10px);
+}
+
+.lp-courses-bar button, 
+.lp-courses-bar .lp-button,
+.lp-course-search form button,
+#learn-press-course-search button {
+    background-color: #ff6a00 !important;
+    color: #0c092f !important;
+    border-radius: 0.75rem !important;
+    border: none !important;
+}
+
+.lp-courses-bar input,
+.lp-courses-bar select {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
     color: #ffffff !important;
+    border-radius: 0.75rem !important;
 }
 
-.course-title, .course-price {
-    color: #ffffff !important;
+/* 4. Course Cards (Training Parity) */
+.course-item, .lp-course-card {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 2rem !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Mobile Offcanvas visibility */
-#mobile-offcanvas {
-    z-index: 3000 !important;
+.course-item:hover {
+    border-color: rgba(255, 106, 0, 0.4) !important;
+    transform: translateY(-10px);
 }
 
-#mobile-offcanvas .tw\:max-w-xs {
-    background-color: #0c092f !important;
+.course-title {
+    font-size: 1.6rem !important;
+    font-weight: 800 !important;
+    padding: 0 1.5rem !important;
+}
+
+.course-item .course-thumbnail img {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+
+/* 5. Buttons Parity */
+.lp-button, 
+.lp-readmore a,
+.course-readmore a,
+.learn-press-course-button-read-more {
+    background: #ff6a00 !important;
+    color: #0c092f !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    padding: 1rem 2rem !important;
+    display: inline-block !important;
 }

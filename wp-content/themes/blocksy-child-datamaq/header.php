@@ -57,7 +57,30 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<?php if ( ! is_page_template( 'page-contact.php' ) ) : ?>
+<?php if ( is_page_template( 'page-contact.php' ) ) : ?>
+<header id="dm-contact-header" class="tw:fixed tw:bg-[#0c092f]/80 tw:backdrop-blur-md tw:border-b tw:border-white/10" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 64px; display: flex; align-items: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" role="banner">
+    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
+        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-2" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">
+            <span class="c-logo-icon">&gt;_</span>
+            <span>DataMaq</span>
+        </a>
+        <a class="tw:btn tw:border tw:border-white/20 tw:text-white tw:px-6 tw:py-2 tw:rounded-xl" href="<?php echo home_url('/'); ?>">Inicio</a>
+    </div>
+</header>
+<div class="header-spacer" style="height: 64px;"></div>
+
+<?php elseif ( is_page_template( 'page-gracias.php' ) ) : ?>
+<!-- Success Page specialized header -->
+<header id="dm-thanks-header" class="tw:fixed tw:bg-transparent" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 80px; display: flex; align-items: center;">
+    <div class="tw:container tw:mx-auto tw:px-4 tw:flex tw:items-center tw:justify-between">
+        <h2 class="tw:text-white/40 tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">Estado del env&iacute;o</h2>
+        <a href="<?php echo home_url('/'); ?>" class="tw:text-white/60 hover:tw:text-white tw:text-3xl tw:transition-all" aria-label="Cerrar">
+            <i class="bi bi-x-lg"></i>
+        </a>
+    </div>
+</header>
+
+<?php else : ?>
 <header id="dm-main-header" class="tw:fixed tw:bg-[#0c092f]/80 tw:backdrop-blur-md tw:border-b tw:border-white/10" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 64px; display: flex; align-items: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" role="banner">
     <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
         <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-2" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">
@@ -93,6 +116,7 @@
 <?php endif; ?>
 
 <!-- Mobile Offcanvas -->
+<?php if ( !is_page_template('page-gracias.php') && !is_page_template('page-contact.php') ) : ?>
 <div id="mobile-offcanvas" class="tw:fixed tw:inset-0 tw:z-[10000]" style="display: none;">
     <div id="offcanvas-overlay" class="tw:fixed tw:inset-0 tw:bg-black/80 tw:backdrop-blur-md"></div>
     <div class="tw:fixed tw:right-0 tw:top-0 tw:bottom-0 tw:w-full tw:max-w-xs tw:bg-[#0c092f] tw:p-8 tw:shadow-2xl tw:flex tw:flex-col">
@@ -118,4 +142,4 @@
         </div>
     </div>
 </div>
-
+<?php endif; ?>
