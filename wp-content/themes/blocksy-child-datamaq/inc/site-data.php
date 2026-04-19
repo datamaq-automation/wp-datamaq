@@ -51,7 +51,7 @@ function get_datamaq_site_data() {
                 'Instalaci&oacute;n e integraci&oacute;n para captura autom&aacute;tica.',
                 'Asesoramiento sobre Python, datos y APIs.'
             ],
-            'photo' => $theme_url . '/assets/media/tecnico-a-crop-2.webp',
+            'photo' => $theme_url . '/assets/media/tecnico-a-cargo.webp',
             'whatsappLabel' => 'Escribime directo por WhatsApp'
         ],
         'faq' => [
