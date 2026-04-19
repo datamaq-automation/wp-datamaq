@@ -5,15 +5,39 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
+    <style>
+        /* Logo Icon Specific Styles to ensure Parity without relying on Tailwind compile */
+        .c-logo-icon {
+            background-color: #f97316;
+            color: #0c092f;
+            border-radius: 4px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        .c-logo-icon--mobile {
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
 <?php if ( ! is_page_template( 'page-contact.php' ) ) : ?>
-<header id="dm-main-header" class="tw:bg-[#0c092f] tw:backdrop-blur-md tw:border-b tw:border-white/10" style="position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; height: 60px; display: flex; align-items: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);" role="banner">
+<header id="dm-main-header" class="tw:fixed tw:bg-[#0c092f] tw:backdrop-blur-md tw:border-b tw:border-white/10" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 60px; display: flex; align-items: center; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);" role="banner">
     <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
-        <a class="tw:text-xl tw:font-bold tw:text-white" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">DataMaq</a>
+        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-2" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">
+            <span class="c-logo-icon">&gt;_</span>
+            <span>DataMaq</span>
+        </a>
         
         <button
             id="mobile-menu-toggle"
@@ -41,11 +65,14 @@
 <?php endif; ?>
 
 <!-- Mobile Offcanvas -->
-<div id="mobile-offcanvas" class="tw:hidden tw:fixed tw:inset-0 tw:z-[10000]">
+<div id="mobile-offcanvas" class="tw:fixed tw:inset-0 tw:z-[10000]" style="display: none;">
     <div id="offcanvas-overlay" class="tw:fixed tw:inset-0 tw:bg-black/80 tw:backdrop-blur-md"></div>
     <div class="tw:fixed tw:right-0 tw:top-0 tw:bottom-0 tw:w-full tw:max-w-xs tw:bg-[#0c092f] tw:p-8 tw:shadow-2xl tw:flex tw:flex-col">
         <div class="tw:flex tw:items-center tw:justify-between tw:mb-12">
-            <span class="tw:text-2xl tw:font-bold tw:text-white">DataMaq</span>
+            <div class="tw:flex tw:items-center tw:gap-2">
+                <span class="c-logo-icon c-logo-icon--mobile">&gt;_</span>
+                <span class="tw:text-2xl tw:font-bold tw:text-white">DataMaq</span>
+            </div>
             <button id="mobile-menu-close" class="tw:p-2 tw:text-white">
                 <svg viewBox="0 0 24 24" width="30" height="30" class="tw:fill-current"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </button>
@@ -61,3 +88,4 @@
         </div>
     </div>
 </div>
+
