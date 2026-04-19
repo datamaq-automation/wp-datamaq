@@ -1,35 +1,52 @@
 <?php
 /**
- * Template part for displaying the Hero section
+ * Template part for displaying the hero section with V6 Absolute Parity.
  */
-
-$data = get_datamaq_site_data()['hero']; 
+$data = get_datamaq_site_data()['hero'];
 ?>
-<section class="section-mobile c-home-hero tw:relative tw:bg-[#0c092f] tw:bg-center tw:bg-no-repeat tw:bg-cover tw:overflow-hidden" 
-         style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo esc_url($data['image']); ?>'); padding-block: clamp(4rem, 6vw, 6.5rem); min-height: 90vh; display:flex; align-items:center;">
-    <div class="tw:container tw:mx-auto tw:px-4 tw:relative tw:z-10">
-        <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-12 tw:gap-8">
-            <div class="tw:col-span-12">
-                <article class="c-home-hero__copy tw:p-8 lg:tw:p-14 tw:border tw:border-white/10 tw:rounded-[2.5rem] tw:bg-[#1a1c3d]/80 tw:backdrop-blur-xl tw:shadow-2xl">
-                    <span class="c-home-eyebrow tw:inline-flex tw:items-center tw:rounded-full tw:px-4 tw:py-2 tw:mb-6 tw:bg-white/5 tw:text-[#ff9a4d] tw:text-[0.93rem] tw:font-black tw:uppercase tw:tracking-widest">
-                        <?php echo esc_html($data['badge']); ?>
-                    </span>
-                    <h1 class="tw:m-0 tw:text-[clamp(2.5rem,7vw,5.5rem)] tw:leading-[0.85] tw:tracking-tighter tw:text-white" style="color:white !important;">
-                        <?php echo esc_html($data['title']); ?>
-                    </h1>
-                    <p class="tw:max-w-[55ch] tw:mt-8 tw:text-white/85 tw:leading-relaxed tw:text-xl lg:tw:text-2xl">
-                        <?php echo esc_html($data['subtitle']); ?>
-                    </p>
-                    <div class="tw:flex tw:flex-wrap tw:gap-6 tw:mt-10">
-                        <a href="<?php echo esc_url($data['primaryCta']['href']); ?>" class="tw:btn-primary tw:px-12 tw:py-5 tw:text-xl tw:font-black tw:transition-transform hover:tw:scale-105">
-                            <?php echo esc_html($data['primaryCta']['label']); ?>
-                        </a>
-                        <a href="<?php echo esc_url($data['secondaryCta']['href']); ?>" class="tw:btn-outline tw:px-12 tw:py-5 tw:text-xl tw:transition-colors hover:tw:bg-white/5">
-                            <?php echo esc_html($data['secondaryCta']['label']); ?>
-                        </a>
-                    </div>
-                </article>
+<section class="tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
+    <!-- Vibrant ambient glows -->
+    <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-10%] tw:left-[-10%] tw:opacity-[0.12]"></div>
+    <div class="c-ambient-glow tw:bg-[#4299e1] tw:bottom-[-20%] tw:right-[-10%] tw:opacity-[0.08]"></div>
+
+    <div class="tw:container tw:mx-auto tw:px-4">
+        <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-24 tw:items-center">
+            
+            <div class="tw:max-w-4xl">
+                <span class="c-home-hero__eyebrow">Captura autom&aacute;tica de datos operativos</span>
+                <h1 class="c-home-hero__title tw:text-white tw:mb-10">
+                    Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n
+                </h1>
+                <p class="tw:text-2xl tw:text-white/85 tw:leading-relaxed tw:mb-14 tw:max-w-2xl">
+                    Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.
+                </p>
+                <div class="tw:flex tw:flex-wrap tw:gap-8">
+                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-12 tw:py-6 tw:text-xl tw:font-black">
+                        Escribime por WhatsApp
+                    </a>
+                    <a href="#servicios" class="tw:btn-outline tw:px-12 tw:py-6 tw:text-xl tw:font-bold">
+                        Ver alcance t&eacute;cnico
+                    </a>
+                </div>
             </div>
+
+            <div class="tw:relative lg:tw:block tw:hidden">
+                <div class="tw:glass-card-intensive tw:p-6 tw:rounded-[4rem] tw:shadow-2xl">
+                    <img 
+                        src="<?php echo esc_url($data['image']); ?>" 
+                        alt="Hero DataMaq" 
+                        class="tw:w-full tw:h-auto tw:rounded-[3.2rem]"
+                    >
+                </div>
+                <!-- Precision Label -->
+                <div class="tw:absolute -tw:bottom-8 -tw:left-8 tw:glass-card-intensive tw:p-10 tw:rounded-3xl tw:shadow-2xl tw:border-orange-400/30">
+                    <div class="tw:flex tw:items-center tw:gap-6">
+                        <div class="tw:w-4 tw:h-4 tw:bg-green-500 tw:rounded-full tw:animate-pulse"></div>
+                        <span class="tw:text-white tw:font-black tw:text-lg tw:uppercase tw:tracking-widest">Estado: Online</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

@@ -2,220 +2,92 @@
  Theme Name:   Blocksy Child Datamaq
  Template:     blocksy
  Author:       Agustin Madygraf
- Version:      2.3.0
+ Version:      2.8.0
 */
 
 :root {
-  color-scheme: dark;
   --dm-bg-0: #0c092f;
-  --dm-bg-0-rgb: 12, 9, 47;
-  --dm-surface-0: #0f1b3a;
-  --dm-surface-0-rgb: 15, 27, 58;
-  --dm-surface-1: #132449;
-  --dm-surface-1-rgb: 19, 36, 73;
-  --dm-text-0: #e2e9f3;
-  --dm-text-0-rgb: 226, 233, 243;
-  --dm-text-muted: #99a9d1;
-  --dm-text-muted-rgb: 153, 169, 209;
+  --dm-surface-0: #13142d;
+  --dm-surface-1: #1a1c3d;
   --dm-accent-orange: #ff9a4d;
-  --dm-accent-orange-rgb: 255, 154, 77;
   --dm-primary: #ff6a00;
-  --dm-primary-rgb: 255, 106, 0;
-  --dm-whatsapp-green: #25d366;
-  --dm-whatsapp-green-rgb: 37, 211, 102;
-  --dm-shadow-rgb: 12, 9, 47;
-  --dm-line-blueprint-rgb: 153, 169, 209;
-  --dm-data-cyan-rgb: 255, 106, 0;
-
-  --dm-radius-1: 0.75rem;
+  --dm-radius-huge: 4rem;
 }
 
-/* --- GLOBAL SETTINGS & TYPOGRAPHY --- */
+/* --- V-ULTIMATE TYPOGRAPHY --- */
 
-body, button, input, select, textarea {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
+body, button, input {
     font-family: 'Inter', sans-serif !important;
-    font-weight: 800;
+    -webkit-font-smoothing: antialiased;
 }
 
-html, body {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
-    height: auto !important;
-    scroll-behavior: smooth;
-    background-color: var(--dm-bg-0) !important;
-    color: var(--dm-text-0);
+/* Extreme H1 Scale to match Local */
+h1, .c-home-hero__title, #dm-main-header + section h1 {
+    font-size: clamp(3.5rem, 8.5vw, 10rem) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.05em !important;
+    line-height: 0.9 !important;
 }
 
-/* --- GLOW & GLASS UTILITIES --- */
+/* --- DOCK V-ULTIMATE (FORCE VISIBILITY) --- */
 
-.tw\:glass-card {
-    background: rgba(var(--dm-surface-0-rgb), 0.7) !important;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
-}
-
-.tw\:glow-border {
-    position: relative;
-    border: 1px solid rgba(var(--dm-accent-orange-rgb), 0.2) !important;
-}
-
-.tw\:glow-border:hover {
-    border-color: rgba(var(--dm-accent-orange-rgb), 0.5) !important;
-    box-shadow: 0 0 15px rgba(var(--dm-accent-orange-rgb), 0.1);
-}
-
-/* --- HEADER --- */
-
-header#dm-main-header {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    background: rgba(var(--dm-bg-0-rgb), 0.82) !important;
-    border-bottom: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
-}
-
-/* --- PROFILE SECTION PARITY --- */
-
-.c-profile-image-container {
-    position: relative;
-    width: 280px;
-    height: 280px;
-    margin: 0 auto;
-}
-
-.c-profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50% !important;
-    border: 4px solid var(--dm-accent-orange);
-    box-shadow: 0 0 30px rgba(var(--dm-accent-orange-rgb), 0.2);
-}
-
-.c-profile-list i {
-    color: var(--dm-accent-orange);
-    font-size: 1.4rem;
-    margin-right: 0.75rem;
-}
-
-/* --- SERVICES SECTION PARITY --- */
-
-.c-home-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  padding: 0.38rem 0.85rem;
-  margin-bottom: 1rem;
-  background: rgba(var(--dm-accent-orange-rgb), 0.14);
-  color: var(--dm-accent-orange);
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
-
-.c-service-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.c-service-card:hover {
-    transform: translateY(-8px);
-    background: rgba(var(--dm-surface-1-rgb), 0.9) !important;
-}
-
-/* --- FAQ SECTION PARITY --- */
-
-.c-faq-card {
-    border-radius: 1.25rem;
-    margin-bottom: 1rem;
-    overflow: hidden;
-}
-
-.c-faq-card__header {
-    padding: 1.5rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.2s ease;
-}
-
-.c-faq-card__header:hover {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.c-faq-card__header h4 {
-    margin: 0;
-    font-size: 1.15rem;
-}
-
-.c-faq-card__icon {
-    color: var(--dm-accent-orange);
-    font-size: 1.5rem;
-}
-
-.c-faq-card__content {
-    padding: 0 1.5rem 1.5rem;
-    color: var(--dm-text-muted);
-    font-size: 1.05rem;
-    line-height: 1.6;
-}
-
-/* --- DOCK PARITY --- */
-
-.c-parity-dock {
-  position: fixed;
-  left: 0.75rem;
-  right: 0.75rem;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
-  z-index: 99999;
+body nav.c-parity-dock, 
+html body nav.c-parity-dock {
+  position: fixed !important;
+  left: 1rem !important;
+  right: 1rem !important;
+  bottom: 1.5rem !important;
+  z-index: 2147483647 !important; /* Maximum possible z-index */
   display: flex !important;
+  background: rgba(19, 20, 45, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 2.5rem !important;
+  padding: 0.75rem 0.5rem !important;
   flex-direction: row !important;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0.45rem;
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.15);
-  border-radius: 1.45rem;
-  background: rgba(var(--dm-surface-0-rgb), 0.9);
-  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  align-items: center !important;
+  justify-content: space-around !important;
 }
 
 .c-parity-dock__link {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  min-height: 4rem;
-  border-radius: 0.95rem;
-  color: rgba(var(--dm-text-0-rgb), 0.7);
-  text-decoration: none;
-  font-size: 0.625rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.2s ease;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important;
+    font-size: 0.65rem !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
 }
 
-/* --- MOBILE HIDES --- */
+.c-parity-dock__link i {
+    font-size: 1.6rem !important;
+    color: var(--dm-accent-orange) !important;
+}
+
+/* --- HIDE ON DESKTOP --- */
+@media (min-width: 992px) {
+    body nav.c-parity-dock { display: none !important; }
+}
 
 @media (max-width: 991.98px) {
-    #scroll-to-top {
-        display: none !important;
-    }
     #whatsapp-fab {
-        bottom: 6.75rem !important;
+        bottom: 8.5rem !important;
     }
 }
 
-@media (min-width: 992px) {
-    .c-parity-dock { display: none !important; }
+/* --- CARDS V-ULTIMATE --- */
+.tw\:glass-card-intensive {
+    border-radius: 4rem !important;
+    padding: 4rem !important; /* Huge p-16 equivalent */
+}
+
+@media (max-width: 767.98px) {
+    .tw\:glass-card-intensive {
+        padding: 2.5rem !important;
+        border-radius: 2.5rem !important;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * DataMaq Site Data Repository
- * Source of truth for all frontend strings and content.
+ * DEFINITIVE EDITION - 100% Entities for Parity.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -14,88 +14,62 @@ function get_datamaq_site_data() {
             'name' => 'DataMaq',
             'whatsapp' => 'https://wa.me/5491156297160',
             'email' => 'info@datamaq.com.ar',
-            'base' => 'Garín (GBA Norte)'
+            'base' => 'Gar&iacute;n (GBA Norte)'
         ],
         'hero' => [
-            'badge' => 'Captura automática de datos operativos',
-            'title' => 'Instalación e integración de equipos IoT para energía y producción',
-            'subtitle' => 'Implementación de soluciones para medir variables eléctricas y operativas, integrarlas a sistemas existentes y dejar una base técnica usable para seguimiento, diagnóstico y capacitación.',
+            'badge' => 'Captura autom&aacute;tica de datos operativos',
+            'title' => 'Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n',
+            'subtitle' => 'Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.',
             'primaryCta' => ['label' => 'Escribime por WhatsApp', 'href' => 'https://wa.me/5491156297160'],
-            'secondaryCta' => ['label' => 'Ver alcance técnico', 'href' => '#servicios'],
-            'image' => $theme_url . '/assets/media/hero-energy.svg'
+            'secondaryCta' => ['label' => 'Ver alcance t&eacute;cnico', 'href' => '#servicios']
         ],
         'services' => [
-            'title' => 'Servicios técnicos sobre captura, integración y uso de datos',
+            'title' => 'Servicios t&eacute;cnicos sobre captura, integraci&oacute;n y uso de datos',
             'cards' => [
                 [
-                    'id' => 'iot-installation', 
-                    'title' => 'Instalación de equipos IoT para captura de datos', 
-                    'subtitle' => 'Captura, comunicación e integración inicial', 
-                    'items' => ['Medición de kWh, potencia, factor de potencia y armónicas', 'Captura de kilos, unidades, metros, velocidades o estados', 'Integración inicial con Powermate o sistemas de terceros'], 
-                    'cta' => ['label' => 'Consultá por instalación', 'href' => '#contacto']
+                    'id' => 'iot', 'title' => 'Instalaci&oacute;n IoT', 'subtitle' => 'Captura y Comunicaci&oacute;n',
+                    'items' => ['Medici&oacute;n de kWh y potencia', 'Captura de kilos o estados'],
+                    'cta' => ['label' => 'Consult&aacute; por instalaci&oacute;n', 'href' => '#contacto']
                 ],
                 [
-                    'id' => 'data-advisory', 
-                    'title' => 'Asesoramiento técnico para análisis de datos', 
-                    'subtitle' => 'Datos, estructura y criterio técnico', 
-                    'items' => ['Análisis de consumo energético y comportamiento operativo', 'Ordenamiento de datos desde bases, planillas, APIs o sistemas existentes', 'Soporte para reportes, dashboards y automatizaciones de seguimiento'], 
-                    'cta' => ['label' => 'Consultá por asesoramiento', 'href' => '#contacto']
+                    'id' => 'data', 'title' => 'Asesoramiento', 'subtitle' => 'Datos y Estructura',
+                    'items' => ['An&aacute;lisis de consumo el&eacute;ctrico', 'Ordenamiento de bases y APIs'],
+                    'cta' => ['label' => 'Consult&aacute; asesoramiento', 'href' => '#contacto']
                 ],
                 [
-                    'id' => 'training', 
-                    'title' => 'Capacitaciones aplicadas', 
-                    'subtitle' => 'Capacitación sobre casos concretos', 
-                    'items' => ['Python aplicado con NumPy, pandas y Matplotlib', 'Buenas prácticas para trabajar con bases de datos y APIs', 'Capacitación adaptada al nivel técnico y al caso real del equipo'], 
-                    'cta' => ['label' => 'Consultá por capacitación', 'href' => 'https://cursos.datamaq.com.ar']
+                    'id' => 'edu', 'title' => 'Capacitaciones', 'subtitle' => 'Python y An&aacute;lisis',
+                    'items' => ['Python con NumPy y Pandas', 'Gesti&oacute;n de bases de datos'],
+                    'cta' => ['label' => 'Ver cursos', 'href' => 'https://cursos.datamaq.com.ar']
                 ]
             ]
         ],
         'profile' => [
-            'name' => 'Agustin Bustos', 
-            'role' => 'Técnico a cargo',
-            'eyebrow' => 'Perfil profesional',
-            'sectionLabel' => 'Enfoque técnico',
-            'lead' => 'DataMaq trabaja sobre captura automática de datos operativos, con foco en energía eléctrica y producción.',
+            'name' => 'Agust&iacute;n Bustos',
+            'lead' => 'DataMaq trabaja sobre captura autom&aacute;tica de datos operativos, con foco en energ&iacute;a el&eacute;ctrica y producci&oacute;n.',
             'bullets' => [
-                'Relevamiento en sitio y criterio de implementación.',
-                'Instalación, integración y puesta en marcha para captura automática de datos.',
-                'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.'
+                'Relevamiento en sitio y criterio de implementaci&oacute;n.',
+                'Instalaci&oacute;n e integraci&oacute;n para captura autom&aacute;tica.',
+                'Asesoramiento sobre Python, datos y APIs.'
             ],
-            'photo' => $theme_url . '/assets/media/tecnico-a-cargo.webp',
+            'photo' => $theme_url . '/assets/media/tecnico-a-crop-2.webp',
             'whatsappLabel' => 'Escribime directo por WhatsApp'
-        ],
-        'process' => [
-            'title' => 'Cómo trabajamos',
-            'steps' => [
-                ['order' => 1, 'title' => 'Relevamiento y definición del caso', 'desc' => 'Revisamos tablero, equipo, proceso, conectividad y variables a capturar.'],
-                ['order' => 2, 'title' => 'Instalación y configuración', 'desc' => 'Montamos la solución y configuramos la comunicación e integración inicial.'],
-                ['order' => 3, 'title' => 'Pruebas y validación', 'desc' => 'Verificamos lecturas, comunicaciones y condiciones mínimas de funcionamiento.'],
-                ['order' => 4, 'title' => 'Cierre técnico y próximos pasos', 'desc' => 'Entregamos observaciones y recomendaciones para estabilizar la captura.']
-            ]
         ],
         'faq' => [
             'title' => 'Preguntas frecuentes',
             'items' => [
-                ['q' => '¿Qué tipo de datos se pueden capturar?', 'a' => 'Variables eléctricas (kWh, potencia) u operativas (kilos, unidades, metros, estados).'],
-                ['q' => '¿Trabajás solo con energía eléctrica?', 'a' => 'No. También implementamos soluciones para datos de producción y procesos industriales.'],
-                ['q' => '¿Usás Powermeter y Automate?', 'a' => 'Sí. Según el proyecto, usamos Powermeter para eléctrica y Automate para señales operativas.'],
-                ['q' => '¿Qué necesitás para evaluar el caso?', 'a' => 'Zona, fotos del tablero, variables a capturar, conectividad y sistema de destino.']
+                ['q' => '&iquest;Qu&eacute; tipo de datos se pueden capturar?', 'a' => 'Variables el&eacute;ctricas o operativas (kilos, unidades).'],
+                ['q' => '&iquest;Trabaj&aacute;s solo con energ&iacute;a el&eacute;ctrica?', 'a' => 'No. Tambi&eacute;n datos de producci&oacute;n.'],
+                ['q' => '&iquest;Qu&eacute; necesit&aacute;s evaluar?', 'a' => 'Zona, fotos, variables y sistema de destino.']
             ]
         ],
         'contactPage' => [
             'eyebrow' => 'Contacto',
-            'title' => 'Iniciá una consulta técnica',
-            'subtitle' => 'Indicá qué variable querés capturar, desde qué equipo o proceso, con qué objetivo y en qué zona.',
+            'title' => 'Inici&aacute; una consulta t&eacute;cnica',
+            'subtitle' => 'Indic&aacute; qu&eacute; variable quer&eacute;s capturar y en qu&eacute; zona.',
             'supportTitle' => 'Canales disponibles',
-            'supportItems' => [
-                'Formulario principal para consultas técnicas y comerciales.',
-                'WhatsApp directo para coordinación rápida cuando esté habilitado.'
-            ],
-            'introLinks' => [
-                ['label' => 'Solución', 'href' => home_url('#servicios')],
-                ['label' => 'Perfil técnico', 'href' => home_url('#perfil')],
-                ['label' => 'FAQ', 'href' => home_url('#faq')]
-            ]
+            'placeholderName' => 'Ej: Agust&iacute;n',
+            'placeholderMsg' => 'Describ&iacute; tu caso t&eacute;cnico...',
+            'buttonLabel' => 'Continuar por WhatsApp'
         ]
     ];
 }

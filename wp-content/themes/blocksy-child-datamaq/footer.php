@@ -1,84 +1,56 @@
 <?php
 /**
- * The template for displaying the footer with Mobile Dock.
+ * Template part for displaying the footer with V6 Absolute Parity.
  */
-
-$site_data = get_datamaq_site_data();
-$brand = $site_data['brand'];
+$data = get_datamaq_site_data();
 ?>
-    <footer class="c-home-footer tw:py-16 tw:bg-[#0c092f] tw:border-t tw:border-white/10 tw:text-white/60" role="contentinfo">
+    <footer class="tw:bg-[#0c092f] tw:py-24 tw:border-t tw:border-white/5">
         <div class="tw:container tw:mx-auto tw:px-4">
-            <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-3 tw:gap-12 tw:mb-16">
-                <div>
-                    <h3 class="tw:text-2xl tw:font-bold tw:text-white tw:mb-6"><?php echo esc_html($brand['name']); ?></h3>
-                    <p class="tw:text-lg tw:leading-relaxed">Captura de datos industriales y capacitaci&oacute;n t&eacute;cnica aplicada para optimizar procesos energ&eacute;ticos y productivos.</p>
+            <div class="tw:flex tw:flex-col md:tw:flex-row tw:justify-between tw:items-center tw:gap-12">
+                <div class="tw:text-center md:tw:text-left">
+                    <h2 class="tw:text-3xl tw:font-black tw:text-white tw:mb-4">DataMaq</h2>
+                    <p class="tw:text-white/60 tw:text-lg">Captura autom&aacute;tica de datos operativos</p>
                 </div>
-                <div>
-                    <h4 class="tw:font-bold tw:text-white tw:mb-6 tw:uppercase tw:tracking-widest tw:text-sm">Explorar</h4>
-                    <ul class="tw:space-y-4 tw:text-lg">
-                        <li><a href="<?php echo home_url('#servicios'); ?>" class="hover:tw:text-[#ff9a4d] tw:transition-colors">Soluci&oacute;n T&eacute;cnica</a></li>
-                        <li><a href="<?php echo home_url('#faq'); ?>" class="hover:tw:text-[#ff9a4d] tw:transition-colors">Preguntas Frecuentes</a></li>
-                        <li><a href="https://cursos.datamaq.com.ar" class="hover:tw:text-[#ff9a4d] tw:transition-colors">Plataforma de Cursos</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="tw:font-bold tw:text-white tw:mb-6 tw:uppercase tw:tracking-widest tw:text-sm">Contacto</h4>
-                    <ul class="tw:space-y-4 tw:text-lg">
-                        <li><?php echo esc_html($brand['base']); ?></li>
-                        <li><a href="mailto:<?php echo esc_attr($brand['email']); ?>" class="hover:tw:text-[#ff9a4d] tw:transition-colors"><?php echo esc_html($brand['email']); ?></a></li>
-                        <li><a href="<?php echo esc_url($brand['whatsapp']); ?>" class="hover:tw:text-[#ff9a4d] tw:transition-colors">WhatsApp Directo</a></li>
-                    </ul>
+                <div class="tw:flex tw:gap-10 tw:text-2xl">
+                    <a href="<?php echo esc_url($data['brand']['whatsapp']); ?>" class="tw:text-white/60 hover:tw:text-orange-400 tw:transition-colors">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                    <a href="mailto:<?php echo esc_attr($data['brand']['email']); ?>" class="tw:text-white/60 hover:tw:text-orange-400 tw:transition-colors">
+                        <i class="bi bi-envelope"></i>
+                    </a>
                 </div>
             </div>
-
-            <div class="tw:pt-10 tw:border-t tw:border-white/5 tw:flex tw:flex-col md:tw:flex-row tw:justify-between tw:items-center tw:gap-6">
-                <p class="tw:text-sm">(c) <?php echo date('Y'); ?> <?php echo esc_html($brand['name']); ?> | <?php echo esc_html($brand['base']); ?></p>
-                <div class="tw:flex tw:gap-8 tw:text-sm">
-                    <a href="#" class="hover:tw:text-white">Privacidad</a>
-                    <a href="#" class="hover:tw:text-white">T&eacute;rminos</a>
-                </div>
+            <div class="tw:mt-16 tw:pt-10 tw:border-t tw:border-white/5 tw:text-center tw:text-white/40 tw:text-sm">
+                &copy; <?php echo date('Y'); ?> DataMaq. Todos los derechos reservados.
             </div>
         </div>
     </footer>
 
-    <!-- Mobile Dock Navigation -->
-    <nav class="c-parity-dock tw:lg:hidden" aria-label="Navegaci&oacute;n r&aacute;pida">
-        <a href="<?php echo home_url('/'); ?>" class="c-parity-dock__link">
-            <i class="bi bi-house-door-fill" aria-hidden="true"></i>
-            <span>Inicio</span>
+    <!-- MOBILE PARITY DOCK V6 -->
+    <nav class="c-parity-dock lg:tw:hidden">
+        <a href="#dm-main-header" class="c-parity-dock__link tw:flex-1 tw:flex tw:flex-col tw:items-center tw:gap-2 tw:text-white/70 hover:tw:text-orange-400">
+            <i class="bi bi-house-door tw:text-2xl"></i>
+            <span>INICIO</span>
         </a>
-        <a href="<?php echo home_url('#servicios'); ?>" class="c-parity-dock__link">
-            <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
-            <span>Soluci&oacute;n</span>
+        <a href="#servicios" class="c-parity-dock__link tw:flex-1 tw:flex tw:flex-col tw:items-center tw:gap-2 tw:text-white/70 hover:tw:text-orange-400">
+            <i class="bi bi-lightning-charge tw:text-2xl"></i>
+            <span>SOLUCI&Oacute;N</span>
         </a>
-        <a href="<?php echo home_url('#faq'); ?>" class="c-parity-dock__link">
-            <i class="bi bi-patch-question-fill" aria-hidden="true"></i>
+        <a href="#faq" class="c-parity-dock__link tw:flex-1 tw:flex tw:flex-col tw:items-center tw:gap-2 tw:text-white/70 hover:tw:text-orange-400">
+            <i class="bi bi-question-circle tw:text-2xl"></i>
             <span>FAQ</span>
         </a>
-        <a href="<?php echo home_url('#contacto'); ?>" class="c-parity-dock__link c-parity-dock__link--emergency">
-            <i class="bi bi-envelope-fill" aria-hidden="true"></i>
-            <span>Contacto</span>
+        <a href="#contacto" class="c-parity-dock__link tw:flex-1 tw:flex tw:flex-col tw:items-center tw:gap-2 tw:text-white/70 hover:tw:text-orange-400">
+            <i class="bi bi-chat-dots tw:text-2xl"></i>
+            <span>CONTACTO</span>
         </a>
     </nav>
 
-    <!-- WhatsApp FAB (Floating Action Button) -->
-    <a
-        id="whatsapp-fab"
-        class="c-dm-fab"
-        href="<?php echo esc_url($brand['whatsapp']); ?>"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat con nosotros"
-    >
+    <!-- FABs -->
+    <a href="https://wa.me/5491156297160" id="whatsapp-fab" class="tw:fixed tw:right-8 tw:bottom-8 tw:w-16 tw:h-16 tw:bg-[#25d366] tw:text-white tw:rounded-full tw:flex tw:items-center tw:justify-center tw:text-3xl tw:shadow-2xl tw:z-[9999] hover:tw:scale-110 tw:transition-all">
         <i class="bi bi-whatsapp"></i>
     </a>
 
-    <!-- Scroll to Top Button (Hidden on Mobile via CSS) -->
-    <button id="scroll-to-top" class="c-dm-fab" aria-label="Volver arriba">
-        <i class="bi bi-arrow-up-short"></i>
-    </button>
-
-<?php wp_footer(); ?>
-
+    <?php wp_footer(); ?>
 </body>
 </html>
