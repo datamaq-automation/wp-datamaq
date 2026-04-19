@@ -5,7 +5,7 @@
 $data = get_datamaq_site_data();
 $profile = $data['profile'];
 ?>
-<section id="perfil" class="tw:py-32 tw:bg-gradient-to-b tw:from-[#0f1b3a] tw:to-[#0c092f] tw:relative tw:overflow-hidden">
+<section id="perfil" class="c-home-profile tw:py-32 tw:bg-gradient-to-b tw:from-[#0f1b3a] tw:to-[#0c092f] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->
     <div class="c-ambient-glow tw:bg-[#ff6a00] tw:bottom-[-20%] tw:left-[-10%] tw:opacity-[0.12]"></div>
 
@@ -25,7 +25,7 @@ $profile = $data['profile'];
 
             <div class="tw:space-y-12">
                 <div>
-                    <span class="c-home-hero__eyebrow">Perfil profesional</span>
+                    <span class="c-home-profile__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.05em;">Perfil profesional</span>
                     <h2 class="tw:text-6xl md:tw:text-7xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">
                         Agustin Bustos
                     </h2>
@@ -62,7 +62,7 @@ $profile = $data['profile'];
                 </ul>
 
                 <div class="tw:pt-10">
-                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-14 tw:py-6 tw:text-xl tw:font-black">
+                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-14 tw:py-6 tw:text-xl tw:font-black" style="background-color: #ff6a00; border-color: #ff6a00; border-radius: 12px; font-weight: 500;">
                         Escribime directo por WhatsApp
                     </a>
                 </div>
@@ -71,3 +71,4 @@ $profile = $data['profile'];
         </div>
     </div>
 </section>
+
