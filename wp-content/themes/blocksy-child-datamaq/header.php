@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying the header with V6 Absolute Parity.
+ * Template part for displaying the header with V6 Absolute Parity + App Shell.
  */
 ?>
 <!DOCTYPE html>
@@ -11,89 +11,124 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
     <style>
-        /* V6 Absolute Parity: Design Tokens & Typography */
+        /* V6 DESIGN SYSTEM: TOKENS & ATMOSPHERE */
         :root {
             --dm-accent-orange-rgb: 255, 106, 0;
             --dm-data-cyan-rgb: 34, 211, 238;
             --dm-line-blueprint-rgb: 226, 233, 243;
+            --dm-app-bg: #03041a;
+            --dm-shell-bg: #0c092f;
         }
 
-        /* Typography Tracking & Weights */
-        .c-home-hero__title, .c-home-section-title {
-            letter-spacing: -0.03em !important;
-            line-height: 0.98 !important;
-        }
-        .c-home-eyebrow {
-            letter-spacing: 0.14em !important;
-            font-weight: 800 !important;
-            text-transform: uppercase;
-        }
-        
-        /* Button Weight Standardization */
-        .tw:btn-primary, .dm-btn-cta, .tw:btn {
-            font-weight: 700 !important; /* Bold 700 to match Vue */
+        body {
+            background-color: var(--dm-app-bg) !important;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(var(--dm-data-cyan-rgb), 0.2) 0%, transparent 45%),
+                radial-gradient(circle at 90% 90%, rgba(var(--dm-accent-orange-rgb), 0.15) 0%, transparent 45%) !important;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
 
-        /* V6 Ambient Lighting (The 'Atmosphere') */
-        .app-shell--home {
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.16), transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 106, 0, 0.08), transparent 40%),
-                #0c092f !important;
+        /* THE APP SHELL (CENTERED CARD) - V6 PARITY */
+        <?php if ( is_front_page() ) : ?>
+        .dm-app-shell {
+            max-width: 1440px;
+            margin: 2.5rem auto;
+            background-color: var(--dm-shell-bg);
+            border-radius: 2rem;
+            box-shadow: 0 50px 150px rgba(0,0,0,0.9);
+            position: relative;
+            z-index: 10;
+            overflow: visible; /* Changed from hidden to fix sticky header */
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: shellEntry 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        /* Blueprint Grid Pattern */
-        .c-home-hero::before {
+        /* We use a pseudo-element to clip the top background since we removed overflow:hidden */
+        .dm-app-shell::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(226, 233, 243, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(226, 233, 243, 0.05) 1px, transparent 1px);
-            background-size: 56px 56px;
+            top: 0; left: 0; right: 0; height: 100px;
+            background: linear-gradient(to bottom, rgba(12, 9, 47, 0.4), transparent);
+            border-radius: 2rem 2rem 0 0;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
+        @keyframes shellEntry {
+            from { opacity: 0; transform: translateY(30px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @media (max-width: 1480px) {
+            .dm-app-shell { margin: 1.5rem; border-radius: 1.5rem; }
+        }
+        @media (max-width: 768px) {
+            .dm-app-shell { margin: 0; border-radius: 0; box-shadow: none; border: none; overflow: visible; }
+        }
+        <?php endif; ?>
 
-        /* Logo Icon Specific Styles */
-        .c-logo-icon {
-            background-color: #f97316;
-            color: #0c092f;
-            border-radius: 4px;
-            width: 40px;
-            height: 40px;
+        /* Typography Precision */
+        .c-home-hero__title, .c-home-section-title, h1, h2, h3 {
+            letter-spacing: -0.03em !important;
+            line-height: 0.98 !important;
+            font-weight: 800 !important;
+        }
+        .c-home-eyebrow, .dm-eyebrow {
+            letter-spacing: 0.14em !important;
+            font-weight: 900 !important;
+            text-transform: uppercase;
+            font-size: 0.72rem;
+            color: #ff6a00;
+        }
+        
+        /* Sticky Header FIX */
+        #dm-main-header {
+            position: -webkit-sticky !important;
+            position: sticky !important;
+            top: 0;
+            z-index: 10000;
+            background: rgba(12, 9, 47, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            height: 72px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            font-weight: 700;
-            font-size: 20px;
         }
-        /* Nav link typography adjustments */
-        .dm-nav-link {
-            font-size: 15.68px;
-            font-weight: 400;
-            color: rgba(226, 233, 243, 0.88) !important;
-            transition: color 0.2s ease;
+        /* Mobile adjustment */
+        @media (max-width: 768px) {
+            #dm-main-header { height: 64px; }
         }
-        .dm-nav-link:hover {
-            color: #ff6a00 !important;
-        }
-        /* CTA Typography and Shape */
+
         .dm-btn-cta {
             background-color: #ff6a00 !important;
             border-color: #ff6a00 !important;
             color: #0c092f !important;
-            font-weight: 700 !important; /* Bold 700 */
+            font-weight: 800 !important;
             border-radius: 12px !important;
-            font-size: 16px !important;
-            padding: 0.5rem 1.6rem !important; /* Slightly wider to match Vue */
-            transition: all 0.2s ease;
+            padding: 0.75rem 2.25rem !important;
+            box-shadow: 0 4px 14px 0 rgba(255, 106, 0, 0.3);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dm-btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.4);
             background-color: #ff8533 !important;
-            border-color: #ff8533 !important;
-            transform: translateY(-1px);
+        }
+
+        .c-logo-icon {
+            background-color: #f97316;
+            color: #0c092f;
+            border-radius: 8px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-weight: 900;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -101,89 +136,48 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if ( is_front_page() ) : ?>
+<div class="dm-app-shell" id="top">
+<?php endif; ?>
+
 <?php if ( is_page_template( 'page-contact.php' ) ) : ?>
-<header id="dm-contact-header" class="tw:fixed tw:bg-[#0c092f]/80 tw:backdrop-blur-md tw:border-b tw:border-white/10" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 64px; display: flex; align-items: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" role="banner">
-    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
-        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-2" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">
+<header id="dm-contact-header" style="background: rgba(12, 9, 47, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.08); height: 72px; display: flex; align-items: center; width: 100%; z-index: 10000;">
+    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-6 tw:flex tw:items-center tw:justify-between">
+        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-3" href="<?php echo home_url('/'); ?>">
             <span class="c-logo-icon">&gt;_</span>
-            <span>DataMaq</span>
+            <span class="tw:tracking-tight">DataMaq</span>
         </a>
         <a class="tw:btn tw:border tw:border-white/20 tw:text-white tw:px-6 tw:py-2 tw:rounded-xl" href="<?php echo home_url('/'); ?>">Inicio</a>
     </div>
 </header>
-<div class="header-spacer" style="height: 64px;"></div>
 
 <?php elseif ( is_page_template( 'page-gracias.php' ) ) : ?>
-<!-- Success Page specialized header -->
-<header id="dm-thanks-header" class="tw:fixed tw:bg-transparent" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 80px; display: flex; align-items: center;">
-    <div class="tw:container tw:mx-auto tw:px-4 tw:flex tw:items-center tw:justify-between">
+<header id="dm-thanks-header" style="height: 80px; display: flex; align-items: center; width: 100%; z-index: 10000; position: absolute; top: 0;">
+    <div class="tw:container tw:mx-auto tw:px-6 tw:flex tw:items-center tw:justify-between">
         <h2 class="tw:text-white/40 tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">Estado del env&iacute;o</h2>
-        <a href="<?php echo home_url('/'); ?>" class="tw:text-white/60 hover:tw:text-white tw:text-3xl tw:transition-all" aria-label="Cerrar">
-            <i class="bi bi-x-lg"></i>
-        </a>
+        <a href="<?php echo home_url('/'); ?>" class="tw:text-white/60 hover:tw:text-white tw:text-3xl tw:transition-all"><i class="bi bi-x-lg"></i></a>
     </div>
 </header>
 
 <?php else : ?>
-<header id="dm-main-header" class="tw:fixed tw:bg-[#0c092f]/80 tw:backdrop-blur-md tw:border-b tw:border-white/10" style="top: 0; left: 0; width: 100%; z-index: 9999; height: 64px; display: flex; align-items: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" role="banner">
-    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
-        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-2" href="<?php echo home_url('/'); ?>" aria-label="DataMaq Home">
+<header id="dm-main-header">
+    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-6 tw:flex tw:items-center tw:justify-between">
+        <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-3" href="<?php echo home_url('/'); ?>">
             <span class="c-logo-icon">&gt;_</span>
-            <span>DataMaq</span>
+            <span class="tw:tracking-tight">DataMaq</span>
         </a>
         
-        <button
-            id="mobile-menu-toggle"
-            class="tw:p-2 tw:text-white tw:lg:hidden"
-            type="button"
-            aria-label="Abrir navegaci&oacute;n"
-        >
-            <svg viewBox="0 0 24 24" width="24" height="24" class="tw:fill-current">
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-            </svg>
-        </button>
+        <button id="mobile-menu-toggle" class="tw:p-2 tw:text-white tw:lg:hidden"><svg viewBox="0 0 24 24" width="28" height="28" class="tw:fill-current"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
 
         <nav class="tw:hidden tw:lg:flex tw:ml-auto">
-            <ul class="tw:flex tw:items-center tw:gap-8">
-                <li><a class="dm-nav-link" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
-                <li><a class="dm-nav-link" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
-                <li><a class="dm-nav-link" href="<?php echo home_url('#perfil'); ?>">Perfil</a></li>
-                <li><a class="dm-nav-link" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
-                <li class="tw:ml-4">
-                    <a class="tw:btn dm-btn-cta" href="<?php echo home_url('#contacto'); ?>">Escribime</a>
-                </li>
+            <ul class="tw:flex tw:items-center tw:gap-10">
+                <li><a class="tw:text-white/70 hover:tw:text-[#ff6a00] tw:transition-colors tw:text-sm tw:font-bold tw:no-underline" href="<?php echo home_url('#servicios'); ?>">Soluci&oacute;n</a></li>
+                <li><a class="tw:text-white/70 hover:tw:text-[#ff6a00] tw:transition-colors tw:text-sm tw:font-bold tw:no-underline" href="<?php echo home_url('#proceso'); ?>">Proceso</a></li>
+                <li><a class="tw:text-white/70 hover:tw:text-[#ff6a00] tw:transition-colors tw:text-sm tw:font-bold tw:no-underline" href="<?php echo home_url('#perfil'); ?>">Perfil</a></li>
+                <li><a class="tw:text-white/70 hover:tw:text-[#ff6a00] tw:transition-colors tw:text-sm tw:font-bold tw:no-underline" href="<?php echo home_url('#faq'); ?>">FAQ</a></li>
+                <li class="tw:ml-4"><a class="tw:btn dm-btn-cta tw:no-underline" href="<?php echo home_url('#contacto'); ?>">Escribime</a></li>
             </ul>
         </nav>
     </div>
 </header>
-<div class="header-spacer" style="height: 64px;"></div>
-<?php endif; ?>
-
-<!-- Mobile Offcanvas -->
-<?php if ( !is_page_template('page-gracias.php') && !is_page_template('page-contact.php') ) : ?>
-<div id="mobile-offcanvas" class="tw:fixed tw:inset-0 tw:z-[10000]" style="display: none;">
-    <div id="offcanvas-overlay" class="tw:fixed tw:inset-0 tw:bg-black/80 tw:backdrop-blur-md"></div>
-    <div class="tw:fixed tw:right-0 tw:top-0 tw:bottom-0 tw:w-full tw:max-w-xs tw:bg-[#0c092f] tw:p-8 tw:shadow-2xl tw:flex tw:flex-col">
-        <div class="tw:flex tw:items-center tw:justify-between tw:mb-12">
-            <div class="tw:flex tw:items-center tw:gap-2">
-                <span class="c-logo-icon">&gt;_</span>
-                <span class="tw:text-2xl tw:font-bold tw:text-white">DataMaq</span>
-            </div>
-            <button id="mobile-menu-close" class="tw:p-2 tw:text-white">
-                <svg viewBox="0 0 24 24" width="30" height="30" class="tw:fill-current"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-            </button>
-        </div>
-        <nav>
-            <ul class="tw:flex tw:flex-col tw:gap-8">
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#servicios">Soluci&oacute;n</a></li>
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#proceso">Proceso</a></li>
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#perfil">Perfil</a></li>
-                <li><a class="tw:text-xl tw:font-bold tw:text-white" href="#faq">FAQ</a></li>
-            </ul>
-        </nav>
-        <div class="tw:mt-auto">
-            <a class="tw:btn dm-btn-cta tw:w-full tw:py-4" style="text-align: center;" href="#contacto">Escribime</a>
-        </div>
-    </div>
-</div>
 <?php endif; ?>
