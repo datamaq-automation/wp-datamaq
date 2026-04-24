@@ -57,7 +57,7 @@ define( 'AUTH_SALT',         'put your unique phrase here' );
 define( 'SECURE_AUTH_SALT',  'put your unique phrase here' );
 define( 'LOGGED_IN_SALT',    'put your unique phrase here' );
 define( 'NONCE_SALT',        'put your unique phrase here' );
-define( 'WP_CACHE_KEY_SALT', 'Av@/_cqB%F=*|x@Ga-%r`n`o*aw*ma:h4/k|$}.Lza[,E&X2G$d&fM@r;eh3b!NT' );
+define( 'WP_CACHE_KEY_SALT', 'put your unique phrase here' );
 
 
 /**#@-*/
