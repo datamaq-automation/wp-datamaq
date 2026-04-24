@@ -14,17 +14,17 @@ $data = get_datamaq_site_data()['hero'];
             
             <div class="tw:max-w-4xl">
                 <span class="c-home-hero__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.05em;">Captura autom&aacute;tica de datos operativos</span>
-                <h1 class="c-home-hero__title tw:text-white tw:mb-10">
+                <h1 class="c-home-hero__title tw:text-white tw:mb-10 tw:text-5xl md:tw:text-7xl">
                     Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n
                 </h1>
-                <p class="tw:text-2xl tw:text-white/85 tw:leading-relaxed tw:mb-14 tw:max-w-2xl">
+                <p class="tw:text-xl md:tw:text-2xl tw:text-white/85 tw:leading-relaxed tw:mb-14 tw:max-w-2xl">
                     Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.
                 </p>
-                <div class="tw:flex tw:flex-wrap tw:gap-8">
-                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-12 tw:py-6 tw:text-xl tw:font-black" style="background-color: #ff6a00; border-color: #ff6a00; border-radius: 12px;">
-                        Escribime por WhatsApp
-                    </a>
-                    <a href="#servicios" class="tw:btn-outline tw:px-12 tw:py-6 tw:text-xl tw:font-bold" style="border-radius: 12px; border-color: rgba(255,255,255,0.2); color: white;">
+                <div class="tw:flex tw:flex-col md:tw:flex-row tw:gap-6">
+                    <button onclick="window.$chatwoot.toggle()" class="tw:btn-primary tw:px-12 tw:py-6 tw:text-xl tw:font-black tw:cursor-pointer" style="background-color: #ff6a00; border-color: #ff6a00; border-radius: 12px; color: #0c092f; border: none;">
+                        Consultar ahora
+                    </button>
+                    <a href="#servicios" class="tw:btn-outline tw:px-12 tw:py-6 tw:text-xl tw:font-bold tw:text-center" style="border-radius: 12px; border-color: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.2);">
                         Ver alcance t&eacute;cnico
                     </a>
                 </div>

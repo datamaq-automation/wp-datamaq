@@ -5,6 +5,20 @@
  Version:      4.0.0
 */
 
+html {
+  scroll-padding-top: 5.5rem;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('assets/fonts/inter-var.woff2') format('woff2');
+}
+
 :root {
   color-scheme: dark;
   --dm-bg-0: #0c092f;
@@ -28,8 +42,13 @@ h1, .c-home-hero__title {
     line-height: 0.9 !important;
 }
 
+/* UI/UX IMPROVEMENTS */
+#dm-main-header ul {
+    gap: 2.5rem !important; /* Fix navigation spacing bug */
+}
+
 /* --- MOBILE DOCK PARITY --- */
-body nav.c-parity-dock {
+body nav.c-parity-dock, .c-home-dock {
   position: fixed !important;
   left: 1rem !important;
   right: 1rem !important;
@@ -44,7 +63,7 @@ body nav.c-parity-dock {
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.7) !important;
 }
 
-.c-parity-dock__link {
+.c-parity-dock__link, .c-home-dock__link {
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
@@ -56,18 +75,22 @@ body nav.c-parity-dock {
     text-transform: uppercase !important;
 }
 
-.c-parity-dock__link i {
+.c-parity-dock__link i, .c-home-dock__link i {
     font-size: 1.6rem !important;
     color: var(--dm-accent-orange) !important;
 }
 
 /* Responsive visibility */
 @media (min-width: 992px) {
-    body nav.c-parity-dock { display: none !important; }
+    body nav.c-parity-dock, .c-home-dock { display: none !important; }
 }
 
-@media (max-width: 991.98px) {
-    #whatsapp-fab { bottom: 8.5rem !important; }
+/* Responsive Typography */
+@media (max-width: 768px) {
+    .c-home-hero__title, h1 {
+        font-size: 3rem !important;
+        line-height: 1.1 !important;
+    }
 }
 
 /* --- CARDS & GLASS --- */

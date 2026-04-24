@@ -24,9 +24,9 @@ $data = get_datamaq_site_data();
 
                 <!-- Right: CTA -->
                 <div class="tw:text-center lg:tw:text-right">
-                    <a href="<?php echo esc_url($data['brand']['whatsapp']); ?>" class="tw:text-orange-400 tw:font-black tw:text-lg hover:tw:text-orange-300 tw:transition-colors">
-                        Escribime directo
-                    </a>
+                    <button onclick="window.$chatwoot.toggle()" class="tw:text-orange-400 tw:font-black tw:text-lg hover:tw:text-orange-300 tw:transition-colors tw:bg-transparent tw:border-none tw:cursor-pointer">
+                        Hablemos ahora
+                    </button>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@ $data = get_datamaq_site_data();
             <i class="bi bi-house tw:text-xl"></i>
             <span class="tw:text-[9px] tw:font-bold tw:uppercase tw:tracking-tighter">Inicio</span>
         </a>
-        <a href="#servicios" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 twin:text-white/40 hover:tw:text-orange-400 tw:transition-colors">
+        <a href="#servicios" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors">
             <i class="bi bi-cpu tw:text-xl"></i>
             <span class="tw:text-[9px] tw:font-bold tw:uppercase tw:tracking-tighter">Soluci&oacute;n</span>
         </a>
@@ -50,16 +50,11 @@ $data = get_datamaq_site_data();
             <i class="bi bi-person-badge tw:text-xl"></i>
             <span class="tw:text-[9px] tw:font-bold tw:uppercase tw:tracking-tighter">Perfil</span>
         </a>
-        <a href="#contacto" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors">
+        <a onclick="window.$chatwoot.toggle()" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors tw:cursor-pointer">
             <i class="bi bi-chat-right-text tw:text-xl"></i>
-            <span class="tw:text-[9px] tw:font-bold tw:uppercase tw:tracking-tighter">Contacto</span>
+            <span class="tw:text-[9px] tw:font-bold tw:uppercase tw:tracking-tighter">Chat</span>
         </a>
     </nav>
-
-    <!-- FABs -->
-    <a href="https://wa.me/5491156297160" id="whatsapp-fab" class="tw:fixed tw:right-6 tw:bottom-24 tw:w-16 tw:h-16 tw:bg-[#25d366] tw:text-white tw:rounded-full tw:flex tw:items-center tw:justify-center tw:text-3xl tw:shadow-2xl tw:z-[4999] hover:tw:scale-110 tw:transition-all">
-        <i class="bi bi-whatsapp"></i>
-    </a>
 
     <?php wp_footer(); ?>
 </body>
