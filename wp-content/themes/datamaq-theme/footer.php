@@ -36,25 +36,6 @@ $data = get_datamaq_site_data();
 </div><!-- /.dm-app-shell -->
 <?php endif; ?>
 
-    <!-- MOBILE PARITY DOCK V6 -->
-    <nav class="c-home-dock lg:tw:hidden tw:fixed tw:bottom-0 tw:left-0 tw:right-0 tw:bg-[#0c092f]/95 tw:backdrop-blur-xl tw:border-t tw:border-white/10 tw:z-[5000] tw:flex tw:justify-around tw:py-4">
-        <a href="#top" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors tw:no-underline">
-            <i class="bi bi-house tw:text-xl"></i>
-            <span class="tw:text-[11px] tw:font-black tw:uppercase tw:tracking-tighter">Inicio</span>
-        </a>
-        <a href="#servicios" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors tw:no-underline">
-            <i class="bi bi-cpu tw:text-xl"></i>
-            <span class="tw:text-[11px] tw:font-black tw:uppercase tw:tracking-tighter">Soluci&oacute;n</span>
-        </a>
-        <a href="#perfil" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors tw:no-underline">
-            <i class="bi bi-person-badge tw:text-xl"></i>
-            <span class="tw:text-[11px] tw:font-black tw:uppercase tw:tracking-tighter">Perfil</span>
-        </a>
-        <a onclick="window.$chatwoot.toggle()" class="c-home-dock__link tw:flex tw:flex-col tw:items-center tw:gap-1 tw:text-white/40 hover:tw:text-orange-400 tw:transition-colors tw:cursor-pointer tw:no-underline">
-            <i class="bi bi-chat-right-text tw:text-xl"></i>
-            <span class="tw:text-[11px] tw:font-black tw:uppercase tw:tracking-tighter">Chat</span>
-        </a>
-    </nav>
 
     <?php wp_footer(); ?>
 </body>
