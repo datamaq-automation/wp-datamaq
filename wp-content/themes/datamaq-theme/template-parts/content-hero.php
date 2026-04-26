@@ -21,7 +21,7 @@ $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
                     <?php echo esc_html($viewModel->getDescription()); ?>
                 </p>
                 <div class="tw:flex tw:flex-col md:tw:flex-row tw:gap-6">
-                    <button onclick="window.$chatwoot.toggle()" class="dm-btn-primary tw:px-12  tw:text-xl">
+                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" class="dm-btn-primary tw:px-12 tw:py-6 tw:text-xl">
                         <?php echo esc_html($viewModel->getPrimaryCtaText()); ?>
                     </button>
                     <a href="#servicios" class="dm-btn-outline tw:px-12  tw:text-xl">

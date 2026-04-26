@@ -16,7 +16,7 @@ class DMComponentizer {
             const name = el.getAttribute('data-dm-component');
             if (this.components[name]) {
                 new this.components[name](el);
-                console.log(`[DM] Component initialized: ${name}`);
+                // console.log(`[DM] Component initialized: ${name}`);
             }
         });
     }

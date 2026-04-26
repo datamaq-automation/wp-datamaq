@@ -134,31 +134,10 @@ section {
 }
 
 /* --- LOGO --- */
-    font-weight: 900;
-    font-size: 18px;
-}
+/* Cleaned up old styles */
 
 /* Hide extra docks */
 .c-parity-dock, .c-home-dock, .dm-mobile-dock {
     display: none !important;
 }
-/*
- * DataMaq Isotype - Fixed for 1:1 Parity
- */
-.c-logo-icon {
-    width: 40px !important;
-    height: 40px !important;
-    background-color: rgba(255, 154, 77, 0.14) !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: none !important;
-    box-shadow: none !important;
-}
 
-.c-logo-icon i {
-    color: rgb(255, 154, 77) !important;
-    font-size: 18.4px !important;
-    background: transparent !important;
-}

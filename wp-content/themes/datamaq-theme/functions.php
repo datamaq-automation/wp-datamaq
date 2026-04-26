@@ -26,6 +26,10 @@ function datamaq_inject_section($slug) {
  * Chatwoot Widget Integration
  */
 add_action('wp_footer', function() {
+    if (strpos($_SERVER['HTTP_HOST'] ?? '', 'localhost') !== false) {
+        echo '<!-- Chatwoot disabled in local development to prevent 429 errors -->';
+        return;
+    }
 ?>
 <script>
   (function(d,t) {

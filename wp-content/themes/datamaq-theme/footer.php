@@ -24,7 +24,7 @@ $data = get_datamaq_site_data();
 
                 <!-- Right: CTA -->
                 <div class="tw:text-center lg:tw:text-right">
-                    <button onclick="window.$chatwoot.toggle()" class="tw:text-orange-400 tw:font-black tw:text-lg hover:tw:text-orange-300 tw:transition-colors tw:bg-transparent tw:border-none tw:cursor-pointer">
+                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" class="tw:text-orange-400 tw:font-black tw:text-lg hover:tw:text-orange-300 tw:transition-colors tw:bg-transparent tw:border-none tw:cursor-pointer">
                         Hablemos ahora
                     </button>
                 </div>
