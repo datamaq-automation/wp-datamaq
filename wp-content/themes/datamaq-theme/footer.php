@@ -37,6 +37,7 @@ $data = get_datamaq_site_data();
 <?php endif; ?>
 
 
+</div><!-- /#app -->
     <?php wp_footer(); ?>
 </body>
 </html>
