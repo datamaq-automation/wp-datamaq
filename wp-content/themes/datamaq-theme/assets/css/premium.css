@@ -234,3 +234,44 @@ section {
     font-size: 0.875rem !important;
     border-radius: 0.5rem !important;
 }
+
+/* --- LEGACY MOBILE DOCK PARITY --- */
+.c-home-dock {
+    position: fixed !important;
+    bottom: 12px !important;
+    background-color: rgba(15, 27, 58, 0.9) !important;
+    z-index: 1045 !important;
+    border-top: 1px solid rgba(226, 233, 243, 0.1) !important;
+    display: grid !important;
+    height: 87.5938px !important;
+    grid-template-columns: repeat(var(--dock-columns, 2), minmax(0, 1fr)) !important;
+    left: 12px;
+    right: 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.c-home-dock__link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: rgba(226, 233, 243, 0.66) !important;
+    font-size: 10.88px !important;
+    padding: 0px !important;
+    text-decoration: none !important;
+    gap: 4px !important;
+    transition: color 0.3s ease;
+}
+
+.c-home-dock__link i {
+    font-size: 20px !important;
+}
+
+.c-home-dock__link--emergency {
+    color: rgba(37, 211, 102, 0.95) !important;
+    background-color: rgba(37, 211, 102, 0.16) !important;
+    border-radius: 12px !important;
+    margin: 8px !important;
+}
