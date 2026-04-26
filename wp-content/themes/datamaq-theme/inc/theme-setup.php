@@ -20,100 +20,54 @@ function dm_theme_setup() {
  */
 add_action( 'wp_enqueue_scripts', 'dm_enqueue_assets' );
 function dm_enqueue_assets() {
-    $version = '3.0.1'; 
+    $version = '3.1.0'; 
     $theme_uri = get_template_directory_uri();
     
-    // Main Style (metadata)
+    // CSS
     wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $version );
-    
-    // Bootstrap Icons
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
-    
-    // Tailwind v4 Dist
     wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $version );
-    
-    // Premium Aesthetics (migrated from child theme)
     wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/premium.css', array('tailwind-styles'), $version );
     
     if ( class_exists( 'LearnPress' ) ) {
         wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array(), '1.4.1' );
     }
 
-    // Register Contact Form Assets
-    wp_register_style( 'dm-contact-form', $theme_uri . '/assets/css/contact-form.css', array(), $version );
-    wp_register_script( 'dm-contact-wizard', $theme_uri . '/assets/js/contact-wizard.js', array(), $version, true );
+    // JS Component Architecture
+    wp_enqueue_script( 'dm-componentizer', $theme_uri . '/assets/js/dm-components.js', array(), $version, true );
+    wp_enqueue_script( 'dm-comp-header', $theme_uri . '/assets/js/components/header.js', array('dm-componentizer'), $version, true );
+    wp_enqueue_script( 'dm-comp-menu', $theme_uri . '/assets/js/components/mobile-menu.js', array('dm-componentizer'), $version, true );
+    wp_enqueue_script( 'dm-comp-reveal', $theme_uri . '/assets/js/components/scroll-reveal.js', array('dm-componentizer'), $version, true );
+
+    // Legacy Contact Wizard (to be refactored later into component)
+    wp_register_script( 'dm-contact-wizard', $theme_uri . '/assets/js/contact-wizard.js', array('dm-componentizer'), $version, true );
 
     if ( is_front_page() || is_page_template('page-contact.php') ) {
         wp_enqueue_script( 'dm-contact-wizard' );
         wp_localize_script( 'dm-contact-wizard', 'datamaq_vars', array(
-            'thanks_url' => home_url('/gracias')
+            'thanks_url' => home_url('/gracias'),
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('datamaq_contact_nonce')
         ) );
     }
 }
 
 /**
- * Global Scripts (Scroll, Offcanvas)
+ * Global Head Styles
  */
-add_action('wp_footer', 'dm_global_scripts', 999);
-function dm_global_scripts() {
+add_action("wp_head", "dm_critical_styles", 1);
+function dm_critical_styles() {
+    $theme_uri = get_template_directory_uri();
     ?>
-    <script>
-    (function() {
-        const header = document.getElementById("dm-main-header");
-        const scrollBtn = document.getElementById("scroll-to-top");
-        const toggle = document.getElementById("mobile-menu-toggle");
-        const close = document.getElementById("mobile-menu-close");
-        const canvas = document.getElementById("mobile-offcanvas");
-        const overlay = document.getElementById("offcanvas-overlay");
-
-        const showMenu = function() {
-            if (canvas) {
-                canvas.classList.add("is-active");
-                document.documentElement.classList.add("dmq-offcanvas-open");
-                document.body.classList.add("dmq-offcanvas-open");
-            }
-        };
-
-        const hideMenu = function() { 
-            if (canvas) {
-                canvas.classList.remove("is-active");
-            }
-            document.documentElement.classList.remove("dmq-offcanvas-open");
-            document.body.classList.remove("dmq-offcanvas-open");
-        };
-
-        if (toggle) toggle.onclick = showMenu;
-        if (close) close.onclick = hideMenu;
-        if (overlay) overlay.onclick = hideMenu;
-        
-        document.querySelectorAll("#mobile-offcanvas a").forEach(a => {
-            a.onclick = hideMenu;
-        });
-
-        // Optimized scroll listener
-        let ticking = false;
-        window.addEventListener("scroll", function() {
-            if (!ticking) {
-                window.requestAnimationFrame(function() {
-                    const scrollPos = window.scrollY;
-                    if (header) {
-                        header.classList.toggle("is-scrolled", scrollPos > 60);
-                    }
-                    if (scrollBtn) {
-                        scrollBtn.classList.toggle("show", scrollPos > 400);
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-
-        if (scrollBtn) {
-            scrollBtn.onclick = function() { window.scrollTo({ top: 0, behavior: "smooth" }); };
-        }
-    })();
-    </script>
+    <link rel="preload" href="<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
     <style>
+        @font-face {
+            font-family: 'Inter';
+            src: url('<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2') format('woff2');
+            font-weight: 100 900;
+            font-display: swap;
+            font-style: normal;
+        }
         /* Base Parity Rules */
         html { 
             scroll-behavior: smooth; 
@@ -125,79 +79,18 @@ function dm_global_scripts() {
             margin: 0;
             -webkit-font-smoothing: antialiased;
         }
+        [id] { scroll-margin-top: 100px; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 900; letter-spacing: -0.02em; }
         
-        /* Offcanvas Styles */
-        #mobile-offcanvas {
-            position: fixed;
-            inset: 0;
-            z-index: 1050;
-            display: none;
-            justify-content: flex-end;
+        /* Reveal Animations */
+        [data-dm-component="ScrollReveal"] {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
-        #mobile-offcanvas.is-active {
-            display: flex;
-        }
-        #offcanvas-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-        .offcanvas-panel {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            background: var(--dm-bg-0);
-            height: 100%;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-            transform: translateX(100%);
-            transition: transform 0.3s ease-out;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid rgba(255,255,255,0.08);
-        }
-        #mobile-offcanvas.is-active .offcanvas-panel {
-            transform: translateX(0);
-        }
-        
-        /* Body Lock */
-        html.dmq-offcanvas-open,
-        body.dmq-offcanvas-open {
-            overflow: hidden !important;
-            height: 100dvh !important;
-        }
-
-        /* Sticky Header Transition */
-        #dm-main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-        #dm-main-header.is-scrolled {
-            height: 70px;
-            background: rgba(12, 9, 47, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        /* Anchor Scroll Margin */
-        [id] {
-            scroll-margin-top: 100px;
-        }
-
-        /* Typography fixes */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 900;
-            letter-spacing: -0.02em;
+        [data-dm-component="ScrollReveal"].is-revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
     <?php
@@ -212,35 +105,13 @@ function dm_register_shortcodes() {
         $data = get_datamaq_site_data();
         return esc_url($data['brand']['whatsapp']);
     });
-
     add_shortcode('datamaq_email', function() {
         $data = get_datamaq_site_data();
         return esc_html($data['brand']['email']);
     });
-
     add_shortcode('datamaq_contact_form', function() {
         ob_start();
         get_template_part('template-parts/content', 'contact');
         return ob_get_clean();
     });
-}
-
-/**
- * Preload critical assets.
- */
-add_action("wp_head", "dm_preload_assets", 1);
-function dm_preload_assets() {
-    $theme_uri = get_template_directory_uri();
-    ?>
-    <link rel="preload" href="<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-    <style>
-        @font-face {
-            font-family: 'Inter';
-            src: url('<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2') format('woff2');
-            font-weight: 100 900;
-            font-display: swap;
-            font-style: normal;
-        }
-    </style>
-    <?php
 }

@@ -4,7 +4,7 @@
  */
 $data = dm_content_repo()->getSection('services');
 ?>
-<section id="servicios" class="c-home-services tw:py-32 tw:bg-[#111229] tw:relative tw:overflow-hidden">
+<section id="servicios" data-dm-component="ScrollReveal" class="c-home-services tw:py-32 tw:bg-[#111229] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->
     <div class="c-ambient-glow tw:bg-[#4299e1] tw:top-[-20%] tw:right-[-10%]"></div>
 

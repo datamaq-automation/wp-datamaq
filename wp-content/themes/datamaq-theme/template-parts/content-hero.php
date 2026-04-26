@@ -5,7 +5,7 @@
  */
 $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
 ?>
-<section id="hero" class="c-home-hero tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
+<section id="hero" data-dm-component="ScrollReveal" class="c-home-hero tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
     <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-10%] tw:left-[-10%]"></div>
     <div class="c-ambient-glow tw:bg-[#4299e1] tw:bottom-[-20%] tw:right-[-10%] tw:opacity-[0.08]"></div>
 

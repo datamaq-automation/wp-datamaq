@@ -4,7 +4,7 @@
  */
 $process = dm_content_repo()->getSection('process'); 
 ?>
-<section id="proceso" class="c-home-process section-mobile tw:py-32 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
+<section id="proceso" data-dm-component="ScrollReveal" class="c-home-process section-mobile tw:py-32 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
     <!-- Subtle ambient glow -->
     <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-20%] tw:right-[-10%] tw:opacity-[0.05]"></div>
 

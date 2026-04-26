@@ -6,7 +6,7 @@
 $is_standalone = is_page_template('page-contact.php');
 $contact_page = dm_content_repo()->getSection('contactPage');
 ?>
-<section id="contacto" class="tw:relative tw:py-24 tw:overflow-hidden">
+<section id="contacto" data-dm-component="ScrollReveal" class="tw:relative tw:py-24 tw:overflow-hidden">
     <!-- Grid Pattern refinement -->
     <div class="tw:absolute tw:inset-0 tw:bg-gradient-to-b tw:from-cyan-500/5 tw:to-transparent"></div>
     
@@ -39,7 +39,7 @@ $contact_page = dm_content_repo()->getSection('contactPage');
                         </div>
                     </div>
 
-                    <form id="dm-contact-form" action="#" method="POST">
+                    <form id="dm-contact-form" action="#" method="POST" data-dm-component="ContactWizard">
                         <!-- STEP 1: Identity -->
                         <div class="dm-form-step" id="step-1">
                             <div class="tw:space-y-12">

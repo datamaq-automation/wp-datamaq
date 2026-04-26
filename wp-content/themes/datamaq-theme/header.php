@@ -39,7 +39,7 @@
 </header>
 
 <?php else : ?>
-<header id="dm-main-header">
+<header id="dm-main-header" data-dm-component="Header">
     <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-6 tw:flex tw:items-center tw:justify-between">
         <a class="tw:text-xl tw:font-bold tw:text-white tw:flex tw:items-center tw:gap-3 tw:no-underline" href="<?php echo home_url('/'); ?>">
             <span class="c-logo-icon">&gt;_</span>
@@ -63,7 +63,7 @@
 </header>
 
 <!-- Mobile Offcanvas -->
-<div id="mobile-offcanvas">
+<div id="mobile-offcanvas" data-dm-component="MobileMenu">
     <div id="offcanvas-overlay"></div>
     <div class="offcanvas-panel">
         <div class="tw:flex tw:items-center tw:justify-between tw:p-6 tw:border-b tw:border-white/5">

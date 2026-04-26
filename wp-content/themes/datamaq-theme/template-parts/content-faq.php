@@ -4,7 +4,7 @@
  */
 $data = dm_content_repo()->getSection('faq');
 ?>
-<section id="faq" class="c-home-faq tw:py-40 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
+<section id="faq" data-dm-component="ScrollReveal" class="c-home-faq tw:py-40 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->
     <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-20%] tw:left-[-10%] tw:opacity-[0.1]"></div>
 

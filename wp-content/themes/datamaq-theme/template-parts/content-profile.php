@@ -22,7 +22,7 @@ function get_profile_benefit_icon($text) {
     return 'bi-check2-circle';
 }
 ?>
-<section id="perfil" class="section-mobile c-home-profile tw:py-24 tw:relative tw:overflow-hidden" aria-labelledby="perfil-title">
+<section id="perfil" data-dm-component="ScrollReveal" class="section-mobile c-home-profile tw:py-24 tw:relative tw:overflow-hidden" aria-labelledby="perfil-title">
     <!-- Blue Ambient Glow for V6 feel -->
     <div class="c-ambient-glow c-ambient-glow--blue tw:top-[-20%] tw:right-[-10%] tw:w-[60vw] tw:h-[60vw]"></div>
 

@@ -4,7 +4,7 @@
  */
 $data = dm_content_repo()->getSection('escobarLanding'); 
 ?>
-<section class="tw:py-16 lg:tw:py-24 tw:bg-[#0c092f]" aria-labelledby="escobar-hero-title">
+<section data-dm-component="ScrollReveal" class="tw:py-16 lg:tw:py-24 tw:bg-[#0c092f]" aria-labelledby="escobar-hero-title">
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:max-w-4xl">
             <p class="tw:uppercase tw:text-sm tw:font-black tw:text-[#ff9a4d] tw:mb-4 tw:tracking-widest">
