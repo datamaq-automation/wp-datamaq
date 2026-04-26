@@ -5,21 +5,19 @@
  */
 $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
 ?>
-<section id="hero" data-dm-component="ScrollReveal" class="c-home-hero tw:relative tw:min-h-screen tw:flex tw:items-center  tw:overflow-hidden tw:bg-[#0c092f]">
-    <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-10%] tw:left-[-10%]"></div>
-    <div class="c-ambient-glow tw:bg-[#4299e1] tw:bottom-[-20%] tw:right-[-10%] tw:opacity-[0.08]"></div>
-
+<section id="hero" data-dm-component="ScrollReveal" class="section-mobile c-home-hero c-home-hero--direct" aria-labelledby="hero-title" style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo esc_url($viewModel->getImageUrl()); ?>');">
     <div class="tw:container tw:mx-auto tw:px-4">
-        <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-24 tw:items-center">
+        <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-12 tw:gap-8 tw:items-end">
             
-            <div class="tw:max-w-4xl">
-                <span class="dm-eyebrow">Captura autom&aacute;tica de datos operativos</span>
-                <h1 class="c-home-hero__title tw:mb-10 tw:text-5xl md:tw:text-7xl">
-                    <?php echo esc_html($viewModel->getTitle()); ?>
-                </h1>
-                <p class="tw:text-xl md:tw:text-2xl /85 tw:leading-relaxed tw:mb-14 tw:max-w-2xl">
-                    <?php echo esc_html($viewModel->getDescription()); ?>
-                </p>
+            <div class="tw:col-span-1 tw:lg:col-span-7">
+                <div class="c-home-hero__copy">
+                    <span class="c-home-eyebrow">Captura autom&aacute;tica de datos operativos</span>
+                    <h1 id="hero-title" class="c-home-hero__title">
+                        <?php echo esc_html($viewModel->getTitle()); ?>
+                    </h1>
+                    <p class="c-home-hero__subtitle">
+                        <?php echo esc_html($viewModel->getDescription()); ?>
+                    </p>
                 <div class="tw:flex tw:flex-col md:tw:flex-row tw:gap-6">
                     <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" class="dm-btn-primary tw:px-12 tw:py-6 tw:text-xl">
                         <?php echo esc_html($viewModel->getPrimaryCtaText()); ?>

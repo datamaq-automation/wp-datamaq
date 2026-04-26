@@ -7,7 +7,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main dm-modern-structure">
+<main id="contenido-principal" class="c-home-main with-floating-cta">
 
     <?php 
     // Hero Section
