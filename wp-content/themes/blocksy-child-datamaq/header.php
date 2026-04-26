@@ -167,7 +167,7 @@
             <span class="tw:tracking-tight">DataMaq</span>
         </a>
         
-        <button id="mobile-menu-toggle" class="tw:p-2 tw:text-white tw:lg:hidden"><svg viewBox="0 0 24 24" width="28" height="28" class="tw:fill-current"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
+        <button id="mobile-menu-toggle" class="tw:p-2 tw:text-white tw:lg:hidden" aria-label="Abrir men&uacute;"><svg viewBox="0 0 24 24" width="28" height="28" class="tw:fill-current"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></button>
 
         <nav class="tw:hidden tw:lg:flex tw:ml-auto">
             <ul class="tw:flex tw:items-center tw:gap-10">
