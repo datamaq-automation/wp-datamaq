@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function datamaq_lp_translate_string( $translated, $text, $domain ) {
 	$map = array(
 		'Home' => 'Inicio',
-		'Last updated:' => '?ltima actualizaci?n:',
+		'Last updated:' => '&Uacute;ltima actualizaci&oacute;n:',
 		'Start Learning' => 'Comenzar curso',
-		'Featured Review' => 'Rese?a destacada',
+		'Featured Review' => 'Rese&ntilde;a destacada',
 		'Related Course' => 'Curso relacionado',
 		'Related Courses' => 'Cursos relacionados',
 		'User Avatar' => 'Avatar de usuario',
@@ -34,7 +34,7 @@ function datamaq_lp_translate_plural( $translated, $single, $plural, $number, $d
 		return _n( '%d estudiante', '%d estudiantes', $number, 'default' );
 	}
 	if ( ( '%d lesson' === $single && '%d lessons' === $plural ) || ( '%d Lesson' === $single && '%d Lessons' === $plural ) ) {
-		return _n( '%d lecci?n', '%d lecciones', $number, 'default' );
+		return _n( '%d lecci&oacute;n', '%d lecciones', $number, 'default' );
 	}
 	if ( ( '%d quiz' === $single && '%d quizzes' === $plural ) || ( '%d Quiz' === $single && '%d Quizzes' === $plural ) ) {
 		return _n( '%d cuestionario', '%d cuestionarios', $number, 'default' );

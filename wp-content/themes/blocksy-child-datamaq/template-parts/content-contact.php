@@ -17,7 +17,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                 
                 <!-- Info Column (4 cols) -->
                 <div class="lg:tw:col-span-12 tw:text-center tw:mb-8">
-                    <span class="c-home-eyebrow tw:text-[#ff6a00] tw:font-black">??Hablamos?</span>
+                    <span class="c-home-eyebrow tw:text-[#ff6a00] tw:font-black">&iquest;Hablamos?</span>
                     <h2 class="tw:text-white tw:text-4xl lg:tw:text-6xl tw:mt-4">Iniciar proyecto</h2>
                 </div>
 
@@ -44,7 +44,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                         <!-- STEP 1: Identity -->
                         <div class="dm-form-step" id="step-1">
                             <div class="tw:space-y-12">
-                                <h3 class="tw:text-white tw:text-2xl tw:font-black tw:tracking-tight">??C??mo te llamas?</h3>
+                                <h3 class="tw:text-white tw:text-2xl tw:font-black tw:tracking-tight">&iquest;C&oacute;mo te llamas?</h3>
                                 <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-8">
                                     <div class="tw:space-y-3">
                                         <label class="tw:text-white/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Nombre y Apellido</label>
@@ -63,8 +63,8 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                             <div class="tw:space-y-12">
                                 <h3 class="tw:text-white tw:text-2xl tw:font-black tw:tracking-tight">Detalles del proyecto</h3>
                                 <div class="tw:space-y-3">
-                                    <label class="tw:text-white/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Consulta t??cnica o comercial</label>
-                                    <textarea name="dm_message" required rows="6" placeholder="??En qu?? podemos ayudarte?" class="dm-input-v6 tw:py-6"></textarea>
+                                    <label class="tw:text-white/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Consulta t&eacute;cnica o comercial</label>
+                                    <textarea name="dm_message" required rows="6" placeholder="&iquest;En qu&eacute; podemos ayudarte?" class="dm-input-v6 tw:py-6"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +72,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                         <!-- STEP 3: Contact Preferences -->
                         <div class="dm-form-step tw:hidden" id="step-3">
                             <div class="tw:space-y-12">
-                                <h3 class="tw:text-white tw:text-2xl tw:font-black tw:tracking-tight">V??a de contacto</h3>
+                                <h3 class="tw:text-white tw:text-2xl tw:font-black tw:tracking-tight">V&iacute;a de contacto</h3>
                                 <div class="tw:grid tw:grid-cols-1 sm:tw:grid-cols-2 tw:gap-6">
                                     <label class="channel-opt tw:relative tw:cursor-pointer">
                                         <input type="radio" name="dm_channel" value="whatsapp" checked class="tw:sr-only">
@@ -85,11 +85,11 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                                         <input type="radio" name="dm_channel" value="email" class="tw:sr-only">
                                         <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-3xl tw:p-8 tw:text-center tw:transition-all">
                                             <i class="bi bi-envelope-at tw:text-4xl tw:mb-4 tw:block"></i>
-                                            <span class="tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">V??a Email</span>
+                                            <span class="tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">V&iacute;a Email</span>
                                         </div>
                                     </label>
                                 </div>
-                                <p class="tw:text-white/30 tw:text-xs tw:text-center">Al elegir WhatsApp, abrir?? un chat directo con tu mensaje listo para enviar.</p>
+                                <p class="tw:text-white/30 tw:text-xs tw:text-center">Al elegir WhatsApp, abrir&aacute; un chat directo con tu mensaje listo para enviar.</p>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                         <div class="tw:mt-16 tw:flex tw:gap-4">
                             <button type="button" id="btn-back" class="tw:hidden tw:flex-1 tw:py-6 tw:rounded-2xl tw:border tw:border-white/20 tw:text-white tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:bg-white/5">Volver</button>
                             <button type="button" id="btn-next" class="tw:flex-[2] tw:py-6 tw:rounded-2xl tw:bg-[#ff6a00] tw:text-[#0c092f] tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:scale-[1.02]">Siguiente paso</button>
-                            <button type="submit" id="btn-submit" class="tw:hidden tw:flex-[2] tw:py-6 tw:rounded-2xl tw:bg-[#ff6a00] tw:text-[#0c092f] tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:scale-[1.02]">Finalizar env??o</button>
+                             <button type="submit" id="btn-submit" class="tw:hidden tw:flex-[2] tw:py-6 tw:rounded-2xl tw:bg-[#ff6a00] tw:text-[#0c092f] tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:scale-[1.02]">Finalizar env&iacute;o</button>
                         </div>
                     </form>
 

@@ -48,7 +48,7 @@ function get_datamaq_site_data() {
         ],
         'process' => [
             'eyebrow' => 'C&oacute;mo trabajamos',
-            'title' => 'Flujo de implementaci&oacute;n t??cnica',
+            'title' => 'Flujo de implementaci&oacute;n t&eacute;cnica',
             'steps' => [
                 [
                     'order' => '01',
