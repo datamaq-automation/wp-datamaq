@@ -18,13 +18,10 @@ $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
                     <p class="c-home-hero__subtitle">
                         <?php echo esc_html($viewModel->getDescription()); ?>
                     </p>
-                <div class="tw:flex tw:flex-col md:tw:flex-row tw:gap-6">
-                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" class="dm-btn-primary tw:px-12 tw:py-6 tw:text-xl">
+                <div class="c-home-hero__actions">
+                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" type="button" class="tw:btn-primary c-home-hero__primary">
                         <?php echo esc_html($viewModel->getPrimaryCtaText()); ?>
                     </button>
-                    <a href="#servicios" class="dm-btn-outline tw:px-12  tw:text-xl">
-                        <?php echo esc_html($viewModel->getSecondaryCtaText()); ?>
-                    </a>
                 </div>
             </div>
 

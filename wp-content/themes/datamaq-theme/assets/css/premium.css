@@ -275,3 +275,48 @@ section {
     border-radius: 12px !important;
     margin: 8px !important;
 }
+
+/* --- LEGACY HERO PARITY --- */
+.c-home-hero {
+    padding-top: 144px !important;
+    padding-bottom: 96px !important;
+    min-height: 100vh !important;
+    background-size: cover;
+    background-position: center;
+}
+
+.c-home-hero__copy {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 32px !important;
+}
+
+.c-home-eyebrow {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.7px !important;
+    line-height: 14px !important;
+    text-transform: uppercase !important;
+    color: rgba(226, 233, 243, 0.5) !important;
+}
+
+.c-home-hero__title {
+    font-size: 52px !important;
+    font-weight: 400 !important;
+    letter-spacing: -1.04px !important;
+    line-height: 52px !important;
+    color: rgb(226, 233, 243) !important;
+}
+
+.c-home-hero__subtitle {
+    font-size: 20.8px !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.416px !important;
+    line-height: 33.28px !important;
+    color: rgba(226, 233, 243, 0.8) !important;
+}
+
+.c-home-hero__actions {
+    display: flex;
+    gap: 16px;
+}
