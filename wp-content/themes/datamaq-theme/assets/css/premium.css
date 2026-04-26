@@ -173,7 +173,7 @@ section {
 }
 
 .c-home-header__brand-icon i {
-    color: #ff6a00 !important;
+    color: rgb(255, 154, 77) !important;
     font-size: 18.4px !important;
 }
 
@@ -208,17 +208,21 @@ section {
 }
 
 .c-home-header__icon-link {
-    width: 42px;
-    height: 42px;
+    width: 43.2px !important;
+    height: 43.2px !important;
     border-radius: 999px;
-    background: #13142d;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(226, 233, 243, 0.06) !important;
+    border: 1px solid rgba(226, 233, 243, 0.08) !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: rgba(226, 233, 243, 0.86) !important;
     text-decoration: none;
     transition: all 0.3s ease;
+}
+
+.c-home-header__icon-link i {
+    font-size: 16px !important;
 }
 
 .c-home-header__icon-link:hover {
