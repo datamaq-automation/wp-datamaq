@@ -12,7 +12,7 @@
 	<?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class('has-consent-banner'); ?>>
 <?php wp_body_open(); ?>
 
 <header id="dm-main-header" class="c-home-header tw:fixed tw:top-0 tw:left-0 tw:right-0 tw:z-[10000] tw:h-[60.2px] tw:flex tw:items-center tw:bg-[#0c092f]/82 tw:backdrop-blur-2xl tw:border-b tw:border-white/10" role="banner">
