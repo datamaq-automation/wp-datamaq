@@ -16,6 +16,7 @@
 <?php wp_body_open(); ?>
 <div id="app" data-v-app="">
 <div id="top" class="app-shell app-shell--home tw:min-h-screen app-shell--variant-direct">
+    <a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
 
 <header id="dm-main-header" class="c-home-header" role="banner">
     <div class="tw:container tw:mx-auto tw:px-4 c-home-header__inner">
