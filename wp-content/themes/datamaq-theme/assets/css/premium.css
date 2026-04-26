@@ -1,22 +1,25 @@
 /*
- * DataMaq Premium Aesthetics - ABSOLUTE 1:1 PARITY
+ * DataMaq Premium Aesthetics - REFACTORED (BEM / ITCSS)
+ * 1:1 Parity with Legacy Vue Application
  */
 
+/* =========================================
+   1. BASE & RESETS
+   ========================================= */
 html, body {
-  height: auto !important;
+  height: auto;
 }
 
 html {
-  overflow: hidden auto !important;
-  scroll-padding-top: 60px; /* Match header height */
+  overflow: hidden auto;
   scroll-behavior: smooth;
 }
 
 body {
-  overflow: visible !important;
-  background-color: #03041a !important;
-  color: rgb(226, 233, 243) !important;
-  font-family: 'Inter', sans-serif !important;
+  overflow: visible;
+  background-color: #03041a;
+  color: rgb(226, 233, 243);
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -28,7 +31,11 @@ body {
   src: url('../fonts/inter-var.woff2') format('woff2');
 }
 
-/* --- TECHNICAL GRID PATTERN --- */
+/* =========================================
+   2. LAYOUT & APP SHELL
+   ========================================= */
+
+/* Technical Grid Background */
 body::before {
     content: '';
     position: fixed;
@@ -41,7 +48,6 @@ body::before {
     pointer-events: none;
 }
 
-/* --- THE APP SHELL (CLEAN) --- */
 .dm-app-shell {
     max-width: 1440px;
     margin: 0 auto;
@@ -50,109 +56,31 @@ body::before {
     z-index: 10;
 }
 
-/* --- HEADER (EXACT 60.2px) --- */
-#dm-main-header, #dm-contact-header {
-    height: 60.2px !important;
-    width: 100% !important; /* Critical: Prevent width collapse */
-    left: 0 !important;
-    right: 0 !important;
-    background: rgba(12, 9, 47, 0.82) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(226, 233, 243, 0.1) !important;
-    position: fixed !important; /* Match legacy fixed behavior */
-    top: 0;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-}
-
-/* --- HERO TITLE (EXACT VALUES) --- */
-h1, .c-home-hero__title {
-    font-size: 64px !important;
-    font-weight: 400 !important;
-    color: rgb(226, 233, 243) !important;
-    line-height: 1.1 !important;
-    letter-spacing: -1.92px !important;
-    margin-bottom: 2.5rem;
-}
-
-@media (max-width: 768px) {
-    h1, .c-home-hero__title {
-        font-size: 40px !important;
-        letter-spacing: -1px !important;
-    }
-}
-
-/* --- EYEBROW (EXACT WHITE) --- */
-.dm-eyebrow, .c-home-hero__eyebrow {
-    color: rgb(255, 255, 255) !important;
-    text-transform: uppercase !important;
-    font-weight: 900 !important;
-    letter-spacing: 0.14em !important;
-    font-size: 0.72rem !important;
-    display: block;
-    margin-bottom: 1.5rem;
-}
-
-/* --- BUTTONS (8px RADIUS) --- */
-.dm-btn-primary {
-    background-color: #ff6a00 !important;
-    color: #0c092f !important;
-    border-radius: 8px !important;
-    font-weight: 700 !important;
-    padding: 1.5rem 3rem !important;
-    text-decoration: none;
-    display: inline-flex;
-    transition: all 0.3s ease;
-}
-
-.dm-btn-outline {
-    background: transparent !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    color: white !important;
-    border-radius: 8px !important;
-    padding: 1.5rem 3rem !important;
-    text-decoration: none;
-    display: inline-flex;
-    transition: all 0.3s ease;
-}
-
-/* --- SECTION PADDING (35.2px top, 49.6px bottom) --- */
-section {
-    padding-top: 35.2px !important;
-    padding-bottom: 49.6px !important;
-}
-
-/* --- CARDS (2.5rem RADIUS, BLUEISH GLASS) --- */
+/* Custom 3D Card (Tailwind hybrid from earlier iterations) */
 .tw\:glass-card-intensive {
-    border-radius: 2.5rem !important;
-    padding: 3rem !important;
-    background: rgba(26, 28, 61, 0.7) !important;
-    backdrop-filter: blur(20px) !important;
-    border: 1px solid rgba(226, 233, 243, 0.1) !important;
+    border-radius: 2.5rem;
+    padding: 3rem;
+    background: rgba(26, 28, 61, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(226, 233, 243, 0.1);
 }
 
-/* --- LOGO --- */
-/* Cleaned up old styles */
+/* =========================================
+   3. COMPONENTS
+   ========================================= */
 
-/* Hide extra docks */
-.c-parity-dock, .dm-mobile-dock {
-    display: none !important;
-}
-
-/* --- LEGACY HEADER BEM CLASSES PARITY --- */
+/* --- C-HOME-HEADER --- */
 .c-home-header {
-    position: fixed !important;
+    position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 10000;
-    height: 60.2px !important;
+    height: 60.2px;
     display: flex;
     align-items: center;
-    background: rgba(12, 9, 47, 0.82) !important;
+    background: rgba(12, 9, 47, 0.82);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(226, 233, 243, 0.1) !important;
+    border-bottom: 1px solid rgba(226, 233, 243, 0.1);
 }
 
 .c-home-header__inner {
@@ -163,27 +91,27 @@ section {
 }
 
 .c-home-header__brand-icon {
-    width: 40px !important;
-    height: 40px !important;
-    background-color: rgba(255, 154, 77, 0.14) !important;
-    border-radius: 999px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 154, 77, 0.14);
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .c-home-header__brand-icon i {
-    color: rgb(255, 154, 77) !important;
-    font-size: 18.4px !important;
+    color: rgb(255, 154, 77);
+    font-size: 18.4px;
 }
 
 .c-home-header__brand-copy {
     font-family: Inter, system-ui, -apple-system, sans-serif;
-    font-size: 16px !important;
-    font-weight: 400 !important;
-    color: #e2e9f3 !important;
-    letter-spacing: normal !important;
-    line-height: 25.6px !important;
+    font-size: 16px;
+    font-weight: 400;
+    color: #e2e9f3;
+    letter-spacing: normal;
+    line-height: 25.6px;
 }
 
 .c-home-header__nav {
@@ -208,21 +136,21 @@ section {
 }
 
 .c-home-header__icon-link {
-    width: 43.2px !important;
-    height: 43.2px !important;
+    width: 43.2px;
+    height: 43.2px;
     border-radius: 999px;
-    background-color: rgba(226, 233, 243, 0.06) !important;
-    border: 1px solid rgba(226, 233, 243, 0.08) !important;
+    background-color: rgba(226, 233, 243, 0.06);
+    border: 1px solid rgba(226, 233, 243, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(226, 233, 243, 0.86) !important;
+    color: rgba(226, 233, 243, 0.86);
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .c-home-header__icon-link i {
-    font-size: 16px !important;
+    font-size: 16px;
 }
 
 .c-home-header__icon-link:hover {
@@ -230,21 +158,21 @@ section {
 }
 
 .c-home-header__cta {
-    padding: 0.5rem 1.5rem !important;
-    font-size: 0.875rem !important;
-    border-radius: 0.5rem !important;
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
 }
 
-/* --- LEGACY MOBILE DOCK PARITY --- */
+/* --- C-HOME-DOCK --- */
 .c-home-dock {
-    position: fixed !important;
-    bottom: 12px !important;
-    background-color: rgba(15, 27, 58, 0.9) !important;
-    z-index: 1045 !important;
-    border-top: 1px solid rgba(226, 233, 243, 0.1) !important;
-    display: grid !important;
-    height: 87.5938px !important;
-    grid-template-columns: repeat(var(--dock-columns, 2), minmax(0, 1fr)) !important;
+    position: fixed;
+    bottom: 12px;
+    background-color: rgba(15, 27, 58, 0.9);
+    z-index: 1045;
+    border-top: 1px solid rgba(226, 233, 243, 0.1);
+    display: grid;
+    height: 87.5938px;
+    grid-template-columns: repeat(var(--dock-columns, 2), minmax(0, 1fr));
     left: 12px;
     right: 12px;
     border-radius: 20px;
@@ -253,67 +181,67 @@ section {
 }
 
 .c-home-dock__link {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    color: rgba(226, 233, 243, 0.66) !important;
-    font-size: 10.88px !important;
-    padding: 0px !important;
-    text-decoration: none !important;
-    gap: 4px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgba(226, 233, 243, 0.66);
+    font-size: 10.88px;
+    padding: 0px;
+    text-decoration: none;
+    gap: 4px;
     transition: color 0.3s ease;
 }
 
 .c-home-dock__link i {
-    font-size: 20px !important;
+    font-size: 20px;
 }
 
 .c-home-dock__link--emergency {
-    color: rgba(37, 211, 102, 0.95) !important;
-    background-color: rgba(37, 211, 102, 0.16) !important;
-    border-radius: 12px !important;
-    margin: 8px !important;
+    color: rgba(37, 211, 102, 0.95);
+    background-color: rgba(37, 211, 102, 0.16);
+    border-radius: 12px;
+    margin: 8px;
 }
 
-/* --- LEGACY HERO PARITY --- */
+/* --- C-HOME-HERO --- */
 .c-home-hero {
-    padding-top: 144px !important;
-    padding-bottom: 96px !important;
-    min-height: 100vh !important;
+    padding-top: 144px;
+    padding-bottom: 96px;
+    min-height: 100vh;
     background-size: cover;
     background-position: center;
 }
 
 .c-home-hero__copy {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 32px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .c-home-eyebrow {
-    font-size: 14px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.7px !important;
-    line-height: 14px !important;
-    text-transform: uppercase !important;
-    color: rgba(226, 233, 243, 0.5) !important;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    line-height: 14px;
+    text-transform: uppercase;
+    color: rgba(226, 233, 243, 0.5);
 }
 
 .c-home-hero__title {
-    font-size: 52px !important;
-    font-weight: 400 !important;
-    letter-spacing: -1.04px !important;
-    line-height: 52px !important;
-    color: rgb(226, 233, 243) !important;
+    font-size: 52px;
+    font-weight: 400;
+    letter-spacing: -1.04px;
+    line-height: 52px;
+    color: rgb(226, 233, 243);
 }
 
 .c-home-hero__subtitle {
-    font-size: 20.8px !important;
-    font-weight: 400 !important;
-    letter-spacing: -0.416px !important;
-    line-height: 33.28px !important;
-    color: rgba(226, 233, 243, 0.8) !important;
+    font-size: 20.8px;
+    font-weight: 400;
+    letter-spacing: -0.416px;
+    line-height: 33.28px;
+    color: rgba(226, 233, 243, 0.8);
 }
 
 .c-home-hero__actions {
