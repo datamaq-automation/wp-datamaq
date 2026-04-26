@@ -73,3 +73,8 @@ function dm_content_repo() {
     }
     return $repo;
 }
+
+/**
+ * Initialize SEO Service
+ */
+(new \DataMaq\Infrastructure\Seo\SeoService())->registerHooks();
