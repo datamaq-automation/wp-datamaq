@@ -4,6 +4,7 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+require get_template_directory() . '/inc/autoloader.php';
 
 // 1. Data Layer
 require_once get_template_directory() . '/inc/site-data.php';
@@ -61,3 +62,14 @@ add_action('wp_footer', function() {
 </style>
 <?php
 });
+
+/**
+ * DataMaq Repository Factory
+ */
+function dm_content_repo() {
+    static $repo = null;
+    if ($repo === null) {
+        $repo = new \DataMaq\Infrastructure\Content\StaticContentRepository();
+    }
+    return $repo;
+}

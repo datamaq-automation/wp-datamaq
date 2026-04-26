@@ -2,7 +2,7 @@
 /**
  * Template part for displaying the Proceso section with V6 Absolute Parity.
  */
-$process = get_datamaq_site_data()['process']; 
+$process = dm_content_repo()->getSection('process'); 
 ?>
 <section id="proceso" class="c-home-process section-mobile tw:py-32 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
     <!-- Subtle ambient glow -->

@@ -2,7 +2,7 @@
 /**
  * Template part for displaying the Escobar Landing Hero section
  */
-$data = get_datamaq_site_data()['escobarLanding']; 
+$data = dm_content_repo()->getSection('escobarLanding'); 
 ?>
 <section class="tw:py-16 lg:tw:py-24 tw:bg-[#0c092f]" aria-labelledby="escobar-hero-title">
     <div class="tw:container tw:mx-auto tw:px-4">

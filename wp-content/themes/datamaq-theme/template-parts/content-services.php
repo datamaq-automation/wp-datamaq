@@ -2,7 +2,7 @@
 /**
  * Template part for displaying services section with V6 Absolute Parity.
  */
-$data = get_datamaq_site_data()['services'];
+$data = dm_content_repo()->getSection('services');
 ?>
 <section id="servicios" class="c-home-services tw:py-32 tw:bg-[#111229] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->

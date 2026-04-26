@@ -2,7 +2,7 @@
 /**
  * Template part for displaying the hero section with V6 Absolute Parity.
  */
-$data = get_datamaq_site_data()['hero'];
+$data = dm_content_repo()->getSection('hero');
 ?>
 <section id="hero" class="c-home-hero tw:relative tw:min-h-screen tw:flex tw:items-center tw:py-40 tw:overflow-hidden tw:bg-[#0c092f]">
     <!-- Vibrant ambient glows -->

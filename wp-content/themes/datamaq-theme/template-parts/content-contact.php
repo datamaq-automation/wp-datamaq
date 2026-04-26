@@ -4,7 +4,7 @@
  * This file is used both as a section on the home page and as the main content on the contact page.
  */
 $is_standalone = is_page_template('page-contact.php');
-$contact_page = get_datamaq_site_data()['contactPage'];
+$contact_page = dm_content_repo()->getSection('contactPage');
 ?>
 <section id="contacto" class="tw:relative tw:py-24 tw:overflow-hidden">
     <!-- Grid Pattern refinement -->

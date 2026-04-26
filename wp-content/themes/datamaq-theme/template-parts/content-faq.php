@@ -2,7 +2,7 @@
 /**
  * Template part for displaying FAQ section with V6 Absolute Parity.
  */
-$data = get_datamaq_site_data()['faq'];
+$data = dm_content_repo()->getSection('faq');
 ?>
 <section id="faq" class="c-home-faq tw:py-40 tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->
