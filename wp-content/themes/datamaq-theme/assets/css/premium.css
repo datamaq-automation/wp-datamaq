@@ -141,3 +141,85 @@ section {
     display: none !important;
 }
 
+/* --- LEGACY HEADER BEM CLASSES PARITY --- */
+.c-home-header {
+    position: fixed !important;
+    top: 0; left: 0; right: 0;
+    z-index: 10000;
+    height: 60.2px !important;
+    display: flex;
+    align-items: center;
+    background: rgba(12, 9, 47, 0.82) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(226, 233, 243, 0.1) !important;
+}
+
+.c-home-header__inner {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.c-home-header__brand-icon {
+    width: 40px !important;
+    height: 40px !important;
+    background-color: rgba(255, 154, 77, 0.14) !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.c-home-header__brand-copy {
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    color: white;
+}
+
+.c-home-header__nav {
+    gap: 2.5rem;
+}
+
+.c-home-header__nav-link {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.c-home-header__nav-link:hover, .c-home-header__nav-link.router-link-active {
+    color: #ff6a00;
+}
+
+.c-home-header__actions {
+    display: flex;
+    align-items: center;
+}
+
+.c-home-header__icon-link {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    background: #13142d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.c-home-header__icon-link:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.c-home-header__cta {
+    padding: 0.5rem 1.5rem !important;
+    font-size: 0.875rem !important;
+    border-radius: 0.5rem !important;
+}

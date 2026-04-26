@@ -17,20 +17,26 @@
 <div id="app" data-v-app="">
 <div data-v-236fef00="" id="top" class="app-shell app-shell--home tw:min-h-screen app-shell--variant-direct">
 
-<header id="dm-main-header" class="c-home-header tw:fixed tw:top-0 tw:left-0 tw:right-0 tw:z-[10000] tw:h-[60.2px] tw:flex tw:items-center tw:bg-[#0c092f]/82 tw:backdrop-blur-2xl tw:border-b tw:border-white/10" role="banner">
-    <div class="tw:container tw:mx-auto tw:px-4 c-home-header__inner tw:w-full tw:flex tw:items-center tw:justify-between">
+<header id="dm-main-header" class="c-home-header" role="banner">
+    <div class="tw:container tw:mx-auto tw:px-4 c-home-header__inner">
         
-        <a href="<?php echo home_url('/'); ?>" class="tw:flex tw:items-center tw:gap-2 tw:text-white tw:no-underline" aria-label="DataMaq, inicio">
-            <span class="c-home-header__brand-icon tw:w-[40px] tw:h-[40px] tw:rounded-full tw:bg-[#ff9a4d]/14 tw:flex tw:items-center tw:justify-center" aria-hidden="true">
-                <i class="bi bi-terminal-fill tw:text-[#ff6a00] tw:text-[18.4px]"></i>
+        <a aria-current="page" href="<?php echo home_url('/'); ?>" class="tw:flex tw:items-center tw:gap-2 tw:text-dm-text-0 tw:decoration-0" aria-label="DataMaq, inicio">
+            <span class="c-home-header__brand-icon" aria-hidden="true">
+                <i class="bi bi-terminal-fill"></i>
             </span>
-            <span class="c-home-header__brand-copy tw:text-xl tw:font-light tw:tracking-tight">DataMaq</span>
+            <span class="c-home-header__brand-copy">DataMaq</span>
         </a>
 
+        <nav class="c-home-header__nav tw:hidden tw:lg:flex" aria-label="Navegación principal">
+            <a aria-current="page" href="<?php echo home_url('#servicios'); ?>" class="c-home-header__nav-link">Solución</a>
+            <a aria-current="page" href="<?php echo home_url('#faq'); ?>" class="c-home-header__nav-link">FAQ</a>
+        </nav>
+
         <div class="c-home-header__actions">
-            <a href="http://legacy.localhost/contact" class="c-home-header__icon-link tw:w-[42px] tw:h-[42px] tw:rounded-full tw:bg-[#13142d] tw:border tw:border-white/10 tw:flex tw:items-center tw:justify-center tw:text-white hover:tw:bg-white/5 tw:transition-all tw:no-underline" aria-label="Contacto" title="Contacto">
-                <i class="bi bi-telephone-forward-fill tw:text-lg" aria-hidden="true"></i>
+            <a href="http://legacy.localhost/contact" class="c-home-header__icon-link tw:lg:hidden" aria-label="Contacto" title="Contacto">
+                <i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
             </a>
+            <a href="http://legacy.localhost/contact" class="tw:btn-primary c-home-header__cta tw:hidden tw:lg:inline-flex tw:no-underline">Contacto</a>
         </div>
 
     </div>
