@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 add_action( 'wp_enqueue_scripts', 'dm_child_enqueue_styles', 999 );
 function dm_child_enqueue_styles() {
-    $version = '2.2.5'; // Increment for cache busting
+    $version = '2.3.0'; // Increment for cache busting
     
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_uri(), array('parent-style'), $version );

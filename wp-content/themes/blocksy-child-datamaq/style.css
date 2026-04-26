@@ -5,6 +5,11 @@
  Version:      4.0.0
 */
 
+html, body {
+  height: auto !important;
+  overflow: hidden auto !important;
+}
+
 html {
   scroll-padding-top: 5.5rem;
   scroll-behavior: smooth;
