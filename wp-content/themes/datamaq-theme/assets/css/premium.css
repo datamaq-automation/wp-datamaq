@@ -53,11 +53,14 @@ body::before {
 /* --- HEADER (EXACT 60.2px) --- */
 #dm-main-header, #dm-contact-header {
     height: 60.2px !important;
+    width: 100% !important; /* Critical: Prevent width collapse */
+    left: 0 !important;
+    right: 0 !important;
     background: rgba(12, 9, 47, 0.82) !important;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(226, 233, 243, 0.1) !important;
-    position: sticky !important;
+    position: fixed !important; /* Match legacy fixed behavior */
     top: 0;
     z-index: 10000;
     display: flex;

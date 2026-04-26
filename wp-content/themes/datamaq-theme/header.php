@@ -16,7 +16,7 @@
 <?php wp_body_open(); ?>
 
 <header id="dm-main-header" class="tw:fixed tw:top-0 tw:left-0 tw:right-0 tw:z-[10000] tw:h-[60.2px] tw:flex tw:items-center tw:bg-[#0c092f]/82 tw:backdrop-blur-2xl tw:border-b tw:border-white/10">
-    <div class="tw:max-w-7xl tw:mx-auto tw:w-full tw:px-6 tw:flex tw:items-center tw:justify-between">
+    <div class="tw:max-w-[1536px] tw:mx-auto tw:w-full tw:px-4 tw:flex tw:items-center tw:justify-between">
         
         <!-- Left: Logo & Isotype -->
         <a class="tw:flex tw:items-center tw:gap-3 tw:no-underline" href="<?php echo home_url('/'); ?>">
