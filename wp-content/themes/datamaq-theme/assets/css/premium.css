@@ -1,9 +1,6 @@
 /*
- Theme Name:   Blocksy Child Datamaq
- Template:     blocksy
- Author:       Agustin Madygraf
- Version:      4.0.0
-*/
+ * DataMaq Premium Aesthetics
+ */
 
 html, body {
   height: auto !important;
@@ -25,7 +22,7 @@ body {
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('assets/fonts/inter-var.woff2') format('woff2');
+  src: url('../fonts/inter-var.woff2') format('woff2');
 }
 
 :root {

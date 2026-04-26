@@ -1,25 +1,23 @@
-﻿<?php
+<?php
 /**
- * Blocksy Child Datamaq functions and definitions
- * SOLID Refactoring - Modular Architecture
+ * DataMaq Theme functions and definitions
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // 1. Data Layer
-require_once get_stylesheet_directory() . '/inc/site-data.php';
+require_once get_template_directory() . '/inc/site-data.php';
 
 // 2. Business Logic & AJAX
-require_once get_stylesheet_directory() . '/inc/ajax-handlers.php';
+require_once get_template_directory() . '/inc/ajax-handlers.php';
 
 // 3. Theme Setup & Assets
-require_once get_stylesheet_directory() . '/inc/theme-setup.php';
+require_once get_template_directory() . '/inc/theme-setup.php';
 
 /**
- * Injection Controller (Legacy wrapper for backward compatibility if needed)
- * Note: New sections should be loaded via get_template_part() in templates.
+ * Injection Controller
  */
-function blocksy_child_inject_section($slug) {
+function datamaq_inject_section($slug) {
     get_template_part('template-parts/content', $slug);
 }
 
@@ -42,7 +40,7 @@ add_action('wp_footer', function() {
       
       window.addEventListener('chatwoot:ready', function () {
         window.$chatwoot.setCustomAttributes({
-          wp_theme: 'blocksy-child-datamaq'
+          wp_theme: 'datamaq-theme'
         });
       });
     }
@@ -50,14 +48,13 @@ add_action('wp_footer', function() {
   })(document,"script");
 </script>
 <style>
-  /* Ensure Chatwoot bubble is visible and correctly positioned */
   .woot-widget-bubble {
     right: 20px !important;
     bottom: 20px !important;
   }
   @media (max-width: 1024px) {
     .woot-widget-bubble {
-      bottom: 6.5rem !important; /* Matches previous WhatsApp mobile position */
+      bottom: 6.5rem !important;
       right: 1rem !important;
     }
   }
