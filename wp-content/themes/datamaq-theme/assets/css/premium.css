@@ -137,7 +137,7 @@ section {
 /* Cleaned up old styles */
 
 /* Hide extra docks */
-.c-parity-dock, .c-home-dock, .dm-mobile-dock {
+.c-parity-dock, .dm-mobile-dock {
     display: none !important;
 }
 
