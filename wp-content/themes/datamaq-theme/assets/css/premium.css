@@ -172,6 +172,11 @@ section {
     justify-content: center !important;
 }
 
+.c-home-header__brand-icon i {
+    color: #ff6a00 !important;
+    font-size: 18.4px !important;
+}
+
 .c-home-header__brand-copy {
     font-size: 1.25rem;
     font-weight: 300;
