@@ -135,13 +135,13 @@ section {
     background-color: #f97316;
     color: #0c092f;
     border-radius: 8px;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 900;
-    font-size: 22px;
+    font-size: 18px;
 }
 
 /* Hide extra docks */
