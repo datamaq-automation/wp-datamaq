@@ -13,7 +13,7 @@ $data = get_datamaq_site_data()['hero'];
         <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-24 tw:items-center">
             
             <div class="tw:max-w-4xl">
-                <span class="c-home-hero__eyebrow">Captura autom&aacute;tica de datos operativos</span>
+                <span class="dm-eyebrow">Captura autom&aacute;tica de datos operativos</span>
                 <h1 class="c-home-hero__title tw:text-white tw:mb-10 tw:text-5xl md:tw:text-7xl">
                     Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n
                 </h1>
@@ -34,7 +34,7 @@ $data = get_datamaq_site_data()['hero'];
                 <div class="tw:glass-card-intensive tw:p-6 tw:rounded-[4rem] tw:shadow-2xl">
                     <img 
                         src="<?php echo esc_url($data['image']); ?>" 
-                        alt="Hero DataMaq" 
+                        alt="Instalaci&oacute;n de equipos IoT para captura de datos el&eacute;ctricos y producci&oacute;n - DataMaq" 
                         class="tw:w-full tw:h-auto tw:rounded-[3.2rem]"
                     >
                 </div>

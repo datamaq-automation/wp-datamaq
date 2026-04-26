@@ -32,7 +32,7 @@ function get_profile_benefit_icon($text) {
             <!-- Left Col: Profile Card -->
             <div class="tw:col-span-1 lg:tw:col-span-5">
                 <article class="dm-panel tw:h-full tw:p-8 tw:flex tw:flex-col tw:items-start">
-                    <span class="c-home-eyebrow">EL PERFIL DEL T&Eacute;CNICO</span>
+                    <span class="dm-eyebrow">EL PERFIL DEL T&Eacute;CNICO</span>
                     <div class="c-home-profile__avatar-wrap tw:w-full tw:flex tw:justify-center tw:mb-8">
                         <img 
                             src="<?php echo esc_url($profile['photo']); ?>" 

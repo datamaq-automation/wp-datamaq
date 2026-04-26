@@ -27,9 +27,17 @@ function dm_child_enqueue_styles() {
         wp_enqueue_style( 'learnpress-overrides', get_stylesheet_directory_uri() . '/assets/css/learnpress-overrides.css', array(), '1.4.1' );
     }
 
-    // Register Contact Form Assets (Enqueued via shortcode or template)
+    // Register Contact Form Assets
     wp_register_style( 'dm-contact-form', get_stylesheet_directory_uri() . '/assets/css/contact-form.css', array(), $version );
-    wp_register_script( 'dm-contact-form', get_stylesheet_directory_uri() . '/assets/js/contact-form.js', array(), $version, true );
+    wp_register_script( 'dm-contact-wizard', get_stylesheet_directory_uri() . '/assets/js/contact-wizard.js', array(), $version, true );
+
+    // Enqueue wizard logic if on front page or contact page
+    if ( is_front_page() || is_page_template('page-contact.php') ) {
+        wp_enqueue_script( 'dm-contact-wizard' );
+        wp_localize_script( 'dm-contact-wizard', 'datamaq_vars', array(
+            'thanks_url' => home_url('/gracias')
+        ) );
+    }
 }
 
 /**

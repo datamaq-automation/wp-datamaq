@@ -17,7 +17,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                 
                 <!-- Info Column (4 cols) -->
                 <div class="lg:tw:col-span-12 tw:text-center tw:mb-8">
-                    <span class="c-home-eyebrow tw:text-[#ff6a00] tw:font-black">&iquest;Hablamos?</span>
+                    <span class="dm-eyebrow tw:text-center">&iquest;Hablamos?</span>
                     <h2 class="tw:text-white tw:text-4xl lg:tw:text-6xl tw:mt-4">Iniciar proyecto</h2>
                 </div>
 
@@ -100,78 +100,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                         </div>
                     </form>
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            let currentStep = 1;
-                            const totalSteps = 3;
-                            
-                            const form = document.getElementById('dm-contact-form');
-                            const btnNext = document.getElementById('btn-next');
-                            const btnBack = document.getElementById('btn-back');
-                            const btnSubmit = document.getElementById('btn-submit');
-                            const progressBar = document.getElementById('step-progress-bar');
-                            const indicator = document.getElementById('step-indicator');
-                            const dots = document.querySelectorAll('.step-dot');
 
-                            function updateUI() {
-                                document.querySelectorAll('.dm-form-step').forEach(s => s.classList.add('tw:hidden'));
-                                document.getElementById(`step-${currentStep}`).classList.remove('tw:hidden');
-                                progressBar.style.width = (currentStep / totalSteps * 100) + '%';
-                                indicator.textContent = `Paso ${currentStep} de ${totalSteps}`;
-                                dots.forEach((dot, idx) => {
-                                    if (idx < currentStep) dot.classList.add('tw:bg-[#ff6a00]', 'tw:scale-125');
-                                    else dot.classList.remove('tw:bg-[#ff6a00]', 'tw:scale-125');
-                                });
-                                btnBack.classList.toggle('tw:hidden', currentStep === 1);
-                                btnNext.classList.toggle('tw:hidden', currentStep === totalSteps);
-                                btnSubmit.classList.toggle('tw:hidden', currentStep !== totalSteps);
-                            }
-
-                            btnNext.addEventListener('click', () => {
-                                const activeStep = document.getElementById(`step-${currentStep}`);
-                                const inputs = activeStep.querySelectorAll('input[required], textarea[required]');
-                                let valid = true;
-                                inputs.forEach(i => {
-                                    if(!i.value) { i.classList.add('tw:border-red-500/50'); valid = false; }
-                                    else { i.classList.remove('tw:border-red-500/50'); }
-                                });
-                                if (valid && currentStep < totalSteps) {
-                                    currentStep++;
-                                    updateUI();
-                                    window.scrollTo({ top: document.querySelector('#contacto').offsetTop - 100, behavior: 'smooth' });
-                                }
-                            });
-
-                            btnBack.addEventListener('click', () => {
-                                if (currentStep > 1) { currentStep--; updateUI(); }
-                            });
-
-                            // WhatsApp Integration
-                            form.addEventListener('submit', (e) => {
-                                const channel = form.querySelector('input[name="dm_channel"]:checked').value;
-                                if (channel === 'whatsapp') {
-                                    e.preventDefault();
-                                    const name = form.dm_name.value;
-                                    const company = form.dm_company.value;
-                                    const msg = form.dm_message.value;
-                                    const text = `Hola, soy ${name} de ${company}. ${msg}`;
-                                    window.open(`https://wa.me/5491156297160?text=${encodeURIComponent(text)}`, '_blank');
-                                    // Move to thanks anyway
-                                    window.location.href = '<?php echo home_url('/gracias'); ?>';
-                                }
-                                // If email, let WP standard form handle (if integrated, otherwise we'd need a backend endpoint)
-                            });
-
-                            // Radio Toggle
-                            form.querySelectorAll('input[type="radio"]').forEach(rad => {
-                                rad.addEventListener('change', () => {
-                                    form.querySelectorAll('.opt-box').forEach(box => box.classList.remove('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40'));
-                                    if(rad.checked) rad.nextElementSibling.classList.add('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40');
-                                });
-                            });
-                            form.querySelector('input[type="radio"]:checked').nextElementSibling.classList.add('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40');
-                        });
-                    </script>
 
 
                 </div>

@@ -10,7 +10,7 @@ $data = get_datamaq_site_data()['services'];
 
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:max-w-5xl tw:mb-24">
-            <span class="c-home-services__eyebrow">
+            <span class="dm-eyebrow">
                 <?php echo $data['eyebrow'] ?? 'Servicios'; ?>
             </span>
             <h2 class="c-home-section-title tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">

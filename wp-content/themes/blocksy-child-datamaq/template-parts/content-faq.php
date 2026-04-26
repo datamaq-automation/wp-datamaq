@@ -10,7 +10,7 @@ $data = get_datamaq_site_data()['faq'];
 
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:max-w-5xl tw:mx-auto tw:text-center tw:mb-24">
-            <span class="c-home-faq__eyebrow">
+            <span class="dm-eyebrow">
                 <?php echo $data['eyebrow'] ?? 'Ayuda'; ?>
             </span>
             <h2 class="tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">
