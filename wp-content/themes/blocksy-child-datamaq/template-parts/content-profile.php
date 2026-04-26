@@ -24,14 +24,14 @@ function get_profile_benefit_icon($text) {
 ?>
 <section id="perfil" class="section-mobile c-home-profile tw:py-24 tw:relative tw:overflow-hidden" aria-labelledby="perfil-title">
     <!-- Blue Ambient Glow for V6 feel -->
-    <div class="tw:absolute tw:top-[-20%] tw:right-[-10%] tw:w-[60vw] tw:h-[60vw] tw:rounded-full tw:bg-[#22d3ee]/10 tw:blur-[120px] tw:pointer-events-none"></div>
+    <div class="c-ambient-glow c-ambient-glow--blue tw:top-[-20%] tw:right-[-10%] tw:w-[60vw] tw:h-[60vw]"></div>
 
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-12 tw:gap-8 tw:items-stretch">
             
             <!-- Left Col: Profile Card -->
             <div class="tw:col-span-1 lg:tw:col-span-5">
-                <article class="c-home-panel c-home-profile__card tw:h-full tw:p-8 tw:bg-white/5 tw:backdrop-blur-md tw:border tw:border-white/10 tw:rounded-[1.5rem] tw:flex tw:flex-col tw:items-start">
+                <article class="dm-panel tw:h-full tw:p-8 tw:flex tw:flex-col tw:items-start">
                     <span class="c-home-eyebrow">EL PERFIL DEL T&Eacute;CNICO</span>
                     <div class="c-home-profile__avatar-wrap tw:w-full tw:flex tw:justify-center tw:mb-8">
                         <img 
@@ -45,7 +45,7 @@ function get_profile_benefit_icon($text) {
                     <p class="tw:text-white/70 tw:leading-relaxed tw:mb-8">
                         DataMaq trabaja sobre captura autom&aacute;tica de datos operativos, con foco en energ&iacute;a el&eacute;ctrica y producci&oacute;n.
                     </p>
-                    <a href="https://wa.me/5491156297160" class="tw:btn-primary tw:w-full tw:py-4 tw:rounded-xl tw:font-bold" style="background-color: #ff6a00; border-color: #ff6a00; color: #0c092f;">
+                    <a href="https://wa.me/5491156297160" class="dm-btn-primary tw:w-full tw:py-4">
                         Escribime directo por WhatsApp
                     </a>
                 </article>
@@ -53,7 +53,7 @@ function get_profile_benefit_icon($text) {
 
             <!-- Right Col: Benefits and Details -->
             <div class="tw:col-span-1 lg:tw:col-span-7">
-                <article class="c-home-panel c-home-profile__details tw:h-full tw:p-8 tw:bg-white/5 tw:backdrop-blur-md tw:border tw:border-white/10 tw:rounded-[1.5rem]">
+                <article class="dm-panel tw:h-full tw:p-8">
                     <p class="c-home-profile__section-label tw:text-white/40 tw:uppercase tw:tracking-[0.18em] tw:text-[0.7rem] tw:font-bold tw:mb-6">C&Oacute;MO TRABAJO</p>
                     <p class="c-home-profile__detail-copy tw:text-white/80 tw:leading-relaxed tw:mb-12">
                         Relevamiento en sitio y criterio de implementaci&oacute;n. Instalaci&oacute;n, integraci&oacute;n y puesta en marcha para captura autom&aacute;tica de datos.

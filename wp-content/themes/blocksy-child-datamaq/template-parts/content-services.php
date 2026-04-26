@@ -6,11 +6,11 @@ $data = get_datamaq_site_data()['services'];
 ?>
 <section id="servicios" class="c-home-services tw:py-32 tw:bg-[#111229] tw:relative tw:overflow-hidden">
     <!-- Vibrant ambient glow -->
-    <div class="c-ambient-glow tw:bg-[#4299e1] tw:top-[-20%] tw:right-[-10%] tw:opacity-[0.12]"></div>
+    <div class="c-ambient-glow tw:bg-[#4299e1] tw:top-[-20%] tw:right-[-10%]"></div>
 
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:max-w-5xl tw:mb-24">
-            <span class="c-home-services__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.05em;">
+            <span class="c-home-services__eyebrow">
                 <?php echo $data['eyebrow'] ?? 'Servicios'; ?>
             </span>
             <h2 class="c-home-section-title tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">
@@ -23,7 +23,7 @@ $data = get_datamaq_site_data()['services'];
 
         <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-3 tw:gap-14">
             <?php foreach ($data['cards'] as $card) : ?>
-            <article class="c-home-service-card tw:p-14 tw:glass-card-intensive tw:rounded-[4rem] tw:flex tw:flex-col tw:transition-all tw:group" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+            <article class="c-home-service-card tw:p-14 tw:glass-card-intensive tw:rounded-[4rem] tw:flex tw:flex-col tw:transition-all tw:group">
                 <div class="tw:flex-1">
                     <h3 class="tw:text-3xl tw:font-black tw:text-white tw:mb-4"><?php echo $card['title']; ?></h3>
                     <p class="tw:text-orange-400 tw:text-sm tw:font-black tw:uppercase tw:tracking-[0.3em] tw:mb-12"><?php echo $card['subtitle']; ?></p>
@@ -37,7 +37,7 @@ $data = get_datamaq_site_data()['services'];
                     </ul>
                 </div>
                 <div class="tw:pt-8">
-                    <a href="<?php echo esc_url($card['cta']['href']); ?>" class="tw:btn-outline tw:w-full tw:text-xl tw:font-medium tw:py-6 tw:border-white/10 group-hover:tw:border-orange-400/50" style="border-radius: 12px; text-align: center;">
+                    <a href="<?php echo esc_url($card['cta']['href']); ?>" class="dm-btn-outline tw:w-full tw:text-xl tw:py-6">
                         <?php echo $card['cta']['label']; ?>
                     </a>
                 </div>

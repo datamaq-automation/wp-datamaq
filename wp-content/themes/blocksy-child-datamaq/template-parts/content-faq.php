@@ -10,7 +10,7 @@ $data = get_datamaq_site_data()['faq'];
 
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:max-w-5xl tw:mx-auto tw:text-center tw:mb-24">
-            <span class="c-home-faq__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.1em;">
+            <span class="c-home-faq__eyebrow">
                 <?php echo $data['eyebrow'] ?? 'Ayuda'; ?>
             </span>
             <h2 class="tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">
@@ -23,7 +23,7 @@ $data = get_datamaq_site_data()['faq'];
 
         <div class="tw:max-w-5xl tw:mx-auto tw:space-y-8">
             <?php foreach ($data['items'] as $item) : ?>
-            <div class="c-home-faq__item tw:glass-card-intensive tw:glow-orange" style="border-radius: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); overflow: hidden;">
+            <div class="c-home-faq__item dm-faq-item tw:glow-orange">
                 <details class="tw:group">
                     <summary class="tw:p-12 tw:list-none tw:flex tw:justify-between tw:items-center tw:cursor-pointer">
                         <h4 class="tw:font-black tw:text-white tw:text-3xl tw:pr-12 tw:tracking-tight">
@@ -45,13 +45,5 @@ $data = get_datamaq_site_data()['faq'];
     </div>
 </section>
 
-<style>
-/* Remove default details arrow */
-summary::-webkit-details-marker {
-  display: none;
-}
-.c-home-faq__item summary {
-    list-style: none;
-}
-</style>
+
 

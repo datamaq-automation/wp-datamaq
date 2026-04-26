@@ -10,7 +10,7 @@ $process = get_datamaq_site_data()['process'];
 
     <div class="tw:container tw:mx-auto tw:px-4">
          <div class="tw:max-w-5xl tw:mb-20">
-            <span class="c-home-process__eyebrow" style="text-transform: uppercase; color: #ff6a00; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1.5rem; display: inline-block;">
+            <span class="c-home-process__eyebrow">
                 <?php echo $process['eyebrow'] ?? 'C&oacute;mo trabajamos'; ?>
             </span>
             <h2 class="tw:text-6xl lg:tw:text-8xl tw:font-black tw:text-white tw:mb-10 tw:tracking-tighter">

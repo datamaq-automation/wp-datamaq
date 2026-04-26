@@ -8,7 +8,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
 ?>
 <section id="contacto" class="tw:relative tw:py-24 tw:overflow-hidden">
     <!-- Grid Pattern refinement -->
-    <div class="tw:absolute tw:inset-0" style="background-image: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.03), transparent 70%);"></div>
+    <div class="tw:absolute tw:inset-0 tw:bg-gradient-to-b tw:from-cyan-500/5 tw:to-transparent"></div>
     
     <div class="tw:container tw:mx-auto tw:px-6 tw:relative tw:z-10">
         <div class="tw:max-w-5xl tw:mx-auto">
@@ -22,8 +22,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                 </div>
 
                 <!-- Form Card (12 cols for centered high-impactwizard) -->
-                <div class="lg:tw:col-span-10 lg:tw:col-start-2 tw:p-8 lg:tw:p-12 tw:rounded-[2.5rem] tw:border tw:border-white/10 tw:shadow-2xl" 
-                     style="background: rgba(12, 9, 47, 0.72); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); box-shadow: 0 40px 100px rgba(0,0,0,0.4);">
+                <div class="lg:tw:col-span-10 lg:tw:col-start-2 tw:p-8 lg:tw:p-12 dm-contact-card">
                     
                     <!-- Progress Stepper -->
                     <div class="tw:mb-16">
@@ -174,27 +173,7 @@ $contact_page = get_datamaq_site_data()['contactPage'];
                         });
                     </script>
 
-                    <style>
-                        .dm-input-v6 {
-                            width: 100%;
-                            background: rgba(255, 255, 255, 0.03) !important;
-                            border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                            border-radius: 1.25rem !important;
-                            padding: 1.25rem 2rem !important;
-                            color: white !important;
-                            font-size: 1.15rem !important;
-                            outline: none !important;
-                            transition: all 0.3s ease !important;
-                        }
-                        .dm-input-v6:focus {
-                            background: rgba(255, 255, 255, 0.05) !important;
-                            border-color: rgba(255, 106, 0, 0.4) !important;
-                            box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1);
-                        }
-                        .dm-form-step { animation: stepIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-                        @keyframes stepIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-                        .channel-opt:hover .opt-box { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); }
-                    </style>
+
                 </div>
 
             </div>
