@@ -32,9 +32,7 @@ $data = get_datamaq_site_data();
         </div>
     </footer>
 
-<?php if ( is_front_page() ) : ?>
-</div><!-- /.dm-app-shell -->
-<?php endif; ?>
+</div><!-- /.app-shell -->
 
 
 </div><!-- /#app -->
