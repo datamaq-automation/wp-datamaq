@@ -787,16 +787,34 @@ body::before {
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   min-height: 160px;
   justify-content: center;
+  padding: 1rem !important; /* Smaller padding for mobile */
+}
+
+@media (min-width: 640px) {
+  .opt-box {
+    padding: 1.5rem !important; /* Larger padding for desktop */
+    min-height: 180px;
+  }
 }
 
 .opt-box__circle {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 1.15rem;
+  height: 1.15rem;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
   position: relative;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .opt-box i {
+    font-size: 1.5rem !important; /* Smaller icons on mobile */
+  }
+  .opt-box span {
+    font-size: 8px !important; /* Smaller text on mobile */
+    letter-spacing: 0.05em !important;
+  }
 }
 
 .opt-box__circle::after {
