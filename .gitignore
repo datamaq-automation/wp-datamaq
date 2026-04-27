@@ -2,6 +2,7 @@
 wp-config.php
 .env
 .env.*
+.htaccess
 
 # Generated runtime content
 wp-content/uploads/

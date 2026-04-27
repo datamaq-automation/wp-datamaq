@@ -1149,6 +1149,7 @@ body {
   margin-bottom: 1rem;
   background: linear-gradient(to bottom, #fff, #aaa);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -1166,15 +1167,48 @@ body {
   gap: 1rem;
 }
 
-.thanks-actions .btn {
+.thanks-actions__whatsapp,
+.thanks-actions__home {
   padding: 1.2rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.thanks-actions__whatsapp {
+  background: var(--contact-accent);
+  color: white;
+  box-shadow: 0 10px 20px rgba(255, 106, 0, 0.2);
+}
+
+.thanks-actions__whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(255, 106, 0, 0.4);
+}
+
+.thanks-actions__home {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.thanks-actions__home:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* WhatsApp FAB Specific */
+.c-whatsapp-fab {
+  background-color: #25d366;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
 
 .thanks-stage__glow {
