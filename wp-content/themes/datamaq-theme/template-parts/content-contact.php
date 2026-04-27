@@ -73,19 +73,27 @@ try {
                                 <h3 class="c-contact__step-title">3. <?php echo esc_html($steps[2]); ?></h3>
                                 <div class="tw:space-y-6">
                                     <label class="c-contact__label">¿Cómo prefieres que te contactemos?</label>
-                                    <div class="tw:grid tw:grid-cols-1 sm:tw:grid-cols-2 tw:gap-4">
-                                        <label class="tw:relative tw:cursor-pointer">
+                                    <div class="tw:grid tw:grid-cols-2 tw:gap-4">
+                                        <label class="tw:relative tw:cursor-pointer group">
                                             <input type="radio" name="dm_channel" value="whatsapp" checked class="tw:sr-only">
-                                            <div class="opt-box tw:border tw:border-dm-accent tw:bg-dm-accent/10 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all">
-                                                <i class="bi bi-whatsapp tw:text-2xl tw:mb-2 tw:block"></i>
-                                                <span class="tw:text-xs tw:font-bold tw:uppercase">WhatsApp</span>
+                                            <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all tw:flex tw:flex-col tw:items-center tw:gap-4">
+                                                <!-- Línea 1: El círculo -->
+                                                <div class="opt-box__circle"></div>
+                                                <!-- Línea 2: El icono -->
+                                                <i class="bi bi-whatsapp tw:text-3xl"></i>
+                                                <!-- Línea 3: El texto -->
+                                                <span class="tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">WhatsApp</span>
                                             </div>
                                         </label>
-                                        <label class="tw:relative tw:cursor-pointer">
+                                        <label class="tw:relative tw:cursor-pointer group">
                                             <input type="radio" name="dm_channel" value="email" class="tw:sr-only">
-                                            <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all">
-                                                <i class="bi bi-envelope tw:text-2xl tw:mb-2 tw:block"></i>
-                                                <span class="tw:text-xs tw:font-bold tw:uppercase">E-mail</span>
+                                            <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all tw:flex tw:flex-col tw:items-center tw:gap-4">
+                                                <!-- Línea 1: El círculo -->
+                                                <div class="opt-box__circle"></div>
+                                                <!-- Línea 2: El icono -->
+                                                <i class="bi bi-envelope tw:text-3xl"></i>
+                                                <!-- Línea 3: El texto -->
+                                                <span class="tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">E-mail</span>
                                             </div>
                                         </label>
                                     </div>

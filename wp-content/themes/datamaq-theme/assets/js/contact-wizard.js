@@ -83,12 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
             phoneMark?.classList.add('tw:hidden');
             emailMark?.classList.remove('tw:hidden');
         }
-
-        // Visual Radio Feedback
-        contactForm.querySelectorAll('.opt-box').forEach(box => {
-            box.classList.remove('tw:border-dm-accent', 'tw:bg-dm-accent/10');
-            box.parentElement.querySelector('input').checked ? box.classList.add('tw:border-dm-accent', 'tw:bg-dm-accent/10') : null;
-        });
     }
 
     contactForm.querySelectorAll('input[name="dm_channel"]').forEach(rad => {
