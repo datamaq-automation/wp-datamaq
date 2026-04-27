@@ -153,6 +153,11 @@ function get_datamaq_site_data() {
             'placeholderName' => 'Ej: Agust&iacute;n',
             'placeholderMsg' => 'Describ&iacute; tu caso t&eacute;cnico...',
             'buttonLabel' => 'Continuar por WhatsApp'
+        ],
+        'footer' => [
+            'copyright' => '(c) {year} DataMaq | Gar&iacute;n (GBA Norte)',
+            'legal' => 'La informaci&oacute;n publicada es referencial y puede actualizarse seg&uacute;n alcance, tablero, se&ntilde;ales disponibles, conectividad, sistema destino y condiciones de implementaci&oacute;n.',
+            'whatsapp' => 'https://wa.me/5491156297160?text=Hola+DataMaq%2C+necesito+asistencia+t%C3%A9cnica+para+%5BTipo+de+Maquina%5D.'
         ]
     ];
 }

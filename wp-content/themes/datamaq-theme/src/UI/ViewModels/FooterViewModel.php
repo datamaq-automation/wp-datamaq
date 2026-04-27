@@ -2,12 +2,13 @@
 namespace DataMaq\UI\ViewModels;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\FooterSection;
 
 class FooterViewModel {
-    private array $data;
+    private FooterSection $footer;
 
     public function __construct(ContentRepositoryInterface $repo) {
-        $this->data = $repo->getSection('brand') ?? [];
+        $this->footer = $repo->getFooterSection();
     }
 
     public function getHomeUrl(): string {
@@ -19,10 +20,14 @@ class FooterViewModel {
     }
 
     public function getWhatsAppUrl(): string {
-        return $this->data['whatsapp'] ?? 'https://wa.me/5491156297160';
+        return $this->footer->getWhatsappUrl();
     }
 
     public function getCopyright(): string {
-        return sprintf('© %d DataMaq. Todos los derechos reservados.', date('Y'));
+        return $this->footer->getCopyrightNote();
+    }
+
+    public function getLegalText(): string {
+        return $this->footer->getLegalText();
     }
 }

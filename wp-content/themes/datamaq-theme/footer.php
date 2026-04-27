@@ -1,21 +1,31 @@
 <?php
-/**
- * Main Footer Template
- */
-$viewModel = new \DataMaq\UI\ViewModels\FooterViewModel(dm_content_repo());
+try {
+    $viewModel = new \DataMaq\UI\ViewModels\FooterViewModel(dm_content_repo());
+} catch (\Throwable $e) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        echo "<!-- Error in FooterViewModel: " . esc_html($e->getMessage()) . " -->";
+    }
+    $viewModel = null;
+}
 ?>
-    <footer class="c-home-footer tw:py-12 tw:bg-[#03041a] tw:border-t tw:border-white/5">
-        <div class="tw:container tw:mx-auto tw:px-6">
-            <div class="tw:flex tw:flex-col md:tw:flex-row tw:justify-between tw:items-center tw:gap-8">
-                <div class="tw:flex tw:items-center tw:gap-3">
-                    <span class="tw:font-black tw:tracking-tighter tw:text-2xl">DataMaq</span>
-                </div>
-                <div class="tw:text-sm /40">
-                    <?php echo esc_html($viewModel->getCopyright()); ?>
-                </div>
+<footer class="c-home-footer" role="contentinfo">
+    <div class="tw:container tw:mx-auto tw:px-4">
+        <div class="c-home-footer__shell">
+            <div>
+                <p class="c-home-footer__brand">DataMaq</p>
+                <p class="c-home-footer__note"><?php echo $viewModel ? esc_html($viewModel->getCopyright()) : '(c) ' . date('Y') . ' DataMaq'; ?></p>
             </div>
+
+            <p class="c-home-footer__legal">
+                <?php echo $viewModel ? esc_html($viewModel->getLegalText()) : ''; ?>
+            </p>
+            
+            <?php if ($viewModel) : ?>
+                <a class="c-home-footer__whatsapp" href="<?php echo esc_url($viewModel->getWhatsAppUrl()); ?>" target="_blank" rel="noopener noreferrer">Escribime</a>
+            <?php endif; ?>
         </div>
-    </footer>
+    </div>
+</footer>
 
     <nav class="c-home-dock tw:lg:hidden c-home-dock--direct" aria-label="Navegación rápida" style="--dock-columns: 2;">
         <a aria-current="page" href="<?php echo esc_url($viewModel->getHomeUrl()); ?>" class="c-home-dock__link">

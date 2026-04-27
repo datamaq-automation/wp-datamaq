@@ -9,6 +9,7 @@ use DataMaq\Domain\Content\BrandInfo;
 use DataMaq\Domain\Content\HeroSection;
 use DataMaq\Domain\Content\FaqSection;
 use DataMaq\Domain\Content\FaqItem;
+use DataMaq\Domain\Content\FooterSection;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -39,6 +40,16 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getFooterSection(): FooterSection {
+        $data = $this->data['footer'] ?? [];
+        
+        return new FooterSection(
+            $data['copyright'] ?? '(c) {year} DataMaq',
+            $data['legal'] ?? '',
+            $data['whatsapp'] ?? ''
+        );
     }
 
     public function getHeroSection(): HeroSection {
