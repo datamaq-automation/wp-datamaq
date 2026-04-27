@@ -5,7 +5,7 @@
  */
 $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
 ?>
-<section id="hero" data-dm-component="ScrollReveal" class="section-mobile c-home-hero c-home-hero--direct" aria-labelledby="hero-title" style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo esc_url($viewModel->getImageUrl()); ?>');">
+<section id="hero" data-dm-component="ScrollReveal" class="section-mobile c-home-hero c-home-hero--direct" aria-labelledby="hero-title" style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo get_template_directory_uri(); ?>/assets/media/hero-energy.svg');">
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-12 tw:gap-8 tw:items-end">
             
@@ -45,7 +45,7 @@ $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
             <div class="tw:col-span-1 tw:lg:col-span-5 tw:hidden tw:lg:block">
                 <article class="c-home-hero__media-card">
                     <p class="c-home-hero__media-label">Cobertura t&eacute;cnica activa</p>
-                    <img src="<?php echo esc_url($viewModel->getImageUrl()); ?>" alt="<?php echo esc_attr($viewModel->getTitle()); ?>" class="c-home-hero__image" width="900" height="700" fetchpriority="high" loading="eager" decoding="async">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/media/hero-energy.svg" alt="<?php echo esc_attr($viewModel->getTitle()); ?>" class="c-home-hero__image" width="900" height="700" fetchpriority="high" loading="eager" decoding="async">
                 </article>
             </div>
             

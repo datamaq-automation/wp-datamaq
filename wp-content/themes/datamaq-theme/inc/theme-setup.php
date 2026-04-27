@@ -27,7 +27,9 @@ function dm_enqueue_assets() {
     wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $version );
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
     wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $version );
-    wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/premium.css', array('tailwind-styles'), $version );
+    wp_enqueue_style( 'legacy-index-styles', $theme_uri . '/assets/css/index.css', array('tailwind-styles'), $version );
+    wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/HomePage.css', array('legacy-index-styles'), $version );
+    wp_enqueue_style( 'whatsapp-fab-styles', $theme_uri . '/assets/css/WhatsAppFab.css', array(), $version );
     
     if ( class_exists( 'LearnPress' ) ) {
         wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array(), '1.4.1' );
