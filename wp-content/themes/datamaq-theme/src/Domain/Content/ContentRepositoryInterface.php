@@ -16,6 +16,12 @@ interface ContentRepositoryInterface {
     public function getSection(string $key): ?array;
 
     /**
+     * Get the standalone contact page domain model.
+     * @return ContactPage
+     */
+    public function getFullContactPage(): ContactPage;
+
+    /**
      * Get the contact section domain model.
      * @return ContactSection
      */

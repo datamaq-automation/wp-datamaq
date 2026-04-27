@@ -11,6 +11,7 @@ use DataMaq\Domain\Content\FaqSection;
 use DataMaq\Domain\Content\FaqItem;
 use DataMaq\Domain\Content\FooterSection;
 use DataMaq\Domain\Content\ContactSection;
+use DataMaq\Domain\Content\ContactPage;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -41,6 +42,17 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getFullContactPage(): ContactPage {
+        $data = $this->data['contact'] ?? [];
+        
+        return new ContactPage(
+            $data['title'] ?? 'Contacto',
+            $data['introCopy'] ?? '',
+            $data['support']['channels'] ?? [],
+            $data['technician'] ?? []
+        );
     }
 
     public function getContactSection(): ContactSection {

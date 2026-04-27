@@ -147,12 +147,23 @@ function get_datamaq_site_data() {
         ],
         'contact' => [
             'eyebrow' => 'Contacto',
-            'title' => 'Inici&aacute; una consulta t&eacute;cnica',
+            'title' => 'Contacto',
             'subtitle' => 'Dejanos el contexto del caso y te respondemos con el siguiente paso.',
+            'introCopy' => 'Indic&aacute; qu&eacute; variable quer&eacute;s capturar, desde qu&eacute; equipo o proceso, con qu&eacute; objetivo y en qu&eacute; zona. Si ya cont&aacute;s con fotos del tablero, se&ntilde;ales disponibles o sistema destino, mejor.',
             'steps' => [
                 'Identidad',
                 'Proyecto',
                 'Contacto'
+            ],
+            'support' => [
+                'channels' => [
+                    'Formulario principal para consultas t&eacute;cnicas y comerciales.',
+                    'WhatsApp directo para coordinaci&oacute;n r&aacute;pida cuando est&eacute; habilitado.'
+                ]
+            ],
+            'technician' => [
+                'name' => 'Agustin Bustos',
+                'avatar' => '/media/tecnico-a-cargo.webp'
             ],
             'alternativeEmail' => 'info@datamaq.com.ar',
             'buttonLabel' => 'Continu&aacute;'
