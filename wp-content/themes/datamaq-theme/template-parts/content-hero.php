@@ -18,29 +18,37 @@ $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
                     <p class="c-home-hero__subtitle">
                         <?php echo esc_html($viewModel->getDescription()); ?>
                     </p>
-                <div class="c-home-hero__actions">
-                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" type="button" class="tw:btn-primary c-home-hero__primary">
-                        <?php echo esc_html($viewModel->getPrimaryCtaText()); ?>
-                    </button>
-                </div>
-            </div>
-
-            <div class="tw:relative lg:tw:block tw:hidden">
-                <div class="tw:glass-card-intensive tw:p-6 tw:rounded-[4rem] tw:shadow-2xl">
-                    <img 
-                        src="<?php echo $viewModel->getImageUrl(); ?>" 
-                        alt="<?php echo esc_attr($viewModel->getTitle()); ?>" 
-                        class="tw:w-full tw:h-auto tw:rounded-[3.2rem]"
-                    >
-                </div>
-                <div class="tw:absolute -tw:bottom-8 -tw:left-8 tw:glass-card-intensive tw:p-10 tw:rounded-3xl tw:shadow-2xl tw:border-orange-400/30">
-                    <div class="tw:flex tw:items-center tw:gap-6">
-                        <div class="tw:w-4 tw:h-4 tw:bg-green-500 tw:rounded-full tw:animate-pulse"></div>
-                        <span class=" tw:font-black tw:text-lg tw:uppercase tw:tracking-widest">Estado: Online</span>
+                    <div class="c-home-hero__actions">
+                        <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='#contacto'" type="button" class="tw:btn-primary c-home-hero__primary">
+                            <?php echo esc_html($viewModel->getPrimaryCtaText()); ?>
+                        </button>
                     </div>
+                    
+                    <p class="c-home-hero__urgency" role="status">
+                        <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+                        <span>Base operativa: Gar&iacute;n (GBA Norte). El alcance se define seg&uacute;n tablero, se&ntilde;ales disponibles, conectividad, sistema destino y objetivo operativo.</span>
+                    </p>
+                    <p class="c-home-hero__prefill"> WhatsApp abre con mensaje precargado para agilizar la asistencia. </p>
+                    
+                    <div class="c-home-hero__trust-inline" aria-label="Capacidades destacadas">
+                        <span class="c-home-hero__trust-chip">Base operativa: Gar&iacute;n (GBA Norte). El alcance se define seg&uacute;n tablero, se&ntilde;ales disponibles, conectividad, sistema destino y objetivo operativo.</span>
+                        <span class="c-home-hero__trust-chip">Instalaci&oacute;n de equipos IoT para captura de datos</span>
+                        <span class="c-home-hero__trust-chip">Asesoramiento t&eacute;cnico para an&aacute;lisis de datos</span>
+                    </div>
+                    
+                    <ul class="c-home-hero__signals" aria-label="Condiciones operativas">
+                        <li>Base operativa: Gar&iacute;n (GBA Norte). El alcance se define seg&uacute;n tablero, se&ntilde;ales disponibles, conectividad, sistema destino y objetivo operativo.</li>
+                    </ul>
                 </div>
             </div>
 
+            <div class="tw:col-span-1 tw:lg:col-span-5 tw:hidden tw:lg:block">
+                <article class="c-home-hero__media-card">
+                    <p class="c-home-hero__media-label">Cobertura t&eacute;cnica activa</p>
+                    <img src="<?php echo esc_url($viewModel->getImageUrl()); ?>" alt="<?php echo esc_attr($viewModel->getTitle()); ?>" class="c-home-hero__image" width="900" height="700" fetchpriority="high" loading="eager" decoding="async">
+                </article>
+            </div>
+            
         </div>
     </div>
 </section>
