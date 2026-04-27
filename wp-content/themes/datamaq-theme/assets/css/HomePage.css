@@ -6,22 +6,6 @@
 /* =========================================
    1. BASE & RESETS
    ========================================= */
-html, body {
-  height: auto;
-}
-
-html {
-  overflow: hidden auto;
-  scroll-behavior: smooth;
-}
-
-body {
-  overflow: visible;
-  background-color: #03041a;
-  color: rgb(226, 233, 243);
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
 
 @font-face {
   font-family: 'Inter';
