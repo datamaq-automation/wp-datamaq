@@ -2,27 +2,28 @@
 namespace DataMaq\UI\ViewModels;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\ServicesSection;
 
 class ServicesViewModel {
-    private array $data;
+    private ServicesSection $section;
 
     public function __construct(ContentRepositoryInterface $repo) {
-        $this->data = $repo->getSection('services') ?? [];
+        $this->section = $repo->getServicesSection();
     }
 
     public function getEyebrow(): string {
-        return $this->data['eyebrow'] ?? 'Servicios';
+        return $this->section->getEyebrow();
     }
 
     public function getTitle(): string {
-        return $this->data['title'] ?? 'Nuestros Servicios';
+        return $this->section->getTitle();
     }
 
     public function getIntro(): string {
-        return $this->data['intro'] ?? '';
+        return $this->section->getIntro();
     }
 
-    public function getCards(): array {
-        return $this->data['cards'] ?? [];
+    public function getServices(): array {
+        return $this->section->getServices();
     }
 }

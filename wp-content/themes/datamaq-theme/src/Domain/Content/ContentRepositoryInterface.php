@@ -16,8 +16,8 @@ interface ContentRepositoryInterface {
     public function getSection(string $key): ?array;
 
     /**
-     * Get the profile section domain model.
-     * @return ProfileSection
+     * Get the services section domain model.
+     * @return ServicesSection
      */
-    public function getProfileSection(): ProfileSection;
+    public function getServicesSection(): ServicesSection;
 }

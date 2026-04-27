@@ -3,6 +3,8 @@ namespace DataMaq\Infrastructure\Content;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
 use DataMaq\Domain\Content\ProfileSection;
+use DataMaq\Domain\Content\ServicesSection;
+use DataMaq\Domain\Content\ServiceItem;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -46,6 +48,30 @@ class StaticContentRepository implements ContentRepositoryInterface {
             $data['photo'] ?? '',
             $data['bullets'] ?? [],
             $data['whatsappLabel'] ?? 'Escribime directo por WhatsApp'
+        );
+    }
+
+    public function getServicesSection(): ServicesSection {
+        $data = $this->data['services'] ?? [];
+        $services = [];
+
+        foreach (($data['cards'] ?? []) as $card) {
+            $services[] = new ServiceItem(
+                $card['title'] ?? '',
+                $card['description'] ?? '',
+                $card['subtitle'] ?? '',
+                $card['items'] ?? [],
+                $card['note'] ?? '',
+                $card['cta']['label'] ?? '',
+                $card['icon'] ?? 'bi-check2-circle'
+            );
+        }
+
+        return new ServicesSection(
+            $data['eyebrow'] ?? 'Servicios',
+            $data['title'] ?? '',
+            $data['intro'] ?? '',
+            $services
         );
     }
 }

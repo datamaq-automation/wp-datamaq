@@ -30,19 +30,46 @@ function get_datamaq_site_data() {
             'intro' => 'Servicios orientados a captura autom&aacute;tica de datos, integraci&oacute;n t&eacute;cnica y formaci&oacute;n aplicada sobre casos reales.',
             'cards' => [
                 [
-                    'id' => 'iot', 'title' => 'Instalaci&oacute;n IoT', 'subtitle' => 'Captura y Comunicaci&oacute;n',
-                    'items' => ['Medici&oacute;n de kWh y potencia', 'Captura de kilos o estados'],
-                    'cta' => ['label' => 'Consult&aacute; por instalaci&oacute;n', 'href' => '#contacto']
+                    'id' => 'iot', 
+                    'title' => 'Instalaci&oacute;n de equipos IoT para captura de datos', 
+                    'description' => 'Relevamiento, montaje, configuraci&oacute;n y puesta en marcha de soluciones para medir variables el&eacute;ctricas y operativas en tableros, l&iacute;neas o puntos definidos.',
+                    'subtitle' => 'Captura, comunicaci&oacute;n e integraci&oacute;n inicial',
+                    'items' => [
+                        'Medici&oacute;n de kWh, potencia, factor de potencia y distorsi&oacute;n arm&oacute;nica', 
+                        'Captura de kilos, unidades, metros, velocidades o estados',
+                        'Integraci&oacute;n inicial con Powermate o sistemas de terceros'
+                    ],
+                    'note' => 'Seg&uacute;n el caso, la implementaci&oacute;n puede apoyarse en Powermeter, Automate u otros equipos compatibles con la variable a capturar y el objetivo del proyecto.',
+                    'cta' => ['label' => 'Consult&aacute; por instalaci&oacute;n', 'href' => '#contacto'],
+                    'icon' => 'bi-bar-chart-line-fill'
                 ],
                 [
-                    'id' => 'data', 'title' => 'Asesoramiento', 'subtitle' => 'Datos y Estructura',
-                    'items' => ['An&aacute;lisis de consumo el&eacute;ctrico', 'Ordenamiento de bases y APIs'],
-                    'cta' => ['label' => 'Consult&aacute; asesoramiento', 'href' => '#contacto']
+                    'id' => 'data', 
+                    'title' => 'Asesoramiento t&eacute;cnico para an&aacute;lisis de datos', 
+                    'description' => 'Acompa&ntilde;amiento para estructurar, interpretar y explotar datos ya capturados, con foco en seguimiento operativo, diagn&oacute;stico y criterio de decisi&oacute;n.',
+                    'subtitle' => 'Datos, estructura y criterio t&eacute;cnico',
+                    'items' => [
+                        'An&aacute;lisis de consumo energ&eacute;tico y comportamiento operativo', 
+                        'Ordenamiento de datos desde bases, planillas, APIs o sistemas existentes',
+                        'Soporte para reportes, dashboards y automatizaciones de seguimiento'
+                    ],
+                    'note' => 'El asesoramiento puede incluir Python, bases de datos, APIs e integraciones cuando el caso requiere tratamiento, cruce o automatizaci&oacute;n de informaci&oacute;n.',
+                    'cta' => ['label' => 'Consult&aacute; por asesoramiento', 'href' => '#contacto'],
+                    'icon' => 'bi-bar-chart-line-fill'
                 ],
                 [
-                    'id' => 'edu', 'title' => 'Capacitaciones', 'subtitle' => 'Python y An&aacute;lisis',
-                    'items' => ['Python con NumPy y Pandas', 'Gesti&oacute;n de bases de datos'],
-                    'cta' => ['label' => 'Ver cursos', 'href' => 'https://cursos.datamaq.com.ar']
+                    'id' => 'edu', 
+                    'title' => 'Capacitaciones aplicadas', 
+                    'description' => 'Formaci&oacute;n t&eacute;cnica orientada a equipos que necesiten trabajar con datos operativos, Python, bases de datos, APIs o integraciones sobre casos reales.',
+                    'subtitle' => 'Capacitaci&oacute;n sobre casos concretos',
+                    'items' => [
+                        'Python aplicado con NumPy, pandas y Matplotlib', 
+                        'Buenas pr&aacute;cticas para trabajar con bases de datos y APIs',
+                        'Capacitaci&oacute;n adaptada al nivel t&eacute;cnico y al caso real del equipo'
+                    ],
+                    'note' => 'No se trata de formaci&oacute;n gen&eacute;rica. El enfoque se ajusta al problema, los datos disponibles y el nivel t&eacute;cnico de quienes participan.',
+                    'cta' => ['label' => 'Consult&aacute; por capacitaci&oacute;n', 'href' => 'https://cursos.datamaq.com.ar'],
+                    'icon' => 'bi-gear-wide-connected'
                 ]
             ]
         ],
