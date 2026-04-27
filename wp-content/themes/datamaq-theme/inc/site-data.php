@@ -73,12 +73,14 @@ function get_datamaq_site_data() {
             ]
         ],
         'profile' => [
-            'name' => 'Agust&iacute;n Bustos',
-            'lead' => 'DataMaq trabaja sobre captura autom&aacute;tica de datos operativos, con foco en energ&iacute;a el&eacute;ctrica y producci&oacute;n.',
+            'name' => 'Agustin Bustos',
+            'role' => 'Sobre DataMaq',
+            'lead' => 'DataMaq trabaja sobre captura autom&aacute;tica de datos operativos, con foco en energ&iacute;a el&eacute;ctrica, producci&oacute;n y variables cr&iacute;ticas de seguimiento.',
+            'how_i_work' => 'El servicio combina relevamiento en campo, implementaci&oacute;n t&eacute;cnica, integraci&oacute;n inicial y acompa&ntilde;amiento para que los datos capturados puedan usarse con criterio en an&aacute;lisis, seguimiento o capacitaci&oacute;n.',
             'bullets' => [
                 'Relevamiento en sitio y criterio de implementaci&oacute;n.',
-                'Instalaci&oacute;n e integraci&oacute;n para captura autom&aacute;tica.',
-                'Asesoramiento sobre Python, datos y APIs.'
+                'Instalaci&oacute;n, integraci&oacute;n y puesta en marcha para captura autom&aacute;tica de datos.',
+                'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.'
             ],
             'photo' => $theme_url . '/assets/media/tecnico-a-cargo.webp',
             'whatsappLabel' => 'Escribime directo por WhatsApp'

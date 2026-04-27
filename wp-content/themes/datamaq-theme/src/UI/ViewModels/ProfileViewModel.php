@@ -2,40 +2,37 @@
 namespace DataMaq\UI\ViewModels;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\ProfileSection;
 
 class ProfileViewModel {
-    private array $data;
+    private ProfileSection $profile;
 
     public function __construct(ContentRepositoryInterface $repo) {
-        $this->data = $repo->getSection('profile') ?? [];
+        $this->profile = $repo->getProfileSection();
     }
 
     public function getName(): string {
-        return $this->data['name'] ?? 'Agustin Bustos';
+        return $this->profile->getName();
     }
 
     public function getRole(): string {
-        return $this->data['role'] ?? 'Sobre DataMaq';
+        return $this->profile->getRole();
     }
 
     public function getPhotoUrl(): string {
-        return $this->data['photo'] ?? get_template_directory_uri() . '/assets/media/tecnico-a-cargo.webp';
+        return $this->profile->getPhotoUrl();
     }
 
     public function getIntroduction(): string {
-        return $this->data['introduction'] ?? 'DataMaq trabaja sobre captura automática de datos operativos, con foco en energía eléctrica, producción y variables críticas de seguimiento.';
+        return $this->profile->getIntroduction();
     }
 
     public function getHowIWork(): string {
-        return $this->data['how_i_work'] ?? 'El servicio combina relevamiento en campo, implementación técnica, integración inicial y acompañamiento para que los datos capturados puedan usarse con criterio en análisis, seguimiento o capacitación.';
+        return $this->profile->getHowIWork();
     }
 
     public function getItems(): array {
-        return $this->data['items'] ?? [
-            'Relevamiento en sitio y criterio de implementación.',
-            'Instalación, integración y puesta en marcha para captura automática de datos.',
-            'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.'
-        ];
+        return $this->profile->getBenefits();
     }
 
     public function getBenefitIcon(string $text): string {

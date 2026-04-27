@@ -2,6 +2,7 @@
 namespace DataMaq\Infrastructure\Content;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\ProfileSection;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -14,13 +15,14 @@ class StaticContentRepository implements ContentRepositoryInterface {
             $this->data = [];
         }
 
-        // Validation - Phase 4 Blindage
-        try {
-            ContentValidator::validate($this->data);
-        } catch (\Exception $e) {
-            // In a real environment we might log this or handle it gracefully
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                error_log('DataMaq Content Validation Error: ' . $e->getMessage());
+        // Validation - Blindage
+        if (class_exists('DataMaq\Domain\Shared\Validation\ContentValidator')) {
+            try {
+                \DataMaq\Domain\Shared\Validation\ContentValidator::validate($this->data);
+            } catch (\Throwable $e) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    error_log('DataMaq Content Validation Error: ' . $e->getMessage());
+                }
             }
         }
     }
@@ -31,5 +33,19 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getProfileSection(): ProfileSection {
+        $data = $this->data['profile'] ?? [];
+        
+        return new ProfileSection(
+            $data['name'] ?? 'Agustin Bustos',
+            $data['role'] ?? 'Sobre DataMaq',
+            $data['lead'] ?? '',
+            $data['how_i_work'] ?? '',
+            $data['photo'] ?? '',
+            $data['bullets'] ?? [],
+            $data['whatsappLabel'] ?? 'Escribime directo por WhatsApp'
+        );
     }
 }

@@ -9,9 +9,15 @@ interface ContentRepositoryInterface {
     public function getAll(): array;
 
     /**
-     * Get a specific section by key.
+     * Get a specific section by key (Legacy Support).
      * @param string $key
      * @return array|null
      */
     public function getSection(string $key): ?array;
+
+    /**
+     * Get the profile section domain model.
+     * @return ProfileSection
+     */
+    public function getProfileSection(): ProfileSection;
 }

@@ -2,7 +2,14 @@
 /**
  * Template part for displaying the profile section.
  */
-$viewModel = new \DataMaq\UI\ViewModels\ProfileViewModel(dm_content_repo());
+try {
+    $viewModel = new \DataMaq\UI\ViewModels\ProfileViewModel(dm_content_repo());
+} catch (\Throwable $e) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        echo "<!-- Error in ProfileViewModel: " . esc_html($e->getMessage()) . " -->";
+    }
+    return; // Don't render the section if it fails
+}
 ?>
 <section id="perfil" data-dm-component="ScrollReveal" class="section-mobile c-home-profile" aria-labelledby="perfil-title">
     <div class="tw:container tw:mx-auto tw:px-4">
@@ -14,7 +21,7 @@ $viewModel = new \DataMaq\UI\ViewModels\ProfileViewModel(dm_content_repo());
                     <div class="c-home-profile__avatar-wrap tw:flex">
                         <img 
                             src="<?php echo esc_url($viewModel->getPhotoUrl()); ?>" 
-                            alt="<?php echo esc_attr($viewModel->getName()); ?>" 
+                            alt="T&eacute;cnico a cargo de la implementaci&oacute;n" 
                             class="c-home-profile__avatar" 
                             width="700" 
                             height="933" 
