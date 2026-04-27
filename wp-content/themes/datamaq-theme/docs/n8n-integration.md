@@ -3,9 +3,11 @@
 Este documento define el contrato de integración para el sistema de captura de Leads del tema DataMaq.
 
 ## 1. Endpoint del Webhook
-- **URL Temporal**: `https://n8n.datamaq.com.ar/webhook/contact-form`
+- **URL por defecto**: `https://n8n.datamaq.com.ar/webhook/contact-form`
+- **Configuración en WordPress**: la URL puede cambiarse desde `Ajustes -> n8n Integration` mediante la opción `dm_n8n_webhook_url`.
 - **Método HTTP**: `POST`
 - **Content-Type**: `application/json`
+- **Autenticación actual**: sin cabeceras de autenticación.
 
 ## 2. Estructura del Payload (JSON)
 WordPress enviará siempre el siguiente esquema de datos:
@@ -25,9 +27,25 @@ WordPress enviará siempre el siguiente esquema de datos:
 }
 ```
 
+### Mapeo desde WordPress
+El payload se construye en `DataMaq\Infrastructure\Lead\N8nLeadRepository` a partir de `LeadEntity`.
+
+| Campo JSON | Origen en WordPress | Observaciones |
+| --- | --- | --- |
+| `source` | Valor fijo | Siempre `datamaq_wp_theme`. |
+| `timestamp` | Servidor WordPress | Formato ISO 8601 generado con `date('c')`. |
+| `data.name` | `LeadEntity::getName()` | Campo mínimo recomendado para validar en n8n. |
+| `data.email` | `LeadEntity::getEmail()` | Puede estar vacío si el lead incluye teléfono. |
+| `data.phone` | `LeadEntity::getPhone()` | Puede estar vacío. |
+| `data.company` | `LeadEntity::toArray()['company']` | Opcional. |
+| `data.message` | `LeadEntity::toArray()['message']` | Opcional. |
+| `data.channel` | `LeadEntity::toArray()['channel']` | Se normaliza a `whatsapp` o `email`; cualquier otro valor se envía como `email`. |
+
 ## 3. Comportamiento y Errores
 - **Asincronía**: El envío desde WordPress es no-bloqueante (`blocking: false`). Esto significa que WordPress no esperará a que n8n procese el flujo para mostrar la página de éxito al usuario.
 - **Respuesta Esperada**: n8n debe responder con un código HTTP `200` o `202` para confirmar la recepción.
+- **Limitación de WordPress**: al usar `blocking: false`, WordPress solo puede detectar errores locales al iniciar la petición (`WP_Error`). No valida el código HTTP final devuelto por n8n.
+- **Registro local**: si WordPress no puede iniciar la petición, se registra el error técnico con `error_log`.
 - **Seguridad**: Por el momento no se requiere cabecera de autenticación. Si se implementa en el futuro, se utilizará la cabecera `Authorization: Bearer <TOKEN>`.
 
 ## 4. Seguridad y Buenas Prácticas (Recomendado)

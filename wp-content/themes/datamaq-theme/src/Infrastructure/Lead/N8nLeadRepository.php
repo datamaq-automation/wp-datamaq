@@ -8,15 +8,18 @@ use DataMaq\Domain\Lead\LeadRepositoryInterface;
  * Implementation of LeadRepository for n8n Webhooks.
  */
 class N8nLeadRepository implements LeadRepositoryInterface {
+    const DEFAULT_WEBHOOK_URL = 'https://n8n.datamaq.com.ar/webhook/contact-form';
+
     private string $webhookUrl;
 
     public function __construct(string $webhookUrl = '') {
         // Fetch from WP Admin settings, fallback to provided or hardcoded
-        $this->webhookUrl = $webhookUrl ?: get_option('dm_n8n_webhook_url', 'https://n8n.datamaq.com.ar/webhook/contact-form');
+        $this->webhookUrl = $webhookUrl ?: get_option('dm_n8n_webhook_url', self::DEFAULT_WEBHOOK_URL);
     }
 
     public function save(LeadEntity $lead): bool {
         $data = $lead->toArray();
+        $channel = $this->normalizeChannel($data['channel'] ?? 'email');
         
         $payload = [
             'source' => 'datamaq_wp_theme',
@@ -27,17 +30,27 @@ class N8nLeadRepository implements LeadRepositoryInterface {
                 'phone' => $lead->getPhone(),
                 'company' => $data['company'] ?? '',
                 'message' => $data['message'] ?? '',
-                'channel' => $data['channel'] ?? 'email'
+                'channel' => $channel,
             ]
         ];
 
         $response = wp_remote_post($this->webhookUrl, [
-            'body' => json_encode($payload),
+            'body' => wp_json_encode($payload),
             'headers' => ['Content-Type' => 'application/json'],
             'timeout' => 15,
             'blocking' => false // Faster UX
         ]);
 
+        if (is_wp_error($response)) {
+            error_log('DataMaq n8n lead webhook error: ' . $response->get_error_message());
+        }
+
         return !is_wp_error($response);
+    }
+
+    private function normalizeChannel(string $channel): string {
+        $channel = strtolower(trim($channel));
+
+        return in_array($channel, ['whatsapp', 'email'], true) ? $channel : 'email';
     }
 }

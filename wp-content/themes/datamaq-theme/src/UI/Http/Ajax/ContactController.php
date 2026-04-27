@@ -14,14 +14,24 @@ class ContactController {
 
             // Map frontend fields (prefix dm_) to domain entity
             $name = sanitize_text_field($_POST['dm_name'] ?? '');
-            $email = sanitize_email($_POST['dm_email'] ?? 'info@datamaq.com.ar');
+            $email = sanitize_email($_POST['dm_email'] ?? '');
             $company = sanitize_text_field($_POST['dm_company'] ?? '');
             $message = sanitize_text_field($_POST['dm_message'] ?? '');
             $channel = sanitize_text_field($_POST['dm_channel'] ?? 'whatsapp');
             $phone = sanitize_text_field($_POST['dm_phone'] ?? '');
 
+            $errors = [];
+
             if (empty($name)) {
-                throw new ValidationException(['dm_name' => 'El nombre es obligatorio']);
+                $errors['dm_name'] = 'El nombre es obligatorio';
+            }
+
+            if (empty($email) && empty($phone)) {
+                $errors['dm_contact'] = 'Indica un email o teléfono de contacto';
+            }
+
+            if (!empty($errors)) {
+                throw new ValidationException($errors);
             }
 
             // Infrastructure Injection
