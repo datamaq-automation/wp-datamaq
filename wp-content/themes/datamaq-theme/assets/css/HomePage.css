@@ -662,7 +662,7 @@ body::before {
   text-decoration: none;
   font-weight: 700;
 }
-.c-home-dock {
+
   position: fixed;
   left: 0.85rem;
   right: 0.85rem;
