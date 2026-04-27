@@ -9,7 +9,8 @@ Este documento define el contrato de integración para el sistema de captura de 
 - **Content-Type**: `application/json`
 - **Autenticación actual**: opcional mediante `X-API-KEY`.
 - **Secreto de autenticación**: debe definirse fuera del repositorio, por ejemplo en `wp-config.php` con la constante `DATAMAQ_N8N_API_KEY`.
-- **Configuración de n8n**: el workflow, credenciales y variables de entorno de n8n no forman parte de este tema y no deben versionarse en este repositorio.
+- **Workflow n8n versionado**: `docs/n8n/contact-form.production.sanitized.json` contiene una copia sanitizada de producción para trazabilidad y recuperación.
+- **Configuración de n8n**: credenciales, tokens, variables de entorno, datos de ejecución y exports sin sanitizar no deben versionarse en este repositorio.
 
 ## 2. Estructura del Payload (JSON)
 WordPress enviará siempre el siguiente esquema de datos:
@@ -57,6 +58,15 @@ Para asegurar la fiabilidad del sistema en producción, se sugieren las siguient
 - **Retry Logic**: n8n debería estar configurado con "Retry on Fail" en los nodos críticos (como el envío de emails o escritura en CRM) para manejar errores temporales de red.
 - **Global Error Trigger**: Se sugiere crear un flujo de error en n8n que notifique al equipo técnico si un lead no pudo ser procesado correctamente tras ser recibido.
 - **Validación en Entrada**: n8n debe tratar el JSON como "no confiable" y validar la presencia de los campos mínimos (`name`, `phone` o `email`) antes de disparar el resto del flujo.
+
+## 5. Sanitización del Workflow Versionado
+Antes de actualizar `docs/n8n/contact-form.production.sanitized.json`, revisar que el export no incluya:
+
+- Credenciales, tokens, API keys, secretos Turnstile, contraseñas o URLs privadas con tokens.
+- `pinData`, datos reales de ejecución, ejemplos con información personal o respuestas de servicios externos.
+- IDs o metadatos innecesarios de cuentas, usuarios o proyectos de n8n.
+
+El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY`, `DATAMAQ_SUITECRM_WEBHOOK_URL`, `DATAMAQ_SUITECRM_WEBHOOK_API_KEY`, `N8N_TELEGRAM_BOT_TOKEN` y `N8N_TELEGRAM_CHAT_ID`.
 
 ---
 **Nota para el desarrollador**: Cualquier cambio en los nombres de las claves de la sección `data` debe ser coordinado para actualizar la entidad `LeadEntity` en el código PHP del tema.
