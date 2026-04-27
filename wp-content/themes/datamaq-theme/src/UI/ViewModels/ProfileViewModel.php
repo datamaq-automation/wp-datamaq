@@ -15,23 +15,27 @@ class ProfileViewModel {
     }
 
     public function getRole(): string {
-        return $this->data['role'] ?? 'Técnico en Automatización y Datos';
+        return $this->data['role'] ?? 'Sobre DataMaq';
     }
 
     public function getPhotoUrl(): string {
-        return $this->data['photo'] ?? '';
+        return $this->data['photo'] ?? get_template_directory_uri() . '/assets/media/tecnico-a-cargo.webp';
     }
 
     public function getIntroduction(): string {
-        return $this->data['introduction'] ?? 'DataMaq trabaja sobre captura automática de datos operativos, con foco en energía eléctrica y producción.';
+        return $this->data['introduction'] ?? 'DataMaq trabaja sobre captura automática de datos operativos, con foco en energía eléctrica, producción y variables críticas de seguimiento.';
     }
 
     public function getHowIWork(): string {
-        return $this->data['how_i_work'] ?? 'Relevamiento en sitio y criterio de implementación. Instalación, integración y puesta en marcha para captura automática de datos.';
+        return $this->data['how_i_work'] ?? 'El servicio combina relevamiento en campo, implementación técnica, integración inicial y acompañamiento para que los datos capturados puedan usarse con criterio en análisis, seguimiento o capacitación.';
     }
 
     public function getItems(): array {
-        return $this->data['items'] ?? [];
+        return $this->data['items'] ?? [
+            'Relevamiento en sitio y criterio de implementación.',
+            'Instalación, integración y puesta en marcha para captura automática de datos.',
+            'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.'
+        ];
     }
 
     public function getBenefitIcon(string $text): string {
