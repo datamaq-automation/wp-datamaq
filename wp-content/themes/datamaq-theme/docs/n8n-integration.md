@@ -7,7 +7,9 @@ Este documento define el contrato de integración para el sistema de captura de 
 - **Configuración en WordPress**: la URL puede cambiarse desde `Ajustes -> n8n Integration` mediante la opción `dm_n8n_webhook_url`.
 - **Método HTTP**: `POST`
 - **Content-Type**: `application/json`
-- **Autenticación actual**: sin cabeceras de autenticación.
+- **Autenticación actual**: opcional mediante `X-API-KEY`.
+- **Secreto de autenticación**: debe definirse fuera del repositorio, por ejemplo en `wp-config.php` con la constante `DATAMAQ_N8N_API_KEY`.
+- **Configuración de n8n**: el workflow, credenciales y variables de entorno de n8n no forman parte de este tema y no deben versionarse en este repositorio.
 
 ## 2. Estructura del Payload (JSON)
 WordPress enviará siempre el siguiente esquema de datos:
@@ -46,12 +48,12 @@ El payload se construye en `DataMaq\Infrastructure\Lead\N8nLeadRepository` a par
 - **Respuesta Esperada**: n8n debe responder con un código HTTP `200` o `202` para confirmar la recepción.
 - **Limitación de WordPress**: al usar `blocking: false`, WordPress solo puede detectar errores locales al iniciar la petición (`WP_Error`). No valida el código HTTP final devuelto por n8n.
 - **Registro local**: si WordPress no puede iniciar la petición, se registra el error técnico con `error_log`.
-- **Seguridad**: Por el momento no se requiere cabecera de autenticación. Si se implementa en el futuro, se utilizará la cabecera `Authorization: Bearer <TOKEN>`.
+- **Seguridad**: si `DATAMAQ_N8N_API_KEY` está definida y no está vacía, WordPress envía la cabecera `X-API-KEY` con ese valor. Si no está definida, no se envía ninguna cabecera de autenticación.
 
 ## 4. Seguridad y Buenas Prácticas (Recomendado)
 Para asegurar la fiabilidad del sistema en producción, se sugieren las siguientes implementaciones:
 
-- **Autenticación**: Se recomienda encarecidamente añadir una cabecera `X-API-KEY` o usar **HMAC Signature** para verificar que los leads provienen exclusivamente de este WordPress.
+- **Autenticación en n8n**: si se activa `X-API-KEY` del lado WordPress, n8n debe validar esa cabecera contra un secreto guardado en su propia configuración o variables de entorno.
 - **Retry Logic**: n8n debería estar configurado con "Retry on Fail" en los nodos críticos (como el envío de emails o escritura en CRM) para manejar errores temporales de red.
 - **Global Error Trigger**: Se sugiere crear un flujo de error en n8n que notifique al equipo técnico si un lead no pudo ser procesado correctamente tras ser recibido.
 - **Validación en Entrada**: n8n debe tratar el JSON como "no confiable" y validar la presencia de los campos mínimos (`name`, `phone` o `email`) antes de disparar el resto del flujo.

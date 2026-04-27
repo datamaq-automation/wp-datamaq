@@ -36,7 +36,7 @@ class N8nLeadRepository implements LeadRepositoryInterface {
 
         $response = wp_remote_post($this->webhookUrl, [
             'body' => wp_json_encode($payload),
-            'headers' => ['Content-Type' => 'application/json'],
+            'headers' => $this->getHeaders(),
             'timeout' => 15,
             'blocking' => false // Faster UX
         ]);
@@ -46,6 +46,16 @@ class N8nLeadRepository implements LeadRepositoryInterface {
         }
 
         return !is_wp_error($response);
+    }
+
+    private function getHeaders(): array {
+        $headers = ['Content-Type' => 'application/json'];
+
+        if (defined('DATAMAQ_N8N_API_KEY') && trim((string) DATAMAQ_N8N_API_KEY) !== '') {
+            $headers['X-API-KEY'] = trim((string) DATAMAQ_N8N_API_KEY);
+        }
+
+        return $headers;
     }
 
     private function normalizeChannel(string $channel): string {
