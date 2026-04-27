@@ -8,11 +8,14 @@
 ## Arquitectura y Backend
 - [x] **Configuración Dinámica n8n**: Implementada página de ajustes en WordPress (Ajustes -> n8n Integration) para gestionar la URL del webhook. ✅
 - [x] **Refactor de Contacto (SOLID)**: Migrado a Clean Architecture con repositorio e inyección de dependencias. ✅
-- [ ] **Refactor de FAQs**: Convertir el sistema de FAQs actual en un Custom Post Type (CPT) para que sea editable desde el admin de WordPress siguiendo la arquitectura DDD.
+- [x] **Página de Gracias Premium**: Creada página de confirmación con diseño modular y standalone. ✅
+- [ ] **Refactor de FAQs**: Convertir el sistema de FAQs actual en un Custom Post Type (CPT).
 - [ ] **Refactor de Perfil**: Migrar la sección de perfil a la nueva estructura de repositorio y dominio.
 
-## Documentación
-- [x] **Contrato n8n**: Documentación técnica para el desarrollador backend creada en `docs/n8n-integration.md`. ✅
+## Sincronización VPS (Manual)
+- [ ] **Limpieza de Base de Datos**: Borrar páginas duplicadas de "Gracias" y "Contacto" en el Admin de la VPS.
+- [ ] **Asignación de Plantillas**: Asegurar que las páginas `/contacto` y `/gracias` usen sus respectivas plantillas ("Contacto Técnico" y "Página de Gracias").
+- [ ] **Limpieza de Caché**: Forzar vaciado de caché en el servidor si los cambios CSS/JS no se reflejan.
 
 ## Rendimiento
-- [ ] **Optimización de Assets**: Revisar si podemos combinar `index.css` y `HomePage.css` para reducir peticiones HTTP ahora que la estructura está más estable.
+- [ ] **Optimización de Assets**: Combinar `index.css` y `HomePage.css`.
