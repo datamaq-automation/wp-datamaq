@@ -663,57 +663,59 @@ body::before {
   font-weight: 700;
 }
 
+.c-home-dock {
   position: fixed;
-  left: 0.85rem;
-  right: 0.85rem;
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 0.75rem);
-  z-index: 1045;
+  bottom: 1.5rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 1000;
+  background: rgba(12, 9, 47, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  padding: 0.75rem;
   display: grid;
-  grid-template-columns: repeat(var(--dock-columns, 4), minmax(0, 1fr));
-  gap: 0.35rem;
-  padding: 0.5rem;
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.1);
-  border-radius: 1.35rem;
-  background: rgba(var(--dm-surface-0-rgb), 0.9);
-  box-shadow: 0 1rem 2rem rgba(var(--dm-shadow-rgb), 0.35);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  grid-template-columns: repeat(var(--dock-columns), 1fr);
+  gap: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
+
 .c-home-dock__link {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.3rem;
-  min-height: 4.2rem;
-  border-radius: 0.95rem;
-  color: rgba(var(--dm-text-0-rgb), 0.66);
+  gap: 0.25rem;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 1.25rem;
 }
-.c-home-dock__link:hover,
-.c-home-dock__link:focus-visible {
-  color: rgb(var(--dm-accent-orange-rgb));
-  background: rgba(var(--dm-accent-orange-rgb), 0.12);
-}
+
 .c-home-dock__link i {
   font-size: 1.25rem;
 }
-.c-home-dock--direct .c-home-dock__link {
-  min-height: 4.35rem;
+
+.c-home-dock__link:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.05);
 }
+
 .c-home-dock__link--emergency {
-  color: rgba(var(--dm-whatsapp-green-rgb), 0.95);
-  background: rgba(var(--dm-whatsapp-green-rgb), 0.16);
+  background: #ff6a00;
+  color: #0c092f !important;
 }
-.c-home-dock__link--emergency:hover,
-.c-home-dock__link--emergency:focus-visible {
-  color: rgba(var(--dm-whatsapp-green-rgb), 0.98);
-  background: rgba(var(--dm-whatsapp-green-rgb), 0.24);
+
+.c-home-dock__link--emergency i {
+  color: #0c092f;
 }
+
+
 .app-shell--home .c-contact {
   background: linear-gradient(
     180deg,

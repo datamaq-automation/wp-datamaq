@@ -27,8 +27,18 @@ try {
     </div>
 </footer>
 
+<nav class="c-home-dock tw:lg:hidden c-home-dock--direct" aria-label="Navegación rápida" style="--dock-columns: 2;">
+    <a aria-current="page" href="<?php echo $viewModel ? esc_url($viewModel->getHomeUrl()) : '/'; ?>" class="c-home-dock__link">
+        <i class="bi bi-house-door-fill" aria-hidden="true"></i>
+        <span>Inicio</span>
+    </a>
+    <a href="<?php echo $viewModel ? esc_url($viewModel->getContactUrl()) : '/contacto'; ?>" class="c-home-dock__link c-home-dock__link--emergency">
+        <i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
+        <span>Contacto</span>
+    </a>
+</nav>
 
-
+<div class="tw:h-20 tw:lg:hidden"></div> <!-- Espaciador para que el dock no tape contenido -->
 </div><!-- /.app-shell -->
 </div><!-- /#app -->
     <?php wp_footer(); ?>
