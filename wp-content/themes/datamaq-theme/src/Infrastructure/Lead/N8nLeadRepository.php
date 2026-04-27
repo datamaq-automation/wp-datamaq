@@ -8,7 +8,7 @@ use DataMaq\Domain\Lead\LeadRepositoryInterface;
  * Implementation of LeadRepository for n8n Webhooks.
  */
 class N8nLeadRepository implements LeadRepositoryInterface {
-    const DEFAULT_WEBHOOK_URL = 'https://n8n.datamaq.com.ar/webhook/contact-form';
+    const DEFAULT_WEBHOOK_URL = 'https://n8n.datamaq.com.ar/webhook/wf_contact_turnstile_telegram/webhookcontact/contact-form';
 
     private string $webhookUrl;
 

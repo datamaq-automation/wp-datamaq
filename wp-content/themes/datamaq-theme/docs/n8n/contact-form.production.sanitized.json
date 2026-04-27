@@ -15,7 +15,7 @@
           }
         },
         "id": "webhook_contact",
-        "name": "Webhook Contact",
+        "name": "WebhookContact",
         "type": "n8n-nodes-base.webhook",
         "typeVersion": 2.1,
         "position": [
@@ -175,7 +175,7 @@
       {
         "parameters": {
           "method": "POST",
-          "url": "={{ $env.DATAMAQ_SUITECRM_WEBHOOK_URL }}",
+          "url": "https://n8n.datamaq.com.ar/webhook/wf_suitecrm_webhook_create_contact/webhookcontact/suitecrm-create-contact",
           "sendHeaders": true,
           "headerParameters": {
             "parameters": [
@@ -185,7 +185,7 @@
               },
               {
                 "name": "X-API-Key",
-                "value": "={{ $env.DATAMAQ_SUITECRM_WEBHOOK_API_KEY }}"
+                "value": "={{ $env.N8N_SUITECRM_WEBHOOK_TOKEN }}"
               }
             ]
           },
@@ -280,7 +280,7 @@
       },
       {
         "parameters": {
-          "content": "Sanitized production workflow. Configure secrets in n8n environment variables: DATAMAQ_WP_WEBHOOK_API_KEY, DATAMAQ_SUITECRM_WEBHOOK_URL, DATAMAQ_SUITECRM_WEBHOOK_API_KEY, N8N_TELEGRAM_BOT_TOKEN, N8N_TELEGRAM_CHAT_ID. Do not commit runtime credentials or execution data.",
+          "content": "Sanitized production workflow. Configure secrets in n8n environment variables: DATAMAQ_WP_WEBHOOK_API_KEY, N8N_SUITECRM_WEBHOOK_TOKEN, N8N_TELEGRAM_BOT_TOKEN, N8N_TELEGRAM_CHAT_ID. Do not commit runtime credentials or execution data.",
           "height": 220,
           "width": 420
         },
@@ -295,7 +295,7 @@
       }
     ],
     "connections": {
-      "Webhook Contact": {
+      "WebhookContact": {
         "main": [
           [
             {

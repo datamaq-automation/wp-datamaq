@@ -3,7 +3,8 @@
 Este documento define el contrato de integración para el sistema de captura de Leads del tema DataMaq.
 
 ## 1. Endpoint del Webhook
-- **URL por defecto**: `https://n8n.datamaq.com.ar/webhook/contact-form`
+- **URL activa**: `https://n8n.datamaq.com.ar/webhook/wf_contact_turnstile_telegram/webhookcontact/contact-form`
+- **URL corta objetivo**: `https://n8n.datamaq.com.ar/webhook/contact-form`
 - **Configuración en WordPress**: la URL puede cambiarse desde `Ajustes -> n8n Integration` mediante la opción `dm_n8n_webhook_url`.
 - **Método HTTP**: `POST`
 - **Content-Type**: `application/json`
@@ -11,6 +12,7 @@ Este documento define el contrato de integración para el sistema de captura de 
 - **Secreto de autenticación**: debe definirse fuera del repositorio, por ejemplo en `wp-config.php` con la constante `DATAMAQ_N8N_API_KEY`.
 - **Workflow n8n versionado**: `docs/n8n/contact-form.production.sanitized.json` contiene una copia sanitizada de producción para trazabilidad y recuperación.
 - **Configuración de n8n**: credenciales, tokens, variables de entorno, datos de ejecución y exports sin sanitizar no deben versionarse en este repositorio.
+- **Nota operativa**: en esta instalación, n8n registra el webhook activo con la ruta larga. La URL corta queda como objetivo de mejora, pero no debe usarse hasta que responda correctamente en producción.
 
 ## 2. Estructura del Payload (JSON)
 WordPress enviará siempre el siguiente esquema de datos:
@@ -66,7 +68,7 @@ Antes de actualizar `docs/n8n/contact-form.production.sanitized.json`, revisar q
 - `pinData`, datos reales de ejecución, ejemplos con información personal o respuestas de servicios externos.
 - IDs o metadatos innecesarios de cuentas, usuarios o proyectos de n8n.
 
-El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY`, `DATAMAQ_SUITECRM_WEBHOOK_URL`, `DATAMAQ_SUITECRM_WEBHOOK_API_KEY`, `N8N_TELEGRAM_BOT_TOKEN` y `N8N_TELEGRAM_CHAT_ID`.
+El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY`, `N8N_SUITECRM_WEBHOOK_TOKEN`, `N8N_TELEGRAM_BOT_TOKEN` y `N8N_TELEGRAM_CHAT_ID`.
 
 ---
 **Nota para el desarrollador**: Cualquier cambio en los nombres de las claves de la sección `data` debe ser coordinado para actualizar la entidad `LeadEntity` en el código PHP del tema.

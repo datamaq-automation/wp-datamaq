@@ -37,7 +37,7 @@ function dm_register_settings_fields() {
 }
 
 function dm_n8n_webhook_url_callback() {
-    $value = get_option('dm_n8n_webhook_url', 'https://n8n.datamaq.com.ar/webhook/contact-form');
+    $value = get_option('dm_n8n_webhook_url', 'https://n8n.datamaq.com.ar/webhook/wf_contact_turnstile_telegram/webhookcontact/contact-form');
     echo '<input type="url" name="dm_n8n_webhook_url" value="' . esc_url($value) . '" class="regular-text" placeholder="https://...">';
     echo '<p class="description">La URL del Webhook de n8n donde se enviar&aacute;n los leads del formulario de contacto.</p>';
 }
