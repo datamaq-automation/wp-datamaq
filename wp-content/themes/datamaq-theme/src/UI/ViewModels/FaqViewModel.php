@@ -2,27 +2,24 @@
 namespace DataMaq\UI\ViewModels;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\FaqSection;
 
 class FaqViewModel {
-    private array $data;
+    private FaqSection $section;
 
     public function __construct(ContentRepositoryInterface $repo) {
-        $this->data = $repo->getSection('faq') ?? [];
+        $this->section = $repo->getFaqSection();
     }
 
     public function getEyebrow(): string {
-        return $this->data['eyebrow'] ?? 'Ayuda';
+        return $this->section->getEyebrow();
     }
 
     public function getTitle(): string {
-        return $this->data['title'] ?? 'Preguntas Frecuentes';
-    }
-
-    public function getIntro(): string {
-        return $this->data['intro'] ?? 'Todo lo que necesitás saber sobre nuestras soluciones y metodología.';
+        return $this->section->getTitle();
     }
 
     public function getItems(): array {
-        return $this->data['items'] ?? [];
+        return $this->section->getItems();
     }
 }

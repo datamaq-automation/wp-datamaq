@@ -1,49 +1,35 @@
 <?php
 /**
- * Template part for displaying FAQ section.
+ * Template part for displaying the FAQ section.
  */
-$viewModel = new \DataMaq\UI\ViewModels\FaqViewModel(dm_content_repo());
+try {
+    $viewModel = new \DataMaq\UI\ViewModels\FaqViewModel(dm_content_repo());
+} catch (\Throwable $e) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        echo "<!-- Error in FaqViewModel: " . esc_html($e->getMessage()) . " -->";
+    }
+    return;
+}
 ?>
-<section id="faq" data-dm-component="ScrollReveal" class="c-home-faq tw:bg-[#0c092f] tw:relative tw:overflow-hidden">
-    <!-- Vibrant ambient glow -->
-    <div class="c-ambient-glow tw:bg-[#ff6a00] tw:top-[-20%] tw:left-[-10%] tw:opacity-[0.1]"></div>
-
+<section id="faq" data-dm-component="ScrollReveal" class="section-mobile c-home-faq" aria-labelledby="faq-title">
     <div class="tw:container tw:mx-auto tw:px-4">
-        <div class="tw:max-w-5xl tw:mx-auto tw:text-center tw:mb-24">
-            <span class="dm-eyebrow">
-                <?php echo esc_html($viewModel->getEyebrow()); ?>
-            </span>
-            <h2 class="tw:text-6xl lg:tw:text-8xl tw:font-black tw:mb-10 tw:tracking-tighter">
-                <?php echo esc_html($viewModel->getTitle()); ?>
-            </h2>
-            <p class="tw:text-3xl /60">
-                <?php echo esc_html($viewModel->getIntro()); ?>
-            </p>
+        <div class="c-home-section-head">
+            <span class="c-home-eyebrow"><?php echo esc_html($viewModel->getEyebrow()); ?></span>
+            <h2 id="faq-title" class="c-home-section-title"><?php echo esc_html($viewModel->getTitle()); ?></h2>
         </div>
 
-        <div class="tw:max-w-5xl tw:mx-auto tw:space-y-8">
-            <?php foreach ($viewModel->getItems() as $item) : ?>
-            <div class="c-home-faq__item dm-faq-item tw:glow-orange">
-                <details class="tw:group">
-                    <summary class="tw:p-12 tw:list-none tw:flex tw:justify-between tw:items-center tw:cursor-pointer">
-                        <h4 class="tw:font-black tw:text-3xl tw:pr-12 tw:tracking-tight">
-                            <?php echo esc_html($item['q']); ?>
-                        </h4>
-                        <div class="tw:text-orange-400 tw:text-4xl tw:transition-transform tw:duration-300 group-open:tw:rotate-45">
+        <div class="c-home-faq__stack">
+            <?php foreach ($viewModel->getItems() as $faq) : ?>
+                <details class="c-home-faq__item" <?php echo $faq->isOpen() ? 'open' : ''; ?>>
+                    <summary class="c-home-faq__summary">
+                        <span><?php echo esc_html($faq->getQuestion()); ?></span>
+                        <span class="c-home-faq__toggle" aria-hidden="true">
                             <i class="bi bi-plus-lg"></i>
-                        </div>
+                        </span>
                     </summary>
-                    <div class="tw:p-12 tw:pt-0 tw:border-t tw:border-white/5">
-                        <p class="/80 tw:text-2xl tw:leading-relaxed">
-                            <?php echo esc_html($item['a']); ?>
-                        </p>
-                    </div>
+                    <p class="c-home-faq__answer"><?php echo esc_html($faq->getAnswer()); ?></p>
                 </details>
-            </div>
             <?php endforeach; ?>
         </div>
     </div>
 </section>
-
-
-

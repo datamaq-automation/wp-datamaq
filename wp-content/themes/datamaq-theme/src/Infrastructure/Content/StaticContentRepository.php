@@ -7,6 +7,8 @@ use DataMaq\Domain\Content\ServicesSection;
 use DataMaq\Domain\Content\ServiceItem;
 use DataMaq\Domain\Content\BrandInfo;
 use DataMaq\Domain\Content\HeroSection;
+use DataMaq\Domain\Content\FaqSection;
+use DataMaq\Domain\Content\FaqItem;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -50,6 +52,25 @@ class StaticContentRepository implements ContentRepositoryInterface {
             $data['statusInfo'] ?? '',
             $data['trustChips'] ?? [],
             $data['image'] ?? ''
+        );
+    }
+
+    public function getFaqSection(): FaqSection {
+        $data = $this->data['faq'] ?? [];
+        $items = [];
+
+        foreach (($data['items'] ?? []) as $item) {
+            $items[] = new FaqItem(
+                $item['question'] ?? '',
+                $item['answer'] ?? '',
+                $item['open'] ?? false
+            );
+        }
+
+        return new FaqSection(
+            $data['eyebrow'] ?? 'Ayuda',
+            $data['title'] ?? 'Preguntas frecuentes',
+            $items
         );
     }
 
