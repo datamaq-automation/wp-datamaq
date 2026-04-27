@@ -27,6 +27,8 @@ function dm_enqueue_assets() {
     // Auto-versioning based on file modification time to bust cache
     $style_ver = file_exists($theme_path . '/style.css') ? filemtime($theme_path . '/style.css') : $version;
     $premium_ver = file_exists($theme_path . '/assets/css/HomePage.css') ? filemtime($theme_path . '/assets/css/HomePage.css') : $version;
+    $wizard_ver = file_exists($theme_path . '/assets/js/contact-wizard.js') ? filemtime($theme_path . '/assets/js/contact-wizard.js') : $version;
+    $comp_ver = file_exists($theme_path . '/assets/js/dm-components.js') ? filemtime($theme_path . '/assets/js/dm-components.js') : $version;
 
     // CSS
     wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $style_ver );
@@ -41,11 +43,11 @@ function dm_enqueue_assets() {
     }
 
     // JS Component Architecture
-    wp_enqueue_script( 'dm-componentizer', $theme_uri . '/assets/js/dm-components.js', array(), $version, true );
+    wp_enqueue_script( 'dm-componentizer', $theme_uri . '/assets/js/dm-components.js', array(), $comp_ver, true );
     wp_enqueue_script( 'dm-comp-reveal', $theme_uri . '/assets/js/components/scroll-reveal.js', array('dm-componentizer'), $version, true );
 
     // Legacy Contact Wizard (to be refactored later into component)
-    wp_register_script( 'dm-contact-wizard', $theme_uri . '/assets/js/contact-wizard.js', array('dm-componentizer'), $version, true );
+    wp_register_script( 'dm-contact-wizard', $theme_uri . '/assets/js/contact-wizard.js', array('dm-componentizer'), $wizard_ver, true );
 
     if ( is_front_page() || is_page_template('page-contact.php') ) {
         wp_enqueue_script( 'dm-contact-wizard' );

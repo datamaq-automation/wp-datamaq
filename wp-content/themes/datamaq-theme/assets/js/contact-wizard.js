@@ -3,6 +3,7 @@
  * Handles multi-step form navigation, AJAX submission, and conditional validation.
  */
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DataMaq Contact Wizard v4.0.1 - Loaded');
     let currentStep = 1;
     const totalSteps = 3;
     
