@@ -5,6 +5,7 @@ use DataMaq\Domain\Content\ContentRepositoryInterface;
 use DataMaq\Domain\Content\ProfileSection;
 use DataMaq\Domain\Content\ServicesSection;
 use DataMaq\Domain\Content\ServiceItem;
+use DataMaq\Domain\Content\BrandInfo;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -35,6 +36,17 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getBrandInfo(): BrandInfo {
+        $data = $this->data['brand'] ?? [];
+        
+        return new BrandInfo(
+            $data['name'] ?? 'DataMaq',
+            $data['nav'] ?? [],
+            $data['contact_url'] ?? '/contacto',
+            $data['whatsapp'] ?? ''
+        );
     }
 
     public function getProfileSection(): ProfileSection {

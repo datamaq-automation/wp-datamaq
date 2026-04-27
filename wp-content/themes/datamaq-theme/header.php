@@ -20,29 +20,48 @@
 
 <header id="dm-main-header" class="c-home-header" role="banner">
     <div class="tw:container tw:mx-auto tw:px-4 c-home-header__inner">
+        <?php
+        try {
+            $viewModel = new \DataMaq\UI\ViewModels\HeaderViewModel(dm_content_repo());
+        } catch (\Throwable $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                echo "<!-- Error in HeaderViewModel: " . esc_html($e->getMessage()) . " -->";
+            }
+            $viewModel = null;
+        }
+        ?>
         
         <!-- Isotipo y Logo -->
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="tw:flex tw:items-center tw:gap-2 tw:text-dm-text-0 tw:decoration-0" aria-label="DataMaq, inicio">
+        <a href="<?php echo $viewModel ? esc_url($viewModel->getHomeUrl()) : '/'; ?>" class="tw:flex tw:items-center tw:gap-2 tw:text-dm-text-0 tw:decoration-0" aria-label="DataMaq, inicio">
             <span class="c-home-header__brand-icon" aria-hidden="true">
                 <i class="bi bi-terminal-fill"></i>
             </span>
-            <span class="c-home-header__brand-copy">DataMaq</span>
+            <span class="c-home-header__brand-copy"><?php echo $viewModel ? esc_html($viewModel->getSiteName()) : 'DataMaq'; ?></span>
         </a>
 
         <!-- Navegación Primaria (Adaptada para WP) -->
         <nav class="c-home-header__nav tw:hidden tw:lg:flex" aria-label="Navegación principal">
-            <a href="<?php echo esc_url( home_url( '#servicios' ) ); ?>" class="c-home-header__nav-link">Solución</a>
-            <a href="<?php echo esc_url( home_url( '#faq' ) ); ?>" class="c-home-header__nav-link">FAQ</a>
+            <?php if ($viewModel) : ?>
+                <?php foreach ($viewModel->getNavigation() as $nav) : ?>
+                    <a href="<?php echo esc_url(home_url($nav['href'])); ?>" class="c-home-header__nav-link"><?php echo esc_html($nav['label']); ?></a>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <a href="#servicios" class="c-home-header__nav-link">Solución</a>
+                <a href="#faq" class="c-home-header__nav-link">FAQ</a>
+            <?php endif; ?>
         </nav>
 
         <!-- CTAs de Contacto -->
         <div class="c-home-header__actions">
+            <?php 
+            $contact_url = $viewModel ? $viewModel->getContactUrl() : '/contact'; 
+            ?>
             <!-- Icono Mobile -->
-            <a href="http://legacy.localhost/contact" class="c-home-header__icon-link tw:lg:hidden" aria-label="Contacto" title="Contacto">
+            <a href="<?php echo esc_url($contact_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Contacto" title="Contacto">
                 <i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
             </a>
             <!-- Botón Desktop -->
-            <a href="http://legacy.localhost/contact" class="tw:btn-primary c-home-header__cta tw:hidden tw:lg:inline-flex tw:no-underline">Contacto</a>
+            <button onclick="window.location.href='<?php echo esc_url($contact_url); ?>'" type="button" class="tw:btn-primary c-home-header__cta tw:hidden tw:lg:inline-flex">Contacto</button>
         </div>
 
     </div>
