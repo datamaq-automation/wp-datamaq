@@ -20,7 +20,7 @@ function dm_theme_setup() {
  */
 add_action( 'wp_enqueue_scripts', 'dm_enqueue_assets' );
 function dm_enqueue_assets() {
-    $version = '3.1.0'; 
+    $version = '3.1.1'; 
     $theme_uri = get_template_directory_uri();
     
     // CSS
