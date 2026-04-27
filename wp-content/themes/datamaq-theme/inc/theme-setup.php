@@ -20,15 +20,20 @@ function dm_theme_setup() {
  */
 add_action( 'wp_enqueue_scripts', 'dm_enqueue_assets' );
 function dm_enqueue_assets() {
-    $version = '3.1.2'; 
+    $version = '3.1.2';
+    $theme_path = get_template_directory();
     $theme_uri = get_template_directory_uri();
     
+    // Auto-versioning based on file modification time to bust cache
+    $style_ver = file_exists($theme_path . '/style.css') ? filemtime($theme_path . '/style.css') : $version;
+    $premium_ver = file_exists($theme_path . '/assets/css/HomePage.css') ? filemtime($theme_path . '/assets/css/HomePage.css') : $version;
+
     // CSS
-    wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $version );
+    wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $style_ver );
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
     wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $version );
     wp_enqueue_style( 'legacy-index-styles', $theme_uri . '/assets/css/index.css', array('tailwind-styles'), $version );
-    wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/HomePage.css', array('legacy-index-styles'), $version );
+    wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/HomePage.css', array('legacy-index-styles'), $premium_ver );
     wp_enqueue_style( 'whatsapp-fab-styles', $theme_uri . '/assets/css/WhatsAppFab.css', array(), $version );
     
     if ( class_exists( 'LearnPress' ) ) {
