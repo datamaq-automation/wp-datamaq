@@ -6,6 +6,7 @@ use DataMaq\Domain\Content\ProfileSection;
 use DataMaq\Domain\Content\ServicesSection;
 use DataMaq\Domain\Content\ServiceItem;
 use DataMaq\Domain\Content\BrandInfo;
+use DataMaq\Domain\Content\HeroSection;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -36,6 +37,20 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getHeroSection(): HeroSection {
+        $data = $this->data['hero'] ?? [];
+        
+        return new HeroSection(
+            $data['eyebrow'] ?? 'Captura autom&aacute;tica de datos operativos',
+            $data['title'] ?? '',
+            $data['subtitle'] ?? '',
+            $data['ctaLabel'] ?? 'Escribime por WhatsApp',
+            $data['statusInfo'] ?? '',
+            $data['trustChips'] ?? [],
+            $data['image'] ?? ''
+        );
     }
 
     public function getBrandInfo(): BrandInfo {

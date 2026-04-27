@@ -16,8 +16,8 @@ interface ContentRepositoryInterface {
     public function getSection(string $key): ?array;
 
     /**
-     * Get the brand information domain model.
-     * @return BrandInfo
+     * Get the hero section domain model.
+     * @return HeroSection
      */
-    public function getBrandInfo(): BrandInfo;
+    public function getHeroSection(): HeroSection;
 }
