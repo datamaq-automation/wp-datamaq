@@ -16,8 +16,8 @@ interface ContentRepositoryInterface {
     public function getSection(string $key): ?array;
 
     /**
-     * Get the footer section domain model.
-     * @return FooterSection
+     * Get the contact section domain model.
+     * @return ContactSection
      */
-    public function getFooterSection(): FooterSection;
+    public function getContactSection(): ContactSection;
 }

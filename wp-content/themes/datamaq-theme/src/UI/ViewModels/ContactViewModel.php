@@ -2,31 +2,32 @@
 namespace DataMaq\UI\ViewModels;
 
 use DataMaq\Domain\Content\ContentRepositoryInterface;
+use DataMaq\Domain\Content\ContactSection;
 
 class ContactViewModel {
-    private array $data;
+    private ContactSection $section;
 
     public function __construct(ContentRepositoryInterface $repo) {
-        $this->data = $repo->getSection('contactPage') ?? [];
-    }
-
-    public function getEyebrow(): string {
-        return $this->data['eyebrow'] ?? '¿Hablamos?';
+        $this->section = $repo->getContactSection();
     }
 
     public function getTitle(): string {
-        return $this->data['title'] ?? 'Iniciar proyecto';
+        return $this->section->getTitle();
     }
 
-    public function getStepText(int $current, int $total): string {
+    public function getSubtitle(): string {
+        return $this->section->getSubtitle();
+    }
+
+    public function getSteps(): array {
+        return $this->section->getSteps();
+    }
+
+    public function getAlternativeEmail(): string {
+        return $this->section->getAlternativeEmail();
+    }
+
+    public function getProgressText(int $current, int $total): string {
         return sprintf('Paso %d de %d', $current, $total);
-    }
-
-    public function getPlaceholderName(): string {
-        return $this->data['placeholderName'] ?? 'Ej: Agustín';
-    }
-
-    public function getPlaceholderMsg(): string {
-        return $this->data['placeholderMsg'] ?? 'Describí tu caso técnico...';
     }
 }

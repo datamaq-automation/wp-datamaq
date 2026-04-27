@@ -10,6 +10,7 @@ use DataMaq\Domain\Content\HeroSection;
 use DataMaq\Domain\Content\FaqSection;
 use DataMaq\Domain\Content\FaqItem;
 use DataMaq\Domain\Content\FooterSection;
+use DataMaq\Domain\Content\ContactSection;
 use DataMaq\Domain\Shared\Validation\ContentValidator;
 
 class StaticContentRepository implements ContentRepositoryInterface {
@@ -40,6 +41,17 @@ class StaticContentRepository implements ContentRepositoryInterface {
 
     public function getSection(string $key): ?array {
         return $this->data[$key] ?? null;
+    }
+
+    public function getContactSection(): ContactSection {
+        $data = $this->data['contact'] ?? [];
+        
+        return new ContactSection(
+            $data['title'] ?? 'Inici&aacute; una consulta t&eacute;cnica',
+            $data['subtitle'] ?? '',
+            $data['steps'] ?? ['Identidad', 'Proyecto', 'Contacto'],
+            $data['alternativeEmail'] ?? 'info@datamaq.com.ar'
+        );
     }
 
     public function getFooterSection(): FooterSection {

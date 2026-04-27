@@ -145,14 +145,17 @@ function get_datamaq_site_data() {
             'subtitle' => 'Dejanos el contexto del caso y te respondemos con el siguiente paso.',
             'submitLabel' => 'Envi&aacute; tu consulta'
         ],
-        'contactPage' => [
+        'contact' => [
             'eyebrow' => 'Contacto',
             'title' => 'Inici&aacute; una consulta t&eacute;cnica',
-            'subtitle' => 'Indic&aacute; qu&eacute; variable quer&eacute;s capturar y en qu&eacute; zona.',
-            'supportTitle' => 'Canales disponibles',
-            'placeholderName' => 'Ej: Agust&iacute;n',
-            'placeholderMsg' => 'Describ&iacute; tu caso t&eacute;cnico...',
-            'buttonLabel' => 'Continuar por WhatsApp'
+            'subtitle' => 'Dejanos el contexto del caso y te respondemos con el siguiente paso.',
+            'steps' => [
+                'Identidad',
+                'Proyecto',
+                'Contacto'
+            ],
+            'alternativeEmail' => 'info@datamaq.com.ar',
+            'buttonLabel' => 'Continu&aacute;'
         ],
         'footer' => [
             'copyright' => '(c) {year} DataMaq | Gar&iacute;n (GBA Norte)',

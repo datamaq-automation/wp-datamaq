@@ -1,104 +1,80 @@
 <?php
-/**
- * Template part for displaying the Contact Form wizard.
- */
-$viewModel = new \DataMaq\UI\ViewModels\ContactViewModel(dm_content_repo());
-$is_standalone = is_page_template('page-contact.php');
+try {
+    $viewModel = new \DataMaq\UI\ViewModels\ContactViewModel(dm_content_repo());
+} catch (\Throwable $e) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        echo "<!-- Error in ContactViewModel: " . esc_html($e->getMessage()) . " -->";
+    }
+    return;
+}
 ?>
-<section id="contacto" data-dm-component="ScrollReveal" class="tw:relative tw:overflow-hidden">
-    <!-- Grid Pattern refinement -->
-    <div class="tw:absolute tw:inset-0 tw:bg-gradient-to-b tw:from-cyan-500/5 tw:to-transparent"></div>
-    
-    <div class="tw:container tw:mx-auto tw:px-6 tw:relative tw:z-10">
-        <div class="tw:max-w-5xl tw:mx-auto">
-            
-            <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-12 tw:gap-16 tw:items-start">
-                
-                <!-- Info Column (4 cols) -->
-                <div class="lg:tw:col-span-12 tw:text-center tw:mb-8">
-                    <span class="dm-eyebrow tw:text-center"><?php echo esc_html($viewModel->getEyebrow()); ?></span>
-                    <h2 class="tw:text-4xl lg:tw:text-6xl tw:mt-4"><?php echo esc_html($viewModel->getTitle()); ?></h2>
-                </div>
+<section id="contacto" data-dm-component="ScrollReveal" class="tw:py-10 tw:bg-dm-bg tw:text-dm-text-0 c-contact" aria-labelledby="contacto-title">
+    <div class="tw:container tw:mx-auto tw:px-4">
+        <div class="tw:flex tw:justify-center">
+            <div class="tw:w-full tw:max-w-3xl">
+                <div class="tw:bg-dm-surface tw:border tw:border-dm-border tw:rounded-2xl tw:shadow-2xl c-contact__card">
+                    <div class="tw:p-5 tw:lg:p-8">
+                        <h2 id="contacto-title" class="tw:text-2xl tw:lg:text-3xl tw:font-bold c-contact__title tw:mb-2"><?php echo esc_html($viewModel->getTitle()); ?></h2>
+                        <p class="tw:text-dm-text-muted tw:mb-5 c-contact__subtitle"><?php echo esc_html($viewModel->getSubtitle()); ?></p>
 
-                <!-- Form Card (12 cols for centered high-impactwizard) -->
-                <div class="lg:tw:col-span-10 lg:tw:col-start-2 tw:p-8 lg:tw:p-12 dm-contact-card">
-                    
-                    <!-- Progress Stepper -->
-                    <div class="tw:mb-16">
-                        <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
-                            <span id="step-indicator" class="/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest"><?php echo esc_html($viewModel->getStepText(1, 3)); ?></span>
-                            <div class="tw:flex tw:gap-2">
-                                <div class="step-dot tw:w-2 tw:h-2 tw:rounded-full tw:bg-white/10 tw:transition-all"></div>
-                                <div class="step-dot tw:w-2 tw:h-2 tw:rounded-full tw:bg-white/10 tw:transition-all"></div>
-                                <div class="step-dot tw:w-2 tw:h-2 tw:rounded-full tw:bg-white/10 tw:transition-all"></div>
+                        <!-- Stepper -->
+                        <ol class="c-contact__stepper" aria-label="Pasos del formulario">
+                            <?php 
+                            $steps = $viewModel->getSteps();
+                            foreach ($steps as $index => $label) : 
+                                $stepNum = $index + 1;
+                                $isActive = ($stepNum === 1) ? 'is-active' : '';
+                            ?>
+                                <li class="c-contact__stepper-item <?php echo $isActive; ?>">
+                                    <button type="button" class="c-contact__stepper-trigger" aria-label="And&aacute; al paso <?php echo $stepNum; ?>: <?php echo esc_attr($label); ?>">
+                                        <span class="c-contact__stepper-dot" aria-hidden="true"><span><?php echo $stepNum; ?></span></span>
+                                        <span class="c-contact__stepper-label"><?php echo esc_html($label); ?></span>
+                                    </button>
+                                </li>
+                            <?php endforeach; ?>
+                        </ol>
+
+                        <!-- Progress -->
+                        <div class="c-contact__progress" role="progressbar" aria-label="Progreso del formulario" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1">
+                            <div class="c-contact__progress-track">
+                                <div class="c-contact__progress-fill" style="width: 33%;"></div>
                             </div>
+                            <p class="c-contact__progress-text"><?php echo esc_html($viewModel->getProgressText(1, 3)); ?></p>
+                            <p class="c-contact__privacy-note">Guardamos un borrador temporal de este formulario por hasta 12 horas en este dispositivo.</p>
                         </div>
-                        <div class="tw:h-[2px] tw:w-full tw:bg-white/5 tw:relative tw:overflow-hidden tw:rounded-full">
-                            <div id="step-progress-bar" class="tw:absolute tw:left-0 tw:top-0 tw:h-full tw:bg-[#ff6a00] tw:transition-all tw:duration-500" style="width: 33.33%;"></div>
-                        </div>
+
+                        <form class="tw:grid tw:grid-cols-1 tw:gap-4" novalidate="" aria-busy="false">
+                            <div class="c-contact__step-panel" id="step-panel-1">
+                                <h3 class="c-contact__step-title">1. <?php echo esc_html($steps[0]); ?></h3>
+                                <div>
+                                    <label class="c-contact__label" for="contacto-nombre">Nombre</label>
+                                    <input id="contacto-nombre" type="text" class="c-contact__input" autocomplete="given-name" maxlength="80">
+                                    <small class="c-contact__helper">Opcional</small>
+                                </div>
+                                <div>
+                                    <label class="c-contact__label" for="contacto-apellido">Apellido</label>
+                                    <input id="contacto-apellido" type="text" class="c-contact__input" autocomplete="family-name" maxlength="80">
+                                    <small class="c-contact__helper">Opcional</small>
+                                </div>
+                            </div>
+
+                            <div class="c-contact__actions">
+                                <button type="button" class="c-contact__btn c-contact__btn--primary"> Continu&aacute; </button>
+                            </div>
+
+                            <div aria-live="polite" aria-atomic="true">
+                                <p class="tw:text-orange-200 tw:bg-orange-900/35 tw:border tw:border-orange-600 tw:rounded-xl tw:px-4 tw:py-3 tw:text-sm" role="status">Servicio temporalmente no disponible.</p>
+                            </div>
+                        </form>
                     </div>
-
-                    <form id="dm-contact-form" action="#" method="POST" data-dm-component="ContactWizard">
-                        <!-- STEP 1: Identity -->
-                        <div class="dm-form-step" id="step-1">
-                            <div class="tw:space-y-12">
-                                <h3 class="tw:text-2xl tw:font-black tw:tracking-tight">¿Cómo te llamas?</h3>
-                                <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-8">
-                                    <div class="tw:space-y-3">
-                                        <label class="/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Nombre y Apellido</label>
-                                        <input type="text" name="dm_name" required placeholder="Tu respuesta" class="dm-input-v6">
-                                    </div>
-                                    <div class="tw:space-y-3">
-                                        <label class="/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Empresa o Proyecto</label>
-                                        <input type="text" name="dm_company" required placeholder="Tu respuesta" class="dm-input-v6">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- STEP 2: Message -->
-                        <div class="dm-form-step tw:hidden" id="step-2">
-                            <div class="tw:space-y-12">
-                                <h3 class="tw:text-2xl tw:font-black tw:tracking-tight">Detalles del proyecto</h3>
-                                <div class="tw:space-y-3">
-                                    <label class="/40 tw:text-[10px] tw:font-black tw:uppercase tw:tracking-widest">Consulta técnica o comercial</label>
-                                    <textarea name="dm_message" required rows="6" placeholder="<?php echo esc_attr($viewModel->getPlaceholderMsg()); ?>" class="dm-input-v6 "></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- STEP 3: Contact Preferences -->
-                        <div class="dm-form-step tw:hidden" id="step-3">
-                            <div class="tw:space-y-12">
-                                <h3 class="tw:text-2xl tw:font-black tw:tracking-tight">Vía de contacto</h3>
-                                <div class="tw:grid tw:grid-cols-1 sm:tw:grid-cols-2 tw:gap-6">
-                                    <label class="channel-opt tw:relative tw:cursor-pointer">
-                                        <input type="radio" name="dm_channel" value="whatsapp" checked class="tw:sr-only">
-                                        <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-3xl tw:p-8 tw:text-center tw:transition-all">
-                                            <i class="bi bi-whatsapp tw:text-4xl tw:mb-4 tw:block"></i>
-                                            <span class="tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">WhatsApp</span>
-                                        </div>
-                                    </label>
-                                    <label class="channel-opt tw:relative tw:cursor-pointer">
-                                        <input type="radio" name="dm_channel" value="email" class="tw:sr-only">
-                                        <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-3xl tw:p-8 tw:text-center tw:transition-all">
-                                            <i class="bi bi-envelope-at tw:text-4xl tw:mb-4 tw:block"></i>
-                                            <span class="tw:text-sm tw:font-black tw:uppercase tw:tracking-widest">Vía Email</span>
-                                        </div>
-                                    </label>
-                                </div>
-                                <p class="/30 tw:text-xs tw:text-center">Al elegir WhatsApp, abrirá un chat directo con tu mensaje listo para enviar.</p>
-                            </div>
-                        </div>
-
-                        <!-- Navigation -->
-                        <div class="tw:mt-16 tw:flex tw:gap-4">
-                            <button type="button" id="btn-back" class="tw:hidden tw:flex-1  tw:rounded-2xl tw:border tw:border-white/20  tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:bg-white/5">Volver</button>
-                            <button type="button" id="btn-next" class="tw:flex-[2]  tw:rounded-2xl tw:bg-[#ff6a00] tw:text-[#0c092f] tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:scale-[1.02]">Siguiente paso</button>
-                             <button type="submit" id="btn-submit" class="tw:hidden tw:flex-[2]  tw:rounded-2xl tw:bg-[#ff6a00] tw:text-[#0c092f] tw:font-black tw:uppercase tw:tracking-widest tw:text-[10px] tw:transition-all hover:tw:scale-[1.02]">Finalizar envío</button>
-                        </div>
-                    </form>
                 </div>
+
+                <!-- Alternative Email Card -->
+                <article class="c-contact__email-card" aria-label="Contacto alternativo por e-mail">
+                    <p class="c-contact__email-label">Contacto alternativo</p>
+                    <p class="c-contact__email-title">Escribinos por e-mail</p>
+                    <a class="c-contact__email-link" href="mailto:<?php echo esc_attr($viewModel->getAlternativeEmail()); ?>"><?php echo esc_html($viewModel->getAlternativeEmail()); ?></a>
+                </article>
             </div>
         </div>
     </div>
