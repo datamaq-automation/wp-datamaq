@@ -48,22 +48,68 @@ try {
                                 <h3 class="c-contact__step-title">1. <?php echo esc_html($steps[0]); ?></h3>
                                 <div>
                                     <label class="c-contact__label" for="contacto-nombre">Nombre</label>
-                                    <input id="contacto-nombre" type="text" class="c-contact__input" autocomplete="given-name" maxlength="80">
-                                    <small class="c-contact__helper">Opcional</small>
+                                    <input id="contacto-nombre" name="dm_name" type="text" class="c-contact__input" autocomplete="given-name" maxlength="80" required>
+                                    <small class="c-contact__helper">Obligatorio</small>
                                 </div>
                                 <div>
                                     <label class="c-contact__label" for="contacto-apellido">Apellido</label>
-                                    <input id="contacto-apellido" type="text" class="c-contact__input" autocomplete="family-name" maxlength="80">
+                                    <input id="contacto-apellido" name="dm_lastname" type="text" class="c-contact__input" autocomplete="family-name" maxlength="80">
                                     <small class="c-contact__helper">Opcional</small>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: Project Details -->
+                            <div class="c-contact__step-panel tw:hidden" id="step-panel-2">
+                                <h3 class="c-contact__step-title">2. <?php echo esc_html($steps[1]); ?></h3>
+                                <div>
+                                    <label class="c-contact__label" for="contacto-mensaje">Detalles del proyecto o consulta</label>
+                                    <textarea id="contacto-mensaje" name="dm_message" class="c-contact__input" rows="5" required placeholder="Describ&iacute; tu caso t&eacute;cnico..."></textarea>
+                                    <small class="c-contact__helper">Obligatorio</small>
+                                </div>
+                            </div>
+
+                            <!-- STEP 3: Contact Channels -->
+                            <div class="c-contact__step-panel tw:hidden" id="step-panel-3">
+                                <h3 class="c-contact__step-title">3. <?php echo esc_html($steps[2]); ?></h3>
+                                <div class="tw:space-y-6">
+                                    <label class="c-contact__label">¿Cómo prefieres que te contactemos?</label>
+                                    <div class="tw:grid tw:grid-cols-1 sm:tw:grid-cols-2 tw:gap-4">
+                                        <label class="tw:relative tw:cursor-pointer">
+                                            <input type="radio" name="dm_channel" value="whatsapp" checked class="tw:sr-only">
+                                            <div class="opt-box tw:border tw:border-dm-accent tw:bg-dm-accent/10 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all">
+                                                <i class="bi bi-whatsapp tw:text-2xl tw:mb-2 tw:block"></i>
+                                                <span class="tw:text-xs tw:font-bold tw:uppercase">WhatsApp</span>
+                                            </div>
+                                        </label>
+                                        <label class="tw:relative tw:cursor-pointer">
+                                            <input type="radio" name="dm_channel" value="email" class="tw:sr-only">
+                                            <div class="opt-box tw:border tw:border-white/10 tw:bg-white/5 tw:rounded-2xl tw:p-6 tw:text-center tw:transition-all">
+                                                <i class="bi bi-envelope tw:text-2xl tw:mb-2 tw:block"></i>
+                                                <span class="tw:text-xs tw:font-bold tw:uppercase">E-mail</span>
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-6 tw:mt-8">
+                                        <div id="phone-field-group">
+                                            <label class="c-contact__label" for="contacto-phone">WhatsApp / Tel&eacute;fono <span class="required-mark">*</span></label>
+                                            <input id="contacto-phone" name="dm_phone" type="tel" class="c-contact__input" placeholder="+54 9 11 ...">
+                                        </div>
+                                        <div id="email-field-group">
+                                            <label class="c-contact__label" for="contacto-email">Correo electr&oacute;nico <span class="required-mark tw:hidden">*</span></label>
+                                            <input id="contacto-email" name="dm_email" type="email" class="c-contact__input" placeholder="ejemplo@correo.com">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="c-contact__actions">
-                                <button type="button" class="c-contact__btn c-contact__btn--primary"> Continu&aacute; </button>
+                                <button type="button" id="btn-next" class="c-contact__btn c-contact__btn--primary"> Continu&aacute; </button>
+                                <button type="submit" id="btn-submit" class="c-contact__btn c-contact__btn--primary tw:hidden"> Finalizar env&iacute;o </button>
                             </div>
 
-                            <div aria-live="polite" aria-atomic="true">
-                                <p class="tw:text-orange-200 tw:bg-orange-900/35 tw:border tw:border-orange-600 tw:rounded-xl tw:px-4 tw:py-3 tw:text-sm" role="status">Servicio temporalmente no disponible.</p>
+                            <div id="contact-error-msg" class="tw:hidden" aria-live="polite" aria-atomic="true">
+                                <p class="tw:text-orange-200 tw:bg-orange-900/35 tw:border tw:border-orange-600 tw:rounded-xl tw:px-4 tw:py-3 tw:text-sm" role="status">Hubo un error al procesar tu solicitud.</p>
                             </div>
                         </form>
                     </div>

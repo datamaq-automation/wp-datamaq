@@ -2,39 +2,37 @@
 namespace DataMaq\Application\Lead;
 
 use DataMaq\Domain\Lead\LeadEntity;
+use DataMaq\Domain\Lead\LeadRepositoryInterface;
 
 class SubmitLeadUseCase {
+    private LeadRepositoryInterface $repository;
+
+    public function __construct(LeadRepositoryInterface $repository) {
+        $this->repository = $repository;
+    }
+
     public function execute(LeadEntity $lead): bool {
-        // 1. Send Email
+        // 1. Logic: Send to external service (n8n)
+        $external_sent = $this->repository->save($lead);
+
+        // 2. Logic: Send internal notification (Email)
+        $this->sendNotification($lead);
+
+        return $external_sent;
+    }
+
+    private function sendNotification(LeadEntity $lead): bool {
         $to = get_option('admin_email');
-        $subject = 'Nuevo Lead: ' . $lead->getName();
-        $message = "Nombre: " . $lead->getName() . "\n" .
-                   "Email: " . $lead->getEmail() . "\n" .
-                   "Empresa: " . $lead->toArray()['company'] . "\n" .
-                   "Canal: " . $lead->toArray()['channel'] . "\n\n" .
-                   "Mensaje: \n" . $lead->toArray()['message'];
+        $subject = 'Nuevo Lead DataMaq: ' . $lead->getName();
+        $data = $lead->toArray();
         
-        $email_sent = wp_mail($to, $subject, $message);
-
-        // 2. Send to n8n Webhook (Replicating Legacy Behavior)
-        $n8n_url = 'https://n8n.datamaq.com.ar/webhook/contact-form';
-        $payload = [
-            'name' => $lead->getName(),
-            'email' => $lead->getEmail(),
-            'message' => $lead->toArray()['message'],
-            'preferred_contact_channel' => $lead->toArray()['channel'],
-            'custom_attributes' => [
-                'company' => $lead->toArray()['company']
-            ]
-        ];
-
-        wp_remote_post($n8n_url, [
-            'body' => json_encode($payload),
-            'headers' => ['Content-Type' => 'application/json'],
-            'timeout' => 15,
-            'blocking' => false
-        ]);
-
-        return $email_sent;
+        $message = "Nuevo contacto desde el Wizard:\n\n" .
+                   "Nombre: " . $lead->getName() . "\n" .
+                   "Email: " . $lead->getEmail() . "\n" .
+                   "Empresa: " . ($data['company'] ?? '-') . "\n" .
+                   "Canal: " . ($data['channel'] ?? 'email') . "\n\n" .
+                   "Mensaje:\n" . ($data['message'] ?? '-');
+        
+        return wp_mail($to, $subject, $message);
     }
 }

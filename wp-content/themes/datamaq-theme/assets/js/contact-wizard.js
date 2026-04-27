@@ -1,54 +1,58 @@
 /**
  * DataMaq Contact Wizard JS
- * Handles multi-step form navigation and WhatsApp integration.
+ * Handles multi-step form navigation, AJAX submission, and conditional validation.
  */
 document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
     const totalSteps = 3;
     
-    const form = document.getElementById('dm-contact-form');
-    if (!form) return;
+    const contactForm = document.querySelector('.c-contact form');
+    if (!contactForm) return;
 
     const btnNext = document.getElementById('btn-next');
     const btnBack = document.getElementById('btn-back');
     const btnSubmit = document.getElementById('btn-submit');
-    const progressBar = document.getElementById('step-progress-bar');
-    const indicator = document.getElementById('step-indicator');
-    const dots = document.querySelectorAll('.step-dot');
+    const progressBar = document.querySelector('.c-contact__progress-fill');
+    const indicator = document.querySelector('.c-contact__progress-text');
+    const steps = document.querySelectorAll('.c-contact__stepper-item');
 
     function updateUI() {
-        document.querySelectorAll('.dm-form-step').forEach(s => s.classList.add('tw:hidden'));
-        const activeStepEl = document.getElementById(`step-${currentStep}`);
-        if (activeStepEl) activeStepEl.classList.remove('tw:hidden');
+        document.querySelectorAll('.c-contact__step-panel').forEach(s => s.classList.add('tw:hidden'));
+        const activePanel = document.getElementById(`step-panel-${currentStep}`);
+        if (activePanel) activePanel.classList.remove('tw:hidden');
         
+        steps.forEach((step, idx) => {
+            const stepNum = idx + 1;
+            if (stepNum === currentStep) step.classList.add('is-active');
+            else step.classList.remove('is-active');
+        });
+
         if (progressBar) progressBar.style.width = (currentStep / totalSteps * 100) + '%';
         if (indicator) indicator.textContent = `Paso ${currentStep} de ${totalSteps}`;
         
-        dots.forEach((dot, idx) => {
-            if (idx < currentStep) dot.classList.add('tw:bg-[#ff6a00]', 'tw:scale-125');
-            else dot.classList.remove('tw:bg-[#ff6a00]', 'tw:scale-125');
-        });
-        
-        if (btnBack) btnBack.classList.toggle('tw:hidden', currentStep === 1);
         if (btnNext) btnNext.classList.toggle('tw:hidden', currentStep === totalSteps);
         if (btnSubmit) btnSubmit.classList.toggle('tw:hidden', currentStep !== totalSteps);
     }
 
+    // Step Navigation with Dynamic Validation
     if (btnNext) {
         btnNext.addEventListener('click', () => {
-            const activeStep = document.getElementById(`step-${currentStep}`);
-            const inputs = activeStep.querySelectorAll('input[required], textarea[required]');
+            const activePanel = document.getElementById(`step-panel-${currentStep}`);
             let valid = true;
+
+            // Simple validation for inputs in current step
+            const inputs = activePanel.querySelectorAll('input[required], textarea[required]');
             inputs.forEach(i => {
-                if(!i.value) { i.classList.add('tw:border-red-500/50'); valid = false; }
-                else { i.classList.remove('tw:border-red-500/50'); }
+                if(!i.value) { i.classList.add('tw:border-red-500'); valid = false; }
+                else { i.classList.remove('tw:border-red-500'); }
             });
+
             if (valid && currentStep < totalSteps) {
                 currentStep++;
                 updateUI();
-                const contactSection = document.querySelector('#contacto');
+                const contactSection = document.getElementById('contacto');
                 if (contactSection) {
-                    window.scrollTo({ top: contactSection.offsetTop - 100, behavior: 'smooth' });
+                    window.scrollTo({ top: contactSection.offsetTop - 50, behavior: 'smooth' });
                 }
             }
         });
@@ -60,35 +64,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // WhatsApp Integration
-    form.addEventListener('submit', (e) => {
-        const channelInput = form.querySelector('input[name="dm_channel"]:checked');
-        const channel = channelInput ? channelInput.value : 'email';
+    // Conditional Contact Validation Logic
+    function updateValidationRules() {
+        const selectedChannel = contactForm.querySelector('input[name="dm_channel"]:checked')?.value;
+        const phoneInput = document.getElementById('contacto-phone');
+        const emailInput = document.getElementById('contacto-email');
+        const phoneMark = document.querySelector('#phone-field-group .required-mark');
+        const emailMark = document.querySelector('#email-field-group .required-mark');
+
+        if (selectedChannel === 'whatsapp') {
+            phoneInput.required = true;
+            emailInput.required = false;
+            phoneMark?.classList.remove('tw:hidden');
+            emailMark?.classList.add('tw:hidden');
+        } else {
+            phoneInput.required = false;
+            emailInput.required = true;
+            phoneMark?.classList.add('tw:hidden');
+            emailMark?.classList.remove('tw:hidden');
+        }
+
+        // Visual Radio Feedback
+        contactForm.querySelectorAll('.opt-box').forEach(box => {
+            box.classList.remove('tw:border-dm-accent', 'tw:bg-dm-accent/10');
+            box.parentElement.querySelector('input').checked ? box.classList.add('tw:border-dm-accent', 'tw:bg-dm-accent/10') : null;
+        });
+    }
+
+    contactForm.querySelectorAll('input[name="dm_channel"]').forEach(rad => {
+        rad.addEventListener('change', updateValidationRules);
+    });
+
+    // Form Submission
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        if (channel === 'whatsapp') {
-            e.preventDefault();
-            const name = form.dm_name.value;
-            const company = form.dm_company.value;
-            const msg = form.dm_message.value;
-            const text = `Hola, soy ${name} de ${company}. ${msg}`;
-            window.open(`https://wa.me/5491156297160?text=${encodeURIComponent(text)}`, '_blank');
-            
-            // Redirect to thanks page
-            const thanksUrl = (window.datamaq_vars && window.datamaq_vars.thanks_url) ? window.datamaq_vars.thanks_url : '/gracias';
-            window.location.href = thanksUrl;
+        const channel = contactForm.querySelector('input[name="dm_channel"]:checked')?.value || 'whatsapp';
+        const formData = new FormData(contactForm);
+        formData.append('action', 'datamaq_submit_contact');
+        formData.append('security', window.datamaq_vars?.nonce || '');
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Enviando...';
+
+        try {
+            if (channel === 'whatsapp') {
+                const name = contactForm.dm_name.value;
+                const phone = contactForm.dm_phone.value;
+                const msg = contactForm.dm_message.value;
+                const text = `Hola DataMaq, soy ${name}. Mi contacto es ${phone}. Mi consulta: ${msg}`;
+                window.open(`https://wa.me/5491156297160?text=${encodeURIComponent(text)}`, '_blank');
+            }
+
+            const response = await fetch(window.datamaq_vars.ajax_url, {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                window.location.href = window.datamaq_vars.thanks_url || '/gracias';
+            } else {
+                throw new Error(result.data.message || 'Error al enviar');
+            }
+
+        } catch (error) {
+            console.error('Contact Error:', error);
+            const errorMsg = document.getElementById('contact-error-msg');
+            if (errorMsg) {
+                errorMsg.classList.remove('tw:hidden');
+                errorMsg.querySelector('p').textContent = error.message;
+            }
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Finalizar envío';
         }
     });
 
-    // Radio Toggle Styling
-    form.querySelectorAll('input[type="radio"]').forEach(rad => {
-        rad.addEventListener('change', () => {
-            form.querySelectorAll('.opt-box').forEach(box => box.classList.remove('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40'));
-            if(rad.checked) rad.nextElementSibling.classList.add('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40');
-        });
-    });
-    
-    const checkedRadio = form.querySelector('input[type="radio"]:checked');
-    if (checkedRadio && checkedRadio.nextElementSibling) {
-        checkedRadio.nextElementSibling.classList.add('tw:bg-[#ff6a00]/15', 'tw:border-[#ff6a00]/40');
-    }
+    // Initial state
+    updateValidationRules();
+    updateUI();
 });
