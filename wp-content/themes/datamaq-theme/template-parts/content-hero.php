@@ -5,7 +5,7 @@
  */
 $viewModel = new \DataMaq\UI\ViewModels\HeroViewModel(dm_content_repo());
 ?>
-<section id="hero" data-dm-component="ScrollReveal" class="section-mobile c-home-hero c-home-hero--direct" aria-labelledby="hero-title" style="background-image: linear-gradient(180deg, rgba(12, 9, 47, 0.42), rgba(12, 9, 47, 0.96)), url('<?php echo get_template_directory_uri(); ?>/assets/media/hero-energy.svg');">
+<section class="section-mobile c-home-hero c-home-hero--direct" aria-labelledby="hero-title" style="background-image: linear-gradient(180deg, rgba(var(--dm-surface-0-rgb), 0.42), rgba(var(--dm-bg-0-rgb), 0.96)), url('<?php echo get_template_directory_uri(); ?>/assets/media/hero-energy.svg');">
     <div class="tw:container tw:mx-auto tw:px-4">
         <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-12 tw:gap-8 tw:items-end">
             
