@@ -11,8 +11,8 @@ class N8nLeadRepository implements LeadRepositoryInterface {
     private string $webhookUrl;
 
     public function __construct(string $webhookUrl = '') {
-        // Fallback to hardcoded for now, but prepared for injection
-        $this->webhookUrl = $webhookUrl ?: 'https://n8n.datamaq.com.ar/webhook/contact-form';
+        // Fetch from WP Admin settings, fallback to provided or hardcoded
+        $this->webhookUrl = $webhookUrl ?: get_option('dm_n8n_webhook_url', 'https://n8n.datamaq.com.ar/webhook/contact-form');
     }
 
     public function save(LeadEntity $lead): bool {

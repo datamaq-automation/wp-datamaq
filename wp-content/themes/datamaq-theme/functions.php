@@ -14,6 +14,7 @@ require_once get_template_directory() . '/inc/ajax-handlers.php';
 
 // 3. Theme Setup & Assets
 require_once get_template_directory() . '/inc/theme-setup.php';
+require_once get_template_directory() . '/inc/admin-settings.php';
 
 /**
  * Injection Controller
