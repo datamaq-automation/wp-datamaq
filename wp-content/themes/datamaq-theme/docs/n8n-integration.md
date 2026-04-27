@@ -68,7 +68,7 @@ Antes de actualizar `docs/n8n/contact-form.production.sanitized.json`, revisar q
 - `pinData`, datos reales de ejecución, ejemplos con información personal o respuestas de servicios externos.
 - IDs o metadatos innecesarios de cuentas, usuarios o proyectos de n8n.
 
-El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY`, `N8N_SUITECRM_WEBHOOK_TOKEN`, `N8N_TELEGRAM_BOT_TOKEN` y `N8N_TELEGRAM_CHAT_ID`.
+El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY` y `N8N_SUITECRM_WEBHOOK_TOKEN`.
 
 ---
 **Nota para el desarrollador**: Cualquier cambio en los nombres de las claves de la sección `data` debe ser coordinado para actualizar la entidad `LeadEntity` en el código PHP del tema.

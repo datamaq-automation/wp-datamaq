@@ -1,7 +1,7 @@
 [
   {
     "id": "wf_contact_form_production_sanitized",
-    "name": "DataMaq Contact Form -> CRM + Notification",
+    "name": "DataMaq Contact Form -> CRM",
     "active": false,
     "isArchived": false,
     "nodes": [
@@ -209,26 +209,6 @@
       },
       {
         "parameters": {
-          "method": "POST",
-          "url": "={{ 'https://api.telegram.org/bot' + $env.N8N_TELEGRAM_BOT_TOKEN + '/sendMessage' }}",
-          "sendBody": true,
-          "contentType": "json",
-          "specifyBody": "json",
-          "jsonBody": "={{ { chat_id: $env.N8N_TELEGRAM_CHAT_ID, text: 'Nuevo lead web\\n\\nNombre: ' + ($json.name || '-') + '\\nEmail: ' + ($json.email || '-') + '\\nTelefono: ' + ($json.phone || '-') + '\\nEmpresa: ' + ($json.company || '-') + '\\nCanal preferido: ' + ($json.channel || '-') + '\\nComentario: ' + ($json.message || '-') } }}"
-        },
-        "id": "send_telegram_notification",
-        "name": "Send Telegram Notification",
-        "type": "n8n-nodes-base.httpRequest",
-        "typeVersion": 4.2,
-        "position": [
-          1260,
-          240
-        ],
-        "continueOnFail": true,
-        "onError": "continueRegularOutput"
-      },
-      {
-        "parameters": {
           "respondWith": "json",
           "responseBody": "={{ { status: 'accepted', detail: 'Submission queued' } }}",
           "options": {
@@ -280,7 +260,7 @@
       },
       {
         "parameters": {
-          "content": "Sanitized production workflow. Configure secrets in n8n environment variables: DATAMAQ_WP_WEBHOOK_API_KEY, N8N_SUITECRM_WEBHOOK_TOKEN, N8N_TELEGRAM_BOT_TOKEN, N8N_TELEGRAM_CHAT_ID. Do not commit runtime credentials or execution data.",
+          "content": "Sanitized production workflow. Configure secrets in n8n environment variables: DATAMAQ_WP_WEBHOOK_API_KEY and N8N_SUITECRM_WEBHOOK_TOKEN. Do not commit runtime credentials or execution data.",
           "height": 220,
           "width": 420
         },
@@ -354,17 +334,6 @@
         ]
       },
       "Create SuiteCRM Contact": {
-        "main": [
-          [
-            {
-              "node": "Send Telegram Notification",
-              "type": "main",
-              "index": 0
-            }
-          ]
-        ]
-      },
-      "Send Telegram Notification": {
         "main": [
           [
             {
