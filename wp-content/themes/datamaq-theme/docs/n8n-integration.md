@@ -70,5 +70,41 @@ Antes de actualizar `docs/n8n/contact-form.production.sanitized.json`, revisar q
 
 El JSON versionado debe usar variables de entorno para secretos, por ejemplo `DATAMAQ_WP_WEBHOOK_API_KEY` y `N8N_SUITECRM_WEBHOOK_TOKEN`.
 
+## 6. Estado Operativo Actual
+Al cierre de la limpieza del 2026-04-27, n8n quedó reducido a tres workflows activos:
+
+| Workflow ID | Nombre | Uso |
+| --- | --- | --- |
+| `wf_contact_turnstile_telegram` | `DataMaq Contact Form -> CRM` | Recibe leads desde WordPress, valida payload y delega alta de contacto en SuiteCRM. |
+| `wf_suitecrm_webhook_create_contact` | `SuiteCRM Create Contact Webhook` | Crea contactos en SuiteCRM usando las variables `SUITECRM_*`. |
+| `wf_lms_platform_support_v2` | `LMS Platform Support Chat v2` | Responde el soporte del LMS sin integraciones Telegram. |
+
+Se eliminaron de n8n los workflows de prueba, borradores y flujos Telegram:
+
+- `qM70dyAfB7H1SJa7` (`My workflow`)
+- `WPrvTY2uXgbYsRZg` (`My workflow 2`)
+- `wf_suitecrm_oauth_smoke` (`SuiteCRM OAuth Smoke Test`)
+- `wf_lms_platform_support` (`LMS Platform Support Chat`)
+- `wf_suitecrm_error_alert` (`SuiteCRM Error Alert`)
+- `wf_telegram_lms_reply_bridge` (`Telegram LMS Reply Bridge`)
+
+Telegram fue removido deliberadamente de n8n porque el bot queda reservado para OpenClaw. La configuración de n8n ya no debe incluir variables `N8N_TELEGRAM_*`.
+
+Backups operativos generados durante la limpieza:
+
+- `/root/n8n-backups/workflows-before-telegram-removal-20260427T035412Z.json`
+- `/root/n8n-backups/deleted-noise-workflows-20260427T040956Z.json`
+- Backups SQLite relacionados en `/root/n8n-backups/`
+- Backup de `/opt/n8n/.env` antes de remover variables Telegram en `/root/n8n-backups/`
+
+Variables n8n esperadas tras la limpieza:
+
+- `N8N_SUITECRM_WEBHOOK_TOKEN`
+- `SUITECRM_BASE_URL`
+- `SUITECRM_CLIENT_ID`
+- `SUITECRM_CLIENT_SECRET`
+- `SUITECRM_API_USER`
+- `SUITECRM_API_PASSWORD`
+
 ---
 **Nota para el desarrollador**: Cualquier cambio en los nombres de las claves de la sección `data` debe ser coordinado para actualizar la entidad `LeadEntity` en el código PHP del tema.
