@@ -716,49 +716,202 @@ body::before {
 }
 
 
-.app-shell--home .c-contact {
-  background: linear-gradient(
-    180deg,
-    rgba(var(--dm-bg-0-rgb), 0.96),
-    rgba(var(--dm-surface-0-rgb), 0.96)
-  );
+/* --- Contact Wizard Premium Styles --- */
+.c-contact {
+  --contact-accent: #ff6a00;
+  --contact-border: rgba(255, 255, 255, 0.1);
+  --contact-surface: rgba(12, 9, 47, 0.8);
 }
-.app-shell--home .c-contact__card {
-  background: rgba(var(--dm-surface-0-rgb), 0.92) !important;
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.1) !important;
-  box-shadow: 0 1.4rem 3rem rgba(var(--dm-shadow-rgb), 0.3) !important;
+
+.c-contact__card {
+  background: var(--contact-surface) !important;
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--contact-border) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
-.app-shell--home .c-contact__title {
-  color: var(--dm-text-0) !important;
-  font-size: clamp(1.8rem, 2.8vw, 2.35rem);
+
+.c-contact__stepper {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  position: relative;
+}
+
+.c-contact__stepper::before {
+  content: "";
+  position: absolute;
+  top: 1.25rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 1;
+}
+
+.c-contact__stepper-item {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  text-align: center;
+}
+
+.c-contact__stepper-trigger {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.c-contact__stepper-dot {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: #1a1645;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
 }
-.app-shell--home .c-contact__subtitle {
-  color: rgba(var(--dm-text-0-rgb), 0.72) !important;
-  margin-bottom: 1.5rem !important;
+
+.c-contact__stepper-item.is-active .c-contact__stepper-dot {
+  background: var(--contact-accent);
+  color: #0c092f;
+  border-color: var(--contact-accent);
+  box-shadow: 0 0 20px rgba(255, 106, 0, 0.3);
 }
-.app-shell--home .c-contact .form-label {
-  color: rgba(var(--dm-text-0-rgb), 0.58);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.72rem;
+
+.c-contact__stepper-item.is-active .c-contact__stepper-label {
+  color: #fff;
   font-weight: 700;
 }
-.app-shell--home .c-contact .form-control {
-  background: rgba(var(--dm-surface-1-rgb), 0.88);
-  border-color: rgba(var(--dm-text-0-rgb), 0.12);
-  color: var(--dm-text-0);
-  min-height: 3.15rem;
+
+.c-contact__stepper-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }
-.app-shell--home .c-contact textarea.form-control {
-  min-height: 8.8rem;
+
+.c-contact__progress {
+  margin-bottom: 2rem;
 }
-.app-shell--home .c-contact .form-control::placeholder {
-  color: rgba(var(--dm-text-0-rgb), 0.42);
+
+.c-contact__progress-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
 }
-.app-shell--home .c-contact__submit {
-  min-height: 3.3rem;
+
+.c-contact__progress-fill {
+  height: 100%;
+  background: var(--contact-accent);
+  transition: width 0.5s ease;
+}
+
+.c-contact__progress-text {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.c-contact__privacy-note {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 0.5rem;
+}
+
+.c-contact__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.75rem;
+}
+
+.c-contact__input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.c-contact__input:focus {
+  outline: none;
+  border-color: var(--contact-accent);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.c-contact__btn {
+  width: 100%;
+  padding: 1.25rem;
+  border-radius: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.c-contact__btn--primary {
+  background: var(--contact-accent);
+  color: #0c092f;
+  border: none;
+}
+
+.c-contact__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 106, 0, 0.2);
+}
+
+.c-contact__email-card {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.c-contact__email-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.c-contact__email-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.c-contact__email-link {
+  color: var(--contact-accent);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 .app-shell--home .c-consent-banner--shell {
   bottom: calc(var(--floating-cta-height, 5rem) + 0.75rem);
