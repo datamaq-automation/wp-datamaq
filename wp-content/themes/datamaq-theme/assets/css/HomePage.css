@@ -1073,3 +1073,117 @@ body {
   height: auto !important;
 }
 .tw\:hidden { display: none !important; }
+
+/* Thanks View Styles */
+.thanks-view {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c092f;
+  position: relative;
+  overflow: hidden;
+}
+
+.thanks-stage {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.thanks-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.thanks-topbar__close {
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.thanks-topbar__close:hover { opacity: 1; }
+
+.thanks-main__icon-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+}
+
+.thanks-main__icon {
+  width: 100%;
+  height: 100%;
+  background: var(--contact-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.thanks-main__icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle, var(--contact-accent) 0%, transparent 70%);
+  opacity: 0.3;
+  filter: blur(20px);
+}
+
+.thanks-main__title {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  background: linear-gradient(to bottom, #fff, #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.thanks-main__copy {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  line-height: 1.6;
+  color: white;
+}
+
+.thanks-actions {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.thanks-actions .btn {
+  padding: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.thanks-stage__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100vw;
+  background: radial-gradient(circle, rgba(255, 106, 0, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
