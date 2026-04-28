@@ -26,20 +26,24 @@ function dm_enqueue_assets() {
     
     // Auto-versioning based on file modification time to bust cache
     $style_ver = file_exists($theme_path . '/style.css') ? filemtime($theme_path . '/style.css') : $version;
+    $tailwind_ver = file_exists($theme_path . '/assets/css/tailwind-dist.css') ? filemtime($theme_path . '/assets/css/tailwind-dist.css') : $version;
+    $index_ver = file_exists($theme_path . '/assets/css/index.css') ? filemtime($theme_path . '/assets/css/index.css') : $version;
     $premium_ver = file_exists($theme_path . '/assets/css/HomePage.css') ? filemtime($theme_path . '/assets/css/HomePage.css') : $version;
+    $whatsapp_ver = file_exists($theme_path . '/assets/css/WhatsAppFab.css') ? filemtime($theme_path . '/assets/css/WhatsAppFab.css') : $version;
+    $learnpress_ver = file_exists($theme_path . '/assets/css/learnpress-overrides.css') ? filemtime($theme_path . '/assets/css/learnpress-overrides.css') : '1.4.1';
     $wizard_ver = file_exists($theme_path . '/assets/js/contact-wizard.js') ? filemtime($theme_path . '/assets/js/contact-wizard.js') : $version;
     $comp_ver = file_exists($theme_path . '/assets/js/dm-components.js') ? filemtime($theme_path . '/assets/js/dm-components.js') : $version;
 
     // CSS
     wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $style_ver );
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
-    wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $version );
-    wp_enqueue_style( 'legacy-index-styles', $theme_uri . '/assets/css/index.css', array('tailwind-styles'), $version );
+    wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $tailwind_ver );
+    wp_enqueue_style( 'legacy-index-styles', $theme_uri . '/assets/css/index.css', array('tailwind-styles'), $index_ver );
     wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/HomePage.css', array('legacy-index-styles'), $premium_ver );
-    wp_enqueue_style( 'whatsapp-fab-styles', $theme_uri . '/assets/css/WhatsAppFab.css', array(), $version );
+    wp_enqueue_style( 'whatsapp-fab-styles', $theme_uri . '/assets/css/WhatsAppFab.css', array(), $whatsapp_ver );
     
     if ( class_exists( 'LearnPress' ) ) {
-        wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array(), '1.4.1' );
+        wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array(), $learnpress_ver );
     }
 
     // JS Component Architecture
