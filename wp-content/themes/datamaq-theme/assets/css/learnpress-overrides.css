@@ -11,9 +11,11 @@
     color: #ffffff !important;
 }
 
-/* Single Course Header Background */
+/* Single Course Header & Sidebar Background */
 .lp-single-course__header,
-.lp-single-course__header__inner {
+.lp-single-course__header__inner,
+.lp-single-course-main__right,
+.lp-single-course-main__right__inner {
     background-color: #050314 !important; /* Más oscuro para mejor contraste */
 }
 
