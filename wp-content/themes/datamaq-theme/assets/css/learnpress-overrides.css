@@ -11,6 +11,12 @@
     color: #ffffff !important;
 }
 
+/* Single Course Header Background */
+.lp-single-course__header,
+.lp-single-course__header__inner {
+    background-color: #050314 !important; /* Más oscuro para mejor contraste */
+}
+
 /* 2. Archive Header & Breadcrumbs */
 .learn-press-breadcrumb, 
 .lp-breadcrumb {
