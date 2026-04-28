@@ -16,7 +16,8 @@
 .lp-single-course__header__inner,
 .lp-single-course-main__right,
 .lp-single-course-main__right__inner,
-.lp-course-curriculum {
+.lp-course-curriculum,
+.lp-section-instructor {
     background-color: #050314 !important; /* Más oscuro para mejor contraste */
 }
 
