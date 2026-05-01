@@ -23,6 +23,14 @@ class FooterViewModel {
         return $this->footer->getWhatsappUrl();
     }
 
+    public function getProductsUrl(): string {
+        return home_url('/productos');
+    }
+
+    public function getTrainingUrl(): string {
+        return home_url('/courses');
+    }
+
     public function getCopyright(): string {
         return $this->footer->getCopyrightNote();
     }

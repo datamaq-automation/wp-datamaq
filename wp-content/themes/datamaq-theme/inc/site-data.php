@@ -172,7 +172,7 @@ function get_datamaq_site_data() {
         ],
         'footer' => [
             'copyright' => '(c) {year} DataMaq | Gar&iacute;n (GBA Norte)',
-            'legal' => 'La informaci&oacute;n publicada es referencial y puede actualizarse seg&uacute;n alcance, tablero, se&ntilde;ales disponibles, conectividad, sistema destino y condiciones de implementaci&oacute;n.',
+            'legal' => 'Las cotizaciones generadas se basan en reglas de ingenier&iacute;a actualizadas. La implementaci&oacute;n definitiva queda sujeta a validaci&oacute;n t&eacute;cnica in-situ seg&uacute;n condiciones de conectividad y se&ntilde;ales en planta.',
             'whatsapp' => 'https://wa.me/5491156297160?text=Hola+DataMaq%2C+necesito+asistencia+t%C3%A9cnica+para+%5BTipo+de+Maquina%5D.'
         ]
     ];
