@@ -8318,3 +8318,26 @@ body.offcanvas-open .whatsapp-fab {
 .bi-globe-europe-africa-fill:before {
   content: "爛";
 }
+
+/**
+ * Optimización de Tienda para Móviles (DataMaq Audit)
+ */
+@media (max-width: 767.98px) {
+  ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+    gap: 2rem !important;
+  }
+  
+  ul.products li.product {
+    width: 100% !important;
+    margin-bottom: 2rem !important;
+    float: none !important;
+  }
+
+  ul.products li.product img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: var(--dm-radius-1);
+  }
+}
