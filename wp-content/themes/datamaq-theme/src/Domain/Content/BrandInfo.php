@@ -9,6 +9,7 @@ class BrandInfo {
     private array $navigation;
     private string $contactUrl;
     private string $trainingUrl;
+    private string $productsUrl;
     private string $whatsapp;
 
     public function __construct(
@@ -16,12 +17,14 @@ class BrandInfo {
         array $navigation,
         string $contactUrl,
         string $trainingUrl,
+        string $productsUrl,
         string $whatsapp
     ) {
         $this->name = $name;
         $this->navigation = $navigation;
         $this->contactUrl = $contactUrl;
         $this->trainingUrl = $trainingUrl;
+        $this->productsUrl = $productsUrl;
         $this->whatsapp = $whatsapp;
     }
 
@@ -29,5 +32,6 @@ class BrandInfo {
     public function getNavigation(): array { return $this->navigation; }
     public function getContactUrl(): string { return $this->contactUrl; }
     public function getTrainingUrl(): string { return $this->trainingUrl; }
+    public function getProductsUrl(): string { return $this->productsUrl; }
     public function getWhatsapp(): string { return $this->whatsapp; }
 }

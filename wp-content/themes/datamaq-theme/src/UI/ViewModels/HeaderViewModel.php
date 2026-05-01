@@ -27,6 +27,10 @@ class HeaderViewModel {
         return $this->brand->getTrainingUrl();
     }
 
+    public function getProductsUrl(): string {
+        return $this->brand->getProductsUrl();
+    }
+
     public function getHomeUrl(): string {
         return home_url('/');
     }

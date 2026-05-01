@@ -117,6 +117,7 @@ class StaticContentRepository implements ContentRepositoryInterface {
             $data['nav'] ?? [],
             $data['contact_url'] ?? '/contacto',
             $data['training_url'] ?? '/courses',
+            $data['products_url'] ?? '/productos',
             $data['whatsapp'] ?? ''
         );
     }

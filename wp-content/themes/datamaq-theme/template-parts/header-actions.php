@@ -17,9 +17,18 @@ if (!$viewModel) {
 
 $contact_url = $viewModel->getContactUrl();
 $training_url = $viewModel->getTrainingUrl();
+$products_url = $viewModel->getProductsUrl();
 ?>
 
 <div class="c-home-header__actions tw:flex tw:items-center tw:gap-3">
+    <!-- Productos -->
+    <!-- Icono Mobile -->
+    <a href="<?php echo esc_url($products_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Productos" title="Productos">
+        <i class="bi bi-box-seam" aria-hidden="true"></i>
+    </a>
+    <!-- Botón Desktop -->
+    <button onclick="window.location.href='<?php echo esc_url($products_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Productos</button>
+
     <!-- Capacitaciones -->
     <!-- Icono Mobile -->
     <a href="<?php echo esc_url($training_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Capacitaciones" title="Capacitaciones">
