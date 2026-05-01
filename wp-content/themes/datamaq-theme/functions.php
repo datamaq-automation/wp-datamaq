@@ -83,3 +83,9 @@ function dm_content_repo() {
  * Initialize SEO Service
  */
 (new \DataMaq\Infrastructure\Seo\SeoService())->registerHooks();
+
+/**
+ * WooCommerce Clean Up
+ */
+remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+remove_action( 'woocommerce_after_shop_loop', 'woocommerce_result_count', 20 );
