@@ -8341,3 +8341,22 @@ body.offcanvas-open .whatsapp-fab {
     border-radius: var(--dm-radius-1);
   }
 }
+
+/**
+ * Centrado Dinámico de Catálogo (DataMaq Audit)
+ */
+@media (min-width: 768px) {
+  ul.products {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 3rem !important;
+  }
+
+  ul.products li.product {
+    float: none !important;
+    margin: 0 !important;
+    width: 300px !important; /* Tamaño contenido y elegante */
+    flex-basis: auto !important;
+  }
+}
