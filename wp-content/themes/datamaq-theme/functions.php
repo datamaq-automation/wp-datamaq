@@ -90,3 +90,20 @@ function dm_content_repo() {
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_after_shop_loop', 'woocommerce_result_count', 20 );
 remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
+
+/**
+ * Personalización de botones de WooCommerce
+ */
+// 1. Cambiar texto del botón en el catálogo
+add_filter( 'woocommerce_product_add_to_cart_text', function() {
+    return 'Ver más';
+});
+
+// 2. Hacer que el botón redirija a la página del producto en lugar de añadir al carrito por AJAX
+add_filter( 'woocommerce_loop_add_to_cart_link', function( $html, $product ) {
+    return sprintf(
+        '<a href="%s" class="tw:btn-primary c-ui-btn">%s</a>',
+        esc_url( $product->get_permalink() ),
+        'Ver más'
+    );
+}, 10, 2 );
