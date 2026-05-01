@@ -101,8 +101,15 @@ add_filter( 'woocommerce_product_add_to_cart_text', function() {
 
 // 2. Hacer que el botón redirija a la página del producto en lugar de añadir al carrito por AJAX
 add_filter( 'woocommerce_loop_add_to_cart_link', function( $html, $product ) {
+    // AUDITORÍA: Si esto aparece en el log, el filtro está funcionando.
+    error_log('DataMaq Audit: Renderizando botón para ID ' . $product->get_id());
+
     return sprintf(
-        '<a href="%s" class="tw:btn-primary c-ui-btn">%s</a>',
+        '<div class="dm-audit-wrapper" style="text-align: center !important; display: block !important; width: 100%% !important; margin: 1.5rem 0 !important;">
+            <!-- DataMaq Audit System: Start -->
+            <a href="%s" class="tw:btn-primary c-ui-btn" style="display: inline-flex !important; float: none !important;">%s</a>
+            <!-- DataMaq Audit System: End -->
+        </div>',
         esc_url( $product->get_permalink() ),
         'Ver más'
     );
