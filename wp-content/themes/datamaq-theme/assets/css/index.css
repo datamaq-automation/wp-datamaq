@@ -1188,7 +1188,6 @@ body.offcanvas-open .whatsapp-fab {
   iframe,
   embed,
   object {
-    vertical-align: middle;
     display: block;
   }
   img,
