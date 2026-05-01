@@ -109,3 +109,16 @@ add_filter( 'woocommerce_loop_add_to_cart_link', function( $html, $product ) {
         'Ver más'
     );
 }, 10, 2 );
+
+/**
+ * Flujo de Compra Directa (DataMaq Audit)
+ */
+// 1. Redirigir directamente al Checkout al añadir al carrito
+add_filter( 'woocommerce_add_to_cart_redirect', function() {
+    return wc_get_checkout_url();
+});
+
+// 2. Cambiar texto del botón en la página de producto individual
+add_filter( 'woocommerce_product_single_add_to_cart_text', function() {
+    return 'Contratar ahora';
+});
