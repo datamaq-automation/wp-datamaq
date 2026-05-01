@@ -24,6 +24,7 @@
         try {
             $viewModel = new \DataMaq\UI\ViewModels\HeaderViewModel(dm_content_repo());
         } catch (\Throwable $e) {
+            error_log('DataMaq Error: Failed to initialize HeaderViewModel - ' . $e->getMessage());
             if (defined('WP_DEBUG') && WP_DEBUG) {
                 echo "<!-- Error in HeaderViewModel: " . esc_html($e->getMessage()) . " -->";
             }

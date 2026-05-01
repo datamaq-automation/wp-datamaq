@@ -2,9 +2,16 @@
 /**
  * Template part for displaying header actions (CTAs).
  * 
- * @var \DataMaq\UI\ViewModels\HeaderViewModel $viewModel
+ * @var array $args
  */
-if (!isset($viewModel)) {
+
+// Extraemos el ViewModel del array de argumentos (Arquitectura Limpia)
+$viewModel = $args['viewModel'] ?? null;
+
+if (!$viewModel) {
+    if (defined('WP_DEBUG') && WP_DEBUG) {
+        echo '<!-- DEBUG: HeaderViewModel missing in header-actions.php -->';
+    }
     return;
 }
 
