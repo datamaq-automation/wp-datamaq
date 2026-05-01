@@ -23,6 +23,10 @@ class HeaderViewModel {
         return $this->brand->getContactUrl();
     }
 
+    public function getTrainingUrl(): string {
+        return $this->brand->getTrainingUrl();
+    }
+
     public function getHomeUrl(): string {
         return home_url('/');
     }

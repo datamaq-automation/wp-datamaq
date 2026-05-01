@@ -51,18 +51,8 @@
             <?php endif; ?>
         </nav>
 
-        <!-- CTAs de Contacto -->
-        <div class="c-home-header__actions">
-            <?php 
-            $contact_url = $viewModel ? $viewModel->getContactUrl() : '/contact'; 
-            ?>
-            <!-- Icono Mobile -->
-            <a href="<?php echo esc_url($contact_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Contacto" title="Contacto">
-                <i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
-            </a>
-            <!-- Botón Desktop -->
-            <button onclick="window.location.href='<?php echo esc_url($contact_url); ?>'" type="button" class="tw:btn-primary c-home-header__cta tw:hidden tw:lg:inline-flex">Contacto</button>
-        </div>
+        <!-- CTAs de Acción (Modular) -->
+        <?php get_template_part('template-parts/header-actions', null, ['viewModel' => $viewModel]); ?>
 
     </div>
 </header>

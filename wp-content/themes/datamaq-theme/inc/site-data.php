@@ -14,7 +14,8 @@ function get_datamaq_site_data() {
             'name' => 'DataMaq',
             'whatsapp' => 'https://wa.me/5491156297160',
             'email' => 'info@datamaq.com.ar',
-            'base' => 'Gar&iacute;n (GBA Norte)'
+            'base' => 'Gar&iacute;n (GBA Norte)',
+            'training_url' => '/courses'
         ],
         'hero' => [
             'eyebrow' => 'Captura autom&aacute;tica de datos operativos',
