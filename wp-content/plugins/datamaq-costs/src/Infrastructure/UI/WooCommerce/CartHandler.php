@@ -12,29 +12,40 @@ class CartHandler {
         
         // Guardar dirección en el pedido
         add_action('woocommerce_checkout_create_order_line_item', [$this, 'add_address_to_order_items'], 10, 4);
+
+        // Capturar datos del formulario estándar
+        add_filter('woocommerce_add_cart_item_data', [$this, 'capture_calculator_data'], 10, 2);
+    }
+
+    public function capture_calculator_data($cartItemData, $productId): array {
+        if ($productId !== 251) return $cartItemData;
+
+        if (isset($_POST['dm_calculated_price'])) {
+            $cartItemData['dm_custom_price'] = floatval($_POST['dm_calculated_price']);
+        }
+
+        if (isset($_POST['dm_calculated_address'])) {
+            $cartItemData['dm_custom_address'] = sanitize_text_field($_POST['dm_calculated_address']);
+        }
+
+        return $cartItemData;
     }
 
     public function apply_custom_price($cart): void {
         if (is_admin() && !defined('DOING_AJAX')) return;
 
-        $customPrice = WC()->session->get('datamaq_custom_price');
-
-        if (!$customPrice) return;
-
         foreach ($cart->get_cart() as $cartItem) {
-            if ($cartItem['product_id'] === 251) {
-                $cartItem['data']->set_price($customPrice);
+            if (isset($cartItem['dm_custom_price'])) {
+                $cartItem['data']->set_price($cartItem['dm_custom_price']);
             }
         }
     }
 
     public function display_address_in_cart($itemData, $cartItem): array {
-        $address = WC()->session->get('datamaq_custom_address');
-        
-        if ($cartItem['product_id'] === 251 && $address) {
+        if (isset($cartItem['dm_custom_address'])) {
             $itemData[] = [
                 'key'   => 'Planta a relevar',
-                'value' => $address
+                'value' => $cartItem['dm_custom_address']
             ];
         }
         
@@ -42,10 +53,8 @@ class CartHandler {
     }
 
     public function add_address_to_order_items($item, $cartItemKey, $values, $order): void {
-        $address = WC()->session->get('datamaq_custom_address');
-        
-        if ($values['product_id'] === 251 && $address) {
-            $item->add_meta_data('Planta a relevar', $address);
+        if (isset($values['dm_custom_address'])) {
+            $item->add_meta_data('Planta a relevar', $values['dm_custom_address']);
         }
     }
 }

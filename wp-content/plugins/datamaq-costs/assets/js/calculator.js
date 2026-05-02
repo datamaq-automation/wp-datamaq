@@ -74,12 +74,17 @@
             const $loader = $('#dm-calculator-loader');
             const $priceValue = $('#dm-result-price');
             const $distanceValue = $('#dm-result-distance');
-            const $addToCartBtn = $('#dm-add-to-cart-trigger');
+            const $addToCartBtn = $('.single_add_to_cart_button');
+            const $form = $addToCartBtn.closest('form.cart');
 
             if (!$addressInput.length) {
                 DMLog.error('No se encontró el input de dirección tras la teletransportación.');
                 return;
             }
+
+            // Bloquear botón de WooCommerce al inicio
+            $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
+            DMLog.info('Botón de WooCommerce bloqueado hasta completar cálculo.');
 
             DMLog.info('Google Maps detectado. Configurando Autocomplete...');
 
@@ -87,6 +92,12 @@
                 types: ['address'],
                 componentRestrictions: { country: 'ar' },
                 fields: ['formatted_address', 'geometry']
+            });
+
+            // Resetear estado si el usuario escribe algo nuevo sin seleccionar
+            $addressInput.on('input', function() {
+                $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
+                $resultsContainer.hide();
             });
 
             autocomplete.addListener('place_changed', function() {
@@ -99,10 +110,23 @@
                 }
             });
 
+            function updateHiddenField(name, value) {
+                if (!$form.length) return;
+                let $field = $form.find(`input[name="${name}"]`);
+                if (!$field.length) {
+                    $field = $('<input>').attr({
+                        type: 'hidden',
+                        name: name
+                    });
+                    $form.append($field);
+                }
+                $field.val(value);
+            }
+
             function calculate(address) {
                 $resultsContainer.hide();
                 $loader.show();
-                $addToCartBtn.prop('disabled', true);
+                $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
 
                 DMLog.info('Solicitando cálculo al servidor para:', address);
 
@@ -117,39 +141,30 @@
                         $distanceValue.text(response.data.distance);
                         $priceValue.text('$' + response.data.price);
                         $resultsContainer.fadeIn();
-                        $addToCartBtn.prop('disabled', false)
-                                     .data('price', response.data.price)
-                                     .data('address', address);
+                        
+                        // Ocultar guía y habilitar botón oficial
+                        $('#dm-calculator-guide').fadeOut();
+                        $addToCartBtn.prop('disabled', false).css('opacity', '1');
+                        
+                        // Sincronizar datos con el formulario de WooCommerce
+                        updateHiddenField('dm_calculated_price', response.data.price);
+                        updateHiddenField('dm_calculated_address', address);
+                        
+                        DMLog.info('Botón de WooCommerce habilitado y sincronizado.');
+
+                        // Scroll suave hacia el botón de compra
+                        setTimeout(() => {
+                            $('html, body').animate({
+                                scrollTop: $addToCartBtn.offset().top - 150
+                            }, 800);
+                        }, 500);
+
                     } else {
                         DMLog.error('Error en el cálculo del servidor:', response.data);
                         alert('Error: ' + response.data);
                     }
                 });
             }
-
-            $addToCartBtn.on('click', function() {
-                DMLog.info('Procesando reserva para:', $(this).data('address'));
-                
-                const data = {
-                    action: 'datamaq_add_to_cart',
-                    product_id: datamaq_costs.product_id,
-                    custom_price: $(this).data('price'),
-                    custom_address: $(this).data('address'),
-                    _ajax_nonce: datamaq_costs.nonce
-                };
-
-                $addToCartBtn.text('Procesando...').prop('disabled', true);
-                $.post(datamaq_costs.ajax_url, data, function(response) {
-                    if (response.success) {
-                        DMLog.info('Producto añadido al carrito con precio dinámico.');
-                        window.location.href = '/cart/';
-                    } else {
-                        DMLog.error('Fallo al añadir al carrito:', response.data);
-                        alert(response.data);
-                        $addToCartBtn.text('Reservar Relevamiento Técnico').prop('disabled', false);
-                    }
-                });
-            });
         }
     });
 

@@ -48,11 +48,10 @@ if (!defined('ABSPATH')) exit;
             <div class="dm-spinner"></div>
             <span>Calculando distancia técnica...</span>
         </div>
-    </div>
 
-    <div class="dm-calculator-footer">
-        <button type="button" id="dm-add-to-cart-trigger" class="tw:btn-primary dm-btn-full" disabled>
-            Reservar Relevamiento Técnico
-        </button>
+        <div id="dm-calculator-guide" class="dm-calculator-guide">
+            <i class="bi bi-arrow-down-circle"></i>
+            <span>Completá la dirección técnica para habilitar la contratación</span>
+        </div>
     </div>
 </div>
