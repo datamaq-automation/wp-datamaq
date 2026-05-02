@@ -58,9 +58,19 @@ class SettingsPage {
         $maskedKey = !empty($apiKey) ? substr($apiKey, 0, 4) . '...' . substr($apiKey, -4) : '';
         ?>
         <div class="wrap datamaq-costs-admin">
-            <h1><span class="dashicons dashicons-calculator"></span> <?php echo esc_html(get_admin_page_title()); ?></h1>
+            <div class="datamaq-admin-header">
+                <h1><span class="dashicons dashicons-calculator"></span> <?php echo esc_html(get_admin_page_title()); ?></h1>
+                
+                <div class="edit-mode-container">
+                    <label class="switch">
+                        <input type="checkbox" id="datamaq-edit-mode">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="edit-mode-label">Modo Edición</span>
+                </div>
+            </div>
             
-            <form method="post" action="options.php" class="datamaq-settings-form">
+            <form method="post" action="options.php" class="datamaq-settings-form is-read-only">
                 <?php
                 settings_fields('datamaq_costs_group');
                 ?>

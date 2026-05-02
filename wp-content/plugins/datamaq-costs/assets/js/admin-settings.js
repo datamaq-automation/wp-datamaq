@@ -3,6 +3,18 @@
  */
 jQuery(document).ready(function($) {
     
+    // 0. Toggle Edit Mode
+    $('#datamaq-edit-mode').on('change', function() {
+        const isChecked = $(this).is(':checked');
+        const form = $('.datamaq-settings-form');
+        
+        if (isChecked) {
+            form.removeClass('is-read-only');
+        } else {
+            form.addClass('is-read-only');
+        }
+    });
+
     // 1. Toggle API Key Visibility
     $('.toggle-visibility').on('click', function() {
         const input = $('#datamaq_costs_google_api_key');
