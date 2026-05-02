@@ -11,21 +11,24 @@
 - [x] Implementar Toggle de visibilidad para API Key.
 - [x] Implementar "Modo Edición" con interruptor de seguridad.
 - [x] Mantener "Probar Conexión" siempre visible.
+- [x] Implementar Toggle de Chatwoot (External Services).
 
-## Próximos Pasos Técnicos (Refactor & Fix)
+## Refactor de Arquitectura (SOLID / Clean Architecture)
+- [x] **Desacoplar Detección de Contexto**: `WordPressContextService` implementado.
+- [x] **Carga Asíncrona (Performance)**: `AssetManager` inyecta `async`, `defer` y `loading=async` (Resolución de Warnings de Google).
+- [x] **Manejo de Dependencias**: Protección de Race condition implementada en `calculator.js`.
 
-### 1. Refactor de Arquitectura (SOLID / Clean Architecture)
-- [ ] **Desacoplar Detección de Contexto**: Crear un `ContextService` para identificar páginas de producto sin depender de `is_product()`.
-- [ ] **Carga Asíncrona (Performance)**: Implementar un `ScriptFilter` para inyectar los atributos `async` y `defer` en la API de Google Maps (Corrección del Warning de Google).
-- [ ] **Manejo de Dependencias**: Asegurar que `calculator.js` solo se ejecute cuando `google` esté definido (Race condition protection).
+## Observabilidad y Debugging
+- [x] **Logger Frontend**: `DMLog` implementado para monitoreo de teletransportación y AJAX.
+- [x] **Debug Mode**: Botón provisorio para simular cálculos exitosos y verificar integración.
 
-### 2. Observabilidad y Debugging
-- [ ] **Logger Frontend**: Implementar un sistema de logs en consola (`DataMaq: info|error`) para monitorear la "teletransportación" en tiempo real.
-- [ ] **Manejo de Errores de API**: Capturar fallos en Google Places y mostrarlos elegantemente en la UI (no solo en consola).
+## Integración WooCommerce
+- [x] **Flujo Unificado**: Eliminación de botón redundante y habilitación dinámica del botón nativo de WooCommerce.
+- [x] **Persistencia Robusta**: Inyección de `dm_custom_price` y `dm_custom_address` vía `cart_item_data`.
+- [x] **Vendido Individualmente**: Automatización vía WP-CLI / Ajustes para producto ID 251.
+- [x] **Navegación UX**: Scroll automático hacia el botón de compra tras cálculo exitoso.
 
-### 3. Integración WooCommerce
-- [ ] Validar persistencia de metadatos en el carrito tras el "Teleport".
-- [ ] Test de flujo completo: Calculadora -> Carrito -> Checkout.
-- [ ] Implementar Hook de WooCommerce para inyectar precio dinámico al carrito.
+## Próximos Pasos
 - [ ] Configurar Navbar con botones destacados (Relevamiento / Automatización).
 - [ ] Mover botón de WhatsApp al final del proceso de cotización.
+- [ ] Implementar detección automática vía GPS (Browser Geolocation).
