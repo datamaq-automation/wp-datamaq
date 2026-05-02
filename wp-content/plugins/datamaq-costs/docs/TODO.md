@@ -11,7 +11,7 @@
     - [x] Campo: Tarifa Base para Relevamiento.
 
 ## Integración
-- [ ] Implementar el cliente para la API de Google Distance Matrix.
+- [x] Implementar el cliente para la API de Google Distance Matrix.
 - [ ] Implementar el mecanismo de respaldo manual para el ingreso de KM.
 
 ## Funcionalidades

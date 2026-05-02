@@ -7,7 +7,7 @@ Este plugin está diseñado para automatizar y estandarizar el proceso de presup
 ### 2.1 Cálculo de Costos
 - **Fórmula:** `Costo Total = Tarifa Base + (KM Totales * Valor por KM)`
 - **Cálculo de Distancia:** 
-    - Obtención automatizada mediante la **API de Google Distance Matrix**.
+    - Obtención automatizada mediante la **API de Google Distance Matrix** (Validado técnicamente ✅).
     - Calcula la distancia desde la **Dirección de Origen de Datamaq** hasta la **Dirección de Destino del Cliente**.
 - **Respaldo Manual (Fallback):** Si la API falla o no se encuentra la dirección, el administrador debe poder ingresar los KM manualmente.
 - **Disparador:** Se inicia a través de un formulario de "Solicitud de Presupuesto" previo al proceso de checkout.
