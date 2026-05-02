@@ -15,6 +15,7 @@ class CostSettings {
     private Money $km_rate;
     private Money $engineering_rate;
     private Money $assembly_rate;
+    private bool $chatwoot_enabled;
 
     public function __construct(
         GoogleApiKey $google_api_key,
@@ -22,7 +23,8 @@ class CostSettings {
         Money $base_fee,
         Money $km_rate,
         Money $engineering_rate,
-        Money $assembly_rate
+        Money $assembly_rate,
+        bool $chatwoot_enabled = true
     ) {
         $this->google_api_key = $google_api_key;
         $this->origin_address = $origin_address;
@@ -30,6 +32,7 @@ class CostSettings {
         $this->km_rate = $km_rate;
         $this->engineering_rate = $engineering_rate;
         $this->assembly_rate = $assembly_rate;
+        $this->chatwoot_enabled = $chatwoot_enabled;
     }
 
     public function getGoogleApiKey(): GoogleApiKey {
@@ -54,5 +57,9 @@ class CostSettings {
 
     public function getAssemblyRate(): Money {
         return $this->assembly_rate;
+    }
+
+    public function isChatwootEnabled(): bool {
+        return $this->chatwoot_enabled;
     }
 }

@@ -50,6 +50,7 @@ class SettingsPage {
         register_setting( 'datamaq_costs_group', 'datamaq_costs_base_fee' );
         register_setting( 'datamaq_costs_group', 'datamaq_costs_engineering_rate' );
         register_setting( 'datamaq_costs_group', 'datamaq_costs_assembly_rate' );
+        register_setting( 'datamaq_costs_group', 'datamaq_costs_chatwoot_enabled' );
     }
 
     public function render_settings_page() {
@@ -146,6 +147,30 @@ class SettingsPage {
                                 <td>
                                     <span class="currency-prefix">$</span>
                                     <input type="number" step="0.01" id="datamaq_costs_assembly_rate" name="datamaq_costs_assembly_rate" value="<?php echo esc_attr($settings->getAssemblyRate()->getAmount()); ?>" class="small-text">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="datamaq-card">
+                    <div class="datamaq-card-header">
+                        <h2><span class="dashicons dashicons-format-chat"></span> Servicios Externos</h2>
+                    </div>
+                    <div class="datamaq-card-body">
+                        <table class="form-table" role="presentation">
+                            <tr>
+                                <th scope="row"><label for="datamaq_costs_chatwoot_enabled">Habilitar Chatwoot</label></th>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox" 
+                                               id="datamaq_costs_chatwoot_enabled" 
+                                               name="datamaq_costs_chatwoot_enabled" 
+                                               value="1" 
+                                               <?php checked($settings->isChatwootEnabled(), true); ?>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <p class="description">Si se desactiva, el widget de chat no se cargará en el frontend (evita errores de conexión si el servidor está caído).</p>
                                 </td>
                             </tr>
                         </table>

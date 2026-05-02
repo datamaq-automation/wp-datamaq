@@ -253,6 +253,15 @@ input:checked + .slider:before {
     pointer-events: none;
 }
 
+.datamaq-settings-form.is-read-only .switch {
+    pointer-events: none;
+}
+
+.datamaq-settings-form.is-read-only .slider {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 .datamaq-settings-form.is-read-only .submit {
     display: none !important;
 }

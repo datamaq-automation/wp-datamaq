@@ -19,7 +19,8 @@ class WordPressSettingsRepository implements SettingsRepositoryInterface {
             new Money((float)  get_option('datamaq_costs_base_fee', 0.0)),
             new Money((float)  get_option('datamaq_costs_km_rate', 0.0)),
             new Money((float)  get_option('datamaq_costs_engineering_rate', 0.0)),
-            new Money((float)  get_option('datamaq_costs_assembly_rate', 0.0))
+            new Money((float)  get_option('datamaq_costs_assembly_rate', 0.0)),
+            (bool) get_option('datamaq_costs_chatwoot_enabled', true)
         );
     }
 
@@ -30,5 +31,6 @@ class WordPressSettingsRepository implements SettingsRepositoryInterface {
         update_option('datamaq_costs_km_rate', $settings->getKmRate()->getAmount());
         update_option('datamaq_costs_engineering_rate', $settings->getEngineeringRate()->getAmount());
         update_option('datamaq_costs_assembly_rate', $settings->getAssemblyRate()->getAmount());
+        update_option('datamaq_costs_chatwoot_enabled', $settings->isChatwootEnabled());
     }
 }

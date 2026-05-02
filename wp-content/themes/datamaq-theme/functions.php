@@ -27,6 +27,13 @@ function datamaq_inject_section($slug) {
  * Chatwoot Widget Integration
  */
 add_action('wp_footer', function() {
+    // 1. Verificar si está habilitado en los ajustes del plugin
+    if (!get_option('datamaq_costs_chatwoot_enabled', true)) {
+        echo '<!-- Chatwoot disabled via Datamaq Costs Settings -->';
+        return;
+    }
+
+    // 2. Verificar si es entorno local
     if (strpos($_SERVER['HTTP_HOST'] ?? '', 'localhost') !== false) {
         echo '<!-- Chatwoot disabled in local development to prevent 429 errors -->';
         return;
