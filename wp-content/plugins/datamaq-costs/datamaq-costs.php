@@ -42,6 +42,7 @@ class DatamaqCostsPlugin {
         if ( is_admin() ) {
             $settingsRepository = new \Datamaq\Costs\Infrastructure\Persistence\WordPressSettingsRepository();
             new \Datamaq\Costs\Infrastructure\UI\Admin\SettingsPage($settingsRepository);
+            new \Datamaq\Costs\Infrastructure\UI\Admin\AjaxHandler();
         }
     }
 }

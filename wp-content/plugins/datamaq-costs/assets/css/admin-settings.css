@@ -1,0 +1,19 @@
+#datamaq-google-key-feedback {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+#datamaq-google-key-feedback.success {
+    color: #46b450;
+}
+
+#datamaq-google-key-feedback.error {
+    color: #dc3232;
+}
+
+.datamaq-api-key-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

@@ -15,6 +15,20 @@ class SettingsPage {
         $this->repository = $repository;
         add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
         add_action( 'admin_init', [ $this, 'register_settings' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
+    }
+
+    public function enqueue_assets($hook) {
+        if ('toplevel_page_datamaq-costs' !== $hook) {
+            return;
+        }
+
+        wp_enqueue_style('datamaq-costs-admin', DATAMAQ_COSTS_URL . 'assets/css/admin-settings.css', [], '1.0.0');
+        wp_enqueue_script('datamaq-costs-admin', DATAMAQ_COSTS_URL . 'assets/js/admin-settings.js', ['jquery'], '1.0.0', true);
+        
+        wp_localize_script('datamaq-costs-admin', 'datamaq_costs_params', [
+            'nonce' => wp_create_nonce('datamaq_costs_admin')
+        ]);
     }
 
     public function add_menu_page() {
@@ -51,7 +65,13 @@ class SettingsPage {
                 <table class="form-table">
                     <tr valign="top">
                         <th scope="row">Google Maps API Key</th>
-                        <td><input type="text" name="datamaq_costs_google_api_key" value="<?php echo esc_attr( $settings->getGoogleApiKey() ); ?>" class="regular-text" /></td>
+                        <td>
+                            <div class="datamaq-api-key-container">
+                                <input type="text" name="datamaq_costs_google_api_key" value="<?php echo esc_attr( $settings->getGoogleApiKey() ); ?>" class="regular-text" />
+                                <button type="button" id="datamaq-test-google-key" class="button button-secondary">Probar API Key</button>
+                            </div>
+                            <span id="datamaq-google-key-feedback"></span>
+                        </td>
                     </tr>
                     <tr valign="top">
                         <th scope="row">Dirección de Origen (Datamaq)</th>
