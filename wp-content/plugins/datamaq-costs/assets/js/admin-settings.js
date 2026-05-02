@@ -29,6 +29,15 @@ jQuery(document).ready(function($) {
                     feedback.html('<span class="msg">' + response.data.message + '</span>').addClass('success');
                 } else {
                     let msg = '<span class="msg">' + response.data.message + '</span>';
+                    
+                    if (response.data.suggestion) {
+                        msg += '<div class="suggestion"><strong>Sugerencia:</strong> ' + response.data.suggestion + '</div>';
+                    }
+                    
+                    if (response.data.link) {
+                        msg += '<a href="' + response.data.link + '" target="_blank" class="suggestion-link">Ir a la Consola de Google Cloud &rarr;</a>';
+                    }
+
                     if (response.data.technical_details) {
                         msg += '<br><code class="technical">' + response.data.technical_details + '</code>';
                     }

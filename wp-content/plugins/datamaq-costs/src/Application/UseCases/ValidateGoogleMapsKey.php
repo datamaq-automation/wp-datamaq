@@ -34,10 +34,29 @@ class ValidateGoogleMapsKey {
             ];
         }
 
+        $technicalError = $this->distanceService->getLastError();
+        $suggestion = null;
+        $link = null;
+
+        if ($technicalError) {
+            if (strpos($technicalError, 'REQUEST_DENIED') !== false) {
+                $suggestion = 'Asegúrate de que la "Distance Matrix API" esté habilitada en tu consola de Google Cloud.';
+                $link = 'https://console.cloud.google.com/apis/library/distancematrix.googleapis.com';
+            } elseif (strpos($technicalError, 'OVER_QUERY_LIMIT') !== false) {
+                $suggestion = 'Has excedido tu cuota o la facturación no está habilitada.';
+                $link = 'https://console.cloud.google.com/billing';
+            } elseif (strpos($technicalError, 'InvalidKeyMapError') !== false) {
+                $suggestion = 'La API Key parece ser inválida. Verifica que esté copiada correctamente.';
+                $link = 'https://console.cloud.google.com/apis/credentials';
+            }
+        }
+
         return [
             'success' => false, 
             'message' => 'Error de conexión o API Key inválida.',
-            'technical_details' => $this->distanceService->getLastError()
+            'technical_details' => $technicalError,
+            'suggestion' => $suggestion,
+            'link' => $link
         ];
     }
 }

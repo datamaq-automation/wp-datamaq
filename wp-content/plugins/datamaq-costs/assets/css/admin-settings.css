@@ -18,8 +18,28 @@
     font-size: 11px;
     border-radius: 3px;
     display: inline-block;
-    margin-top: 5px;
+    margin-top: 10px;
     border-left: 3px solid #dc3232;
+    opacity: 0.8;
+}
+
+#datamaq-google-key-feedback .suggestion {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #333;
+}
+
+#datamaq-google-key-feedback .suggestion-link {
+    display: inline-block;
+    margin-top: 5px;
+    color: #2271b1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#datamaq-google-key-feedback .suggestion-link:hover {
+    text-decoration: underline;
 }
 
 .datamaq-api-key-container {
