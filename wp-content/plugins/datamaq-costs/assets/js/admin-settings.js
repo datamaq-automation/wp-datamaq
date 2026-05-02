@@ -1,19 +1,40 @@
+/**
+ * Datamaq Costs Admin Logic
+ */
 jQuery(document).ready(function($) {
-    $('#datamaq-test-google-key').on('click', function(e) {
+    
+    // 1. Toggle API Key Visibility
+    $('.toggle-visibility').on('click', function() {
+        const input = $('#datamaq_costs_google_api_key');
+        const icon = $(this).find('.dashicons');
+        
+        if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            icon.removeClass('dashicons-visibility').addClass('dashicons-hidden');
+        } else {
+            input.attr('type', 'password');
+            icon.removeClass('dashicons-hidden').addClass('dashicons-visibility');
+        }
+    });
+
+    // 2. Test Google API Key
+    $('#test-google-key').on('click', function(e) {
         e.preventDefault();
         
-        const btn = $(this);
-        const apiKey = $('input[name="datamaq_costs_google_api_key"]').val();
-        const address = $('input[name="datamaq_costs_origin_address"]').val();
-        const feedback = $('#datamaq-google-key-feedback');
+        const $btn = $(this);
+        const $container = $('.api-key-container');
+        const apiKey = $('#datamaq_costs_google_api_key').val();
+        const address = $('#datamaq_costs_origin_address').val();
+        const $result = $('#test-result-container');
 
         if (!apiKey) {
             alert('Por favor, ingresa una API Key primero.');
             return;
         }
 
-        btn.prop('disabled', true).text('Probando...');
-        feedback.text('').removeClass('success error');
+        // Loading state
+        $container.addClass('is-loading');
+        $result.fadeOut(200, function() { $(this).empty(); });
 
         $.ajax({
             url: ajaxurl,
@@ -25,30 +46,37 @@ jQuery(document).ready(function($) {
                 address: address
             },
             success: function(response) {
-                if (response.success) {
-                    feedback.html('<span class="msg">' + response.data.message + '</span>').addClass('success');
-                } else {
-                    let msg = '<span class="msg">' + response.data.message + '</span>';
-                    
-                    if (response.data.suggestion) {
-                        msg += '<div class="suggestion"><strong>Sugerencia:</strong> ' + response.data.suggestion + '</div>';
-                    }
-                    
-                    if (response.data.link) {
-                        msg += '<a href="' + response.data.link + '" target="_blank" class="suggestion-link">Ir a la Consola de Google Cloud &rarr;</a>';
-                    }
+                let html = '';
+                const type = response.success ? 'success' : 'error';
+                const icon = response.success ? 'yes' : 'no';
+                const message = response.data.message || 'Error desconocido';
 
-                    if (response.data.technical_details) {
-                        msg += '<br><code class="technical">' + response.data.technical_details + '</code>';
+                html += `<div class="datamaq-feedback ${type}">`;
+                html += `<span class="dashicons dashicons-${icon}"></span> <strong>${message}</strong>`;
+                
+                if (!response.success) {
+                    if (response.data.suggestion) {
+                        html += `<div class="suggestion-box">`;
+                        html += `<strong>Solución sugerida:</strong> ${response.data.suggestion}`;
+                        if (response.data.link) {
+                            html += `<br><a href="${response.data.link}" target="_blank" class="suggestion-link">Abrir Consola de Google Cloud</a>`;
+                        }
+                        html += `</div>`;
                     }
-                    feedback.html(msg).addClass('error');
+                    
+                    if (response.data.technical_details) {
+                        html += `<code class="technical-box">Error técnico: ${response.data.technical_details}</code>`;
+                    }
                 }
+                
+                html += `</div>`;
+                $result.html(html).fadeIn();
             },
             error: function() {
-                feedback.text('Error de comunicación con el servidor.').addClass('error');
+                $result.html('<div class="datamaq-feedback error"><span class="dashicons dashicons-no"></span> Error de comunicación con el servidor.</div>').fadeIn();
             },
             complete: function() {
-                btn.prop('disabled', false).text('Probar API Key');
+                $container.removeClass('is-loading');
             }
         });
     });

@@ -1,49 +1,177 @@
-#datamaq-google-key-feedback {
-    display: block;
-    margin-top: 5px;
-    font-weight: bold;
+/**
+ * Datamaq Costs Admin Styles
+ */
+.datamaq-costs-admin {
+    max-width: 1000px;
+    margin-top: 20px;
 }
 
-#datamaq-google-key-feedback.success {
-    color: #46b450;
+.datamaq-costs-admin h1 {
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #1d2327;
 }
 
-#datamaq-google-key-feedback.error {
-    color: #dc3232;
-}
-
-#datamaq-google-key-feedback .technical {
-    background: #f0f0f0;
-    padding: 2px 5px;
-    font-size: 11px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-top: 10px;
-    border-left: 3px solid #dc3232;
-    opacity: 0.8;
-}
-
-#datamaq-google-key-feedback .suggestion {
-    margin-top: 10px;
-    font-size: 13px;
-    line-height: 1.4;
-    color: #333;
-}
-
-#datamaq-google-key-feedback .suggestion-link {
-    display: inline-block;
-    margin-top: 5px;
+.datamaq-costs-admin h1 .dashicons {
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
     color: #2271b1;
-    text-decoration: none;
-    font-weight: 500;
 }
 
-#datamaq-google-key-feedback .suggestion-link:hover {
-    text-decoration: underline;
+/* Card Styling */
+.datamaq-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+    border: 1px solid #c3c4c7;
+    overflow: hidden;
 }
 
-.datamaq-api-key-container {
+.datamaq-card-header {
+    background: #f6f7f7;
+    padding: 15px 20px;
+    border-bottom: 1px solid #c3c4c7;
+}
+
+.datamaq-card-header h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.datamaq-card-header h2 .dashicons {
+    margin-right: 8px;
+    color: #646970;
+}
+
+.datamaq-card-body {
+    padding: 10px 20px 25px;
+}
+
+/* Form Layout */
+.datamaq-card-body .form-table th {
+    width: 250px;
+    padding: 20px 10px 20px 0;
+}
+
+.datamaq-card-body .form-table td {
+    padding: 15px 10px;
+}
+
+/* API Key Container */
+.api-key-container {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.api-key-container input[type="password"],
+.api-key-container input[type="text"] {
+    font-family: monospace;
+    font-size: 14px;
+}
+
+/* Currency Prefixes */
+.currency-prefix {
+    background: #f0f0f1;
+    border: 1px solid #8c8f94;
+    border-right: none;
+    padding: 5px 10px;
+    border-radius: 4px 0 0 4px;
+    color: #50575e;
+    font-weight: 600;
+}
+
+.currency-prefix + input {
+    border-radius: 0 4px 4px 0 !important;
+    margin-left: -1px !important;
+}
+
+/* Feedback Styling */
+#test-result-container {
+    margin-top: 15px;
+}
+
+.datamaq-feedback {
+    padding: 12px 15px;
+    border-radius: 4px;
+    border-left: 4px solid #ccc;
+}
+
+.datamaq-feedback.success {
+    background: #f0f9f1;
+    border-left-color: #46b450;
+    color: #135e20;
+}
+
+.datamaq-feedback.error {
+    background: #fcf0f1;
+    border-left-color: #d63638;
+    color: #d63638;
+}
+
+.technical-box {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 8px 12px;
+    font-family: monospace;
+    font-size: 12px;
+    margin-top: 10px;
+    display: block;
+}
+
+.suggestion-box {
+    margin-top: 12px;
+    padding: 10px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.suggestion-link {
+    display: inline-block;
+    margin-top: 8px;
+    background: #2271b1;
+    color: #fff !important;
+    padding: 4px 12px;
+    border-radius: 3px;
+    text-decoration: none !important;
+    font-size: 12px;
+    transition: background 0.2s;
+}
+
+.suggestion-link:hover {
+    background: #135e96;
+}
+
+/* Spinner */
+.spinner-container {
+    display: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-top-color: #2271b1;
+    border-radius: 50%;
+    animation: datamaq-spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes datamaq-spin {
+    to { transform: rotate(360deg); }
+}
+
+.is-loading .spinner-container {
+    display: inline-block;
+}
+
+.is-loading #test-google-key {
+    opacity: 0.7;
+    pointer-events: none;
 }
