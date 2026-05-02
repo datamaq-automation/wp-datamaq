@@ -4,6 +4,8 @@ namespace Datamaq\Costs\Infrastructure\External;
 
 use Datamaq\Costs\Domain\Services\DistanceServiceInterface;
 
+use Datamaq\Costs\Domain\ValueObject\GoogleApiKey;
+
 /**
  * Cliente para interactuar con la API de Google Maps
  */
@@ -12,8 +14,8 @@ class GoogleMapsClient implements DistanceServiceInterface {
     private string $api_key;
     private ?string $last_error = null;
 
-    public function __construct(string $api_key) {
-        $this->api_key = $api_key;
+    public function __construct(GoogleApiKey $api_key) {
+        $this->api_key = (string)$api_key;
     }
 
     /**

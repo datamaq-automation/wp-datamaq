@@ -4,6 +4,8 @@ namespace Datamaq\Costs\Infrastructure\Persistence;
 
 use Datamaq\Costs\Domain\Model\CostSettings;
 use Datamaq\Costs\Domain\Repository\SettingsRepositoryInterface;
+use Datamaq\Costs\Domain\ValueObject\GoogleApiKey;
+use Datamaq\Costs\Domain\ValueObject\Money;
 
 /**
  * Implementación del repositorio usando la API de opciones de WordPress
@@ -12,12 +14,12 @@ class WordPressSettingsRepository implements SettingsRepositoryInterface {
     
     public function getSettings(): CostSettings {
         return new CostSettings(
-            (string) get_option('datamaq_costs_google_api_key', ''),
+            new GoogleApiKey((string) get_option('datamaq_costs_google_api_key', '')),
             (string) get_option('datamaq_costs_origin_address', ''),
-            (float)  get_option('datamaq_costs_base_fee', 0.0),
-            (float)  get_option('datamaq_costs_km_rate', 0.0),
-            (float)  get_option('datamaq_costs_engineering_rate', 0.0),
-            (float)  get_option('datamaq_costs_assembly_rate', 0.0)
+            new Money((float)  get_option('datamaq_costs_base_fee', 0.0)),
+            new Money((float)  get_option('datamaq_costs_km_rate', 0.0)),
+            new Money((float)  get_option('datamaq_costs_engineering_rate', 0.0)),
+            new Money((float)  get_option('datamaq_costs_assembly_rate', 0.0))
         );
     }
 

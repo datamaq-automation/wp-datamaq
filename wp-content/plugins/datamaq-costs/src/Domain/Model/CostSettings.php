@@ -2,24 +2,27 @@
 
 namespace Datamaq\Costs\Domain\Model;
 
+use Datamaq\Costs\Domain\ValueObject\GoogleApiKey;
+use Datamaq\Costs\Domain\ValueObject\Money;
+
 /**
  * Representa la configuración de costos del sistema
  */
 class CostSettings {
-    private string $google_api_key;
+    private GoogleApiKey $google_api_key;
     private string $origin_address;
-    private float $base_fee;
-    private float $km_rate;
-    private float $engineering_rate;
-    private float $assembly_rate;
+    private Money $base_fee;
+    private Money $km_rate;
+    private Money $engineering_rate;
+    private Money $assembly_rate;
 
     public function __construct(
-        string $google_api_key,
+        GoogleApiKey $google_api_key,
         string $origin_address,
-        float $base_fee,
-        float $km_rate,
-        float $engineering_rate,
-        float $assembly_rate
+        Money $base_fee,
+        Money $km_rate,
+        Money $engineering_rate,
+        Money $assembly_rate
     ) {
         $this->google_api_key = $google_api_key;
         $this->origin_address = $origin_address;
@@ -29,7 +32,7 @@ class CostSettings {
         $this->assembly_rate = $assembly_rate;
     }
 
-    public function getGoogleApiKey(): string {
+    public function getGoogleApiKey(): GoogleApiKey {
         return $this->google_api_key;
     }
 
@@ -37,19 +40,19 @@ class CostSettings {
         return $this->origin_address;
     }
 
-    public function getBaseFee(): float {
+    public function getBaseFee(): Money {
         return $this->base_fee;
     }
 
-    public function getKmRate(): float {
+    public function getKmRate(): Money {
         return $this->km_rate;
     }
 
-    public function getEngineeringRate(): float {
+    public function getEngineeringRate(): Money {
         return $this->engineering_rate;
     }
 
-    public function getAssemblyRate(): float {
+    public function getAssemblyRate(): Money {
         return $this->assembly_rate;
     }
 }

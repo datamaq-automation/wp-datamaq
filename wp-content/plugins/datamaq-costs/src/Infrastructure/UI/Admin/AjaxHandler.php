@@ -21,7 +21,7 @@ class AjaxHandler {
             wp_send_json_error(['message' => 'No tienes permisos suficientes.']);
         }
 
-        $api_key = sanitize_text_field($_POST['api_key']);
+        $api_key = new \Datamaq\Costs\Domain\ValueObject\GoogleApiKey(sanitize_text_field($_POST['api_key']));
         $address = sanitize_text_field($_POST['address']);
 
         if (empty($address)) {

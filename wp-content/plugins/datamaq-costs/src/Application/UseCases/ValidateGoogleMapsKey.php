@@ -3,15 +3,18 @@
 namespace Datamaq\Costs\Application\UseCases;
 
 use Datamaq\Costs\Domain\Services\DistanceServiceInterface;
+use Datamaq\Costs\Domain\Services\LoggerInterface;
 
 /**
  * Caso de uso para validar si una API Key de Google Maps es funcional
  */
 class ValidateGoogleMapsKey {
     private DistanceServiceInterface $distanceService;
+    private LoggerInterface $logger;
 
-    public function __construct(DistanceServiceInterface $distanceService) {
+    public function __construct(DistanceServiceInterface $distanceService, LoggerInterface $logger) {
         $this->distanceService = $distanceService;
+        $this->logger = $logger;
     }
 
     /**
@@ -28,6 +31,7 @@ class ValidateGoogleMapsKey {
         $distance = $this->distanceService->getDistanceKm($testAddress, $testAddress);
 
         if ($distance !== null) {
+            $this->logger->info('API Key validada exitosamente.', ['test_address' => $testAddress]);
             return [
                 'success' => true, 
                 'message' => 'Conexión exitosa con Google Maps API.'
@@ -35,6 +39,10 @@ class ValidateGoogleMapsKey {
         }
 
         $technicalError = $this->distanceService->getLastError();
+        $this->logger->error('Fallo al validar API Key.', [
+            'technical_details' => $technicalError,
+            'test_address' => $testAddress
+        ]);
         $suggestion = null;
         $link = null;
 
