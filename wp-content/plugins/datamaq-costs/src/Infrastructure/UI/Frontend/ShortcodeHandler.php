@@ -70,14 +70,14 @@ class ShortcodeHandler {
             'datamaq-calculator-css',
             plugins_url('assets/css/calculator.css', DATAMAQ_COSTS_FILE),
             [],
-            '1.0.4'
+            '1.0.5'
         );
 
         wp_enqueue_script(
             'datamaq-calculator-js',
             plugins_url('assets/js/calculator.js', DATAMAQ_COSTS_FILE),
             ['jquery', 'google-maps-places'],
-            '1.0.4',
+            '1.0.5',
             true
         );
 

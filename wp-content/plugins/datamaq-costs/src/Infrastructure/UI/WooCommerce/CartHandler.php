@@ -20,12 +20,27 @@ class CartHandler {
     public function capture_calculator_data($cartItemData, $productId): array {
         if ($productId !== 251) return $cartItemData;
 
-        if (isset($_POST['dm_calculated_price'])) {
-            $cartItemData['dm_custom_price'] = floatval($_POST['dm_calculated_price']);
-        }
+        $token = isset($_POST['dm_calculation_token']) ? sanitize_text_field($_POST['dm_calculation_token']) : '';
 
-        if (isset($_POST['dm_calculated_address'])) {
-            $cartItemData['dm_custom_address'] = sanitize_text_field($_POST['dm_calculated_address']);
+        if (!empty($token)) {
+            // Soporte para MODO DEBUG
+            if ($token === 'calc_debug_token') {
+                $cartItemData['dm_custom_price'] = 99.99;
+                $cartItemData['dm_custom_address'] = 'Obelisco, CABA (Simulado)';
+                $cartItemData['dm_calculation_token'] = $token;
+                return $cartItemData;
+            }
+
+            $data = get_transient('dm_calc_' . $token);
+            
+            if ($data) {
+                $cartItemData['dm_custom_price'] = $data['price'];
+                $cartItemData['dm_custom_address'] = $data['address'];
+                $cartItemData['dm_calculation_token'] = $token;
+                
+                // Limpiar el transient para que no se use dos veces (opcional, pero más seguro)
+                // delete_transient('dm_calc_' . $token);
+            }
         }
 
         return $cartItemData;

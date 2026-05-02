@@ -49,9 +49,21 @@ class AjaxHandler {
 
         $totalPrice = $basePrice + ($distanceKm * $kmPrice);
 
-        error_log("[DataMaq Debug] Cálculo exitoso: Distancia {$distanceKm}km, Total \${$totalPrice}");
+        // Generar un token de seguridad para evitar manipulación en el frontend
+        $calculationToken = md5(uniqid($address, true));
+        $calculationData = [
+            'address' => $address,
+            'distance' => $result['distance_text'],
+            'price' => $totalPrice
+        ];
+        
+        // Guardar por 1 hora
+        set_transient('dm_calc_' . $calculationToken, $calculationData, HOUR_IN_SECONDS);
+
+        error_log("[DataMaq Debug] Cálculo exitoso. Token generado: " . $calculationToken);
 
         wp_send_json_success([
+            'token' => $calculationToken,
             'distance' => $result['distance_text'],
             'price' => number_format($totalPrice, 2, '.', ''),
             'raw_price' => $totalPrice

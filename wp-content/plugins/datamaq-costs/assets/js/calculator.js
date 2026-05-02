@@ -5,7 +5,7 @@
 (function($) {
     'use strict';
 
-    console.log('%c[DataMaq] SCRIPT CARGADO CORRECTAMENTE (V1.0.3)', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;');
+    console.log('%c[DataMaq] SCRIPT CARGADO CORRECTAMENTE (V1.0.5)', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;');
 
     const DM_DEBUG = true;
 
@@ -78,7 +78,8 @@
             $priceValue.text('$99.99'); 
             $resultsContainer.fadeIn();
             
-            updateHiddenFields('99.99', 'Obelisco, CABA (Simulado)');
+            // En modo DEBUG usamos un token especial que el CartHandler debe reconocer o simplemente inyectamos datos
+            updateHiddenFields('calc_debug_token');
             
             $addToCartBtn.prop('disabled', false).css('opacity', '1');
             $('#dm-calculator-guide').fadeOut();
@@ -90,18 +91,17 @@
             }, 300);
         });
 
-        function updateHiddenFields(price, address) {
+        function updateHiddenFields(token) {
             const $form = $('.single_add_to_cart_button').closest('form.cart');
             if (!$form.length) return;
             
-            [['dm_calculated_price', price], ['dm_calculated_address', address]].forEach(([name, value]) => {
-                let $field = $form.find(`input[name="${name}"]`);
-                if (!$field.length) {
-                    $field = $('<input>').attr({ type: 'hidden', name: name });
-                    $form.append($field);
-                }
-                $field.val(value);
-            });
+            let $field = $form.find('input[name="dm_calculation_token"]');
+            if (!$field.length) {
+                $field = $('<input>').attr({ type: 'hidden', name: 'dm_calculation_token' });
+                $form.append($field);
+            }
+            $field.val(token);
+            DMLog.info('Token de cálculo inyectado en el formulario:', token);
         }
 
         /**
@@ -157,6 +157,7 @@
                 }, function(response) {
                     $loader.hide();
                     if (response.success) {
+                        DMLog.info('Cálculo recibido exitosamente:', response.data);
                         DMLog.info('DISTANCIA TÉCNICA DETECTADA:', response.data.distance + ' km');
                         $distanceValue.text(response.data.distance);
                         $priceValue.text('$' + response.data.price);
@@ -165,7 +166,7 @@
                         $('#dm-calculator-guide').fadeOut();
                         $addToCartBtn.prop('disabled', false).css('opacity', '1');
                         
-                        updateHiddenFields(response.data.price, address);
+                        updateHiddenFields(response.data.token);
 
                         setTimeout(() => {
                             $('html, body').animate({
