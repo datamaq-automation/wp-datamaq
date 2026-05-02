@@ -40,6 +40,11 @@ spl_autoload_register( function ( $class ) {
 class DatamaqCostsPlugin {
     public static function init() {
         $settingsRepository = new \Datamaq\Costs\Infrastructure\Persistence\WordPressSettingsRepository();
+        $contextService = new \Datamaq\Costs\Infrastructure\Persistence\WordPressContextService();
+        $assetManager = new \Datamaq\Costs\Infrastructure\UI\AssetManager();
+
+        // Inicializar Gestor de Activos (Filtros de Script)
+        $assetManager->init();
 
         // Admin
         if ( is_admin() ) {
@@ -48,7 +53,10 @@ class DatamaqCostsPlugin {
         }
 
         // Frontend
-        $shortcodeHandler = new \Datamaq\Costs\Infrastructure\UI\Frontend\ShortcodeHandler($settingsRepository);
+        $shortcodeHandler = new \Datamaq\Costs\Infrastructure\UI\Frontend\ShortcodeHandler(
+            $settingsRepository, 
+            $contextService
+        );
         $shortcodeHandler->init();
 
         $frontendAjax = new \Datamaq\Costs\Infrastructure\UI\Frontend\AjaxHandler($settingsRepository);

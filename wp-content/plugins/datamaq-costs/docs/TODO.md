@@ -16,7 +16,7 @@
 
 ### 1. Refactor de Arquitectura (SOLID / Clean Architecture)
 - [ ] **Desacoplar Detección de Contexto**: Crear un `ContextService` para identificar páginas de producto sin depender de `is_product()`.
-- [ ] **Carga Asíncrona de Assets**: Refactorizar `ShortcodeHandler` para usar el atributo `async` en la API de Google Maps.
+- [ ] **Carga Asíncrona (Performance)**: Implementar un `ScriptFilter` para inyectar los atributos `async` y `defer` en la API de Google Maps (Corrección del Warning de Google).
 - [ ] **Manejo de Dependencias**: Asegurar que `calculator.js` solo se ejecute cuando `google` esté definido (Race condition protection).
 
 ### 2. Observabilidad y Debugging

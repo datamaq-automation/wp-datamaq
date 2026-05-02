@@ -2,12 +2,18 @@
 namespace Datamaq\Costs\Infrastructure\UI\Frontend;
 
 use Datamaq\Costs\Domain\Repository\SettingsRepositoryInterface;
+use Datamaq\Costs\Domain\Services\ContextServiceInterface;
 
 class ShortcodeHandler {
     private SettingsRepositoryInterface $settingsRepository;
+    private ContextServiceInterface $contextService;
 
-    public function __construct(SettingsRepositoryInterface $settingsRepository) {
+    public function __construct(
+        SettingsRepositoryInterface $settingsRepository,
+        ContextServiceInterface $contextService
+    ) {
         $this->settingsRepository = $settingsRepository;
+        $this->contextService = $contextService;
     }
 
     public function init(): void {
@@ -39,7 +45,7 @@ class ShortcodeHandler {
     }
 
     public function enqueue_assets(): void {
-        if (!is_product() || get_the_ID() !== 251) {
+        if (!$this->contextService->isProductPage(251)) {
             return;
         }
 
@@ -53,7 +59,7 @@ class ShortcodeHandler {
         // Google Maps API con Places Library
         wp_enqueue_script(
             'google-maps-places',
-            "https://maps.googleapis.com/maps/api/js?key={$apiKey}&libraries=places",
+            "https://maps.googleapis.com/maps/api/js?key={$apiKey}&libraries=places&loading=async&callback=Function.prototype",
             [],
             null,
             true
