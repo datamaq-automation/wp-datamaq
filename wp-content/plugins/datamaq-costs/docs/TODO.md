@@ -1,29 +1,20 @@
-# TODO del Proyecto - Datamaq Costs
+# 📋 TODO: Datamaq Costs Infrastructure
 
-## Base
-- [x] Inicializar la estructura del plugin (cumpliendo DDD).
-- [x] Crear la página de Ajustes en el Administrador de WordPress.
-    - [x] Campo: Google Maps API Key.
-    - [x] Campo: Dirección de Origen.
-    - [x] Campo: Valor por KM.
-    - [x] Campo: Valor Hora Ingeniería.
-    - [x] Campo: Valor Hora Montaje.
-    - [x] Campo: Tarifa Base para Relevamiento.
+## Alta Prioridad (Infraestructura)
+- [x] Refactorizar a Clean Architecture (Domain, Application, Infrastructure).
+- [x] Implementar Value Objects (`Money`, `GoogleApiKey`).
+- [x] Resolver errores 500 en `admin-ajax.php`.
+- [x] Corregir Mixed Content y bucles de redirección SSL.
 
-## Integración
-- [x] Implementar el cliente para la API de Google Distance Matrix.
-- [ ] Implementar el mecanismo de respaldo manual para el ingreso de KM.
+## UI/UX Panel de Administración
+- [x] Crear layout de tarjetas (Cards) para ajustes.
+- [x] Implementar Toggle de visibilidad para API Key.
+- [x] Implementar "Modo Edición" con interruptor de seguridad.
+- [x] Mantener "Probar Conexión" siempre visible.
 
-## Funcionalidades
-### Relevamiento Técnico
-- [ ] Crear el frontend del formulario de "Solicitud de Presupuesto".
-- [ ] Implementar la lógica del lado del servidor para el cálculo de KM.
-- [ ] Implementar la fórmula de costo: `Base + (KM * Valor)`.
-
-### Automatización a Medida
-- [ ] Crear la interfaz de entrada para las horas de Ingeniería/Montaje.
-- [ ] Implementar la fórmula de costo: `(HorasIng * ValorIng) + (HorasMont * ValorMont)`.
-
-## Pruebas y Pulido
-- [ ] Probar escenarios de falla de la API.
-- [ ] Mejoras de UI/UX para el formulario de presupuesto.
+## Frontend (Próximos Pasos)
+- [ ] Implementar Calculadora Dinámica en Página de Producto (ID 251).
+- [ ] Integrar Google Places Autocomplete en el input de dirección.
+- [ ] Implementar Hook de WooCommerce para inyectar precio dinámico al carrito.
+- [ ] Configurar Navbar con botones destacados (Relevamiento / Automatización).
+- [ ] Mover botón de WhatsApp al final del proceso de cotización.
