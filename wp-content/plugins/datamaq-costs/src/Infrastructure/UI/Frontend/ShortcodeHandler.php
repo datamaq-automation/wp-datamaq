@@ -11,14 +11,30 @@ class ShortcodeHandler {
     }
 
     public function init(): void {
-        add_shortcode('datamaq_presupuesto_relevamiento', [$this, 'render']);
+        add_action('init', function() {
+            add_shortcode('datamaq_presupuesto_relevamiento', [$this, 'render']);
+        });
         add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
+        
+        // Inyectar en el footer de forma oculta para que JS la mueva al lugar correcto en el App de Vue
+        add_action('wp_footer', [$this, 'inject_hidden_calculator']);
+    }
+
+    public function inject_hidden_calculator(): void {
+        echo '<div id="dm-calculator-transport" style="display:none;">';
+        echo do_shortcode('[datamaq_presupuesto_relevamiento]');
+        echo '</div>';
     }
 
     public function render($atts): string {
-        // En un entorno DDD ideal, esto cargaría un template
+        $templatePath = plugin_dir_path(__FILE__) . '../../../../templates/frontend/calculator.php';
+        
+        if (!file_exists($templatePath)) {
+            return "";
+        }
+
         ob_start();
-        include plugin_dir_path(__FILE__) . '../../../../templates/frontend/calculator.php';
+        include $templatePath;
         return ob_get_clean();
     }
 
