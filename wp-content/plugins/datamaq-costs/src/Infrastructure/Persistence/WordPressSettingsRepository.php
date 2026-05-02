@@ -24,11 +24,11 @@ class WordPressSettingsRepository implements SettingsRepositoryInterface {
     }
 
     public function saveSettings(CostSettings $settings): void {
-        update_option('datamaq_costs_google_api_key', $settings->getGoogleApiKey());
+        update_option('datamaq_costs_google_api_key', $settings->getGoogleApiKey()->getValue());
         update_option('datamaq_costs_origin_address', $settings->getOriginAddress());
-        update_option('datamaq_costs_base_fee', $settings->getBaseFee());
-        update_option('datamaq_costs_km_rate', $settings->getKmRate());
-        update_option('datamaq_costs_engineering_rate', $settings->getEngineeringRate());
-        update_option('datamaq_costs_assembly_rate', $settings->getAssemblyRate());
+        update_option('datamaq_costs_base_fee', $settings->getBaseFee()->getAmount());
+        update_option('datamaq_costs_km_rate', $settings->getKmRate()->getAmount());
+        update_option('datamaq_costs_engineering_rate', $settings->getEngineeringRate()->getAmount());
+        update_option('datamaq_costs_assembly_rate', $settings->getAssemblyRate()->getAmount());
     }
 }

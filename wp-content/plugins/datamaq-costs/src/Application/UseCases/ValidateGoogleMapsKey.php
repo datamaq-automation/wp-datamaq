@@ -5,6 +5,8 @@ namespace Datamaq\Costs\Application\UseCases;
 use Datamaq\Costs\Domain\Services\DistanceServiceInterface;
 use Datamaq\Costs\Domain\Services\LoggerInterface;
 
+use Datamaq\Costs\Domain\ValueObject\GoogleApiKey;
+
 /**
  * Caso de uso para validar si una API Key de Google Maps es funcional
  */
@@ -20,11 +22,11 @@ class ValidateGoogleMapsKey {
     /**
      * Intenta realizar una consulta mínima para validar la key
      * 
-     * @param string $apiKey La clave a probar
+     * @param GoogleApiKey $apiKey La clave a probar
      * @return array [success => bool, message => string]
      */
-    public function execute(string $apiKey, string $testAddress): array {
-        if (empty($apiKey)) {
+    public function execute(GoogleApiKey $apiKey, string $testAddress): array {
+        if ($apiKey->isEmpty()) {
             return ['success' => false, 'message' => 'La API Key está vacía.'];
         }
 

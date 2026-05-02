@@ -29,7 +29,8 @@ class AjaxHandler {
         }
 
         $client = new GoogleMapsClient($api_key);
-        $useCase = new ValidateGoogleMapsKey($client);
+        $logger = new \Datamaq\Costs\Infrastructure\Logging\WordPressLogger();
+        $useCase = new \Datamaq\Costs\Application\UseCases\ValidateGoogleMapsKey($client, $logger);
         
         $result = $useCase->execute($api_key, $address);
 
