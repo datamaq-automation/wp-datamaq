@@ -40,7 +40,8 @@ class DatamaqCostsPlugin {
     public static function init() {
         // Inicializar componentes de la infraestructura (Hooks de WP)
         if ( is_admin() ) {
-            new \Datamaq\Costs\Infrastructure\UI\Admin\SettingsPage();
+            $settingsRepository = new \Datamaq\Costs\Infrastructure\Persistence\WordPressSettingsRepository();
+            new \Datamaq\Costs\Infrastructure\UI\Admin\SettingsPage($settingsRepository);
         }
     }
 }
