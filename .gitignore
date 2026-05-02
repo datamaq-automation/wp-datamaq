@@ -34,6 +34,7 @@ landing
 # Third-party plugins (re-installable via WP-CLI)
 wp-content/plugins/*
 !wp-content/plugins/.gitkeep
+!wp-content/plugins/datamaq-costs/
 
 # Third-party themes (re-installable via WP-CLI)
 wp-content/themes/*
