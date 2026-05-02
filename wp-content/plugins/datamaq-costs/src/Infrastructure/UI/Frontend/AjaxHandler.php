@@ -20,28 +20,36 @@ class AjaxHandler {
     }
 
     public function calculate_costs(): void {
+        error_log("[DataMaq Debug] Iniciando cálculo de costos para: " . ($_POST['address'] ?? 'VACÍO'));
+        
         check_ajax_referer('datamaq_costs_nonce', '_ajax_nonce');
 
         $address = sanitize_text_field($_POST['address']);
         if (empty($address)) {
+            error_log("[DataMaq Debug] Error: Dirección vacía");
             wp_send_json_error('La dirección es obligatoria.');
         }
 
         $settings = $this->settingsRepository->getSettings();
-        $client = new GoogleMapsClient($settings->getGoogleApiKey());
+        $origin = $settings->getOriginAddress();
         
-        // Calculamos la distancia usando el cliente existente
-        $result = $client->getDistance('Garin, Buenos Aires, Argentina', $address);
+        error_log("[DataMaq Debug] Origen configurado: " . $origin);
+        
+        $client = new GoogleMapsClient($settings->getGoogleApiKey());
+        $result = $client->getDistance($origin, $address);
 
         if (!$result['success']) {
+            error_log("[DataMaq Debug] Error de Google Maps: " . $result['message']);
             wp_send_json_error($result['message']);
         }
 
         $distanceKm = $result['distance_value'] / 1000;
-        $basePrice = $settings->getBasePrice()->getAmount();
-        $kmPrice = $settings->getKmPrice()->getAmount();
+        $basePrice = $settings->getBaseFee()->getAmount(); // Corregido nombre de método según CostSettings
+        $kmPrice = $settings->getKmRate()->getAmount();    // Corregido nombre de método según CostSettings
 
         $totalPrice = $basePrice + ($distanceKm * $kmPrice);
+
+        error_log("[DataMaq Debug] Cálculo exitoso: Distancia {$distanceKm}km, Total \${$totalPrice}");
 
         wp_send_json_success([
             'distance' => $result['distance_text'],

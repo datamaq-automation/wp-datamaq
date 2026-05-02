@@ -52,6 +52,11 @@ if (!defined('ABSPATH')) exit;
         <div id="dm-calculator-guide" class="dm-calculator-guide">
             <i class="bi bi-arrow-down-circle"></i>
             <span>Completá la dirección técnica para habilitar la contratación</span>
+            
+            <!-- Botón Provisorio de Debug -->
+            <button type="button" id="dm-debug-trigger" style="margin-top: 10px; font-size: 10px; opacity: 0.7; background: #eee; border: 1px solid #ccc; cursor: pointer; padding: 2px 5px; border-radius: 4px;">
+                [Debug] Simular Cálculo Exitoso
+            </button>
         </div>
     </div>
 </div>

@@ -5,6 +5,8 @@
 (function($) {
     'use strict';
 
+    console.log('%c[DataMaq] SCRIPT CARGADO CORRECTAMENTE (V1.0.3)', 'background: #000; color: #0f0; font-size: 14px; padding: 5px;');
+
     const DM_DEBUG = true;
 
     /**
@@ -19,7 +21,7 @@
     $(document).ready(function() {
         let isTeleported = false;
         let retryCount = 0;
-        const MAX_RETRIES = 50; // ~5 segundos
+        const MAX_RETRIES = 50; 
 
         /**
          * Lógica de Teletransportación con reintentos para entornos dinámicos (Vue/React)
@@ -57,14 +59,59 @@
         teleportCalculator();
 
         /**
-         * Inicialización de funcionalidades con protección de dependencias
+         * Lógica de Debug y Guía (Global para resistir re-renders)
+         */
+        $(document).on('click', '#dm-debug-trigger', function(e) {
+            e.preventDefault();
+            const dummyDistance = 15;
+            console.log('%c[DataMaq Debug] Botón pulsado!', 'color: orange; font-weight: bold;');
+            DMLog.info('VALOR DE DISTANCIA (DEBUG):', dummyDistance + ' km');
+            
+            const $addressInput = $('#dm-address-input');
+            const $distanceValue = $('#dm-result-distance');
+            const $priceValue = $('#dm-result-price');
+            const $resultsContainer = $('#dm-calculator-results');
+            const $addToCartBtn = $('.single_add_to_cart_button');
+
+            $addressInput.val('Obelisco, CABA (Simulado)');
+            $distanceValue.text(dummyDistance + ' km');
+            $priceValue.text('$99.99'); 
+            $resultsContainer.fadeIn();
+            
+            updateHiddenFields('99.99', 'Obelisco, CABA (Simulado)');
+            
+            $addToCartBtn.prop('disabled', false).css('opacity', '1');
+            $('#dm-calculator-guide').fadeOut();
+
+            setTimeout(() => {
+                $('html, body').animate({
+                    scrollTop: $addToCartBtn.offset().top - 150
+                }, 800);
+            }, 300);
+        });
+
+        function updateHiddenFields(price, address) {
+            const $form = $('.single_add_to_cart_button').closest('form.cart');
+            if (!$form.length) return;
+            
+            [['dm_calculated_price', price], ['dm_calculated_address', address]].forEach(([name, value]) => {
+                let $field = $form.find(`input[name="${name}"]`);
+                if (!$field.length) {
+                    $field = $('<input>').attr({ type: 'hidden', name: name });
+                    $form.append($field);
+                }
+                $field.val(value);
+            });
+        }
+
+        /**
+         * Inicialización de funcionalidades reales
          */
         function initCalculatorFeatures() {
             DMLog.info('Inicializando funcionalidades de la calculadora...');
 
-            // Protección contra carga asíncrona de Google Maps
             if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
-                DMLog.warn('Google Maps no está disponible aún. Reintentando en 500ms...');
+                DMLog.warn('Google Maps no disponible aún. Reintentando...');
                 setTimeout(initCalculatorFeatures, 500);
                 return;
             }
@@ -75,18 +122,10 @@
             const $priceValue = $('#dm-result-price');
             const $distanceValue = $('#dm-result-distance');
             const $addToCartBtn = $('.single_add_to_cart_button');
-            const $form = $addToCartBtn.closest('form.cart');
 
-            if (!$addressInput.length) {
-                DMLog.error('No se encontró el input de dirección tras la teletransportación.');
-                return;
-            }
+            if (!$addressInput.length) return;
 
-            // Bloquear botón de WooCommerce al inicio
             $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
-            DMLog.info('Botón de WooCommerce bloqueado hasta completar cálculo.');
-
-            DMLog.info('Google Maps detectado. Configurando Autocomplete...');
 
             const autocomplete = new google.maps.places.Autocomplete($addressInput[0], {
                 types: ['address'],
@@ -94,7 +133,6 @@
                 fields: ['formatted_address', 'geometry']
             });
 
-            // Resetear estado si el usuario escribe algo nuevo sin seleccionar
             $addressInput.on('input', function() {
                 $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
                 $resultsContainer.hide();
@@ -103,32 +141,14 @@
             autocomplete.addListener('place_changed', function() {
                 const place = autocomplete.getPlace();
                 if (place.geometry) {
-                    DMLog.info('Dirección seleccionada:', place.formatted_address);
                     calculate(place.formatted_address);
-                } else {
-                    DMLog.warn('La dirección seleccionada no tiene geometría válida.');
                 }
             });
-
-            function updateHiddenField(name, value) {
-                if (!$form.length) return;
-                let $field = $form.find(`input[name="${name}"]`);
-                if (!$field.length) {
-                    $field = $('<input>').attr({
-                        type: 'hidden',
-                        name: name
-                    });
-                    $form.append($field);
-                }
-                $field.val(value);
-            }
 
             function calculate(address) {
                 $resultsContainer.hide();
                 $loader.show();
                 $addToCartBtn.prop('disabled', true).css('opacity', '0.5');
-
-                DMLog.info('Solicitando cálculo al servidor para:', address);
 
                 $.post(datamaq_costs.ajax_url, {
                     action: 'datamaq_calculate_costs',
@@ -137,31 +157,21 @@
                 }, function(response) {
                     $loader.hide();
                     if (response.success) {
-                        DMLog.info('Cálculo recibido exitosamente:', response.data);
+                        DMLog.info('DISTANCIA TÉCNICA DETECTADA:', response.data.distance + ' km');
                         $distanceValue.text(response.data.distance);
                         $priceValue.text('$' + response.data.price);
                         $resultsContainer.fadeIn();
                         
-                        // Ocultar guía y habilitar botón oficial
                         $('#dm-calculator-guide').fadeOut();
                         $addToCartBtn.prop('disabled', false).css('opacity', '1');
                         
-                        // Sincronizar datos con el formulario de WooCommerce
-                        updateHiddenField('dm_calculated_price', response.data.price);
-                        updateHiddenField('dm_calculated_address', address);
-                        
-                        DMLog.info('Botón de WooCommerce habilitado y sincronizado.');
+                        updateHiddenFields(response.data.price, address);
 
-                        // Scroll suave hacia el botón de compra
                         setTimeout(() => {
                             $('html, body').animate({
                                 scrollTop: $addToCartBtn.offset().top - 150
                             }, 800);
                         }, 500);
-
-                    } else {
-                        DMLog.error('Error en el cálculo del servidor:', response.data);
-                        alert('Error: ' + response.data);
                     }
                 });
             }

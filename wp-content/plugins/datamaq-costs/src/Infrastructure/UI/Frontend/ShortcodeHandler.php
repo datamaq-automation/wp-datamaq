@@ -27,6 +27,7 @@ class ShortcodeHandler {
     }
 
     public function inject_hidden_calculator(): void {
+        echo '<!-- [DataMaq Debug] Inyectando calculadora oculta -->';
         echo '<div id="dm-calculator-transport" style="display:none;">';
         echo do_shortcode('[datamaq_presupuesto_relevamiento]');
         echo '</div>';
@@ -69,14 +70,14 @@ class ShortcodeHandler {
             'datamaq-calculator-css',
             plugins_url('assets/css/calculator.css', DATAMAQ_COSTS_FILE),
             [],
-            '1.0.0'
+            '1.0.4'
         );
 
         wp_enqueue_script(
             'datamaq-calculator-js',
             plugins_url('assets/js/calculator.js', DATAMAQ_COSTS_FILE),
             ['jquery', 'google-maps-places'],
-            '1.0.0',
+            '1.0.4',
             true
         );
 
