@@ -10,6 +10,8 @@ class BrandInfo {
     private string $contactUrl;
     private string $trainingUrl;
     private string $productsUrl;
+    private string $relevamientoUrl;
+    private string $automatizacionUrl;
     private string $whatsapp;
 
     public function __construct(

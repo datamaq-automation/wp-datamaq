@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Definir constantes del plugin
 define( 'DATAMAQ_COSTS_PATH', plugin_dir_path( __FILE__ ) );
 define( 'DATAMAQ_COSTS_URL', plugin_dir_url( __FILE__ ) );
+define( 'DATAMAQ_COSTS_FILE', __FILE__ );
 
 // Autoloader simple para la estructura src/ (PSR-4 manual)
 spl_autoload_register( function ( $class ) {
@@ -38,12 +39,24 @@ spl_autoload_register( function ( $class ) {
  */
 class DatamaqCostsPlugin {
     public static function init() {
-        // Inicializar componentes de la infraestructura (Hooks de WP)
+        $settingsRepository = new \Datamaq\Costs\Infrastructure\Persistence\WordPressSettingsRepository();
+
+        // Admin
         if ( is_admin() ) {
-            $settingsRepository = new \Datamaq\Costs\Infrastructure\Persistence\WordPressSettingsRepository();
             new \Datamaq\Costs\Infrastructure\UI\Admin\SettingsPage($settingsRepository);
             new \Datamaq\Costs\Infrastructure\UI\Admin\AjaxHandler();
         }
+
+        // Frontend
+        $shortcodeHandler = new \Datamaq\Costs\Infrastructure\UI\Frontend\ShortcodeHandler($settingsRepository);
+        $shortcodeHandler->init();
+
+        $frontendAjax = new \Datamaq\Costs\Infrastructure\UI\Frontend\AjaxHandler($settingsRepository);
+        $frontendAjax->init();
+
+        // WooCommerce
+        $cartHandler = new \Datamaq\Costs\Infrastructure\UI\WooCommerce\CartHandler();
+        $cartHandler->init();
     }
 }
 
