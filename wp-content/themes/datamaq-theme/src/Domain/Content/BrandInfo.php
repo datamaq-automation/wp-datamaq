@@ -18,6 +18,8 @@ class BrandInfo {
         string $contactUrl,
         string $trainingUrl,
         string $productsUrl,
+        string $relevamientoUrl,
+        string $automatizacionUrl,
         string $whatsapp
     ) {
         $this->name = $name;
@@ -25,6 +27,8 @@ class BrandInfo {
         $this->contactUrl = $contactUrl;
         $this->trainingUrl = $trainingUrl;
         $this->productsUrl = $productsUrl;
+        $this->relevamientoUrl = $relevamientoUrl;
+        $this->automatizacionUrl = $automatizacionUrl;
         $this->whatsapp = $whatsapp;
     }
 
@@ -33,5 +37,7 @@ class BrandInfo {
     public function getContactUrl(): string { return $this->contactUrl; }
     public function getTrainingUrl(): string { return $this->trainingUrl; }
     public function getProductsUrl(): string { return $this->productsUrl; }
+    public function getRelevamientoUrl(): string { return $this->relevamientoUrl; }
+    public function getAutomatizacionUrl(): string { return $this->automatizacionUrl; }
     public function getWhatsapp(): string { return $this->whatsapp; }
 }

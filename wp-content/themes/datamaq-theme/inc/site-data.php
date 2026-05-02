@@ -16,7 +16,10 @@ function get_datamaq_site_data() {
             'email' => 'info@datamaq.com.ar',
             'base' => 'Gar&iacute;n (GBA Norte)',
             'training_url' => '/courses',
-            'products_url' => '/productos'
+            'products_url' => '/productos',
+            'relevamiento_url' => '/product/relevamiento-tecnico-y-visita-a-planta/',
+            'automatizacion_url' => '/product/solucion-de-automatizacion-a-medida/',
+            'nav' => []
         ],
         'hero' => [
             'eyebrow' => 'Captura autom&aacute;tica de datos operativos',

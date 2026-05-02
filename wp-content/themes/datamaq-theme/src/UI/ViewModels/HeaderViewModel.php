@@ -31,6 +31,14 @@ class HeaderViewModel {
         return $this->brand->getProductsUrl();
     }
 
+    public function getRelevamientoUrl(): string {
+        return $this->brand->getRelevamientoUrl();
+    }
+
+    public function getAutomatizacionUrl(): string {
+        return $this->brand->getAutomatizacionUrl();
+    }
+
     public function getHomeUrl(): string {
         return home_url('/');
     }

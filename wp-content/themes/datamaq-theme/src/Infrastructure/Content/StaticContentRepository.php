@@ -118,6 +118,8 @@ class StaticContentRepository implements ContentRepositoryInterface {
             $data['contact_url'] ?? '/contacto',
             $data['training_url'] ?? '/courses',
             $data['products_url'] ?? '/productos',
+            $data['relevamiento_url'] ?? '/product/relevamiento-tecnico-y-visita-a-planta/',
+            $data['automatizacion_url'] ?? '/product/solucion-de-automatizacion-a-medida/',
             $data['whatsapp'] ?? ''
         );
     }

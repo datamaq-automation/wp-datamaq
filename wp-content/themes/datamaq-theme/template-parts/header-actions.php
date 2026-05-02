@@ -17,25 +17,34 @@ if (!$viewModel) {
 
 $contact_url = $viewModel->getContactUrl();
 $training_url = $viewModel->getTrainingUrl();
-$products_url = $viewModel->getProductsUrl();
+$relevamiento_url = $viewModel->getRelevamientoUrl();
+$automatizacion_url = $viewModel->getAutomatizacionUrl();
 ?>
 
 <div class="c-home-header__actions tw:flex tw:items-center tw:gap-3">
-    <!-- Productos -->
+    <!-- Relevamiento -->
     <!-- Icono Mobile -->
-    <a href="<?php echo esc_url($products_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Productos" title="Productos">
-        <i class="bi bi-box-seam" aria-hidden="true"></i>
+    <a href="<?php echo esc_url($relevamiento_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Relevamiento" title="Relevamiento">
+        <i class="bi bi-geo-alt" aria-hidden="true"></i>
     </a>
     <!-- Botón Desktop -->
-    <button onclick="window.location.href='<?php echo esc_url($products_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Productos</button>
+    <button onclick="window.location.href='<?php echo esc_url($relevamiento_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Relevamiento</button>
+
+    <!-- Automatización -->
+    <!-- Icono Mobile -->
+    <a href="<?php echo esc_url($automatizacion_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Automatización" title="Automatización">
+        <i class="bi bi-gear-wide-connected" aria-hidden="true"></i>
+    </a>
+    <!-- Botón Desktop -->
+    <button onclick="window.location.href='<?php echo esc_url($automatizacion_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Automatización</button>
 
     <!-- Capacitaciones -->
     <!-- Icono Mobile -->
-    <a href="<?php echo esc_url($training_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Capacitaciones" title="Capacitaciones">
+    <a href="<?php echo esc_url($training_url); ?>" class="c-home-header__icon-link tw:lg:hidden" aria-label="Cursos" title="Cursos">
         <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
     </a>
     <!-- Botón Desktop -->
-    <button onclick="window.location.href='<?php echo esc_url($training_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Capacitaciones</button>
+    <button onclick="window.location.href='<?php echo esc_url($training_url); ?>'" type="button" class="tw:btn-outline c-home-header__cta tw:hidden tw:lg:inline-flex">Cursos</button>
 
     <!-- Contacto -->
     <!-- Icono Mobile -->
