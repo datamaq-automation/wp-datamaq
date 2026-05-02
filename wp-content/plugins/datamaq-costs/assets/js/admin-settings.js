@@ -26,9 +26,13 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 if (response.success) {
-                    feedback.text(response.data.message).addClass('success');
+                    feedback.html('<span class="msg">' + response.data.message + '</span>').addClass('success');
                 } else {
-                    feedback.text(response.data.message).addClass('error');
+                    let msg = '<span class="msg">' + response.data.message + '</span>';
+                    if (response.data.technical_details) {
+                        msg += '<br><code class="technical">' + response.data.technical_details + '</code>';
+                    }
+                    feedback.html(msg).addClass('error');
                 }
             },
             error: function() {

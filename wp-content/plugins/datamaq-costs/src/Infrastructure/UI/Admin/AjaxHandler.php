@@ -25,7 +25,7 @@ class AjaxHandler {
         $address = sanitize_text_field($_POST['address']);
 
         if (empty($address)) {
-            $address = 'Buenos Aires, Argentina'; // Fallback para test
+            $address = 'Av. Cabildo y Juramento, CABA, Argentina'; // Nuevo fallback emblemático
         }
 
         $client = new GoogleMapsClient($api_key);

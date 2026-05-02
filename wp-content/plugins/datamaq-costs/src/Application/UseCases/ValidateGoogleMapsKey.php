@@ -25,8 +25,6 @@ class ValidateGoogleMapsKey {
             return ['success' => false, 'message' => 'La API Key está vacía.'];
         }
 
-        // Intentamos calcular distancia desde la dirección de prueba a sí misma
-        // para verificar que la API responde 200 OK y no 403/INVALID_KEY
         $distance = $this->distanceService->getDistanceKm($testAddress, $testAddress);
 
         if ($distance !== null) {
@@ -38,7 +36,8 @@ class ValidateGoogleMapsKey {
 
         return [
             'success' => false, 
-            'message' => 'Error de conexión o API Key inválida. Revisa los permisos de Distance Matrix API.'
+            'message' => 'Error de conexión o API Key inválida.',
+            'technical_details' => $this->distanceService->getLastError()
         ];
     }
 }

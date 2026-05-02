@@ -10,4 +10,9 @@ interface DistanceServiceInterface {
      * Calcula la distancia en KM entre dos direcciones
      */
     public function getDistanceKm(string $origin, string $destination): ?float;
+
+    /**
+     * Obtiene el último error técnico ocurrido
+     */
+    public function getLastError(): ?string;
 }

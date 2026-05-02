@@ -12,6 +12,16 @@
     color: #dc3232;
 }
 
+#datamaq-google-key-feedback .technical {
+    background: #f0f0f0;
+    padding: 2px 5px;
+    font-size: 11px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-top: 5px;
+    border-left: 3px solid #dc3232;
+}
+
 .datamaq-api-key-container {
     display: flex;
     align-items: center;
