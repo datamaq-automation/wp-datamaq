@@ -171,9 +171,29 @@
     font-weight: 600 !important;
 }
 
-.course-item .course-count-item {
+/* Solo aire si es encabezado de tarjeta */
+.course-item > .course-count-item {
     padding: 1rem 1.5rem 0 !important;
     display: block !important;
+}
+
+.course-wrap-meta {
+    padding: 0 1.5rem 1.5rem !important;
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.course-wrap-meta .course-count-item {
+    display: inline-block !important;
+    padding: 0 !important;
+}
+
+.course-wrap-meta .meta-item {
+    display: flex !important;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .course-title {
