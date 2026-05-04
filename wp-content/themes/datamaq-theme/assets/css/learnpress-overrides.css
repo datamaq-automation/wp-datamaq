@@ -83,6 +83,21 @@
     display: none !important;
 }
 
+/* 1.4 Detalles de Instructor */
+.instructor-display-name {
+    display: inline-block !important;
+    padding: 0.5rem 0 0.5rem 1.5rem !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+}
+
+/* 1.5 Biografía de Instructor */
+.lp-section-instructor p {
+    padding: 0 1.5rem 1.5rem 1.5rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    line-height: 1.7 !important;
+}
+
 /* 2. Archive Header & Breadcrumbs */
 .learn-press-breadcrumb, 
 .lp-breadcrumb {
