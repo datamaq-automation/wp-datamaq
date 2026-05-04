@@ -92,7 +92,16 @@
     font-size: 1.6rem !important;
     font-weight: 800 !important;
     padding: 0 1.5rem !important;
-    color: var(--dm-color-text-primary) !important;
+    margin-bottom: 1rem !important;
+}
+
+.course-title a {
+    color: var(--dm-color-brand-primary) !important;
+    text-decoration: none !important;
+}
+
+.course-title a:hover {
+    color: var(--dm-color-brand-accent) !important;
 }
 
 /* 5. Buttons Parity */

@@ -16,7 +16,8 @@
             criticalSelectors: [
                 '.lesson-title',
                 '.course-item-title',
-                '.lp-archive-courses-title'
+                '.lp-archive-courses-title',
+                'a'
             ]
         },
 

@@ -45,9 +45,23 @@ body.course-item-popup {
 }
 
 /* UI Component Defaults */
+a {
+    color: var(--dm-color-brand-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--dm-color-brand-accent);
+}
+
 .c-btn-primary {
     background-color: var(--dm-color-brand-primary);
     color: var(--dm-color-brand-secondary);
     border-radius: var(--dm-border-radius-sm);
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
 }
