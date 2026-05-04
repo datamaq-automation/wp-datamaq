@@ -11,37 +11,49 @@
     --dm-color-brand-secondary: #0c092f;
     --dm-color-brand-accent: #ffb606;
 
-    /* 2. Semantic Backgrounds */
-    --dm-color-bg-main: #0c092f;
-    --dm-color-bg-surface: #050314;
-    --dm-color-bg-glass: rgba(255, 255, 255, 0.03);
+    /* 2. Semantic Variables (Default: Dark) */
+    --dm-bg-base: #0c092f;
+    --dm-bg-surface: #050314;
+    --dm-text-base: #ffffff;
+    --dm-text-muted: rgba(255, 255, 255, 0.7);
+    --dm-border-color: rgba(255, 255, 255, 0.1);
+    --dm-glass-bg: rgba(255, 255, 255, 0.03);
 
-    /* 3. Semantic Typography */
-    --dm-color-text-primary: #ffffff;
-    --dm-color-text-muted: rgba(255, 255, 255, 0.7);
-    --dm-color-text-on-light: #050314;
-
-    /* 4. Layout Tokens */
+    /* 3. Layout Tokens */
     --dm-border-radius-sm: 0.75rem;
     --dm-border-radius-md: 1.2rem;
     --dm-border-radius-lg: 2rem;
     --dm-glass-blur: blur(10px);
 
-    /* 5. Dynamic Surface State (Contextual) */
-    --dm-surface-bg: var(--dm-color-bg-main);
-    --dm-surface-text: var(--dm-color-text-primary);
+    /* 4. Contextual Aliases */
+    --dm-surface-bg: var(--dm-bg-base);
+    --dm-surface-text: var(--dm-text-base);
 }
 
-/* Surface Contexts */
+/* Light Mode Overrides */
+[data-theme="light"] {
+    --dm-bg-base: #f8fafc;
+    --dm-bg-surface: #ffffff;
+    --dm-text-base: #0f172a;
+    --dm-text-muted: #64748b;
+    --dm-border-color: #e2e8f0;
+    --dm-glass-bg: rgba(0, 0, 0, 0.02);
+    
+    /* Update Aliases for Light Mode */
+    --dm-surface-bg: var(--dm-bg-base);
+    --dm-surface-text: var(--dm-text-base);
+}
+
+/* Local Surface Contexts (Component overrides) */
 .is-light-context,
 body.course-item-popup {
     --dm-surface-bg: #ffffff;
-    --dm-surface-text: var(--dm-color-text-on-light);
+    --dm-surface-text: #050314;
 }
 
 .is-dark-context {
-    --dm-surface-bg: var(--dm-color-bg-main);
-    --dm-surface-text: var(--dm-color-text-primary);
+    --dm-surface-bg: #0c092f;
+    --dm-surface-text: #ffffff;
 }
 
 /* UI Component Defaults */

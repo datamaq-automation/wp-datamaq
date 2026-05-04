@@ -49,6 +49,7 @@ function dm_enqueue_assets() {
     wp_enqueue_script( 'dm-componentizer', $theme_uri . '/assets/js/dm-components.js', array(), $comp_ver, true );
     wp_enqueue_script( 'dm-comp-reveal', $theme_uri . '/assets/js/components/scroll-reveal.js', array('dm-componentizer'), $version, true );
     wp_enqueue_script( 'dm-ui-health', $theme_uri . '/assets/js/components/ui-health-monitor.js', array(), $version, true );
+    wp_enqueue_script( 'dm-theme-toggle', $theme_uri . '/assets/js/components/theme-toggle.js', array(), $version, true );
 
     // Legacy Contact Wizard (to be refactored later into component)
     wp_register_script( 'dm-contact-wizard', $theme_uri . '/assets/js/contact-wizard.js', array('dm-componentizer'), $wizard_ver, true );
@@ -83,8 +84,8 @@ function dm_critical_styles() {
         html { 
             scroll-behavior: smooth; 
             overflow-x: hidden;
-            background-color: var(--dm-color-bg-main);
-            color: var(--dm-color-text-primary);
+            background-color: var(--dm-bg-base);
+            color: var(--dm-text-base);
         }
         body { 
             overflow-x: hidden; 
@@ -92,6 +93,7 @@ function dm_critical_styles() {
             -webkit-font-smoothing: antialiased;
             background-color: var(--dm-surface-bg);
             color: var(--dm-surface-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         [id] { scroll-margin-top: 100px; }
         h1, h2, h3, h4, h5, h6 { font-weight: 900; letter-spacing: -0.02em; color: inherit; }
