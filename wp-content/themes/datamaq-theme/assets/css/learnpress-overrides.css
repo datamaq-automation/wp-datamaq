@@ -168,15 +168,16 @@
     font-weight: 800 !important;
     padding: 0 1.5rem !important;
     margin-bottom: 1rem !important;
+    color: #ffffff !important;
 }
 
 .course-title a {
-    color: var(--dm-color-brand-primary) !important;
+    color: #ffffff !important;
     text-decoration: none !important;
 }
 
 .course-title a:hover {
-    color: var(--dm-color-brand-accent) !important;
+    color: var(--dm-color-brand-primary) !important;
 }
 
 /* 5. Buttons Parity */
