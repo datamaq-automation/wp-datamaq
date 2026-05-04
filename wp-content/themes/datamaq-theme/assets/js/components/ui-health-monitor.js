@@ -17,7 +17,10 @@
                 '.lesson-title',
                 '.course-item-title',
                 '.lp-archive-courses-title',
-                'a'
+                'a',
+                '.course-section__title',
+                '.course-section__description',
+                '.section-count-items'
             ]
         },
 

@@ -209,15 +209,18 @@ body::before {
   width: 2.7rem;
   height: 2.7rem;
   border-radius: 999px;
-  color: rgba(var(--dm-text-0-rgb), 0.86);
+  color: var(--dm-color-brand-primary);
   text-decoration: none;
-  background: rgba(var(--dm-text-0-rgb), 0.06);
-  border: 1px solid rgba(var(--dm-text-0-rgb), 0.08);
+  background: var(--dm-color-bg-glass);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
 }
+
 .c-home-header__icon-link:hover,
 .c-home-header__icon-link:focus-visible {
-  color: rgb(var(--dm-accent-orange-rgb));
-  background: rgba(var(--dm-accent-orange-rgb), 0.12);
+  color: var(--dm-color-brand-accent);
+  background: rgba(255, 106, 0, 0.15);
+  border-color: var(--dm-color-brand-primary);
 }
 .c-home-header__cta {
   min-height: 2.65rem;

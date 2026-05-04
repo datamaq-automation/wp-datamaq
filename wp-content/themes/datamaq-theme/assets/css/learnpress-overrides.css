@@ -18,9 +18,52 @@
 .lp-single-course-main__right__inner,
 .lp-course-curriculum,
 .lp-section-instructor,
-.course-section-header,
 .instructor-item-meta {
     background-color: var(--dm-color-bg-surface) !important;
+}
+
+/* 1.1 Course Curriculum Sections (SOLID Context) */
+.course-section-header {
+    background-color: var(--dm-color-bg-surface) !important;
+    padding: 1.5rem !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.course-section-header:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.course-section__title {
+    color: var(--dm-color-text-primary) !important;
+    font-weight: 700 !important;
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+}
+
+.course-section__description {
+    color: var(--dm-color-text-muted) !important;
+    font-size: 0.9rem !important;
+    margin-top: 0.25rem !important;
+}
+
+.section-toggle i {
+    color: var(--dm-color-brand-primary) !important;
+    margin-right: 1rem !important;
+    font-size: 1.2rem !important;
+}
+
+.section-count-items {
+    background: rgba(255, 106, 0, 0.1) !important;
+    color: var(--dm-color-brand-primary) !important;
+    padding: 0.2rem 0.8rem !important;
+    border-radius: 2rem !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    margin-left: auto !important;
 }
 
 /* 2. Archive Header & Breadcrumbs */
@@ -151,4 +194,22 @@ body.course-item-popup {
 
 .course-item-popup #popup-sidebar .course-item__name {
     color: var(--dm-surface-text) !important;
+}
+
+/* Close Button Parity & Contrast */
+.course-item-popup .back-course {
+    background-color: var(--dm-color-brand-primary) !important;
+    color: var(--dm-color-brand-secondary) !important;
+    opacity: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 70px !important;
+    height: 70px !important;
+    padding: 0 !important;
+    font-size: 20px !important;
+}
+
+.course-item-popup .back-course i {
+    color: inherit !important;
 }
