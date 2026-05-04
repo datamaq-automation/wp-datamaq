@@ -66,8 +66,9 @@
     margin-left: auto !important;
 }
 
-/* 1.2 Specific Title Fix (Contrast Audit) */
-.lp-course-curriculum__title {
+/* 1.2 Encabezados Semánticos (Curriculum, Instructor, etc.) */
+.lp-course-curriculum__title,
+.section-title {
     color: #ffffff !important;
     font-weight: 900 !important;
     margin: 2rem 0 1.5rem 0 !important;
