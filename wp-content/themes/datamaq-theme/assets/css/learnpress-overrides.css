@@ -20,6 +20,26 @@
 .lp-section-instructor,
 .instructor-item-meta {
     background-color: var(--dm-color-bg-surface) !important;
+    padding: 2.5rem !important; /* Aumentamos el espesor para un look más premium y espacioso */
+    border-radius: 2rem !important;
+}
+
+/* Fix: Margin Collapse (Evita el efecto de "espesor flaco" arriba) */
+.lp-course-curriculum > *:first-child,
+.lp-section-instructor > *:first-child,
+.lp-instructor-info > *:first-child {
+    margin-top: 0 !important;
+}
+
+/* Fix: Margin Collapse (Evita el efecto de "espesor flaco" arriba) */
+.lp-course-curriculum > *:first-child,
+.lp-section-instructor > *:first-child {
+    margin-top: 0 !important;
+}
+
+.lp-section-instructor {
+    margin-top: 4rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
 /* 1.1 Course Curriculum Sections (SOLID Context) */
@@ -37,16 +57,19 @@
     background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
-.course-section__title {
-    color: var(--dm-color-text-primary) !important;
-    font-weight: 700 !important;
+.course-section__title,
+.course-item-title,
+.course-item__link,
+.course-item__link span {
+    color: #ffffff !important;
+    font-weight: 600 !important;
     font-size: 1.1rem !important;
     margin: 0 !important;
 }
 
 .course-section__description {
-    color: var(--dm-color-text-muted) !important;
-    font-size: 0.9rem !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.95rem !important;
     margin-top: 0.25rem !important;
 }
 
@@ -178,7 +201,7 @@
 }
 
 .course-wrap-meta {
-    padding: 0 1.5rem 1.5rem !important;
+    padding: 1.5rem !important;
     display: flex !important;
     flex-wrap: wrap;
     gap: 1.2rem;
