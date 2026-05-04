@@ -59,8 +59,12 @@ body.course-item-popup {
 /* UI Component Defaults */
 a {
     color: var(--dm-color-brand-primary);
-    text-decoration: none;
+    text-decoration: underline;
     transition: color 0.2s ease;
+}
+
+a:visited {
+    color: #cc5500; /* Tono más oscuro para el estado persistente */
 }
 
 a:hover {
