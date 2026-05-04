@@ -66,6 +66,15 @@
     margin-left: auto !important;
 }
 
+/* 1.2 Specific Title Fix (Contrast Audit) */
+.lp-course-curriculum__title {
+    color: #ffffff !important;
+    font-weight: 900 !important;
+    margin: 2rem 0 1.5rem 0 !important;
+    padding-left: 1.5rem !important;
+    font-size: 1.8rem !important;
+}
+
 /* 2. Archive Header & Breadcrumbs */
 .learn-press-breadcrumb, 
 .lp-breadcrumb {
