@@ -1,14 +1,14 @@
 /*
- * LearnPress & Theme Overrides for DataMaq - V6 Absolute Parity (REFINED)
+ * LearnPress & Theme Overrides for DataMaq - V7 SOLID Refactor
  */
 
-/* 1. Global Layout & Colors */
+/* 1. Global Layout & Colors (Dark Context by Default) */
 .learn-press-courses,
 .lp-archive-courses,
 .single-lp_course,
 #learn-press-course {
-    background-color: #0c092f !important;
-    color: #ffffff !important;
+    background-color: var(--dm-color-bg-main) !important;
+    color: var(--dm-color-text-primary) !important;
 }
 
 /* Single Course Sections Background */
@@ -20,27 +20,27 @@
 .lp-section-instructor,
 .course-section-header,
 .instructor-item-meta {
-    background-color: #050314 !important; /* Más oscuro para mejor contraste */
+    background-color: var(--dm-color-bg-surface) !important;
 }
 
 /* 2. Archive Header & Breadcrumbs */
 .learn-press-breadcrumb, 
 .lp-breadcrumb {
     padding: 2.5rem 0 1rem !important;
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: var(--dm-color-text-muted) !important;
     font-size: 14px !important;
 }
 
 .learn-press-breadcrumb a,
 .lp-breadcrumb a {
-    color: #ff6a00 !important;
+    color: var(--dm-color-brand-primary) !important;
 }
 
 .learn-press-courses-header h1,
 .lp-archive-courses-title {
     font-size: clamp(2.5rem, 6vw, 4rem) !important;
     font-weight: 900 !important;
-    color: #ffffff !important;
+    color: var(--dm-color-text-primary) !important;
     margin-top: 1rem !important;
     letter-spacing: -0.04em !important;
 }
@@ -59,8 +59,8 @@
 .lp-courses-bar .lp-button,
 .lp-course-search form button,
 #learn-press-course-search button {
-    background-color: #ff6a00 !important;
-    color: #0c092f !important;
+    background-color: var(--dm-color-brand-primary) !important;
+    color: var(--dm-color-bg-main) !important;
     border-radius: 0.75rem !important;
     border: none !important;
 }
@@ -69,7 +69,7 @@
 .lp-courses-bar select {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+    color: var(--dm-color-text-primary) !important;
     border-radius: 0.75rem !important;
 }
 
@@ -92,12 +92,7 @@
     font-size: 1.6rem !important;
     font-weight: 800 !important;
     padding: 0 1.5rem !important;
-    color: #ffffff !important;
-}
-
-.course-item .course-thumbnail img {
-    aspect-ratio: 16/9;
-    object-fit: cover;
+    color: var(--dm-color-text-primary) !important;
 }
 
 /* 5. Buttons Parity */
@@ -105,10 +100,44 @@
 .lp-readmore a,
 .course-readmore a,
 .learn-press-course-button-read-more {
-    background: #ff6a00 !important;
-    color: #0c092f !important;
+    background: var(--dm-color-brand-primary) !important;
+    color: var(--dm-color-bg-main) !important;
     font-weight: 700 !important;
     border-radius: 12px !important;
     padding: 1rem 2rem !important;
     display: inline-block !important;
+}
+
+/* 6. Lesson Content & Popups (FIX: Contrast Audit) */
+body.course-item-popup {
+    background-color: #ffffff !important;
+}
+
+.course-item-popup #popup-header,
+.course-item-popup #popup-footer,
+.course-item-popup #popup-sidebar {
+    background-color: #f7f7f7 !important;
+    color: #1a1a1a !important;
+}
+
+.course-item-popup #popup-content {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+}
+
+/* Targeting the specific white-on-white title */
+.course-item-popup .course-item-title,
+.course-item-popup .lesson-title,
+.course-item-popup #popup-content h1,
+.course-item-popup #popup-content h2,
+.course-item-popup #popup-content h3 {
+    color: #050314 !important; /* Force dark blue for headings in light popup context */
+}
+
+.course-item-popup #popup-sidebar .lp-course-curriculum {
+    background-color: #ffffff !important;
+}
+
+.course-item-popup #popup-sidebar .course-item__name {
+    color: #1a1a1a !important;
 }

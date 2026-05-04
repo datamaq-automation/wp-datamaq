@@ -79,19 +79,47 @@ function dm_critical_styles() {
             font-display: swap;
             font-style: normal;
         }
+        /* 
+         * Design Tokens (SOLID & DDD Architecture)
+         */
+        :root {
+            --dm-color-brand-primary: #ff6a00;
+            --dm-color-bg-main: #0c092f;
+            --dm-color-bg-surface: #050314;
+            --dm-color-text-primary: #ffffff;
+            --dm-color-text-muted: rgba(255, 255, 255, 0.7);
+            
+            /* Dynamic Surface Tokens */
+            --dm-current-text: var(--dm-color-text-primary);
+            --dm-current-bg: var(--dm-color-bg-main);
+        }
+
+        .is-light-context {
+            --dm-current-text: #050314;
+            --dm-current-bg: #ffffff;
+        }
+
+        .is-dark-context {
+            --dm-current-text: var(--dm-color-text-primary);
+            --dm-current-bg: var(--dm-color-bg-main);
+        }
+
         /* Base Parity Rules */
         html { 
             scroll-behavior: smooth; 
             overflow-x: hidden;
-            background-color: #0c092f;
+            background-color: var(--dm-color-bg-main);
+            color: var(--dm-color-text-primary);
         }
         body { 
             overflow-x: hidden; 
             margin: 0;
             -webkit-font-smoothing: antialiased;
+            background-color: var(--dm-current-bg);
+            color: var(--dm-current-text);
         }
         [id] { scroll-margin-top: 100px; }
-        h1, h2, h3, h4, h5, h6 { font-weight: 900; letter-spacing: -0.02em; }
+        h1, h2, h3, h4, h5, h6 { font-weight: 900; letter-spacing: -0.02em; color: inherit; }
         
         /* Reveal Animations */
         [data-dm-component="ScrollReveal"] {
