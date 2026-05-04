@@ -110,34 +110,36 @@
 
 /* 6. Lesson Content & Popups (FIX: Contrast Audit) */
 body.course-item-popup {
-    background-color: #ffffff !important;
+    background-color: var(--dm-surface-bg) !important;
+    color: var(--dm-surface-text) !important;
 }
 
 .course-item-popup #popup-header,
 .course-item-popup #popup-footer,
 .course-item-popup #popup-sidebar {
-    background-color: #f7f7f7 !important;
-    color: #1a1a1a !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    color: var(--dm-surface-text) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .course-item-popup #popup-content {
-    background-color: #ffffff !important;
-    color: #1a1a1a !important;
+    background-color: var(--dm-surface-bg) !important;
+    color: var(--dm-surface-text) !important;
 }
 
-/* Targeting the specific white-on-white title */
+/* Targeting the specific white-on-white title using semantic tokens */
 .course-item-popup .course-item-title,
 .course-item-popup .lesson-title,
 .course-item-popup #popup-content h1,
 .course-item-popup #popup-content h2,
 .course-item-popup #popup-content h3 {
-    color: #050314 !important; /* Force dark blue for headings in light popup context */
+    color: var(--dm-surface-text) !important; 
 }
 
 .course-item-popup #popup-sidebar .lp-course-curriculum {
-    background-color: #ffffff !important;
+    background-color: var(--dm-surface-bg) !important;
 }
 
 .course-item-popup #popup-sidebar .course-item__name {
-    color: #1a1a1a !important;
+    color: var(--dm-surface-text) !important;
 }

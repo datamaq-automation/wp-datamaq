@@ -1,0 +1,53 @@
+/*
+ * DataMaq Design Tokens - SOLID Architecture
+ * -----------------------------------------
+ * This file defines the core visual constants of the platform.
+ * It is the single source of truth for branding and surfacing.
+ */
+
+:root {
+    /* 1. Core Branding */
+    --dm-color-brand-primary: #ff6a00;
+    --dm-color-brand-secondary: #0c092f;
+    --dm-color-brand-accent: #ffb606;
+
+    /* 2. Semantic Backgrounds */
+    --dm-color-bg-main: #0c092f;
+    --dm-color-bg-surface: #050314;
+    --dm-color-bg-glass: rgba(255, 255, 255, 0.03);
+
+    /* 3. Semantic Typography */
+    --dm-color-text-primary: #ffffff;
+    --dm-color-text-muted: rgba(255, 255, 255, 0.7);
+    --dm-color-text-on-light: #050314;
+
+    /* 4. Layout Tokens */
+    --dm-border-radius-sm: 0.75rem;
+    --dm-border-radius-md: 1.2rem;
+    --dm-border-radius-lg: 2rem;
+    --dm-glass-blur: blur(10px);
+
+    /* 5. Dynamic Surface State (Contextual) */
+    --dm-surface-bg: var(--dm-color-bg-main);
+    --dm-surface-text: var(--dm-color-text-primary);
+}
+
+/* Surface Contexts */
+.is-light-context,
+body.course-item-popup {
+    --dm-surface-bg: #ffffff;
+    --dm-surface-text: var(--dm-color-text-on-light);
+}
+
+.is-dark-context {
+    --dm-surface-bg: var(--dm-color-bg-main);
+    --dm-surface-text: var(--dm-color-text-primary);
+}
+
+/* UI Component Defaults */
+.c-btn-primary {
+    background-color: var(--dm-color-brand-primary);
+    color: var(--dm-color-brand-secondary);
+    border-radius: var(--dm-border-radius-sm);
+    font-weight: 700;
+}

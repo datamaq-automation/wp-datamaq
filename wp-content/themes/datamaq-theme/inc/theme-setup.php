@@ -30,20 +30,19 @@ function dm_enqueue_assets() {
     $index_ver = file_exists($theme_path . '/assets/css/index.css') ? filemtime($theme_path . '/assets/css/index.css') : $version;
     $premium_ver = file_exists($theme_path . '/assets/css/HomePage.css') ? filemtime($theme_path . '/assets/css/HomePage.css') : $version;
     $whatsapp_ver = file_exists($theme_path . '/assets/css/WhatsAppFab.css') ? filemtime($theme_path . '/assets/css/WhatsAppFab.css') : $version;
-    $learnpress_ver = file_exists($theme_path . '/assets/css/learnpress-overrides.css') ? filemtime($theme_path . '/assets/css/learnpress-overrides.css') : '1.4.1';
-    $wizard_ver = file_exists($theme_path . '/assets/js/contact-wizard.js') ? filemtime($theme_path . '/assets/js/contact-wizard.js') : $version;
-    $comp_ver = file_exists($theme_path . '/assets/js/dm-components.js') ? filemtime($theme_path . '/assets/js/dm-components.js') : $version;
+    $tokens_ver = file_exists($theme_path . '/assets/css/tokens.css') ? filemtime($theme_path . '/assets/css/tokens.css') : $version;
 
-    // CSS
-    wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array(), $style_ver );
+    // CSS Layered Architecture (SOLID)
+    wp_enqueue_style( 'dm-tokens', $theme_uri . '/assets/css/tokens.css', array(), $tokens_ver );
+    wp_enqueue_style( 'datamaq-style', get_stylesheet_uri(), array('dm-tokens'), $style_ver );
     wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css', array(), '1.11.3' );
-    wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array(), $tailwind_ver );
+    wp_enqueue_style( 'tailwind-styles', $theme_uri . '/assets/css/tailwind-dist.css', array('dm-tokens'), $tailwind_ver );
     wp_enqueue_style( 'legacy-index-styles', $theme_uri . '/assets/css/index.css', array('tailwind-styles'), $index_ver );
     wp_enqueue_style( 'premium-styles', $theme_uri . '/assets/css/HomePage.css', array('legacy-index-styles'), $premium_ver );
     wp_enqueue_style( 'whatsapp-fab-styles', $theme_uri . '/assets/css/WhatsAppFab.css', array(), $whatsapp_ver );
     
     if ( class_exists( 'LearnPress' ) ) {
-        wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array(), $learnpress_ver );
+        wp_enqueue_style( 'learnpress-overrides', $theme_uri . '/assets/css/learnpress-overrides.css', array('dm-tokens'), $learnpress_ver );
     }
 
     // JS Component Architecture
@@ -79,31 +78,6 @@ function dm_critical_styles() {
             font-display: swap;
             font-style: normal;
         }
-        /* 
-         * Design Tokens (SOLID & DDD Architecture)
-         */
-        :root {
-            --dm-color-brand-primary: #ff6a00;
-            --dm-color-bg-main: #0c092f;
-            --dm-color-bg-surface: #050314;
-            --dm-color-text-primary: #ffffff;
-            --dm-color-text-muted: rgba(255, 255, 255, 0.7);
-            
-            /* Dynamic Surface Tokens */
-            --dm-current-text: var(--dm-color-text-primary);
-            --dm-current-bg: var(--dm-color-bg-main);
-        }
-
-        .is-light-context {
-            --dm-current-text: #050314;
-            --dm-current-bg: #ffffff;
-        }
-
-        .is-dark-context {
-            --dm-current-text: var(--dm-color-text-primary);
-            --dm-current-bg: var(--dm-color-bg-main);
-        }
-
         /* Base Parity Rules */
         html { 
             scroll-behavior: smooth; 
@@ -115,8 +89,8 @@ function dm_critical_styles() {
             overflow-x: hidden; 
             margin: 0;
             -webkit-font-smoothing: antialiased;
-            background-color: var(--dm-current-bg);
-            color: var(--dm-current-text);
+            background-color: var(--dm-surface-bg);
+            color: var(--dm-surface-text);
         }
         [id] { scroll-margin-top: 100px; }
         h1, h2, h3, h4, h5, h6 { font-weight: 900; letter-spacing: -0.02em; color: inherit; }
