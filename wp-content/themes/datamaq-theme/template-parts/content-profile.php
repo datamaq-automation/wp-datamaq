@@ -32,7 +32,7 @@ try {
                     <h2 id="perfil-title" class="c-home-profile__name"><?php echo esc_html($viewModel->getName()); ?></h2>
                     <p class="c-home-profile__role"><?php echo esc_html($viewModel->getRole()); ?></p>
                     <p><?php echo esc_html($viewModel->getIntroduction()); ?></p>
-                    <button onclick="window.$chatwoot ? window.$chatwoot.toggle() : window.location.href='https://wa.me/5491156297160'" type="button" class="tw:btn-primary c-home-profile__cta">Escribime directo por WhatsApp</button>
+                    <button onclick="DataMaq.Chat.toggle()" type="button" class="tw:btn-primary c-home-profile__cta">Escribime directo por WhatsApp</button>
                 </article>
             </div>
 

@@ -24,56 +24,15 @@ function datamaq_inject_section($slug) {
 }
 
 /**
- * Chatwoot Widget Integration
+ * Communication System Initialization (Hexagonal Architecture)
  */
-add_action('wp_footer', function() {
-    // 1. Verificar si está habilitado en los ajustes del plugin
-    if (!get_option('datamaq_costs_chatwoot_enabled', true)) {
-        echo '<!-- Chatwoot disabled via Datamaq Costs Settings -->';
-        return;
-    }
-
-    // 2. Verificar si es entorno local
-    if (strpos($_SERVER['HTTP_HOST'] ?? '', 'localhost') !== false) {
-        echo '<!-- Chatwoot disabled in local development to prevent 429 errors -->';
-        return;
-    }
-?>
-<script>
-  (function(d,t) {
-    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src="https://chatwoot.datamaq.com.ar/packs/js/sdk.js";
-    g.defer = true;
-    g.async = true;
-    g.onload=function(){
-      window.chatwootSDK.run({
-        websiteToken: 'x42oXgvquc13HvqzB28SigaP',
-        baseUrl: 'https://chatwoot.datamaq.com.ar'
-      })
-      
-      window.addEventListener('chatwoot:ready', function () {
-        window.$chatwoot.setCustomAttributes({
-          wp_theme: 'datamaq-theme'
-        });
-      });
-    }
-    s.parentNode.insertBefore(g,s);
-  })(document,"script");
-</script>
-<style>
-  .woot-widget-bubble {
-    right: 20px !important;
-    bottom: 20px !important;
-  }
-  @media (max-width: 1024px) {
-    .woot-widget-bubble {
-      bottom: 6.5rem !important;
-      right: 1rem !important;
-    }
-  }
-</style>
-<?php
+add_action('wp_enqueue_scripts', function() {
+    wp_enqueue_script('datamaq-chat-bridge', get_template_directory_uri() . '/assets/js/chat-bridge.js', [], '1.0.0', true);
 });
+
+$chatProvider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter();
+$chatManager = new \DataMaq\Application\Communication\ChatManager($chatProvider);
+$chatManager->boot();
 
 /**
  * DataMaq Repository Factory

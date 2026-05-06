@@ -61,7 +61,7 @@
 .course-item-title,
 .course-item__link,
 .course-item__link span {
-    color: #ffffff !important;
+    color: var(--dm-text-base) !important;
     font-weight: 600 !important;
     font-size: 1.1rem !important;
     margin: 0 !important;
@@ -92,7 +92,7 @@
 /* 1.2 Encabezados Semánticos (Curriculum, Instructor, etc.) */
 .lp-course-curriculum__title,
 .section-title {
-    color: #ffffff !important;
+    color: var(--dm-text-base) !important;
     font-weight: 900 !important;
     margin: 2rem 0 1.5rem 0 !important;
     padding-left: 1.5rem !important;
@@ -112,7 +112,7 @@
 .instructor-display-name {
     display: inline-block !important;
     padding: 0.5rem 0 0.5rem 1.5rem !important;
-    color: #ffffff !important;
+    color: var(--dm-text-base) !important;
     font-weight: 700 !important;
 }
 
@@ -224,11 +224,11 @@
     font-weight: 800 !important;
     padding: 0 1.5rem !important;
     margin-bottom: 1rem !important;
-    color: #ffffff !important;
+    color: var(--dm-text-base) !important;
 }
 
 .course-title a {
-    color: #ffffff !important;
+    color: var(--dm-text-base) !important;
     text-decoration: none !important;
 }
 

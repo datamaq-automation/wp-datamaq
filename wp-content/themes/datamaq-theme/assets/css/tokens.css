@@ -39,6 +39,9 @@
     --dm-border-color: #e2e8f0;
     --dm-glass-bg: rgba(0, 0, 0, 0.02);
     
+    /* 1.1 Brand Update for Contrast (WCAG AA compliance) */
+    --dm-color-brand-primary: #d35400; /* Naranja más profundo para legibilidad */
+    
     /* Update Aliases for Light Mode */
     --dm-surface-bg: var(--dm-bg-base);
     --dm-surface-text: var(--dm-text-base);
