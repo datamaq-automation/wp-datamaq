@@ -24,5 +24,9 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "phpstan/extension-installer": true
         }
+    },
+    "require": {
+        "botman/botman": "^2.8",
+        "botman/driver-web": "^1.5"
     }
 }

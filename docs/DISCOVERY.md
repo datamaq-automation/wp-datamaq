@@ -2,15 +2,20 @@
 
 Este documento registra exclusivamente las incertidumbres técnicas que requieren definición antes de proceder.
 
-## 🤖 Integración de BotMan (PHP)
-- **Dependencias:** ¿Se deben instalar `botman/botman` y `botman/driver-web` inmediatamente vía Composer?
-- **Endpoint del Webhook:** ¿Se debe registrar en la REST API (`/wp-json/datamaq/v1/botman`) o mediante un handler de Admin AJAX?
-- **Interfaz (Frontend):** ¿Existe una librería de JS preferida para el widget del chat o se debe implementar una solución custom?
-- **Persistencia:** ¿Se utilizará la API de Transients de WordPress o se requiere un driver de persistencia externo (Redis/Memcached)?
+## 🤖 Integración de BotMan (PHP) - PRÓXIMAMENTE
+- **Dependencias:** Confirmado el uso de `botman/botman` y `botman/driver-web`.
+- **Endpoint del Webhook:** Se propone usar la REST API de WordPress (`/wp-json/datamaq/v1/chat`) para mayor escalabilidad y facilidad de debug.
+- **Interfaz (Frontend):** Se implementará un widget custom reactivo integrado en el tema para mantener la coherencia estética (Design Tokens).
+- **Persistencia:** Se utilizará la API de Transients de WordPress inicialmente, evaluando migrar a una tabla custom si el volumen de sesiones lo requiere.
 
-## 🚀 Continuous Delivery (CD)
-- **Destino del Despliegue:** ¿Cuál es la infraestructura de destino (VPS via SSH/rsync, Hosting compartido via FTP, o plataforma Cloud)?
-- **Secretos de GitHub:** ¿Están ya configuradas las credenciales en el repositorio para el despliegue automático?
+## ✅ Infraestructura y CD (RESUELTO)
+- **Modelo:** CD en 8 etapas con validación inteligente (Local CI + Remote CD).
+- **Destino:** VPS vía SSH/Rsync (Puerto 5932).
+- **Entorno:** Configurado en GitHub Actions bajo el environment `prod`.
+- **Estrategia Slim Repo:** El núcleo de WordPress y archivos de configuración sensibles (`wp-config.php`, `.env`) están excluidos y se gestionan directamente en el servidor.
 
-## 📊 Auditoría de Repositorio
-- **Exclusión de Core:** ¿Se ha confirmado la migración definitiva a un modelo donde el Core de WordPress no sea trackeado por Git?
+---
+
+## 📊 Auditoría de Repositorio (RESUELTO)
+- Se ha limpiado el repositorio de archivos temporales y logs.
+- La arquitectura hexagonal está validada y lista para recibir el dominio de BotMan.

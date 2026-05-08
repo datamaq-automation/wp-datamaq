@@ -38,9 +38,15 @@ add_action(
 $config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
 $logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
 
-$chat_provider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter( $config_provider, $logger );
-$chat_manager  = new \DataMaq\Application\Communication\ChatManager( $chat_provider );
+// Inicialización de BotMan (Motor + UI)
+$botman_adapter = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger );
+$chat_manager   = new \DataMaq\Application\Communication\ChatManager( $botman_adapter );
 $chat_manager->boot();
+
+// Registro de API REST para el Chat
+add_action( 'rest_api_init', function() use ( $botman_adapter ) {
+	( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman_adapter ) )->register_routes();
+} );
 
 /**
  * DataMaq Repository Factory
