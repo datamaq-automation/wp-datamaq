@@ -2,28 +2,26 @@
 
 # ==============================================================================
 # DATA MAQ - CI LOCAL (PRE-PUSH HOOK)
-# Versión: Observabilidad Premium
+# Versión: Ultra-Observabilidad (with Time Metrics)
 # ==============================================================================
 
-# Colores para la terminal
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 CYAN='\033[0;36m'
 YELLOW='\033[1;33m'
 RESET='\033[0m'
 
+START_TIME=$(date +%s.%N)
+
 echo -e "\n${CYAN}🚀 Iniciando validación técnica del proyecto...${RESET}"
 echo -e "${CYAN}=================================================${RESET}"
 
-# 1. Identificar archivos PHP relevantes
+# ------------------------------------------------------------------------------
+# NIVEL 1: PHP LINT
+# ------------------------------------------------------------------------------
+L1_START=$(date +%s.%N)
+echo -e "\n${CYAN}🔍 [NIVEL 1] Verificando sintaxis PHP...${RESET}"
 PHP_FILES=$(git ls-files | grep '\.php$')
-TOTAL_FILES=$(echo "$PHP_FILES" | wc -l)
-
-# ------------------------------------------------------------------------------
-# NIVEL 1: PHP LINT (Sintaxis)
-# ------------------------------------------------------------------------------
-echo -e "\n${CYAN}🔍 [NIVEL 1] Verificando sintaxis en $TOTAL_FILES archivos PHP...${RESET}"
-
 ERR_LINT=0
 for FILE in $PHP_FILES; do
     if [ -f "$FILE" ]; then
@@ -35,34 +33,54 @@ for FILE in $PHP_FILES; do
         fi
     fi
 done
-
-if [ $ERR_LINT -gt 0 ]; then
-    echo -e "\n${RED}🛑 PUSH ABORTADO: Se encontraron $ERR_LINT errores de sintaxis.${RESET}"
-    exit 1
-fi
-echo -e "   ${GREEN}✅ Todos los archivos PHP tienen sintaxis válida.${RESET}"
+[ $ERR_LINT -gt 0 ] && echo -e "\n${RED}🛑 PUSH ABORTADO (L1).${RESET}" && exit 1
+L1_END=$(date +%s.%N)
+echo -e "   ${GREEN}✅ Sintaxis válida.${RESET}"
 
 # ------------------------------------------------------------------------------
-# NIVEL 2: PHP CODE SNIFFER (Estándares WP)
+# NIVEL 2: PHPCS
 # ------------------------------------------------------------------------------
-echo -e "\n${CYAN}🎨 [NIVEL 2] Validando estándares de WordPress (WPCS)...${RESET}"
-
+L2_START=$(date +%s.%N)
+echo -e "\n${CYAN}🎨 [NIVEL 2] Validando estándares WordPress (WPCS)...${RESET}"
 if [ -f "./vendor/bin/phpcs" ]; then
-    # Ejecutar PHPCS con reporte de progreso y nombres de sniffs
     ./vendor/bin/phpcs --standard=phpcs.xml -s -n
-    
     if [ $? -ne 0 ]; then
-        echo -e "\n${RED}🛑 PUSH ABORTADO: Violaciones de calidad detectadas.${RESET}"
-        echo -e "${YELLOW}💡 Tip: Podés usar './vendor/bin/phpcbf' para arreglar el formato automáticamente.${RESET}"
+        echo -e "\n${RED}🛑 PUSH ABORTADO (L2).${RESET}"
         exit 1
     fi
-    echo -e "   ${GREEN}✅ El código cumple con los estándares de calidad definidos.${RESET}"
+    echo -e "   ${GREEN}✅ Calidad WPCS validada.${RESET}"
 else
-    echo -e "   ${YELLOW}⚠️  Aviso: PHPCS no encontrado en ./vendor/bin/. Saltando Nivel 2.${RESET}"
+    echo -e "   ${YELLOW}⚠️  PHPCS no encontrado.${RESET}"
 fi
+L2_END=$(date +%s.%N)
 
 # ------------------------------------------------------------------------------
-# FINALIZACIÓN
+# NIVEL 3: PHPSTAN
 # ------------------------------------------------------------------------------
-echo -e "\n${GREEN}📤 ¡Todo en orden! Procediendo con el envío a GitHub...${RESET}\n"
+L3_START=$(date +%s.%N)
+echo -e "\n${CYAN}🧠 [NIVEL 3] Realizando análisis lógico (PHPStan)...${RESET}"
+if [ -f "./vendor/bin/phpstan" ]; then
+    ./vendor/bin/phpstan analyze -c phpstan.neon --no-progress
+    if [ $? -ne 0 ]; then
+        echo -e "\n${RED}🛑 PUSH ABORTADO (L3).${RESET}"
+        exit 1
+    fi
+    echo -e "   ${GREEN}✅ Análisis estático sin errores.${RESET}"
+else
+    echo -e "   ${YELLOW}⚠️  PHPStan no encontrado.${RESET}"
+fi
+L3_END=$(date +%s.%N)
+
+# ------------------------------------------------------------------------------
+# MÉTRICAS FINALES
+# ------------------------------------------------------------------------------
+END_TIME=$(date +%s.%N)
+TOTAL_ELAPSED=$(echo "$END_TIME - $START_TIME" | bc 2>/dev/null || echo "0")
+L1_ELAPSED=$(echo "$L1_END - $L1_START" | bc 2>/dev/null || echo "0")
+L2_ELAPSED=$(echo "$L2_END - $L2_START" | bc 2>/dev/null || echo "0")
+L3_ELAPSED=$(echo "$L3_END - $L3_START" | bc 2>/dev/null || echo "0")
+
+echo -e "\n${GREEN}📊 Resumen de validación:${RESET}"
+echo -e "   ⏱️  Total: ${TOTAL_ELAPSED}s | L1: ${L1_ELAPSED}s | L2: ${L2_ELAPSED}s | L3: ${L3_ELAPSED}s"
+echo -e "\n${GREEN}📤 ¡Todo en orden! Enviando a GitHub...${RESET}\n"
 exit 0

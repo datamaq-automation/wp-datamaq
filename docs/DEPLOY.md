@@ -17,7 +17,7 @@ Para garantizar la estabilidad sin consumir créditos de GitHub, utilizamos un s
 | :--- | :--- | :--- | :--- |
 | **L1** | **Sintaxis** | `php -l` | ✅ Activo |
 | **L2** | **Estándares (WPCS)** | `phpcs` | ✅ Activo |
-| **L3** | **Análisis Estático** | `phpstan` | ⏳ Pendiente |
+| **L3** | **Análisis Estático** | `phpstan` | ✅ Activo |
 | **L4** | **Tests Funcionales** | `phpunit` | ⏳ Pendiente |
 
 - **L1 (Sintaxis):** Detecta errores fatales y puntos y coma faltantes. Es el guardián básico para evitar caídas del sitio.
@@ -32,7 +32,7 @@ Una vez que el código es aceptado en la rama principal (`main`), se dispara el 
 - **Post-Deploy:** Ejecución de comandos automáticos vía `wp-cli` (limpieza de caché, actualización de base de datos si fuera necesario).
 
 ## 📋 Requisitos Previos
-- **Local:** Tener configurado el Git Hook en `.git/hooks/pre-push`.
+- **Local:** Tener configurado el Git Hook en `.githooks/pre-push`.
 - **Servidor:** Acceso SSH habilitado y `wp-cli` instalado.
 - **GitHub:** Secrets configurados (`SSH_PRIVATE_KEY`, `SSH_HOST`, `SSH_USER`).
 

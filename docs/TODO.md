@@ -18,5 +18,5 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Crear estructura base de documentación (`docs/`).
 - [x] Unificar `README.md`.
 - [x] Documentar el proceso de despliegue (Deploy Workflow).
-- [x] Configurar Git Hook local para CI (Nivel 2: PHPCS/WPCS).
+- [x] Configurar Git Hook local para CI (Nivel 3: PHPStan).
 - [ ] Implementar el workflow de GitHub Actions (`.github/workflows/deploy.yml`).

@@ -1,0 +1,15 @@
+parameters:
+    level: 5
+    paths:
+        - wp-content/themes/datamaq-theme
+        - wp-content/mu-plugins
+    excludePaths:
+        - wp-content/themes/datamaq-theme/vendor/*
+        - wp-content/themes/datamaq-theme/assets/*
+    scanDirectories:
+        - wp-content/themes/datamaq-theme
+    bootstrapFiles:
+        # Aquí podrías cargar un archivo de bootstrap si fuera necesario
+    ignoreErrors:
+        # Errores comunes de WP que podemos ignorar al inicio
+        - '#Constant [A-Z_]+ not found.#'
