@@ -11,6 +11,7 @@ jobs:
   audit_secrets:
     name: "🔐 Audit: Secrets"
     runs-on: ubuntu-latest
+    environment: prod
     steps:
     - name: "Validar Clave SSH"
       env:
@@ -29,6 +30,7 @@ jobs:
   audit_variables:
     name: "📋 Audit: Variables"
     runs-on: ubuntu-latest
+    environment: prod
     steps:
     - name: "Validar Variables de Entorno"
       run: |
@@ -52,6 +54,7 @@ jobs:
     name: "🚀 Sincronizar Archivos"
     needs: [audit_secrets, audit_variables]
     runs-on: ubuntu-latest
+    environment: prod
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -74,6 +77,7 @@ jobs:
     name: "🏥 Verificar Salud"
     needs: deploy
     runs-on: ubuntu-latest
+    environment: prod
     steps:
     - name: "🧹 Post-Deploy: Cache Flush & Audit"
       uses: appleboy/ssh-action@master
