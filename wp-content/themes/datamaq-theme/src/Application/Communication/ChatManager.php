@@ -19,11 +19,7 @@ class ChatManager {
 	 * @param ChatProvider[] $providers Lista de proveedores a gestionar.
 	 */
 	public function __construct( array $providers ) {
-		foreach ( $providers as $provider ) {
-			if ( $provider instanceof ChatProvider ) {
-				$this->providers[] = $provider;
-			}
-		}
+		$this->providers = $providers;
 	}
 
 	/**

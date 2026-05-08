@@ -9,6 +9,7 @@
 - [x] **Configuración Dinámica n8n**: Implementada página de ajustes en WordPress (Ajustes -> n8n Integration) para gestionar la URL del webhook. ✅
 - [x] **Refactor de Contacto (SOLID)**: Migrado a Clean Architecture con repositorio e inyección de dependencias. ✅
 - [x] **Página de Gracias Premium**: Creada página de confirmación con diseño modular y standalone. ✅
+- [x] **Integración BotMan y Sidecar**: Interceptor de SPA responsivo y motor de IA integrado nativamente en PHP. ✅
 - [ ] **Refactor de FAQs**: Convertir el sistema de FAQs actual en un Custom Post Type (CPT).
 - [ ] **Refactor de Perfil**: Migrar la sección de perfil a la nueva estructura de repositorio y dominio.
 

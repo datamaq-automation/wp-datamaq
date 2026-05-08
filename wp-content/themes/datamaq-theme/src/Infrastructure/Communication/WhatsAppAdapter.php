@@ -28,8 +28,7 @@ class WhatsAppAdapter implements ChatProvider {
 	}
 
 	public function isEnabled(): bool {
-		// Por ahora siempre habilitado, o según una opción de config.
-		return $this->config->isEnabled( 'whatsapp', true );
+		return $this->config->isEnabled( 'whatsapp' );
 	}
 
 	public function renderWidget(): void {
