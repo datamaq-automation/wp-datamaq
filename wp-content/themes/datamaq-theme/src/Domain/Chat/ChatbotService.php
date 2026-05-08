@@ -18,7 +18,7 @@ class ChatbotService {
 			'hola|buen(as|os) (dias|tardes|noches)' => '¡Hola! Soy el asistente virtual de DataMaq. ¿En qué puedo ayudarte?',
 			'cursos|estudiar|aprender'               => 'Ofrecemos cursos especializados en WordPress, PHP y Arquitectura de Software. ¿Te gustaría ver el catálogo?',
 			'precio|costo|cuanto sale'               => 'Nuestros precios son competitivos y varían según el curso. ¿De qué curso te gustaría saber el precio?',
-			'contacto|hablar con alguien|humano'    => 'Puedes contactarnos directamente al mail info@datamaq.com.ar o esperar a que un operador se conecte.',
+			'humano|operador|hablar con alguien'    => 'Puedes contactarnos directamente al mail info@datamaq.com.ar o esperar a que un operador se conecte.',
 		);
 	}
 

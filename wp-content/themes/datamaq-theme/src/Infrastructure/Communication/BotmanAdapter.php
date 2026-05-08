@@ -72,6 +72,11 @@ class BotmanAdapter implements ChatProvider, BotEngine {
 			} );
 		}
 
+		// Registrar flujos interactivos (Conversations)
+		$this->botman->hears( 'contacto|presupuesto|comprar|cotizar|asesor', function( BotMan $bot ) {
+			$bot->startConversation( new \DataMaq\Infrastructure\Communication\Conversations\LeadCaptureConversation() );
+		} );
+
 		// Fallback desde el dominio
 		$fallback = $this->chatbot_service->getFallbackMessage();
 		$this->botman->fallback( function( BotMan $bot ) use ( $fallback ) {

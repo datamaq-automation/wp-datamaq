@@ -17,7 +17,10 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 ## 🤖 Migración a BotMan (PHP)
 - [x] Instalar dependencias vía Composer (`botman/botman`).
 - [x] Implementar Webhook Controller (REST API: `/chat`).
-- [ ] Desarrollar lógica de conversación (Conversations/Nodes).
+- [ ] Desarrollar clase `LeadCaptureConversation` para calificar contactos.
+- [ ] Desarrollar clase `SupportConversation` para soporte técnico guiado.
+- [ ] Conectar fin de conversaciones con servicio Webhook de n8n.
+- [ ] Desarrollar Panel de Ajustes / CPT en WordPress para editar reglas de Regex sin tocar código.
 - [x] Integrar Widget de JS compatible con BotMan.
 
 ## 🚀 Continuous Delivery (CD)
