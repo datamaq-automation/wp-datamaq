@@ -10,7 +10,7 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Consolidar la carpeta `media/` raíz dentro del tema o `uploads/`.
 
 ## 🏗️ Desarrollo del Tema (`datamaq-theme`)
-- [ ] Implementar la sección "Process" en `front-page.php` (actualmente vacía).
+- [x] Implementar la sección "Process" en `front-page.php` (actualmente vacía).
 - [ ] Revisar y optimizar `template-parts/content-hero.php`.
 - [ ] Validar la visualización del "Dock" móvil inferior.
 

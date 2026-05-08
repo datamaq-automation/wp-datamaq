@@ -20,6 +20,7 @@ get_header();
     get_template_part('template-parts/content', 'services'); 
 
     // Process Section
+    get_template_part('template-parts/content', 'process'); 
 
 
     // FAQ Section
