@@ -4,10 +4,20 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 
 ## 🛠️ Arquitectura de Despliegue
 
-### 1. CI Local (Ahorro de minutos de GitHub)
-Antes de que cualquier cambio llegue a la nube, se valida localmente mediante Git Hooks.
-- **Trigger:** `pre-push`.
-- **Objetivo:** Impedir que código con errores de sintaxis o que no cumpla los estándares sea enviado al repositorio.
+### 1. CI Local (Niveles de Validación)
+Para garantizar la estabilidad sin consumir créditos de GitHub, utilizamos un sistema de validación progresivo ejecutado mediante Git Hooks (`.githooks/pre-push`).
+
+| Nivel | Validación | Herramienta | Estado |
+| :--- | :--- | :--- | :--- |
+| **L1** | **Sintaxis** | `php -l` | ✅ Activo |
+| **L2** | **Estándares (WPCS)** | `phpcs` | ⏳ Pendiente |
+| **L3** | **Análisis Estático** | `phpstan` | ⏳ Pendiente |
+| **L4** | **Tests Funcionales** | `phpunit` | ⏳ Pendiente |
+
+- **L1 (Sintaxis):** Detecta errores fatales y puntos y coma faltantes. Es el guardián básico para evitar caídas del sitio.
+- **L2 (Estándares):** Asegura que el código siga las normas oficiales de WordPress, mejorando la mantenibilidad.
+- **L3 (Estático):** Encuentra errores lógicos complejos sin ejecutar el código (ej: variables no definidas).
+- **L4 (Funcional):** Valida que la lógica de negocio (ViewModels, Repositorios) funcione correctamente ante cambios.
 
 ### 2. CD Automatizado (GitHub Actions + SSH)
 Una vez que el código es aceptado en la rama principal (`main`), se dispara el flujo automático.

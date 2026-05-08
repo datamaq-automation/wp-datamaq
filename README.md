@@ -26,5 +26,13 @@ wp theme list --status=active
 wp transient delete --all
 ```
 
+## 🚀 Configuración del Entorno
+Para activar las validaciones automáticas antes de cada `push`, ejecutá el siguiente comando en la raíz del proyecto:
+```bash
+git config core.hooksPath .githooks
+chmod +x .githooks/pre-push
+```
+Esto habilitará el **CI Local** (L1: PHP Lint) en tu máquina.
+
 ---
 *Este repositorio está en proceso de optimización ("Slimming"). Consultar [TODO.md](docs/TODO.md) para detalles sobre la remoción del núcleo de WP del control de versiones.*

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# ==============================================================================
+# DATA MAQ - CI LOCAL (NIVEL 1: PHP LINT)
+# ==============================================================================
+# Este script valida que no haya errores de sintaxis en los archivos PHP
+# antes de permitir el envío (push) al repositorio remoto.
+
+echo ""
+echo "🚀 Ejecutando CI Local: Validando sintaxis PHP..."
+echo "------------------------------------------------"
+
+# Obtener la lista de archivos PHP trackeados que han cambiado o existen
+PHP_FILES=$(git ls-files | grep '\.php$')
+
+if [ -z "$PHP_FILES" ]; then
+    echo "⚠️ No se encontraron archivos PHP para validar."
+    exit 0
+fi
+
+ERROR_COUNT=0
+
+for FILE in $PHP_FILES; do
+    # Solo validar si el archivo existe físicamente
+    if [ -f "$FILE" ]; then
+        # Ejecutar PHP Lint
+        RESULT=$(php -l "$FILE" 2>&1)
+        if [ $? -ne 0 ]; then
+            echo "❌ ERROR en: $FILE"
+            echo "   $RESULT"
+            ERROR_COUNT=$((ERROR_COUNT + 1))
+        fi
+    fi
+done
+
+echo "------------------------------------------------"
+
+if [ $ERROR_COUNT -gt 0 ]; then
+    echo "🛑 Se encontraron $ERROR_COUNT errores de sintaxis."
+    echo "❌ PUSH ABORTADO. Corregí los errores antes de reintentar."
+    echo ""
+    exit 1
+fi
+
+echo "✅ Excelente: Todos los archivos PHP son válidos."
+echo "📤 Procediendo con el push..."
+echo ""
+exit 0
