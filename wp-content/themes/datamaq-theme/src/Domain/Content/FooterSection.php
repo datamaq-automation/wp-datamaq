@@ -17,7 +17,7 @@ class FooterSection {
 
 	public function getCopyrightNote(): string {
 		// Reemplazar marcador de posición de año si existe
-		return str_replace( '{year}', date( 'Y' ), $this->copyrightNote );
+		return str_replace( '{year}', gmdate( 'Y' ), $this->copyrightNote );
 	}
 
 	public function getLegalText(): string {

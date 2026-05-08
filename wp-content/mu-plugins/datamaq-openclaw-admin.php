@@ -336,9 +336,11 @@ function dm_openclaw_ws_read_text( $socket ) {
 		$length   = $parts['low'];
 	}
 
-	$payload = '';
-	while ( strlen( $payload ) < $length && ! feof( $socket ) ) {
-		$payload .= fread( $socket, $length - strlen( $payload ) );
+	$payload     = '';
+	$payload_len = 0;
+	while ( $payload_len < $length && ! feof( $socket ) ) {
+		$payload    .= fread( $socket, $length - $payload_len );
+		$payload_len = strlen( $payload );
 	}
 
 	if ( 8 === $opcode ) {

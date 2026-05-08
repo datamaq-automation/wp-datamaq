@@ -19,6 +19,7 @@ class ContentValidator {
 		}
 
 		if ( ! empty( $missing ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped
 			throw new ValidationException( $missing );
 		}
 

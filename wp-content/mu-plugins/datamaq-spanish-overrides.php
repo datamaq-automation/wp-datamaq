@@ -31,12 +31,15 @@ add_filter( 'gettext', 'datamaq_lp_translate_string', 20, 3 );
 
 function datamaq_lp_translate_plural( $translated, $single, $plural, $number, $domain ) {
 	if ( ( '%d student' === $single && '%d students' === $plural ) || ( '%d Student' === $single && '%d Students' === $plural ) ) {
+		// translators: %d: number of students.
 		return _n( '%d estudiante', '%d estudiantes', $number, 'default' );
 	}
 	if ( ( '%d lesson' === $single && '%d lessons' === $plural ) || ( '%d Lesson' === $single && '%d Lessons' === $plural ) ) {
+		// translators: %d: number of lessons.
 		return _n( '%d lecci&oacute;n', '%d lecciones', $number, 'default' );
 	}
 	if ( ( '%d quiz' === $single && '%d quizzes' === $plural ) || ( '%d Quiz' === $single && '%d Quizzes' === $plural ) ) {
+		// translators: %d: number of quizzes.
 		return _n( '%d cuestionario', '%d cuestionarios', $number, 'default' );
 	}
 	if ( 'Quiz' === $single && 'Quizzes' === $plural ) {

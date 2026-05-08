@@ -6,19 +6,19 @@
  */
 
 // Extraemos el ViewModel del array de argumentos (Arquitectura Limpia)
-$viewModel = $args['viewModel'] ?? null;
+$view_model = $args['viewModel'] ?? null;
 
-if ( ! $viewModel ) {
+if ( ! $view_model ) {
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 		echo '<!-- DEBUG: HeaderViewModel missing in header-actions.php -->';
 	}
 	return;
 }
 
-$contact_url        = $viewModel->getContactUrl();
-$training_url       = $viewModel->getTrainingUrl();
-$relevamiento_url   = $viewModel->getRelevamientoUrl();
-$automatizacion_url = $viewModel->getAutomatizacionUrl();
+$contact_url        = $view_model->getContactUrl();
+$training_url       = $view_model->getTrainingUrl();
+$relevamiento_url   = $view_model->getRelevamientoUrl();
+$automatizacion_url = $view_model->getAutomatizacionUrl();
 ?>
 
 <div class="c-home-header__actions tw:flex tw:items-center tw:gap-3">

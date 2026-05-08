@@ -1,11 +1,11 @@
 <?php
 try {
-	$viewModel = new \DataMaq\UI\ViewModels\FooterViewModel( dm_content_repo() );
+	$view_model = new \DataMaq\UI\ViewModels\FooterViewModel( dm_content_repo() );
 } catch ( \Throwable $e ) {
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 		echo '<!-- Error in FooterViewModel: ' . esc_html( $e->getMessage() ) . ' -->';
 	}
-	$viewModel = null;
+	$view_model = null;
 }
 ?>
 <footer class="c-home-footer" role="contentinfo">
@@ -26,9 +26,9 @@ try {
 			<div class="c-home-footer__nav-col">
 				<p class="c-home-footer__title tw:text-white tw:font-bold tw:mb-6">Explorar</p>
 				<nav class="tw:flex tw:flex-col tw:gap-4">
-					<a href="<?php echo esc_url( $viewModel->getHomeUrl() ); ?>" class="c-home-footer__link">Inicio</a>
-					<a href="<?php echo esc_url( $viewModel->getProductsUrl() ); ?>" class="c-home-footer__link">Productos</a>
-					<a href="<?php echo esc_url( $viewModel->getTrainingUrl() ); ?>" class="c-home-footer__link">Capacitaciones</a>
+					<a href="<?php echo esc_url( $view_model->getHomeUrl() ); ?>" class="c-home-footer__link">Inicio</a>
+					<a href="<?php echo esc_url( $view_model->getProductsUrl() ); ?>" class="c-home-footer__link">Productos</a>
+					<a href="<?php echo esc_url( $view_model->getTrainingUrl() ); ?>" class="c-home-footer__link">Capacitaciones</a>
 				</nav>
 			</div>
 
@@ -36,15 +36,15 @@ try {
 			<div class="c-home-footer__services-col">
 				<p class="c-home-footer__title tw:text-white tw:font-bold tw:mb-6">Servicio</p>
 				<nav class="tw:flex tw:flex-col tw:gap-4">
-					<a href="<?php echo esc_url( $viewModel->getContactUrl() ); ?>" class="c-home-footer__link">Contacto</a>
-					<a href="<?php echo esc_url( $viewModel->getWhatsAppUrl() ); ?>" class="c-home-footer__link">Soporte Técnico</a>
+					<a href="<?php echo esc_url( $view_model->getContactUrl() ); ?>" class="c-home-footer__link">Contacto</a>
+					<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="c-home-footer__link">Soporte Técnico</a>
 				</nav>
 			</div>
 
 			<!-- Columna 4: Acción -->
 			<div class="c-home-footer__cta-col tw:flex tw:flex-col tw:items-start tw:lg:items-end">
-				<?php if ( $viewModel ) : ?>
-					<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="<?php echo esc_url( $viewModel->getWhatsAppUrl() ); ?>" target="_blank" rel="noopener noreferrer">
+				<?php if ( $view_model ) : ?>
+					<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" target="_blank" rel="noopener noreferrer">
 						<i class="bi bi-whatsapp tw:mr-2"></i> Escribinos
 					</a>
 				<?php endif; ?>
@@ -54,25 +54,25 @@ try {
 		<!-- Barra Inferior: Legal -->
 		<div class="c-home-footer__bottom tw:border-t tw:border-white/10 tw:py-8 tw:flex tw:flex-col tw:lg:flex-row tw:justify-between tw:items-center tw:gap-6">
 			<p class="c-home-footer__note tw:text-xs tw:text-dm-text-600">
-				<?php echo $viewModel ? esc_html( $viewModel->getCopyright() ) : '(c) ' . date( 'Y' ) . ' DataMaq'; ?>
+				<?php echo $view_model ? esc_html( $view_model->getCopyright() ) : '(c) ' . esc_html( gmdate( 'Y' ) ) . ' DataMaq'; ?>
 			</p>
 			<p class="c-home-footer__legal tw:max-w-2xl tw:text-center tw:lg:text-right">
-				<?php echo $viewModel ? esc_html( $viewModel->getLegalText() ) : ''; ?>
+				<?php echo $view_model ? esc_html( $view_model->getLegalText() ) : ''; ?>
 			</p>
 		</div>
 	</div>
 </footer>
 
 <nav class="c-home-dock tw:lg:hidden c-home-dock--direct" aria-label="Navegación rápida" style="--dock-columns: 3;">
-	<a <?php echo is_front_page() ? 'aria-current="page"' : ''; ?> href="<?php echo $viewModel ? esc_url( $viewModel->getHomeUrl() ) : '/'; ?>" class="c-home-dock__link">
+	<a <?php echo is_front_page() ? 'aria-current="page"' : ''; ?> href="<?php echo $view_model ? esc_url( $view_model->getHomeUrl() ) : '/'; ?>" class="c-home-dock__link">
 		<i class="bi bi-house-door-fill" aria-hidden="true"></i>
 		<span>Inicio</span>
 	</a>
-	<a href="<?php echo $viewModel ? esc_url( $viewModel->getWhatsAppUrl() ) : '#'; ?>" class="c-home-dock__link">
+	<a href="<?php echo $view_model ? esc_url( $view_model->getWhatsAppUrl() ) : '#'; ?>" class="c-home-dock__link">
 		<i class="bi bi-whatsapp" aria-hidden="true"></i>
 		<span>WhatsApp</span>
 	</a>
-	<a href="<?php echo $viewModel ? esc_url( $viewModel->getContactUrl() ) : '/contacto'; ?>" class="c-home-dock__link c-home-dock__link--emergency">
+	<a href="<?php echo $view_model ? esc_url( $view_model->getContactUrl() ) : '/contacto'; ?>" class="c-home-dock__link c-home-dock__link--emergency">
 		<i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
 		<span>Contacto</span>
 	</a>

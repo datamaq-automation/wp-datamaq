@@ -26,7 +26,7 @@ class ChatManager {
 				if ( $this->provider && $this->provider->isEnabled() ) {
 					$this->provider->renderWidget();
 				} else {
-					echo '<!-- Chat disabled by ' . ( $this->provider ? $this->provider->getIdentifier() : 'No Provider' ) . ' logic -->';
+					echo '<!-- Chat disabled by ' . esc_html( $this->provider ? $this->provider->getIdentifier() : 'No Provider' ) . ' logic -->';
 				}
 			}
 		);

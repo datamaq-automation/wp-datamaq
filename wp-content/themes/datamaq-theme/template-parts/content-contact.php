@@ -1,6 +1,6 @@
 <?php
 try {
-	$viewModel = new \DataMaq\UI\ViewModels\ContactViewModel( dm_content_repo() );
+	$view_model = new \DataMaq\UI\ViewModels\ContactViewModel( dm_content_repo() );
 } catch ( \Throwable $e ) {
 	if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 		echo '<!-- Error in ContactViewModel: ' . esc_html( $e->getMessage() ) . ' -->';
@@ -14,20 +14,20 @@ try {
 			<div class="tw:w-full tw:max-w-3xl">
 				<div class="tw:bg-dm-surface tw:border tw:border-dm-border tw:rounded-2xl tw:shadow-2xl c-contact__card">
 					<div class="tw:p-5 tw:lg:p-8">
-						<h2 id="contacto-title" class="tw:text-2xl tw:lg:text-3xl tw:font-bold c-contact__title tw:mb-2"><?php echo esc_html( $viewModel->getTitle() ); ?></h2>
-						<p class="tw:text-dm-text-muted tw:mb-5 c-contact__subtitle"><?php echo esc_html( $viewModel->getSubtitle() ); ?></p>
+						<h2 id="contacto-title" class="tw:text-2xl tw:lg:text-3xl tw:font-bold c-contact__title tw:mb-2"><?php echo esc_html( $view_model->getTitle() ); ?></h2>
+						<p class="tw:text-dm-text-muted tw:mb-5 c-contact__subtitle"><?php echo esc_html( $view_model->getSubtitle() ); ?></p>
 
 						<!-- Stepper -->
 						<ol class="c-contact__stepper" aria-label="Pasos del formulario">
 							<?php
-							$steps = $viewModel->getSteps();
+							$steps = $view_model->getSteps();
 							foreach ( $steps as $index => $label ) :
-								$stepNum  = $index + 1;
-								$isActive = ( $stepNum === 1 ) ? 'is-active' : '';
+								$step_num  = $index + 1;
+								$is_active = ( 1 === $step_num ) ? 'is-active' : '';
 								?>
-								<li class="c-contact__stepper-item <?php echo $isActive; ?>">
-									<button type="button" class="c-contact__stepper-trigger" aria-label="And&aacute; al paso <?php echo $stepNum; ?>: <?php echo esc_attr( $label ); ?>">
-										<span class="c-contact__stepper-dot" aria-hidden="true"><span><?php echo $stepNum; ?></span></span>
+								<li class="c-contact__stepper-item <?php echo esc_attr( $is_active ); ?>">
+									<button type="button" class="c-contact__stepper-trigger" aria-label="And&aacute; al paso <?php echo esc_html( $step_num ); ?>: <?php echo esc_attr( $label ); ?>">
+										<span class="c-contact__stepper-dot" aria-hidden="true"><span><?php echo esc_html( $step_num ); ?></span></span>
 										<span class="c-contact__stepper-label"><?php echo esc_html( $label ); ?></span>
 									</button>
 								</li>
@@ -39,7 +39,7 @@ try {
 							<div class="c-contact__progress-track">
 								<div class="c-contact__progress-fill" style="width: 33%;"></div>
 							</div>
-							<p class="c-contact__progress-text"><?php echo esc_html( $viewModel->getProgressText( 1, 3 ) ); ?></p>
+							<p class="c-contact__progress-text"><?php echo esc_html( $view_model->getProgressText( 1, 3 ) ); ?></p>
 							<p class="c-contact__privacy-note">Guardamos un borrador temporal de este formulario por hasta 12 horas en este dispositivo.</p>
 						</div>
 
@@ -127,7 +127,7 @@ try {
 				<article class="c-contact__email-card" aria-label="Contacto alternativo por e-mail">
 					<p class="c-contact__email-label">Contacto alternativo</p>
 					<p class="c-contact__email-title">Escribinos por e-mail</p>
-					<a class="c-contact__email-link" href="mailto:<?php echo esc_attr( $viewModel->getAlternativeEmail() ); ?>"><?php echo esc_html( $viewModel->getAlternativeEmail() ); ?></a>
+					<a class="c-contact__email-link" href="mailto:<?php echo esc_attr( $view_model->getAlternativeEmail() ); ?>"><?php echo esc_html( $view_model->getAlternativeEmail() ); ?></a>
 				</article>
 			</div>
 		</div>

@@ -14,7 +14,7 @@ class N8nLeadRepository implements LeadRepositoryInterface {
 
 	public function __construct( string $webhookUrl = '' ) {
 		// Fetch from WP Admin settings, fallback to provided or hardcoded
-		$this->webhookUrl = $webhookUrl ?: get_option( 'dm_n8n_webhook_url', self::DEFAULT_WEBHOOK_URL );
+		$this->webhookUrl = $webhookUrl ? $webhookUrl : get_option( 'dm_n8n_webhook_url', self::DEFAULT_WEBHOOK_URL );
 	}
 
 	public function save( LeadEntity $lead ): bool {
@@ -23,7 +23,7 @@ class N8nLeadRepository implements LeadRepositoryInterface {
 
 		$payload = array(
 			'source'    => 'datamaq_wp_theme',
-			'timestamp' => date( 'c' ),
+			'timestamp' => gmdate( 'c' ),
 			'data'      => array(
 				'name'    => $lead->getName(),
 				'email'   => $lead->getEmail(),

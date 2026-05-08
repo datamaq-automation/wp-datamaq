@@ -80,11 +80,11 @@ add_action( 'wp_head', 'dm_critical_styles', 1 );
 function dm_critical_styles() {
 	$theme_uri = get_template_directory_uri();
 	?>
-	<link rel="preload" href="<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+	<link rel="preload" href="<?php echo esc_url( $theme_uri ); ?>/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 	<style>
 		@font-face {
 			font-family: 'Inter';
-			src: url('<?php echo $theme_uri; ?>/assets/fonts/inter-var.woff2') format('woff2');
+			src: url('<?php echo esc_url( $theme_uri ); ?>/assets/fonts/inter-var.woff2') format('woff2');
 			font-weight: 100 900;
 			font-display: swap;
 			font-style: normal;

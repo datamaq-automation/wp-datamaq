@@ -40,7 +40,7 @@ get_header();
 				<i class="bi bi-whatsapp"></i>
 				<span>Coordin&aacute; por WhatsApp</span>
 			</a>
-			<a href="<?php echo home_url( '/' ); ?>" class="tw:btn tw:border tw:border-white/20 tw:text-white tw:py-4 tw:px-12 tw:rounded-xl tw:flex tw:items-center tw:justify-center hover:tw:bg-white/5 tw:transition-all">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="tw:btn tw:border tw:border-white/20 tw:text-white tw:py-4 tw:px-12 tw:rounded-xl tw:flex tw:items-center tw:justify-center hover:tw:bg-white/5 tw:transition-all">
 				Volv&eacute; al inicio
 			</a>
 		</div>

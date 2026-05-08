@@ -35,16 +35,16 @@ add_action(
 	}
 );
 
-$chatProvider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter();
-$chatManager  = new \DataMaq\Application\Communication\ChatManager( $chatProvider );
-$chatManager->boot();
+$chat_provider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter();
+$chat_manager  = new \DataMaq\Application\Communication\ChatManager( $chat_provider );
+$chat_manager->boot();
 
 /**
  * DataMaq Repository Factory
  */
 function dm_content_repo() {
 	static $repo = null;
-	if ( $repo === null ) {
+	if ( null === $repo ) {
 		$repo = new \DataMaq\Infrastructure\Content\StaticContentRepository();
 	}
 	return $repo;

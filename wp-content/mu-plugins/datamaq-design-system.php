@@ -115,6 +115,7 @@ add_action(
 		add_action(
 			'wp_head',
 			function () use ( $css ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '<style id="dm-design-system-core">' . $css . '</style>';
 			},
 			999

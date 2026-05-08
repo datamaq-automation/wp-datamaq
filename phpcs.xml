@@ -14,6 +14,27 @@
     <rule ref="WordPress-Core" />
     <rule ref="WordPress-Extra" />
 
+    <!-- PSR-4 compliance for src directory -->
+    <rule ref="WordPress.Files.FileName">
+        <exclude-pattern>wp-content/themes/datamaq-theme/src/*</exclude-pattern>
+    </rule>
+
+    <!-- Allow camelCase for properties and methods in the src directory (Clean Architecture) -->
+    <rule ref="WordPress.NamingConventions.ValidVariableName">
+        <exclude-pattern>wp-content/themes/datamaq-theme/src/*</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.NamingConventions.ValidFunctionName">
+        <exclude-pattern>wp-content/themes/datamaq-theme/src/*</exclude-pattern>
+    </rule>
+
+    <!-- Allow direct socket functions for OpenClaw WebSocket proxy -->
+    <rule ref="WordPress.WP.AlternativeFunctions">
+        <exclude-pattern>wp-content/mu-plugins/datamaq-openclaw-admin.php</exclude-pattern>
+    </rule>
+    <rule ref="WordPress.PHP.NoSilencedErrors">
+        <exclude-pattern>wp-content/mu-plugins/datamaq-openclaw-admin.php</exclude-pattern>
+    </rule>
+
     <!-- Customizations for this project -->
     <!-- Allow spaces (4) instead of tabs for indentation -->
     <rule ref="Generic.WhiteSpace.ScopeIndent">

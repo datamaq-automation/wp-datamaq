@@ -28,6 +28,7 @@ class SeoService {
 				'addressCountry'  => 'AR',
 			),
 		);
-		echo '<script type="application/ld+json">' . json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) . '</script>' . "\n";
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) . '</script>' . "\n";
 	}
 }
