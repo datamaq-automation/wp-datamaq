@@ -4,13 +4,13 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 
 ## 🏗️ Arquitectura de Despliegue
 
-### 1. CI Local (Validación Pre-Push)
-Para ahorrar minutos de GitHub Actions, validamos la calidad antes de subir el código.
-- **Hook:** `.githooks/pre-push`
-- **Niveles:** L1 (Sintaxis), L2 (WPCS), L3 (PHPStan), L4 (PHPUnit).
+### 1. CI Híbrido (Doble Validación)
+Para garantizar la máxima estabilidad, validamos el código en dos etapas:
+- **Etapa Local (Pre-Push):** Ejecuta L1-L4 mediante Git Hooks para detectar errores antes de subir al repo.
+- **Etapa Nube (GitHub Actions):** El job `validate` replica estas pruebas en un entorno limpio antes de autorizar el despliegue.
 
-### 2. CD Automatizado (GitHub Actions)
-El flujo en `.github/workflows/deploy.yml` se activa al hacer push a `main`:
+### 2. CD Automatizado (Job Dependiente)
+El job `deploy` en `.github/workflows/deploy.yml` tiene una dependencia estricta del job de validación:
 1. **Sincronización:** Usa `rsync` para subir solo archivos necesarios, excluyendo tests y configs locales.
 2. **Post-Deploy:**
    - **Cache Flush:** Ejecuta `wp cache flush` vía SSH (requiere `wp-cli` en el servidor).

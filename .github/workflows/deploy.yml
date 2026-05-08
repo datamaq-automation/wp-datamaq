@@ -1,14 +1,51 @@
-name: CD - Deployment
+name: CD - Pipeline Completo
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  deploy:
-    name: Deploy to Production
+  # JOB 1: Validación de Calidad (CI en la nube para seguridad extra)
+  validate:
+    name: "🔍 Validar Calidad (L1-L4)"
     runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        extensions: mbstring, xml, ctype, iconv, intl
+        coverage: none
+
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: "L1-L4: Full Validation"
+      run: |
+        echo "::group::L1: PHP Syntax Check"
+        find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+        echo "::endgroup::"
+        
+        echo "::group::L2: WordPress Coding Standards (PHPCS)"
+        ./vendor/bin/phpcs --standard=phpcs.xml -n
+        echo "::endgroup::"
+        
+        echo "::group::L3: Static Analysis (PHPStan)"
+        ./vendor/bin/phpstan analyze -c phpstan.neon --no-progress
+        echo "::endgroup::"
+        
+        echo "::group::L4: Unit Tests (PHPUnit)"
+        ./vendor/bin/phpunit --display-warnings
+        echo "::endgroup::"
+
+  # JOB 2: Despliegue a Producción (Solo si el Job 1 pasa)
+  deploy:
+    name: "🚀 Desplegar a Producción"
+    needs: validate
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
