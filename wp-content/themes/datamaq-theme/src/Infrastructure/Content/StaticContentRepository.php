@@ -83,7 +83,7 @@ class StaticContentRepository implements ContentRepositoryInterface {
 			$data['eyebrow'] ?? 'Captura autom&aacute;tica de datos operativos',
 			$data['title'] ?? '',
 			$data['subtitle'] ?? '',
-			$data['ctaLabel'] ?? 'Escribime por WhatsApp',
+			$data['ctaLabel'] ?? 'Conversá con nuestro Agente',
 			$data['statusInfo'] ?? '',
 			$data['trustChips'] ?? array(),
 			$data['image'] ?? ''
@@ -134,7 +134,7 @@ class StaticContentRepository implements ContentRepositoryInterface {
 			$data['how_i_work'] ?? '',
 			$data['photo'] ?? '',
 			$data['bullets'] ?? array(),
-			$data['whatsappLabel'] ?? 'Escribime directo por WhatsApp'
+			$data['whatsappLabel'] ?? 'Conversá con nuestro Agente'
 		);
 	}
 

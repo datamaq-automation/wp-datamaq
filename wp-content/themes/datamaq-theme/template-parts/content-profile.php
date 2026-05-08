@@ -32,7 +32,7 @@ try {
 					<h2 id="perfil-title" class="c-home-profile__name"><?php echo esc_html( $view_model->getName() ); ?></h2>
 					<p class="c-home-profile__role"><?php echo esc_html( $view_model->getRole() ); ?></p>
 					<p><?php echo esc_html( $view_model->getIntroduction() ); ?></p>
-					<button onclick="DataMaq.Chat.toggle()" type="button" class="tw:btn-primary c-home-profile__cta">Escribime directo por WhatsApp</button>
+					<button onclick="DataMaq.Chat.toggle()" type="button" class="tw:btn-primary c-home-profile__cta">Conversá con nuestro Agente</button>
 				</article>
 			</div>
 

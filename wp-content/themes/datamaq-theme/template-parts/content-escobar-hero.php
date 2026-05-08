@@ -19,7 +19,7 @@ $data = dm_content_repo()->getSection( 'escobarLanding' );
 			
 			<div class="tw:flex tw:flex-col sm:tw:flex-row tw:gap-6">
 				<a href="https://wa.me/5491156297160" class="tw:btn-primary tw:px-12  tw:text-xl tw:font-black tw:text-center">
-					Escribime por WhatsApp
+					Conversá con nuestro Agente
 				</a>
 				<a class="tw:btn-outline tw:px-12  tw:text-xl tw:text-center" href="#contacto">
 					Consultá por el formulario

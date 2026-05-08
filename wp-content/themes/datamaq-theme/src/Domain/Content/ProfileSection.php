@@ -21,7 +21,7 @@ class ProfileSection {
 		string $howIWork,
 		string $photoUrl,
 		array $benefits,
-		string $whatsappLabel = 'Escribime directo por WhatsApp'
+		string $whatsappLabel = 'Conversá con nuestro Agente'
 	) {
 		$this->name          = $name;
 		$this->role          = $role;

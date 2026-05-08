@@ -27,7 +27,7 @@ function get_datamaq_site_data() {
 			'eyebrow'    => 'Captura autom&aacute;tica de datos operativos',
 			'title'      => 'Instalaci&oacute;n e integraci&oacute;n de equipos IoT para energ&iacute;a y producci&oacute;n',
 			'subtitle'   => 'Implementaci&oacute;n de soluciones para medir variables el&eacute;ctricas y operativas, integrarlas a sistemas existentes y dejar una base t&eacute;cnica usable para seguimiento, diagn&oacute;stico y capacitaci&oacute;n.',
-			'ctaLabel'   => 'Escribime por WhatsApp',
+			'ctaLabel'   => 'Conversá con nuestro Agente',
 			'statusInfo' => 'Base operativa: Gar&iacute;n (GBA Norte). El alcance se define seg&uacute;n tablero, se&ntilde;ales disponibles, conectividad, sistema destino y objetivo operativo.',
 			'trustChips' => array(
 				'Base operativa: Gar&iacute;n (GBA Norte). El alcance se define seg&uacute;n tablero, se&ntilde;ales disponibles, conectividad, sistema destino y objetivo operativo.',
@@ -131,7 +131,7 @@ function get_datamaq_site_data() {
 				'Asesoramiento y capacitaciones sobre Python, datos, bases de datos y APIs en contextos reales.',
 			),
 			'photo'         => $theme_url . '/assets/media/tecnico-a-cargo.webp',
-			'whatsappLabel' => 'Escribime directo por WhatsApp',
+			'whatsappLabel' => 'Conversá con nuestro Agente',
 		),
 		'faq'                => array(
 			'eyebrow' => 'Ayuda',

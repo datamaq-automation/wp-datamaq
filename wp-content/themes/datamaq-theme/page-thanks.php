@@ -61,7 +61,7 @@ $theme_uri = get_template_directory_uri();
 		<footer class="thanks-actions">
 			<a href="<?php echo esc_url( $footer_v_m->getWhatsAppUrl() ); ?>" class="thanks-actions__whatsapp">
 				<i class="bi bi-whatsapp" aria-hidden="true"></i>
-				<span>Escribime por WhatsApp</span>
+				<span>Conversá con nuestro Agente</span>
 			</a>
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="thanks-actions__home">
 				Volv&eacute; al inicio
