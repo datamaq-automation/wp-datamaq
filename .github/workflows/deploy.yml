@@ -153,7 +153,7 @@ jobs:
   # ------------------------------------------------------------------------------
   verify:
     name: "🏥 Verificar Salud"
-    needs: deploy
+    needs: [deploy, host_type, dns_resolution]
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -165,12 +165,13 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ vars.REMOTE_PORT || '22' }}
         script: |
-          cd ${{ vars.REMOTE_TARGET }}
+          # Usar ruta explícita para evitar errores de contexto
+          TARGET="${{ vars.REMOTE_TARGET }}"
           if command -v wp &> /dev/null; then
-            wp cache flush --allow-root
+            wp cache flush --path="$TARGET" --allow-root
             echo "✅ WordPress Cache Flushed"
           fi
-          echo '{"commit": "${{ github.sha }}", "date": "$(date -u)"}' > deploy-info.json
+          echo "{\"commit\": \"${{ github.sha }}\", \"date\": \"$(date -u)\"}" > "$TARGET/deploy-info.json"
 
     - name: "🏥 Smoke Test"
       run: |
