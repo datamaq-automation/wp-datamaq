@@ -3,11 +3,11 @@
 Listado de tareas para la optimización y finalización de la réplica Vue -> WordPress.
 
 ## 🧹 Limpieza y Optimización (Slimming)
-- [ ] Dejar de trackear el núcleo de WordPress (`wp-admin`, `wp-includes`, archivos raíz).
-- [ ] Eliminar `learnpress` del índice de Git (mantener archivos físicos).
-- [ ] Eliminar archivos redundantes: `readme.html`, `license.txt`, `wp-config-sample.php`.
-- [ ] Eliminar archivos `.bak` en `wp-content/mu-plugins/`.
-- [ ] Consolidar la carpeta `media/` raíz dentro del tema o `uploads/`.
+- [x] Dejar de trackear el núcleo de WordPress (`wp-admin`, `wp-includes`, archivos raíz).
+- [x] Eliminar `learnpress` del índice de Git (mantener archivos físicos).
+- [x] Eliminar archivos redundantes: `readme.html`, `license.txt`, `wp-config-sample.php`.
+- [x] Eliminar archivos `.bak` en `wp-content/mu-plugins/`.
+- [x] Consolidar la carpeta `media/` raíz dentro del tema o `uploads/`.
 
 ## 🏗️ Desarrollo del Tema (`datamaq-theme`)
 - [ ] Implementar la sección "Process" en `front-page.php` (actualmente vacía).
