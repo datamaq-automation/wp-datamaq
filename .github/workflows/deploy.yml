@@ -58,33 +58,56 @@ jobs:
         HOST="${{ vars.REMOTE_HOST }}"
         if [[ "$HOST" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
           echo "type=ip" >> $GITHUB_OUTPUT
-          echo "::notice title=Host Type::Se detectó una IP directa. Saltando validación DNS."
+          echo "::notice title=Host Type::Se detectó una IP directa."
         else
           echo "type=domain" >> $GITHUB_OUTPUT
-          echo "::notice title=Host Type::Se detectó un nombre de dominio. Iniciando validación DNS."
+          echo "::notice title=Host Type::Se detectó un nombre de dominio."
         fi
 
   # ------------------------------------------------------------------------------
-  # 4. DNS RESOLUTION: Solo si es dominio
+  # 4. DNS SYNTAX: Validar formato del nombre
   # ------------------------------------------------------------------------------
-  dns_resolution:
-    name: "🌐 Audit: DNS Resolution"
+  dns_syntax:
+    name: "🌐 Audit: DNS Syntax"
     needs: host_type
     if: needs.host_type.outputs.type == 'domain'
     runs-on: ubuntu-latest
     environment: prod
     steps:
-    - name: "DNS Lookup"
+    - name: "Validar Formato"
       run: |
         HOST="${{ vars.REMOTE_HOST }}"
-        echo "🔍 Intentando resolver: $HOST"
-        if ! nslookup "$HOST"; then
-          echo "::error title=DNS Error::El dominio '$HOST' no existe o no tiene un registro A configurado. TIP: Verifica los registros DNS en tu proveedor (Cloudflare/VPS)."
+        if [[ "$HOST" =~ ^([a-zA-Z0-9](([a-zA-Z0-9-]*[a-zA-Z0-9])?)\.)+[a-zA-Z]{2,}$ ]]; then
+          echo "✅ Formato de dominio válido."
+        else
+          echo "::error title=Syntax Error::El host '$HOST' no tiene un formato de dominio válido (ej. sub.dominio.com)."
           exit 1
         fi
 
   # ------------------------------------------------------------------------------
-  # 5. SSH CHECK: ¿El servidor acepta la conexión?
+  # 5. DNS RESOLUTION: Solo si es dominio y la sintaxis es correcta
+  # ------------------------------------------------------------------------------
+  dns_resolution:
+    name: "🌐 Audit: DNS Resolution"
+    needs: dns_syntax
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: "Lookup & Diagnosis"
+      run: |
+        HOST="${{ vars.REMOTE_HOST }}"
+        echo "🔍 Intentando resolver: $HOST"
+        if ! nslookup "$HOST"; then
+          echo "::error title=DNS NXDOMAIN::El dominio '$HOST' no pudo ser resuelto."
+          echo "--- INFO DE DEPURACIÓN ---"
+          echo "1. Verifica que el registro A esté creado en Cloudflare/DNS."
+          echo "2. Si usas Cloudflare, asegúrate de que esté en modo 'DNS Only' (nube gris)."
+          echo "3. TIP: Puedes usar la IP directa provisionalmente."
+          exit 1
+        fi
+
+  # ------------------------------------------------------------------------------
+  # 6. SSH CHECK: ¿El servidor acepta la conexión?
   # ------------------------------------------------------------------------------
   ssh_check:
     name: "🔑 Audit: SSH Auth"
@@ -100,10 +123,10 @@ jobs:
         username: ${{ vars.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ vars.REMOTE_PORT || '22' }}
-        script: echo "✅ SSH Handshake exitoso."
+        script: echo "✅ Conexión establecida con éxito."
 
   # ------------------------------------------------------------------------------
-  # 6. DEPLOY: Sincronización de archivos
+  # 7. DEPLOY: Sincronización de archivos
   # ------------------------------------------------------------------------------
   deploy:
     name: "🚀 Sincronizar Archivos"
@@ -126,7 +149,7 @@ jobs:
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
 
   # ------------------------------------------------------------------------------
-  # 7. VERIFY: Post-despliegue y Salud
+  # 8. VERIFY: Post-despliegue y Salud
   # ------------------------------------------------------------------------------
   verify:
     name: "🏥 Verificar Salud"
@@ -159,13 +182,15 @@ jobs:
           exit 1
         fi
 
-    - name: "📊 Final Summary"
+    - name: "📊 Ultimate Summary"
       run: |
-        echo "### 🚀 Reporte Final de Despliegue" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Reporte de Despliegue DataMaq" >> $GITHUB_STEP_SUMMARY
         echo "| Etapa | Resultado |" >> $GITHUB_STEP_SUMMARY
         echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
         echo "| 🔐 Seguridad | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| 🔍 Tipo de Host | ${{ needs.host_type.outputs.type == 'ip' && '📌 IP Directa' || '🌐 Dominio' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| 🌐 Resolución DNS | ${{ needs.dns_resolution.result == 'skipped' && '⏭️ Saltada' || '✅ Exitosa' }} |" >> $GITHUB_STEP_SUMMARY
-        echo "| 🔑 Acceso SSH | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| 📦 Despliegue | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔍 Tipo Host | ${{ needs.host_type.outputs.type }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🌐 DNS Syntax | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🌐 DNS Res | ${{ needs.dns_resolution.result }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔑 SSH Auth | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| 📦 Sync | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🏥 Salud | ✅ OK |" >> $GITHUB_STEP_SUMMARY

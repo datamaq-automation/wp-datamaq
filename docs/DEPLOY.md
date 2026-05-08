@@ -7,12 +7,13 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 ### 1. CI Local (Validación Pre-Push)
 Para maximizar el ahorro de recursos, la validación (L1-L4) ocurre **exclusivamente en local** mediante Git Hooks. GitHub Actions no realiza tareas de validación de código.
 
-### 2. CD en 7 Etapas (GitHub Actions)
+### 2. CD en 8 Etapas (GitHub Actions)
 El flujo en `.github/workflows/deploy.yml` se activa al hacer push a `main` y se divide en:
 - **🔐 Audit Secrets:** Verifica claves privadas.
 - **📋 Audit Variables:** Verifica la configuración base.
-- **🔍 Audit Host Type:** Detecta automáticamente si se usa una IP o un Dominio.
-- **🌐 Audit DNS:** Solo se ejecuta si el host es un dominio.
+- **🔍 Audit Host Type:** Detecta si se usa IP o Dominio.
+- **🌐 Audit DNS Syntax:** Valida el formato del dominio.
+- **🌐 Audit DNS Resolution:** Valida la existencia del dominio en la red.
 - **🔑 Audit SSH Auth:** Valida el acceso antes de mover archivos.
 - **🚀 Deploy:** Sincroniza archivos vía `rsync`.
 - **🏥 Verify:** Flush de caché y Smoke Test final.
