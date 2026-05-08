@@ -30,6 +30,20 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitio</title>
+    <script>
+      // --- DataMaq API Interceptor (Local Fix) ---
+      (function() {
+          const originalFetch = window.fetch;
+          window.fetch = function() {
+              let [resource, config] = arguments;
+              if (typeof resource === 'string' && resource.includes('api.datamaq.com.ar/v1/health')) {
+                  console.log('🔄 [SPA] Intercepted health check. Redirecting to local proxy...');
+                  resource = '/wp-json/datamaq/v1/observability/health';
+              }
+              return originalFetch.apply(this, [resource, config]);
+          };
+      })();
+    </script>
     <script type="module" crossorigin src="/assets/index-33xPpqpC.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-CYmC4thG.css">
   </head>

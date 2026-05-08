@@ -2,14 +2,13 @@
 
 namespace DataMaq\Infrastructure\Shared;
 
-use DataMaq\Domain\Shared\Logger;
+use DataMaq\Domain\Shared\Observability\LoggerInterface;
 
 /**
- * Adapter WPLogger
- *
- * Implementa el logging usando error_log de PHP/WordPress.
+ * Implementación de Logger usando el error_log de WordPress.
  */
-class WPLogger implements Logger {
+class WPLogger implements LoggerInterface {
+
 	public function info( string $message, array $context = array() ): void {
 		$this->log( 'INFO', $message, $context );
 	}
@@ -23,7 +22,7 @@ class WPLogger implements Logger {
 	}
 
 	private function log( string $level, string $message, array $context ): void {
-		$formatted_context = ! empty( $context ) ? ' | Context: ' . json_encode( $context ) : '';
+		$formatted_context = ! empty( $context ) ? ' | Context: ' . wp_json_encode( $context ) : '';
 		error_log( sprintf( '[DataMaq-%s] %s%s', $level, $message, $formatted_context ) );
 	}
 }

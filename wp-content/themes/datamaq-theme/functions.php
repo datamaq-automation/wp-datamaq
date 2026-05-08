@@ -31,8 +31,10 @@ function datamaq_inject_section( $slug ) {
 add_action(
 	'wp_enqueue_scripts',
 	function () {
-		wp_enqueue_script( 'datamaq-chat-bridge', get_template_directory_uri() . '/assets/js/chat-bridge.js', array(), '1.0.0', true );
-	}
+		// Cargamos en el header (false) para interceptar peticiones tempranas
+		wp_enqueue_script( 'datamaq-chat', get_template_directory_uri() . '/assets/js/datamaq-chat.js', array(), '1.0.2', false );
+	},
+	1
 );
 
 // Configuración de Comunicación (Hexagonal Architecture)
@@ -40,15 +42,23 @@ $config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
 $logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
 $content_repo    = dm_content_repo();
 
-// 1. Canal Tradicional: WhatsApp
+// 1. Observabilidad y Salud
+$health_repo     = new \DataMaq\Infrastructure\Shared\ExternalHealthAdapter( $logger );
+$obs_controller  = new \DataMaq\Infrastructure\WordPress\ObservabilityController( $logger, $health_repo );
+
+add_action( 'rest_api_init', function() use ( $obs_controller ) {
+	$obs_controller->register_routes();
+} );
+
+// 2. Canal Tradicional: WhatsApp
 $whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
 $whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
 
-// 2. Canal Inteligente: BotMan
+// 3. Canal Inteligente: BotMan
 $chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
 $botman_provider = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
 
-// 3. Orquestador
+// 4. Orquestador de Chat
 $chat_manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $botman_provider ) );
 $chat_manager->boot();
 
