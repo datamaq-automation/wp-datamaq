@@ -11,9 +11,20 @@
     <exclude-pattern>*/assets/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
 
-    <!-- Ruleset: WordPress Core (minimal for now to avoid too many alerts) -->
     <rule ref="WordPress-Core" />
-    <rule ref="WordPress-Security" />
+    <rule ref="WordPress-Extra" />
+
+    <!-- Customizations for this project -->
+    <!-- Allow spaces (4) instead of tabs for indentation -->
+    <rule ref="Generic.WhiteSpace.ScopeIndent">
+        <properties>
+            <property name="indent" value="4"/>
+            <property name="tabIndent" value="false"/>
+        </properties>
+    </rule>
+    <rule ref="Generic.WhiteSpace.DisallowTabIndent">
+        <severity>0</severity>
+    </rule>
 
     <!-- Config -->
     <arg name="colors"/>

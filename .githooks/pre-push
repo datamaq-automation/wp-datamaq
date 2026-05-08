@@ -1,69 +1,68 @@
 #!/bin/bash
 
 # ==============================================================================
-# DATA MAQ - CI LOCAL (NIVEL 1: PHP LINT)
+# DATA MAQ - CI LOCAL (PRE-PUSH HOOK)
+# Versión: Observabilidad Premium
 # ==============================================================================
-# Este script valida que no haya errores de sintaxis en los archivos PHP
-# antes de permitir el envío (push) al repositorio remoto.
 
-echo ""
-echo "🚀 Ejecutando CI Local: Validando sintaxis PHP..."
-echo "------------------------------------------------"
+# Colores para la terminal
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+RESET='\033[0m'
 
-# Obtener la lista de archivos PHP trackeados que han cambiado o existen
+echo -e "\n${CYAN}🚀 Iniciando validación técnica del proyecto...${RESET}"
+echo -e "${CYAN}=================================================${RESET}"
+
+# 1. Identificar archivos PHP relevantes
 PHP_FILES=$(git ls-files | grep '\.php$')
+TOTAL_FILES=$(echo "$PHP_FILES" | wc -l)
 
-if [ -z "$PHP_FILES" ]; then
-    echo "⚠️ No se encontraron archivos PHP para validar."
-    exit 0
-fi
+# ------------------------------------------------------------------------------
+# NIVEL 1: PHP LINT (Sintaxis)
+# ------------------------------------------------------------------------------
+echo -e "\n${CYAN}🔍 [NIVEL 1] Verificando sintaxis en $TOTAL_FILES archivos PHP...${RESET}"
 
-ERROR_COUNT=0
-
+ERR_LINT=0
 for FILE in $PHP_FILES; do
-    # Solo validar si el archivo existe físicamente
     if [ -f "$FILE" ]; then
-        # Ejecutar PHP Lint
-        RESULT=$(php -l "$FILE" 2>&1)
+        php -l "$FILE" > /dev/null 2>&1
         if [ $? -ne 0 ]; then
-            echo "❌ ERROR en: $FILE"
-            echo "   $RESULT"
-            ERROR_COUNT=$((ERROR_COUNT + 1))
+             echo -e "   ${RED}❌ Error:${RESET} $FILE"
+             php -l "$FILE"
+             ERR_LINT=$((ERR_LINT + 1))
         fi
     fi
 done
 
-echo "------------------------------------------------"
-
-if [ $ERROR_COUNT -gt 0 ]; then
-    echo "🛑 Se encontraron $ERROR_COUNT errores de sintaxis."
-    echo "❌ PUSH ABORTADO. Corregí los errores antes de reintentar."
-    echo ""
+if [ $ERR_LINT -gt 0 ]; then
+    echo -e "\n${RED}🛑 PUSH ABORTADO: Se encontraron $ERR_LINT errores de sintaxis.${RESET}"
     exit 1
 fi
+echo -e "   ${GREEN}✅ Todos los archivos PHP tienen sintaxis válida.${RESET}"
 
-echo "✅ Excelente: Todos los archivos PHP son válidos."
-
-# ==============================================================================
-# NIVEL 2: PHP CODE SNIFFER (WordPress Standards)
-# ==============================================================================
-echo ""
-echo "🎨 Ejecutando CI Local: Validando Estándares WP (Nivel 2)..."
-echo "-----------------------------------------------------------"
+# ------------------------------------------------------------------------------
+# NIVEL 2: PHP CODE SNIFFER (Estándares WP)
+# ------------------------------------------------------------------------------
+echo -e "\n${CYAN}🎨 [NIVEL 2] Validando estándares de WordPress (WPCS)...${RESET}"
 
 if [ -f "./vendor/bin/phpcs" ]; then
-    ./vendor/bin/phpcs --standard=phpcs.xml
+    # Ejecutar PHPCS con reporte de progreso y nombres de sniffs
+    ./vendor/bin/phpcs --standard=phpcs.xml -s -n
+    
     if [ $? -ne 0 ]; then
-        echo "🛑 Violaciones de estándares detectadas."
-        echo "❌ PUSH ABORTADO. Por favor, corregí el estilo del código."
-        echo ""
+        echo -e "\n${RED}🛑 PUSH ABORTADO: Violaciones de calidad detectadas.${RESET}"
+        echo -e "${YELLOW}💡 Tip: Podés usar './vendor/bin/phpcbf' para arreglar el formato automáticamente.${RESET}"
         exit 1
     fi
-    echo "✅ El código cumple con los estándares de WordPress."
+    echo -e "   ${GREEN}✅ El código cumple con los estándares de calidad definidos.${RESET}"
 else
-    echo "⚠️ PHPCS no encontrado. Saltando Nivel 2."
+    echo -e "   ${YELLOW}⚠️  Aviso: PHPCS no encontrado en ./vendor/bin/. Saltando Nivel 2.${RESET}"
 fi
 
-echo "📤 Procediendo con el push..."
-echo ""
+# ------------------------------------------------------------------------------
+# FINALIZACIÓN
+# ------------------------------------------------------------------------------
+echo -e "\n${GREEN}📤 ¡Todo en orden! Procediendo con el envío a GitHub...${RESET}\n"
 exit 0
