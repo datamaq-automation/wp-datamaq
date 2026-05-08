@@ -1,4 +1,4 @@
-name: CD - Pipeline de Alto Rendimiento
+name: CD - Pipeline de Despliegue
 
 on:
   push:
@@ -6,80 +6,49 @@ on:
 
 jobs:
   # ------------------------------------------------------------------------------
-  # 1. LINT: Estilo y Sintaxis (WPCS)
+  # 1. AUDIT SECRETS: Validar claves de seguridad
   # ------------------------------------------------------------------------------
-  lint:
-    name: "🎨 Lint: WPCS & Syntax"
+  audit_secrets:
+    name: "🔐 Audit: Secrets"
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-        coverage: none
-
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: "L1: Syntax Check"
-      run: find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
-
-    - name: "L2: WordPress Standards"
-      run: ./vendor/bin/phpcs --standard=phpcs.xml -n
+    - name: "Validar Clave SSH"
+      run: |
+        if [[ -z "${{ secrets.SERVER_SSH_KEY }}" ]]; then
+          echo "::error::❌ La clave SERVER_SSH_KEY no está cargada en Secrets."
+          exit 1
+        else
+          echo "✅ Secretos validados."
+        fi
 
   # ------------------------------------------------------------------------------
-  # 2. ANALYSIS: Lógica Estática (PHPStan)
+  # 2. AUDIT VARIABLES: Validar configuración de entorno
   # ------------------------------------------------------------------------------
-  analysis:
-    name: "🧠 Analysis: PHPStan"
+  audit_variables:
+    name: "📋 Audit: Variables"
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-        coverage: none
-
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: "L3: Static Analysis"
-      run: ./vendor/bin/phpstan analyze -c phpstan.neon --no-progress
-
-  # ------------------------------------------------------------------------------
-  # 3. TEST: Lógica Funcional (PHPUnit)
-  # ------------------------------------------------------------------------------
-  test:
-    name: "🧪 Test: PHPUnit"
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-        coverage: none
-
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-
-    - name: "L4: Unit Tests"
-      run: ./vendor/bin/phpunit --display-warnings
+    - name: "Validar Variables de Entorno"
+      run: |
+        MISSING=()
+        [[ -z "${{ vars.REMOTE_HOST }}" ]] && MISSING+=("REMOTE_HOST")
+        [[ -z "${{ vars.REMOTE_USER }}" ]] && MISSING+=("REMOTE_USER")
+        [[ -z "${{ vars.REMOTE_TARGET }}" ]] && MISSING+=("REMOTE_TARGET")
+        [[ -z "${{ vars.SITE_URL }}" ]] && MISSING+=("SITE_URL")
+        
+        if [ ${#MISSING[@]} -ne 0 ]; then
+          echo "::error::❌ Faltan configurar las siguientes Variables: ${MISSING[*]}"
+          exit 1
+        else
+          echo "✅ Variables validadas."
+        fi
 
   # ------------------------------------------------------------------------------
-  # 4. DEPLOY: Despliegue a Producción (Solo si todos los anteriores son ✅)
+  # 3. DEPLOY: Sincronización de archivos (Solo si 1 y 2 son ✅)
   # ------------------------------------------------------------------------------
   deploy:
-    name: "🚀 Desplegar a Producción"
-    needs: [lint, analysis, test]
+    name: "🚀 Sincronizar Archivos"
+    needs: [audit_secrets, audit_variables]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -91,18 +60,26 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
         REMOTE_HOST: ${{ vars.REMOTE_HOST }}
         REMOTE_USER: ${{ vars.REMOTE_USER }}
-        REMOTE_PORT: ${{ vars.REMOTE_PORT }}
+        REMOTE_PORT: ${{ vars.REMOTE_PORT || '22' }}
         TARGET: ${{ vars.REMOTE_TARGET }}
         ARGS: "-avz --delete"
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
 
-    - name: "🧹 Post-Deploy Actions"
+  # ------------------------------------------------------------------------------
+  # 4. VERIFY: Post-despliegue y Salud
+  # ------------------------------------------------------------------------------
+  verify:
+    name: "🏥 Verificar Salud"
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: "🧹 Post-Deploy: Cache Flush & Audit"
       uses: appleboy/ssh-action@master
       with:
         host: ${{ vars.REMOTE_HOST }}
         username: ${{ vars.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        port: ${{ vars.REMOTE_PORT }}
+        port: ${{ vars.REMOTE_PORT || '22' }}
         script: |
           cd ${{ vars.REMOTE_TARGET }}
           if command -v wp &> /dev/null; then
@@ -111,15 +88,22 @@ jobs:
           fi
           echo '{"commit": "${{ github.sha }}", "date": "$(date -u)"}' > deploy-info.json
 
-    - name: "📊 Generate Deployment Summary"
+    - name: "🏥 Health Check (Smoke Test)"
       run: |
-        echo "### 🚀 Despliegue Exitoso de DataMaq" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Dato | Valor |" >> $GITHUB_STEP_SUMMARY
+        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ vars.SITE_URL }})
+        if [ "$RESPONSE" -eq 200 ]; then
+          echo "✅ Site is UP (HTTP 200)"
+        else
+          echo "❌ Site is DOWN (HTTP $RESPONSE)"
+          exit 1
+        fi
+
+    - name: "📊 Summary"
+      run: |
+        echo "### 🚀 Despliegue Exitoso" >> $GITHUB_STEP_SUMMARY
+        echo "| Etapa | Resultado |" >> $GITHUB_STEP_SUMMARY
         echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Host** | \`${{ vars.REMOTE_HOST }}\` |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Resultado Health Check** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Fecha (UTC)** | $(date -u) |" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "Check audit log here: [deploy-info.json](${{ vars.SITE_URL }}/deploy-info.json)" >> $GITHUB_STEP_SUMMARY
+        echo "| **Secrets** | ✅ Validados |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Variables** | ✅ Validadas |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Sincronización** | ✅ Completada |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Salud del Sitio** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY

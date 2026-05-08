@@ -4,16 +4,15 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 
 ## 🏗️ Arquitectura de Despliegue
 
-### 1. CI Híbrido (Doble Validación)
-Para garantizar la máxima estabilidad, validamos el código en dos etapas:
-- **Etapa Local (Pre-Push):** Ejecuta L1-L4 mediante Git Hooks localmente.
-- **Etapa Nube (Paralela):** El pipeline de GitHub lanza tres procesos en paralelo para una respuesta rápida:
-  - **🎨 Lint:** Verifica WPCS y sintaxis PHP.
-  - **🧠 Analysis:** Ejecuta PHPStan para análisis lógico.
-  - **🧪 Test:** Ejecuta PHPUnit para validación funcional.
+### 1. CI Local (Validación Pre-Push)
+Para maximizar el ahorro de recursos, la validación (L1-L4) ocurre **exclusivamente en local** mediante Git Hooks. GitHub Actions no realiza tareas de validación de código.
 
-### 2. CD Automatizado (Job Orquestador)
-El job `deploy` actúa como orquestador y solo se inicia si los tres jobs de validación anteriores (`lint`, `analysis` y `test`) terminan en éxito.
+### 2. CD en 4 Etapas (GitHub Actions)
+El flujo en `.github/workflows/deploy.yml` se activa al hacer push a `main` y se divide en:
+- **🔐 Audit Secrets:** Verifica la presencia de claves privadas SSH.
+- **📋 Audit Variables:** Verifica la configuración del entorno (Host, User, Path).
+- **🚀 Deploy:** Sincroniza los archivos mediante `rsync` vía SSH (depende de los audits).
+- **🏥 Verify:** Tareas post-despliegue y validación final de salud.
 1. **Sincronización:** Usa `rsync` para subir solo archivos necesarios, excluyendo tests y configs locales.
 2. **Post-Deploy:**
    - **Cache Flush:** Ejecuta `wp cache flush` vía SSH (requiere `wp-cli` en el servidor).
