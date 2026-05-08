@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: "Validar Clave SSH"
+      env:
+        SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
       run: |
-        if [[ -z "${{ secrets.SERVER_SSH_KEY }}" ]]; then
-          echo "::error::❌ La clave SERVER_SSH_KEY no está cargada en Secrets."
+        if [[ -z "$SSH_KEY" ]]; then
+          echo "::error::❌ La clave SERVER_SSH_KEY no está cargada o es inaccesible."
           exit 1
         else
           echo "✅ Secretos validados."
