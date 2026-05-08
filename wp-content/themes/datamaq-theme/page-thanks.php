@@ -40,7 +40,7 @@ $theme_uri = get_template_directory_uri();
 	
 	<main id="contenido-principal" class="thanks-stage" aria-labelledby="thanks-title">
 		<header class="thanks-topbar">
-			<a href="<?php echo esc_url( home_url( '/' ))) ); ?>" class="thanks-topbar__close" aria-label="Volv&eacute; al inicio">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="thanks-topbar__close" aria-label="Volv&eacute; al inicio">
 				<i class="bi bi-x-lg" aria-hidden="true"></i>
 			</a>
 			<h2 class="thanks-topbar__title">Solicitud finalizada</h2>
@@ -63,7 +63,7 @@ $theme_uri = get_template_directory_uri();
 				<i class="bi bi-whatsapp" aria-hidden="true"></i>
 				<span>Escribime por WhatsApp</span>
 			</a>
-			<a href="<?php echo esc_url( home_url( '/' ))) ); ?>" class="thanks-actions__home">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="thanks-actions__home">
 				Volv&eacute; al inicio
 			</a>
 		</footer>

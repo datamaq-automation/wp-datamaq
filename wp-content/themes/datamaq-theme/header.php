@@ -44,7 +44,7 @@
 		<nav class="c-home-header__nav tw:hidden tw:lg:flex" aria-label="Navegación principal">
 			<?php if ( $view_model ) : ?>
 				<?php foreach ( $view_model->getNavigation() as $nav ) : ?>
-					<a href="<?php echo esc_url( home_url( $nav['href'] )) ); ?>" class="c-home-header__nav-link"><?php echo esc_html( $nav['label'] ); ?></a>
+					<a href="<?php echo esc_url( home_url( $nav['href'] ) ); ?>" class="c-home-header__nav-link"><?php echo esc_html( $nav['label'] ); ?></a>
 				<?php endforeach; ?>
 			<?php else : ?>
 				<a href="#servicios" class="c-home-header__nav-link">Solución</a>
