@@ -26,10 +26,19 @@ try {
 					</p>
 					
 					<div class="c-home-hero__actions tw:flex tw:flex-wrap tw:gap-4 tw:mb-8">
-						<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="tw:btn-primary c-home-hero__primary tw:inline-flex tw:items-center tw:gap-2 tw:px-8 tw:py-4 tw:rounded-full tw:bg-[var(--dm-color-brand-primary)] tw:text-[var(--dm-color-brand-secondary)] tw:font-bold tw:transition-transform hover:tw:scale-105">
-							<i class="bi bi-whatsapp"></i>
-							<?php echo esc_html( $view_model->getCtaLabel() ); ?>
-						</a>
+						<?php 
+						$botman = dm_chat_manager()->getProvider('botman');
+						if ( $botman && $botman->isEnabled() ) : ?>
+							<a href="#chat" class="tw:btn-primary c-home-hero__primary tw:inline-flex tw:items-center tw:gap-2 tw:px-8 tw:py-4 tw:rounded-full tw:bg-[var(--dm-color-brand-primary)] tw:text-[var(--dm-color-brand-secondary)] tw:font-bold tw:transition-transform hover:tw:scale-105">
+								<i class="bi bi-chat-dots-fill"></i>
+								Consultar Asistente
+							</a>
+						<?php else : ?>
+							<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="tw:btn-primary c-home-hero__primary tw:inline-flex tw:items-center tw:gap-2 tw:px-8 tw:py-4 tw:rounded-full tw:bg-[var(--dm-color-brand-primary)] tw:text-[var(--dm-color-brand-secondary)] tw:font-bold tw:transition-transform hover:tw:scale-105">
+								<i class="bi bi-whatsapp"></i>
+								<?php echo esc_html( $view_model->getCtaLabel() ); ?>
+							</a>
+						<?php endif; ?>
 					</div>
 
 					<div class="tw:flex tw:flex-col tw:gap-4">

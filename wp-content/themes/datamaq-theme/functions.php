@@ -50,21 +50,38 @@ add_action( 'rest_api_init', function() use ( $obs_controller ) {
 	$obs_controller->register_routes();
 } );
 
-// 2. Canal Tradicional: WhatsApp
-$whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
-$whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
+/**
+ * DataMaq Chat Manager Factory/Helper
+ */
+function dm_chat_manager() {
+	static $manager = null;
+	if ( null === $manager ) {
+		$config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
+		$logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
+		$content_repo    = dm_content_repo();
 
-// 3. Canal Inteligente: BotMan
-$chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
-$botman_provider = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
+		// 1. WhatsApp
+		$whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
+		$whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
 
-// 4. Orquestador de Chat
-$chat_manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $botman_provider ) );
-$chat_manager->boot();
+		// 2. BotMan
+		$chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
+		$botman_provider = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
+
+		$manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $botman_provider ) );
+	}
+	return $manager;
+}
+
+// Inicialización
+dm_chat_manager()->boot();
 
 // Registro de API REST para el Chat (BotMan)
-add_action( 'rest_api_init', function() use ( $botman_provider ) {
-	( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman_provider ) )->register_routes();
+add_action( 'rest_api_init', function() {
+	$botman = dm_chat_manager()->getProvider( 'botman' );
+	if ( $botman ) {
+		( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman ) )->register_routes();
+	}
 } );
 
 /**

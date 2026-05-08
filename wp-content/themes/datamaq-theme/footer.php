@@ -68,10 +68,19 @@ try {
 		<i class="bi bi-house-door-fill" aria-hidden="true"></i>
 		<span>Inicio</span>
 	</a>
-	<a href="<?php echo $view_model ? esc_url( $view_model->getWhatsAppUrl() ) : '#'; ?>" class="c-home-dock__link">
-		<i class="bi bi-whatsapp" aria-hidden="true"></i>
-		<span>WhatsApp</span>
-	</a>
+	<?php 
+	$botman = dm_chat_manager()->getProvider('botman');
+	if ( $botman && $botman->isEnabled() ) : ?>
+		<a href="#chat" class="c-home-dock__link" id="dm-dock-chat">
+			<i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
+			<span>Asistente</span>
+		</a>
+	<?php else : ?>
+		<a href="<?php echo $view_model ? esc_url( $view_model->getWhatsAppUrl() ) : '#'; ?>" class="c-home-dock__link" target="_blank">
+			<i class="bi bi-whatsapp" aria-hidden="true"></i>
+			<span>WhatsApp</span>
+		</a>
+	<?php endif; ?>
 	<a href="<?php echo $view_model ? esc_url( $view_model->getContactUrl() ) : '/contacto'; ?>" class="c-home-dock__link c-home-dock__link--emergency">
 		<i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
 		<span>Contacto</span>
