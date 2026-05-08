@@ -13,5 +13,5 @@
 ### Decisiones Arquitectónicas Consolidadas
 - **Motor de Inteligencia:** Se eligió el **Árbol Clásico (Regex / Palabras clave)** en lugar de un LLM. Prioriza velocidad, control estricto del flujo comercial, previsibilidad total y cero costos recurrentes de API.
 - **Flujos Conversacionales:** Se implementarán `Conversation` classes de BotMan para guiar al usuario paso a paso (ej. Soporte Técnico / Captación de Datos).
-- **Captura de Leads (n8n):** El chatbot reemplaza funcionalmente a los formularios, actuando como recolector interactivo y disparando los webhooks a n8n de manera asíncrona al terminar un flujo.
+- **Captura de Leads (SuiteCRM Directo):** Se decidió descartar n8n en favor de una integración directa (Punto a Punto). El chatbot recogerá los datos e interactuará con la REST API v8 de SuiteCRM (`/Api/access_token` y `/api/v8/module/Leads`) usando OAuth2. Esto reduce infraestructura externa pero requiere manejar la lógica de autenticación y reintentos dentro de PHP.
 - **Gestión de Contenido:** Se desarrollará posteriormente una interfaz de WordPress (Ajustes o CPT) para que el equipo comercial pueda gestionar el diccionario de intenciones y respuestas de manera autónoma.

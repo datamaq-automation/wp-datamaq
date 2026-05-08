@@ -19,7 +19,9 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Implementar Webhook Controller (REST API: `/chat`).
 - [ ] Desarrollar clase `LeadCaptureConversation` para calificar contactos.
 - [ ] Desarrollar clase `SupportConversation` para soporte técnico guiado.
-- [ ] Conectar fin de conversaciones con servicio Webhook de n8n.
+- [ ] Desarrollar servicio HTTP Client (`SuiteCrmService`) para la REST API v8.
+- [ ] Implementar autenticación OAuth2 (obtención y renovación de tokens).
+- [ ] Mapear y enviar payload JSON de LeadCaptureConversation hacia `/api/v8/module/Leads`.
 - [ ] Desarrollar Panel de Ajustes / CPT en WordPress para editar reglas de Regex sin tocar código.
 - [x] Integrar Widget de JS compatible con BotMan.
 

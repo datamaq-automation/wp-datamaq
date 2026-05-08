@@ -44,17 +44,30 @@ class LeadCaptureConversation extends Conversation {
 			$this->say( '¡Excelente! He registrado tu solicitud.' );
 			$this->say( 'Un especialista de DataMaq se contactará contigo a la brevedad a través de: ' . $this->contact_info . '.' );
 			
-			// Aquí en el futuro dispararemos el Webhook a n8n.
-			$this->dispatchToN8n();
+			// Aquí disparamos el envío directo al CRM.
+			$this->dispatchToCrm();
 		} );
 	}
 
 	/**
-	 * Simulación del envío de datos a n8n.
+	 * Envío de datos a SuiteCRM vía API v8.
 	 */
-	protected function dispatchToN8n(): void {
-		// TODO: Integrar con el servicio HTTP de n8n usando la URL de ConfigProvider.
-		// En este punto tenemos $this->name, $this->contact_info y $this->reason.
+	protected function dispatchToCrm(): void {
+		$crm = new \DataMaq\Infrastructure\CRM\SuiteCrmService(
+			defined('SUITECRM_BASE_URL') ? SUITECRM_BASE_URL : '',
+			defined('SUITECRM_CLIENT_ID') ? SUITECRM_CLIENT_ID : '',
+			defined('SUITECRM_CLIENT_SECRET') ? SUITECRM_CLIENT_SECRET : '',
+			defined('SUITECRM_USERNAME') ? SUITECRM_USERNAME : '',
+			defined('SUITECRM_PASSWORD') ? SUITECRM_PASSWORD : ''
+		);
+
+		$success = $crm->createLead( $this->name, $this->contact_info, $this->reason );
+
+		if ( $success ) {
+			$this->say( '✅ Tu solicitud fue registrada con éxito en nuestro sistema.' );
+		} else {
+			$this->say( '⚠️ Hubo un pequeño problema técnico al registrar tu solicitud, pero de todas formas nos pondremos en contacto contigo pronto.' );
+		}
 	}
 
 	/**
