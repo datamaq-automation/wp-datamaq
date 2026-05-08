@@ -6,7 +6,18 @@
         "phpstan/phpstan": "^2.1",
         "phpstan/extension-installer": "^1.4",
         "szepeviktor/phpstan-wordpress": "^2.0",
-        "php-stubs/woocommerce-stubs": "^10.7"
+        "php-stubs/woocommerce-stubs": "^10.7",
+        "phpunit/phpunit": "^12.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "DataMaq\\": "wp-content/themes/datamaq-theme/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DataMaq\\Tests\\": "tests/"
+        }
     },
     "config": {
         "allow-plugins": {

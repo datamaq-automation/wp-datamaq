@@ -72,6 +72,26 @@ fi
 L3_END=$(date +%s.%N)
 
 # ------------------------------------------------------------------------------
+# NIVEL 4: PHPUNIT (Tests Unitarios)
+# ------------------------------------------------------------------------------
+L4_START=$(date +%s.%N)
+echo -e "\n${CYAN}🧪 [NIVEL 4] Ejecutando tests unitarios (PHPUnit)...${RESET}"
+
+if [ -f "./vendor/bin/phpunit" ]; then
+    ./vendor/bin/phpunit --no-logging --display-warnings
+    
+    if [ $? -ne 0 ]; then
+        echo -e "\n${RED}🛑 PUSH ABORTADO: Los tests no pasaron.${RESET}"
+        echo -e "${YELLOW}💡 Tip: Verificá que los cambios no hayan roto la lógica de negocio.${RESET}"
+        exit 1
+    fi
+    echo -e "   ${GREEN}✅ Tests unitarios aprobados.${RESET}"
+else
+    echo -e "   ${YELLOW}⚠️  PHPUnit no encontrado. Saltando Nivel 4.${RESET}"
+fi
+L4_END=$(date +%s.%N)
+
+# ------------------------------------------------------------------------------
 # MÉTRICAS FINALES
 # ------------------------------------------------------------------------------
 END_TIME=$(date +%s.%N)
@@ -79,8 +99,9 @@ TOTAL_ELAPSED=$(echo "$END_TIME - $START_TIME" | bc 2>/dev/null || echo "0")
 L1_ELAPSED=$(echo "$L1_END - $L1_START" | bc 2>/dev/null || echo "0")
 L2_ELAPSED=$(echo "$L2_END - $L2_START" | bc 2>/dev/null || echo "0")
 L3_ELAPSED=$(echo "$L3_END - $L3_START" | bc 2>/dev/null || echo "0")
+L4_ELAPSED=$(echo "$L4_END - $L4_START" | bc 2>/dev/null || echo "0")
 
 echo -e "\n${GREEN}📊 Resumen de validación:${RESET}"
-echo -e "   ⏱️  Total: ${TOTAL_ELAPSED}s | L1: ${L1_ELAPSED}s | L2: ${L2_ELAPSED}s | L3: ${L3_ELAPSED}s"
+echo -e "   ⏱️  Total: ${TOTAL_ELAPSED}s | L1: ${L1_ELAPSED}s | L2: ${L2_ELAPSED}s | L3: ${L3_ELAPSED}s | L4: ${L4_ELAPSED}s"
 echo -e "\n${GREEN}📤 ¡Todo en orden! Enviando a GitHub...${RESET}\n"
 exit 0

@@ -18,7 +18,7 @@ Para garantizar la estabilidad sin consumir créditos de GitHub, utilizamos un s
 | **L1** | **Sintaxis** | `php -l` | ✅ Activo |
 | **L2** | **Estándares (WPCS)** | `phpcs` | ✅ Activo |
 | **L3** | **Análisis Estático** | `phpstan` | ✅ Activo |
-| **L4** | **Tests Funcionales** | `phpunit` | ⏳ Pendiente |
+| **L4** | **Tests Funcionales** | `phpunit` | ✅ Activo |
 
 - **L1 (Sintaxis):** Detecta errores fatales y puntos y coma faltantes. Es el guardián básico para evitar caídas del sitio.
 - **L2 (Estándares):** Asegura que el código siga las normas oficiales de WordPress, mejorando la mantenibilidad.

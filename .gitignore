@@ -82,3 +82,4 @@ php_errorlog
 error_log
 vendor/
 composer.phar
+.phpunit.result.cache
