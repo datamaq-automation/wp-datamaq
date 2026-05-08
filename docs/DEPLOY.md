@@ -4,6 +4,12 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 
 ## 🛠️ Arquitectura de Despliegue
 
+### 0. Restauración del Core (Si se eliminó para limpieza)
+Si el núcleo de WordPress (`wp-admin`, `wp-includes`, etc.) fue eliminado para limpiar el entorno, podés restaurarlo sin afectar tu código custom:
+```bash
+wp core download --locale=es_ES --skip-content --force
+```
+
 ### 1. CI Local (Niveles de Validación)
 Para garantizar la estabilidad sin consumir créditos de GitHub, utilizamos un sistema de validación progresivo ejecutado mediante Git Hooks (`.githooks/pre-push`).
 

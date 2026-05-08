@@ -41,6 +41,9 @@ wp-mail.php
 wp-settings.php
 wp-signup.php
 wp-trackback.php
+readme.html
+license.txt
+wp-config-sample.php
 !wp-config.php
 
 # Generated translation files
