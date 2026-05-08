@@ -10,13 +10,22 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Consolidar la carpeta `media/` raíz dentro del tema o `uploads/`.
 
 ## 🏗️ Desarrollo del Tema (`datamaq-theme`)
-- [x] Implementar la sección "Process" en `front-page.php` (actualmente vacía).
-- [x] Revisar y optimizar `template-parts/content-hero.php`.
-- [x] Validar la visualización del "Dock" móvil inferior.
+- [x] Implementar la sección "Process" en `front-page.php`.
+- [x] Refactorizar a Arquitectura Hexagonal (Logger, ConfigProvider).
+- [x] Crear esqueleto de `BotmanAdapter`.
+
+## 🤖 Migración a BotMan (PHP)
+- [ ] Instalar dependencias vía Composer (`botman/botman`).
+- [ ] Implementar Webhook Controller (REST API).
+- [ ] Desarrollar lógica de conversación (Conversations/Nodes).
+- [ ] Integrar Widget de JS compatible con BotMan.
+
+## 🚀 Continuous Delivery (CD)
+- [ ] Configurar GitHub Actions CI (`ci.yml`).
+- [ ] Definir secretos de despliegue en GitHub.
+- [ ] Implementar el workflow de despliegue automático (`deploy.yml`).
 
 ## 📝 Documentación
 - [x] Crear estructura base de documentación (`docs/`).
-- [x] Unificar `README.md`.
-- [x] Documentar el proceso de despliegue (Deploy Workflow).
-- [x] Configurar Git Hook local para CI (Nivel 4: PHPUnit).
-- [ ] Implementar el workflow de GitHub Actions (`.github/workflows/deploy.yml`).
+- [x] Separar dudas (`DISCOVERY.md`) de certezas (`SRS.md`).
+- [x] Actualizar `README.md`.

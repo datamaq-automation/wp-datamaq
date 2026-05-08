@@ -13,10 +13,24 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - Cards de servicios con acentos de color.
 - **Accesibilidad:** Cumplimiento con la política de contraste definida en el tema.
 
-## ⚙️ Requisitos Técnicos
-- **Modularidad:** Todas las secciones de la home deben residir en `template-parts/`.
-- **Performance:** Minimizar el uso de plugins pesados para el frontend; priorizar CSS vainilla.
-- **Administración:** El contenido debe seguir siendo administrable desde Gutenberg/Bloques donde sea posible, sin romper la estructura modular de PHP.
+## 🏗️ Arquitectura de Software
+- **Patrón:** Arquitectura Hexagonal (Ports & Adapters).
+- **Abstracciones (Ports):**
+  - `ChatProvider`: Abstrae el motor de comunicación.
+  - `ConfigProvider`: Desacopla la lógica de negocio de la base de datos de opciones de WP.
+  - `Logger`: Interfaz única para observabilidad y registro de errores.
+- **Implementaciones (Adapters):**
+  - `ChatwootAdapter`: Integración actual vía script.
+  - `WPConfigProvider`: Acceso seguro a `get_option`.
+  - `WPLogger`: Registro de eventos mediante `error_log`.
+
+## 🛠️ Infraestructura Verificada
+- **WP-CLI:** Disponible y funcional.
+- **Validación Técnica:** El flujo de desarrollo cuenta con validaciones automáticas (L1-L4) mediante hooks de Git:
+  - **L1:** Sintaxis PHP.
+  - **L2:** WordPress Coding Standards (WPCS).
+  - **L3:** Análisis Estático (PHPStan).
+  - **L4:** Tests Unitarios (PHPUnit).
 
 ## 📜 Políticas y Estándares
 - **Referencia:** Consultar `wp-content/themes/datamaq-theme/CONTRAST_POLICY.md` para estándares de color.
