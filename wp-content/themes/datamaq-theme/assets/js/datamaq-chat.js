@@ -65,11 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function appendMessage(sender, text) {
         if (!chatMessages) return;
         const msgDiv = document.createElement('div');
-        msgDiv.className = `tw:mb-3 tw:p-3 tw:rounded-lg tw:max-w-[80%] ${
-            sender === 'user' 
-            ? 'tw:bg-dm-primary tw:text-white tw:ml-auto tw:rounded-br-none' 
-            : 'tw:bg-dm-surface-200 tw:text-dm-text-900 tw:mr-auto tw:rounded-bl-none'
-        }`;
+        msgDiv.className = sender === 'user' ? 'dm-chat-msg-user' : 'dm-chat-msg-bot';
         msgDiv.textContent = text;
         chatMessages.appendChild(msgDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;

@@ -7,11 +7,8 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'AW-17968350814');
   </script>
-  <!-- Event snippet for Otra conversion page
-  In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
   <script>
   function gtag_report_conversion(url) {
     var callback = function () {
@@ -29,24 +26,123 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sitio</title>
+    <title>DataMaq | Automatización Industrial</title>
     <script>
-      // --- DataMaq API Gateway (Local Environment) ---
+      // --- DataMaq Debug Gateway ---
       (function() {
+          console.log('🛡️ [DataMaq] Gateway Initializing...');
+          
+          // 1. Interceptar Fetch
           const originalFetch = window.fetch;
           window.fetch = function() {
               let [resource, config] = arguments;
               if (typeof resource === 'string' && resource.includes('api.datamaq.com.ar')) {
+                  console.log('🔌 [DataMaq] API Proxy:', resource);
                   resource = resource.replace('https://api.datamaq.com.ar', '/index.php?rest_route=');
               }
               return originalFetch.apply(this, [resource, config]);
           };
+
+          // 2. Función para abrir el chat
+          const openChat = function() {
+              const chatContainer = document.getElementById('dm-chat-container');
+              if (chatContainer) {
+                  chatContainer.classList.remove('tw:hidden');
+                  console.log('✨ [DataMaq] Chat container opened via interceptor');
+                  const chatInput = document.getElementById('dm-chat-input');
+                  if (chatInput) chatInput.focus();
+                  return true;
+              }
+              console.error('❌ [DataMaq] Chat container NOT FOUND');
+              return false;
+          };
+
+          // 3. Interceptar window.open (usado por Vue/SPA frecuentemente)
+          const originalOpen = window.open;
+          window.open = function(url, target, features) {
+              if (typeof url === 'string' && (url.includes('wa.me') || url.includes('whatsapp.com'))) {
+                  console.log('🛑 [DataMaq] window.open intercepted!');
+                  if (openChat()) return null;
+              }
+              return originalOpen.apply(this, arguments);
+          };
+
+          // 4. Interceptar clics tradicionales (Captura)
+          document.addEventListener('click', (e) => {
+              const link = e.target.closest('a');
+              if (link) {
+                  if (link.href.includes('wa.me') || link.href.includes('whatsapp.com')) {
+                      console.log('🛑 [DataMaq] WhatsApp click intercepted!');
+                      e.preventDefault();
+                      e.stopPropagation();
+                      openChat();
+                  }
+              }
+          }, true);
+
+          window.addEventListener('load', () => {
+              console.log('🏁 [DataMaq] Window Load complete');
+              const toggle = document.getElementById('dm-chat-toggle');
+              if (toggle) {
+                  console.log('✅ [DataMaq] Chat Toggle found:', toggle);
+              } else {
+                  console.error('❌ [DataMaq] Chat Toggle NOT FOUND after load');
+              }
+          });
       })();
     </script>
     <script type="module" crossorigin src="/assets/index-33xPpqpC.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-CYmC4thG.css">
+    
+    <!-- Cargar estilos y lógica del Chatbot desde WordPress -->
+    <link rel="stylesheet" href="/wp-content/themes/datamaq-theme/assets/css/tailwind-dist.css">
+    <script src="/wp-content/themes/datamaq-theme/assets/js/datamaq-chat.js" defer></script>
   </head>
   <body>
     <div id="app"></div>
+    
+    <!-- Inyectamos manualmente el HTML y CSS del chatbot -->
+    <style id="dm-chat-styles">
+      #dm-chatbot { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999999; display: flex; flex-direction: column; align-items: flex-end; }
+      #dm-chat-container { width: 320px; height: 450px; background-color: #ffffff; border-radius: 1rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); display: flex; flex-direction: column; overflow: hidden; border: 1px solid #e5e7eb; margin-bottom: 1rem; transition: opacity 0.2s, transform 0.2s; }
+      #dm-chat-container.tw\:hidden { display: none !important; }
+      .dm-chat-header { background-color: #ff6a00; padding: 1rem; color: #ffffff; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+      .dm-chat-header button { background: transparent; border: none; color: rgba(255,255,255,0.8); cursor: pointer; }
+      .dm-chat-header button:hover { color: #ffffff; }
+      #dm-chat-messages { flex: 1; padding: 1rem; overflow-y: auto; background-color: #f9fafb; font-size: 0.875rem; }
+      .dm-chat-msg-bot { background-color: #e5e7eb; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.75rem; margin-right: auto; max-width: 80%; color: #111827; border-bottom-left-radius: 0; }
+      .dm-chat-msg-user { background-color: #ff6a00; color: #ffffff; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.75rem; margin-left: auto; max-width: 80%; border-bottom-right-radius: 0; }
+      #dm-chat-form { padding: 1rem; border-top: 1px solid #e5e7eb; background-color: #ffffff; display: flex; gap: 0.5rem; }
+      #dm-chat-input { flex: 1; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 0.875rem; outline: none; }
+      #dm-chat-input:focus { border-color: #ff6a00; }
+      #dm-chat-form button { background-color: #ff6a00; color: #ffffff; padding: 0.5rem; border-radius: 0.5rem; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      #dm-chat-toggle { background-color: #ff6a00; color: #ffffff; width: 3.5rem; height: 3.5rem; border-radius: 9999px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: transform 0.2s; }
+      #dm-chat-toggle:hover { transform: scale(1.1); }
+      #dm-chat-toggle:active { transform: scale(0.95); }
+    </style>
+    <div id="dm-chatbot">
+        <div id="dm-chat-container" class="tw:hidden">
+            <div class="dm-chat-header">
+                <span>Asistente DataMaq</span>
+                <button onclick="document.getElementById('dm-chat-container').classList.add('tw:hidden')">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div id="dm-chat-messages">
+                <div class="dm-chat-msg-bot">
+                    ¡Hola! Soy el asistente virtual de DataMaq. ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <form id="dm-chat-form">
+                <input type="text" id="dm-chat-input" placeholder="Escribí tu mensaje...">
+                <button type="submit">
+                    <i class="bi bi-send"></i>
+                </button>
+            </form>
+        </div>
+        <button id="dm-chat-toggle">
+            <i class="bi bi-chat-dots-fill" style="font-size: 1.5rem;"></i>
+        </button>
+    </div>
   </body>
 </html>
