@@ -92,8 +92,8 @@
 
         // Destruir activamente el botón original de WhatsApp de la SPA
         const removeOldFab = () => {
-          const oldFabs = document.querySelectorAll('.c-whatsapp-fab');
-          oldFabs.forEach(fab => fab.remove());
+          const oldElements = document.querySelectorAll('.c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp');
+          oldElements.forEach(el => el.remove());
         };
         removeOldFab();
 
@@ -122,8 +122,8 @@
 
   <!-- Inyectamos manualmente el HTML y CSS del chatbot -->
   <style id="dm-chat-styles">
-    /* Ocultamos el botón flotante original de WhatsApp de la SPA */
-    .c-whatsapp-fab {
+    /* Ocultamos los botones y enlaces originales de WhatsApp de la SPA */
+    .c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp {
       display: none !important;
     }
 
