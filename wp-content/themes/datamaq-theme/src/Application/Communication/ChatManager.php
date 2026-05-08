@@ -7,35 +7,50 @@ use DataMaq\Domain\Communication\ChatProvider;
 /**
  * ChatManager (Application Service / Orchestrator)
  *
- * Gestiona la inicialización del sistema de chat activo.
+ * Gestiona la inicialización de múltiples canales de comunicación (WhatsApp, BotMan, etc.)
  */
 class ChatManager {
-	private ?ChatProvider $provider = null;
+	/**
+	 * @var ChatProvider[]
+	 */
+	private array $providers = array();
 
-	public function __construct( ChatProvider $provider ) {
-		$this->provider = $provider;
+	/**
+	 * @param ChatProvider[] $providers Lista de proveedores a gestionar.
+	 */
+	public function __construct( array $providers ) {
+		foreach ( $providers as $provider ) {
+			if ( $provider instanceof ChatProvider ) {
+				$this->providers[] = $provider;
+			}
+		}
 	}
 
 	/**
-	 * Inicializa el chat en el footer de WordPress si está habilitado.
+	 * Inicializa todos los proveedores habilitados en el footer de WordPress.
 	 */
 	public function boot(): void {
 		add_action(
 			'wp_footer',
 			function () {
-				if ( $this->provider && $this->provider->isEnabled() ) {
-					$this->provider->renderWidget();
-				} else {
-					echo '<!-- Chat disabled by ' . esc_html( $this->provider ? $this->provider->getIdentifier() : 'No Provider' ) . ' logic -->';
+				foreach ( $this->providers as $provider ) {
+					if ( $provider->isEnabled() ) {
+						$provider->renderWidget();
+					}
 				}
 			}
 		);
 	}
 
 	/**
-	 * Devuelve el proveedor activo.
+	 * Devuelve un proveedor específico por su identificador.
 	 */
-	public function getProvider(): ?ChatProvider {
-		return $this->provider;
+	public function getProvider( string $identifier ): ?ChatProvider {
+		foreach ( $this->providers as $provider ) {
+			if ( $provider->getIdentifier() === $identifier ) {
+				return $provider;
+			}
+		}
+		return null;
 	}
 }

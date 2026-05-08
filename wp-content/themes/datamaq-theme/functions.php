@@ -35,18 +35,26 @@ add_action(
 	}
 );
 
+// Configuración de Comunicación (Hexagonal Architecture)
 $config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
 $logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
+$content_repo    = dm_content_repo();
 
-// Inicialización de BotMan (Motor + UI)
+// 1. Canal Tradicional: WhatsApp
+$whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
+$whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
+
+// 2. Canal Inteligente: BotMan
 $chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
-$botman_adapter  = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
-$chat_manager    = new \DataMaq\Application\Communication\ChatManager( $botman_adapter );
+$botman_provider = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
+
+// 3. Orquestador
+$chat_manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $botman_provider ) );
 $chat_manager->boot();
 
-// Registro de API REST para el Chat
-add_action( 'rest_api_init', function() use ( $botman_adapter ) {
-	( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman_adapter ) )->register_routes();
+// Registro de API REST para el Chat (BotMan)
+add_action( 'rest_api_init', function() use ( $botman_provider ) {
+	( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman_provider ) )->register_routes();
 } );
 
 /**
