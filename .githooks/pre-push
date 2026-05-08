@@ -17,6 +17,24 @@ echo -e "\n${CYAN}🚀 Iniciando validación técnica del proyecto...${RESET}"
 echo -e "${CYAN}=================================================${RESET}"
 
 # ------------------------------------------------------------------------------
+# DETECCIÓN INTELIGENTE DE CAMBIOS
+# ------------------------------------------------------------------------------
+# Solo corremos el CI completo si hay cambios en PHP o archivos de configuración.
+# Si solo hay cambios en .github/, docs/ o .md, saltamos el proceso.
+MODIFIED_FILES=$(git diff --name-only origin/main...HEAD 2>/dev/null)
+
+# Si no podemos determinar los cambios (ej. primera subida), corremos todo por seguridad.
+if [ $? -eq 0 ] && [ ! -z "$MODIFIED_FILES" ]; then
+    RELEVANT_CHANGES=$(echo "$MODIFIED_FILES" | grep -E '\.php$|composer\.json$|phpcs\.xml$|phpstan\.neon$|phpunit\.xml$|^src/|^mu-plugins/')
+    
+    if [ -z "$RELEVANT_CHANGES" ]; then
+        echo -e "${YELLOW}ℹ️  Cambios detectados solo en infraestructura o docs. Saltando validaciones PHP...${RESET}"
+        echo -e "${GREEN}📤 ¡Todo en orden! Enviando a GitHub...${RESET}\n"
+        exit 0
+    fi
+fi
+
+# ------------------------------------------------------------------------------
 # NIVEL 1: PHP LINT
 # ------------------------------------------------------------------------------
 L1_START=$(date +%s.%N)
