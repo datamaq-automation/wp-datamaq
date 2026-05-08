@@ -26,7 +26,7 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
 
 ## 🛠️ Infraestructura Verificada
 - **WP-CLI:** Disponible y funcional.
-- **Validación Técnica:** El flujo de desarrollo cuenta con validaciones automáticas (L1-L4) mediante hooks de Git:
+- **Validación Técnica (Local-First):** Para optimizar recursos y minutos de CI, todas las validaciones (L1-L4) se ejecutan localmente mediante hooks de Git antes del push. El pipeline de GitHub confía en esta validación previa para proceder directamente al despliegue.
   - **L1:** Sintaxis PHP.
   - **L2:** WordPress Coding Standards (WPCS).
   - **L3:** Análisis Estático (PHPStan).

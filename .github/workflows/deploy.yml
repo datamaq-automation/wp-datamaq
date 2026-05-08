@@ -1,0 +1,47 @@
+name: CD - Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: 🚀 Deploy via SSH/Rsync
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.REMOTE_TARGET }}
+        ARGS: "-avz --delete"
+        EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
+    - name: "🧹 Post-Deploy: Cache Flush & Audit"
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd ${{ secrets.REMOTE_TARGET }}
+          if command -v wp &> /dev/null; then
+            wp cache flush --allow-root
+            echo "✅ WordPress Cache Flushed"
+          fi
+          echo '{"commit": "${{ github.sha }}", "date": "$(date -u)"}' > deploy-info.json
+
+    - name: "🏥 Health Check (Smoke Test)"
+      run: |
+        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://datamaq.com.ar)
+        if [ "$RESPONSE" -eq 200 ]; then
+          echo "✅ Site is UP (HTTP 200)"
+        else
+          echo "❌ Site is DOWN (HTTP $RESPONSE)"
+          exit 1
+        fi

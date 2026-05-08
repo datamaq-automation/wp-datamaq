@@ -21,9 +21,9 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [ ] Integrar Widget de JS compatible con BotMan.
 
 ## 🚀 Continuous Delivery (CD)
-- [ ] Configurar GitHub Actions CI (`ci.yml`).
-- [ ] Definir secretos de despliegue en GitHub.
-- [ ] Implementar el workflow de despliegue automático (`deploy.yml`).
+- [x] Configurar GitHub Actions CI (`ci.yml`).
+- [ ] Definir secretos de despliegue en GitHub (SSH_KEY, HOST, USER).
+- [x] Implementar el workflow de despliegue automático (`deploy.yml`).
 
 ## 📝 Documentación
 - [x] Crear estructura base de documentación (`docs/`).
