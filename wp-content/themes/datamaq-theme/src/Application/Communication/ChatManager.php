@@ -33,8 +33,11 @@ class ChatManager {
 		add_action(
 			'wp_footer',
 			function () {
+				error_log( '[DataMaq-Chat] Booting Manager. Providers: ' . count( $this->providers ) );
 				foreach ( $this->providers as $provider ) {
-					if ( $provider->isEnabled() ) {
+					$enabled = $provider->isEnabled();
+					error_log( sprintf( '[DataMaq-Chat] Provider %s is %s', $provider->getIdentifier(), $enabled ? 'ENABLED' : 'DISABLED' ) );
+					if ( $enabled ) {
 						$provider->renderWidget();
 					}
 				}

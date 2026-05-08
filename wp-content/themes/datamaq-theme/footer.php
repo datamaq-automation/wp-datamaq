@@ -37,16 +37,26 @@ try {
 				<p class="c-home-footer__title tw:text-white tw:font-bold tw:mb-6">Servicio</p>
 				<nav class="tw:flex tw:flex-col tw:gap-4">
 					<a href="<?php echo esc_url( $view_model->getContactUrl() ); ?>" class="c-home-footer__link">Contacto</a>
-					<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="c-home-footer__link">Soporte Técnico</a>
+					<?php if ( $botman && $botman->isEnabled() ) : ?>
+						<a href="#chat" class="c-home-footer__link">Consultar Asistente</a>
+					<?php else : ?>
+						<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="c-home-footer__link">Soporte Técnico</a>
+					<?php endif; ?>
 				</nav>
 			</div>
-
+ 
 			<!-- Columna 4: Acción -->
 			<div class="c-home-footer__cta-col tw:flex tw:flex-col tw:items-start tw:lg:items-end">
 				<?php if ( $view_model ) : ?>
-					<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" target="_blank" rel="noopener noreferrer">
-						<i class="bi bi-whatsapp tw:mr-2"></i> Escribinos
-					</a>
+					<?php if ( $botman && $botman->isEnabled() ) : ?>
+						<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="#chat">
+							<i class="bi bi-chat-dots-fill tw:mr-2"></i> Hablar con Asistente
+						</a>
+					<?php else : ?>
+						<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" target="_blank" rel="noopener noreferrer">
+							<i class="bi bi-whatsapp tw:mr-2"></i> Escribinos
+						</a>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>
