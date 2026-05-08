@@ -90,20 +90,40 @@
           console.error('❌ [DataMaq] Chat Toggle NOT FOUND after load');
         }
 
-        // Destruir activamente el botón original de WhatsApp de la SPA
-        const removeOldFab = () => {
+        // Modificar la UI de Vue sobre la marcha
+        const modifyVueUI = () => {
           const oldElements = document.querySelectorAll('.c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp');
           oldElements.forEach(el => el.remove());
+
+          // Unificar el enlace "Contacto" del Dock
+          const dockEmergencyLink = document.querySelector('.c-home-dock__link--emergency');
+          if (dockEmergencyLink) {
+              if (!dockEmergencyLink.dataset.chatHijacked) {
+                  dockEmergencyLink.dataset.chatHijacked = "true";
+                  dockEmergencyLink.addEventListener('click', (e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log('🛑 [DataMaq] Dock Contact link hijacked!');
+                      openChat();
+                  }, true);
+              }
+              if (!dockEmergencyLink.innerHTML.includes('bi-whatsapp')) {
+                  dockEmergencyLink.innerHTML = '<i class="bi bi-whatsapp" aria-hidden="true" style="font-size: 1.3rem; margin-bottom: 2px;"></i><span>Asistente</span>';
+              }
+          }
         };
-        removeOldFab();
+        modifyVueUI();
 
         // Observar mutaciones por si Vue lo renderiza de forma asíncrona
         const observer = new MutationObserver((mutations) => {
+          let shouldRun = false;
           for (const mutation of mutations) {
             if (mutation.addedNodes.length) {
-              removeOldFab();
+              shouldRun = true;
+              break;
             }
           }
+          if (shouldRun) modifyVueUI();
         });
         observer.observe(document.body, { childList: true, subtree: true });
       });
@@ -135,6 +155,13 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+    }
+    
+    /* En móviles, ocultamos el botón flotante para delegar la acción al Dock inferior */
+    @media (max-width: 768px) {
+        #dm-chat-toggle {
+            display: none !important;
+        }
     }
 
     #dm-chat-container {
