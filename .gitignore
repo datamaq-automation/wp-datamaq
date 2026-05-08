@@ -44,7 +44,6 @@ wp-includes/
 /readme.html
 /license.txt
 /wp-config-sample.php
-!wp-config.php
 
 # Generated translation files
 wp-content/languages/
