@@ -26,8 +26,8 @@ try {
 								$is_active = ( 1 === $step_num ) ? 'is-active' : '';
 								?>
 								<li class="c-contact__stepper-item <?php echo esc_attr( $is_active ); ?>">
-									<button type="button" class="c-contact__stepper-trigger" aria-label="And&aacute; al paso <?php echo esc_html( $step_num ); ?>: <?php echo esc_attr( $label ); ?>">
-										<span class="c-contact__stepper-dot" aria-hidden="true"><span><?php echo esc_html( $step_num ); ?></span></span>
+									<button type="button" class="c-contact__stepper-trigger" aria-label="And&aacute; al paso <?php echo esc_html( (string) $step_num ); ?>: <?php echo esc_attr( $label ); ?>">
+										<span class="c-contact__stepper-dot" aria-hidden="true"><span><?php echo esc_html( (string) $step_num ); ?></span></span>
 										<span class="c-contact__stepper-label"><?php echo esc_html( $label ); ?></span>
 									</button>
 								</li>
