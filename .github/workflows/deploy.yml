@@ -13,23 +13,26 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: 🚀 Deploy via SSH/Rsync
+    - name: "🚀 Deploy via SSH/Rsync"
       uses: easingthemes/ssh-deploy@main
       with:
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-        REMOTE_USER: ${{ secrets.REMOTE_USER }}
-        TARGET: ${{ secrets.REMOTE_TARGET }}
+        REMOTE_HOST: ${{ vars.REMOTE_HOST }}
+        REMOTE_USER: ${{ vars.REMOTE_USER }}
+        REMOTE_PORT: ${{ vars.REMOTE_PORT }}
+        TARGET: ${{ vars.REMOTE_TARGET }}
         ARGS: "-avz --delete"
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
+
     - name: "🧹 Post-Deploy: Cache Flush & Audit"
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
+        host: ${{ vars.REMOTE_HOST }}
+        username: ${{ vars.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ vars.REMOTE_PORT }}
         script: |
-          cd ${{ secrets.REMOTE_TARGET }}
+          cd ${{ vars.REMOTE_TARGET }}
           if command -v wp &> /dev/null; then
             wp cache flush --allow-root
             echo "✅ WordPress Cache Flushed"
@@ -38,7 +41,7 @@ jobs:
 
     - name: "🏥 Health Check (Smoke Test)"
       run: |
-        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://datamaq.com.ar)
+        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ vars.SITE_URL }})
         if [ "$RESPONSE" -eq 200 ]; then
           echo "✅ Site is UP (HTTP 200)"
         else

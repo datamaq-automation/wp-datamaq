@@ -17,21 +17,28 @@ El flujo en `.github/workflows/deploy.yml` se activa al hacer push a `main`:
    - **Audit Log:** Crea `deploy-info.json` en la raíz del sitio con el ID del commit y fecha UTC.
 3. **Smoke Test:** Un health check final (curl) verifica que el sitio responda con un HTTP 200.
 
-## 🔐 Configuración de Secretos (GitHub)
+## 🔐 Configuración de GitHub (Secrets & Variables)
 
-Para habilitar el despliegue, debés cargar estos secretos en `Settings > Secrets and variables > Actions`:
+Debés cargar estos valores en `Settings > Secrets and variables > Actions`:
 
+### Secrets (Pestaña "Secrets" - Encriptados)
 | Secreto | Descripción | Ejemplo |
 | :--- | :--- | :--- |
-| `SERVER_SSH_KEY` | Clave privada SSH (RSA o ED25519). | `-----BEGIN OPENSSH PRIVATE KEY-----...` |
-| `REMOTE_HOST` | IP o Dominio del servidor. | `123.45.67.89` o `ssh.datamaq.com.ar` |
-| `REMOTE_USER` | Usuario con permisos de escritura. | `agustin` o `deploy-user` |
-| `REMOTE_TARGET` | Ruta absoluta de la web en el servidor. | `/var/www/datamaq/public_html/` |
+| `SERVER_SSH_KEY` | Clave privada SSH. | `-----BEGIN OPENSSH PRIVATE KEY-----...` |
+
+### Variables (Pestaña "Variables" - Texto Plano)
+| Variable | Descripción | Ejemplo |
+| :--- | :--- | :--- |
+| `REMOTE_HOST` | IP o Dominio del servidor. | `123.45.67.89` |
+| `REMOTE_USER` | Usuario SSH. | `agustin` |
+| `REMOTE_PORT` | Puerto SSH (si no es el 22). | `5932` |
+| `REMOTE_TARGET` | Ruta absoluta en el servidor. | `/var/www/public_html/` |
+| `SITE_URL` | URL pública para el Health Check. | `https://datamaq.com.ar` |
 
 ### Procedimiento para generar la Key:
-1. En tu terminal local: `ssh-keygen -t ed25519 -C "github-actions-deploy"`
-2. Copiá la **clave pública** (`.pub`) al archivo `~/.ssh/authorized_keys` del servidor.
-3. Copiá la **clave privada** íntegra al secreto `SERVER_SSH_KEY` en GitHub.
+1. En tu terminal local: `ssh-keygen -t ed25519 -f ~/.ssh/id_github_deploy -C "github-actions-deploy"`
+2. Copiá la **clave pública** (`~/.ssh/id_github_deploy.pub`) al archivo `~/.ssh/authorized_keys` del servidor.
+3. Copiá la **clave privada** (`~/.ssh/id_github_deploy`) al secreto `SERVER_SSH_KEY` en GitHub.
 
 ## 📊 Observabilidad en Producción
 Podés verificar la salud del despliegue de dos formas:
