@@ -17,4 +17,4 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 ## 📝 Documentación
 - [x] Crear estructura base de documentación (`docs/`).
 - [x] Unificar `README.md`.
-- [ ] Documentar el proceso de despliegue (Deploy Workflow).
+- [x] Documentar el proceso de despliegue (Deploy Workflow).

@@ -14,6 +14,7 @@ Para una gestión limpia, la documentación técnica se divide en los siguientes
 1. [**DISCOVERY.md**](docs/DISCOVERY.md): Hallazgos técnicos, estado actual del codebase y auditorías de infraestructura.
 2. [**SRS.md**](docs/SRS.md): Especificación de Requisitos de Software, guías de diseño y estándares de contraste.
 3. [**TODO.md**](docs/TODO.md): Roadmap de desarrollo, tareas pendientes y backlog de optimización.
+4. [**DEPLOY.md**](docs/DEPLOY.md): Guía de despliegue para el repositorio optimizado (Slim Repo).
 
 ## 🛠️ Comandos Útiles
 Si tenés `wp-cli` instalado:
