@@ -18,10 +18,8 @@ jobs:
         SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
       run: |
         if [[ -z "$SSH_KEY" ]]; then
-          echo "::error::❌ La clave SERVER_SSH_KEY no está cargada o es inaccesible."
+          echo "::error title=Secret Missing::La clave SERVER_SSH_KEY no está cargada."
           exit 1
-        else
-          echo "✅ Secretos validados."
         fi
 
   # ------------------------------------------------------------------------------
@@ -38,39 +36,56 @@ jobs:
         [[ -z "${{ vars.REMOTE_HOST }}" ]] && MISSING+=("REMOTE_HOST")
         [[ -z "${{ vars.REMOTE_USER }}" ]] && MISSING+=("REMOTE_USER")
         [[ -z "${{ vars.REMOTE_TARGET }}" ]] && MISSING+=("REMOTE_TARGET")
-        [[ -z "${{ vars.SITE_URL }}" ]] && MISSING+=("SITE_URL")
         
         if [ ${#MISSING[@]} -ne 0 ]; then
-          echo "::error::❌ Faltan configurar las siguientes Variables: ${MISSING[*]}"
+          echo "::error title=Vars Missing::Faltan: ${MISSING[*]}"
           exit 1
-        else
-          echo "✅ Variables validadas: ${{ vars.REMOTE_HOST }}"
         fi
 
   # ------------------------------------------------------------------------------
-  # 3. CONNECTIVITY: Probar conexión antes de subir nada
+  # 3. DNS CHECK: ¿El dominio es válido?
   # ------------------------------------------------------------------------------
-  connectivity_test:
-    name: "🔌 Test: Connectivity"
-    needs: [audit_secrets, audit_variables]
+  dns_check:
+    name: "🌐 Audit: DNS Resolution"
+    needs: audit_variables
     runs-on: ubuntu-latest
     environment: prod
     steps:
-    - name: "SSH Ping"
+    - name: "Verificar Resolución"
+      run: |
+        echo "🔍 Intentando resolver: ${{ vars.REMOTE_HOST }}"
+        if getent hosts ${{ vars.REMOTE_HOST }} > /dev/null; then
+          IP=$(getent hosts ${{ vars.REMOTE_HOST }} | awk '{print $1}')
+          echo "✅ Host resuelto a la IP: $IP"
+        else
+          echo "::error title=DNS Error::No se puede resolver '${{ vars.REMOTE_HOST }}'. Tip: Usa la IP directa si el DNS no está listo."
+          exit 1
+        fi
+
+  # ------------------------------------------------------------------------------
+  # 4. SSH CHECK: ¿El servidor acepta la conexión?
+  # ------------------------------------------------------------------------------
+  ssh_check:
+    name: "🔑 Audit: SSH Auth"
+    needs: dns_check
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: "Prueba de Conexión"
       uses: appleboy/ssh-action@master
       with:
         host: ${{ vars.REMOTE_HOST }}
         username: ${{ vars.REMOTE_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ vars.REMOTE_PORT || '22' }}
-        script: echo "🚀 Conexión establecida con éxito en ${{ vars.REMOTE_HOST }}"
+        script: echo "✅ SSH Handshake exitoso con usuario ${{ vars.REMOTE_USER }}"
 
   # ------------------------------------------------------------------------------
-  # 4. DEPLOY: Sincronización de archivos
+  # 5. DEPLOY: Sincronización de archivos
   # ------------------------------------------------------------------------------
   deploy:
     name: "🚀 Sincronizar Archivos"
-    needs: connectivity_test
+    needs: ssh_check
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -89,7 +104,7 @@ jobs:
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
 
   # ------------------------------------------------------------------------------
-  # 5. VERIFY: Post-despliegue y Salud
+  # 6. VERIFY: Post-despliegue y Salud
   # ------------------------------------------------------------------------------
   verify:
     name: "🏥 Verificar Salud"
@@ -97,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-    - name: "🧹 Post-Deploy: Cache Flush & Audit"
+    - name: "🧹 Post-Deploy & Summary"
       uses: appleboy/ssh-action@master
       with:
         host: ${{ vars.REMOTE_HOST }}
@@ -112,23 +127,23 @@ jobs:
           fi
           echo '{"commit": "${{ github.sha }}", "date": "$(date -u)"}' > deploy-info.json
 
-    - name: "🏥 Health Check (Smoke Test)"
+    - name: "🏥 Smoke Test"
       run: |
         RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ vars.SITE_URL }})
         if [ "$RESPONSE" -eq 200 ]; then
-          echo "✅ Site is UP (HTTP 200)"
+          echo "✅ Site is UP"
         else
-          echo "❌ Site is DOWN (HTTP $RESPONSE)"
+          echo "::error title=Site Down::El sitio respondió con HTTP $RESPONSE"
           exit 1
         fi
 
-    - name: "📊 Summary"
+    - name: "📊 Summary Report"
       run: |
-        echo "### 🚀 Despliegue Exitoso de DataMaq" >> $GITHUB_STEP_SUMMARY
-        echo "| Etapa | Resultado |" >> $GITHUB_STEP_SUMMARY
-        echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Secrets** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Variables** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Conectividad** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Sincronización** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Salud Final** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Reporte de Despliegue DataMaq" >> $GITHUB_STEP_SUMMARY
+        echo "| Etapa | Estatus | Detalle |" >> $GITHUB_STEP_SUMMARY
+        echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔐 Seguridad | ✅ OK | Claves validadas |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🌐 Red (DNS) | ✅ OK | Host resuelto |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🔑 Acceso SSH | ✅ OK | Autenticación exitosa |" >> $GITHUB_STEP_SUMMARY
+        echo "| 📦 Despliegue | ✅ OK | Archivos sincronizados |" >> $GITHUB_STEP_SUMMARY
+        echo "| 🏥 Salud Final | ✅ OK | HTTP 200 |" >> $GITHUB_STEP_SUMMARY
