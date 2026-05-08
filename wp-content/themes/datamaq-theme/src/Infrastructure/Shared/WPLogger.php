@@ -10,15 +10,15 @@ use DataMaq\Domain\Shared\Logger;
  * Implementa el logging usando error_log de PHP/WordPress.
  */
 class WPLogger implements Logger {
-	public function info( string $message, array $context = [] ): void {
+	public function info( string $message, array $context = array() ): void {
 		$this->log( 'INFO', $message, $context );
 	}
 
-	public function error( string $message, array $context = [] ): void {
+	public function error( string $message, array $context = array() ): void {
 		$this->log( 'ERROR', $message, $context );
 	}
 
-	public function warning( string $message, array $context = [] ): void {
+	public function warning( string $message, array $context = array() ): void {
 		$this->log( 'WARNING', $message, $context );
 	}
 
