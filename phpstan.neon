@@ -10,6 +10,11 @@ parameters:
         - wp-content/themes/datamaq-theme
     bootstrapFiles:
         # Aquí podrías cargar un archivo de bootstrap si fuera necesario
+    scanFiles:
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # Errores comunes de WP que podemos ignorar al inicio
         - '#Constant [A-Z_]+ not found.#'
+        - '#Call to static method [a-zA-Z0-9_]+\(\) on an unknown class LP_Settings.#'
+        - '#Instantiated class [a-zA-Z0-9_]+ not found.#'

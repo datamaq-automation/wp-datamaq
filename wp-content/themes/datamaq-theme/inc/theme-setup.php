@@ -31,6 +31,9 @@ function dm_enqueue_assets() {
     $premium_ver = file_exists($theme_path . '/assets/css/HomePage.css') ? filemtime($theme_path . '/assets/css/HomePage.css') : $version;
     $whatsapp_ver = file_exists($theme_path . '/assets/css/WhatsAppFab.css') ? filemtime($theme_path . '/assets/css/WhatsAppFab.css') : $version;
     $tokens_ver = file_exists($theme_path . '/assets/css/tokens.css') ? filemtime($theme_path . '/assets/css/tokens.css') : $version;
+    $learnpress_ver = file_exists($theme_path . '/assets/css/learnpress-overrides.css') ? filemtime($theme_path . '/assets/css/learnpress-overrides.css') : $version;
+    $comp_ver = file_exists($theme_path . '/assets/js/dm-components.js') ? filemtime($theme_path . '/assets/js/dm-components.js') : $version;
+    $wizard_ver = file_exists($theme_path . '/assets/js/contact-wizard.js') ? filemtime($theme_path . '/assets/js/contact-wizard.js') : $version;
 
     // CSS Layered Architecture (SOLID)
     wp_enqueue_style( 'dm-tokens', $theme_uri . '/assets/css/tokens.css', array(), $tokens_ver );

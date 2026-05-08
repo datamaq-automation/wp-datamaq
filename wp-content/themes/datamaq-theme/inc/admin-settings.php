@@ -23,7 +23,7 @@ function dm_register_settings_fields() {
     add_settings_section(
         'dm_integrations_section',
         'Integración con n8n Webhooks',
-        null,
+        '__return_empty_string',
         'datamaq-n8n-settings'
     );
 

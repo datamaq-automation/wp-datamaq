@@ -9,9 +9,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Frontend/API behavior.
-add_filter( 'comments_open', '__return_false', 20, 2 );
-add_filter( 'pings_open', '__return_false', 20, 2 );
-add_filter( 'comments_array', '__return_empty_array', 20, 2 );
+add_filter( 'comments_open', '__return_false', 20 );
+add_filter( 'pings_open', '__return_false', 20 );
+add_filter( 'comments_array', '__return_empty_array', 20 );
 
 // Block direct comment posting endpoint.
 add_action( 'init', function () {
