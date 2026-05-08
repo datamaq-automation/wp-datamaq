@@ -10,7 +10,7 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use DataMaq\Domain\Communication\ChatProvider;
 use DataMaq\Domain\Chat\BotEngine;
 use DataMaq\Domain\Shared\ConfigProvider;
-use DataMaq\Domain\Shared\Logger;
+use DataMaq\Domain\Shared\Observability\LoggerInterface;
 
 /**
  * Adapter para la integración con BotMan.
@@ -19,11 +19,11 @@ use DataMaq\Domain\Shared\Logger;
 class BotmanAdapter implements ChatProvider, BotEngine {
 
 	private ConfigProvider $config;
-	private Logger $logger;
+	private LoggerInterface $logger;
 	private \DataMaq\Domain\Chat\ChatbotService $chatbot_service;
 	private ?BotMan $botman = null;
 
-	public function __construct( ConfigProvider $config, Logger $logger, \DataMaq\Domain\Chat\ChatbotService $chatbot_service ) {
+	public function __construct( ConfigProvider $config, LoggerInterface $logger, \DataMaq\Domain\Chat\ChatbotService $chatbot_service ) {
 		$this->config          = $config;
 		$this->logger          = $logger;
 		$this->chatbot_service = $chatbot_service;

@@ -27,6 +27,13 @@ class ObservabilityController extends WP_REST_Controller {
 			'permission_callback' => '__return_true',
 		) );
 
+		// Alias nativo para compatibilidad con la SPA
+		register_rest_route( 'v1', '/health', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'get_health' ),
+			'permission_callback' => '__return_true',
+		) );
+
 		register_rest_route( $this->namespace, '/' . $this->rest_base . '/log', array(
 			'methods'             => 'POST',
 			'callback'            => array( $this, 'post_log' ),

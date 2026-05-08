@@ -11,12 +11,12 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 
 ## 🏗️ Desarrollo del Tema (`datamaq-theme`)
 - [x] Implementar la sección "Process" en `front-page.php`.
-- [x] Refactorizar a Arquitectura Hexagonal (Logger, ConfigProvider).
-- [x] Crear esqueleto de `BotmanAdapter`.
+- [x] Refactorizar a Arquitectura Hexagonal (Logger, ConfigProvider, HealthStatus).
+- [x] Normalizar Observabilidad (Unificación de Interfaces de Log).
 
 ## 🤖 Migración a BotMan (PHP)
-- [ ] Instalar dependencias vía Composer (`botman/botman`).
-- [ ] Implementar Webhook Controller (REST API).
+- [x] Instalar dependencias vía Composer (`botman/botman`).
+- [x] Implementar Webhook Controller (REST API: `/chat`).
 - [ ] Desarrollar lógica de conversación (Conversations/Nodes).
 - [ ] Integrar Widget de JS compatible con BotMan.
 

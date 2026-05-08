@@ -17,8 +17,13 @@ Este documento define las reglas operativas y el estado técnico para los Agente
 
 ## 🤖 Misión Actual: Integración de BotMan
 - **Estado:** Backend operativo (REST API: `/wp-json/datamaq/v1/chat`).
-- **Adaptador:** `BotmanAdapter` centraliza la lógica del motor.
-- **UI:** Pendiente de implementación (Widget reactivo).
+- **Adaptador:** `BotmanAdapter` actualizado para usar `LoggerInterface` unificado.
+- **UI:** Widget nativo PHP/JS en desarrollo.
+
+## 🏥 Observabilidad y Salud (NUEVO)
+- **Health Check:** `/wp-json/v1/health` (Alias nativo para SPA).
+- **Loggers:** Uso obligatorio de `DataMaq\Domain\Shared\Observability\LoggerInterface`.
+- **Value Objects:** Las respuestas de salud deben usar `HealthStatus` para garantizar tipado fuerte.
 
 ## ⚠️ Restricciones Críticas
 1. **No tocar el Core:** No modificar archivos de WordPress fuera de `wp-content/themes/datamaq-theme/`.
