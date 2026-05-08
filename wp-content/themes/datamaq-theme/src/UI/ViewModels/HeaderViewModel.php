@@ -5,41 +5,41 @@ use DataMaq\Domain\Content\ContentRepositoryInterface;
 use DataMaq\Domain\Content\BrandInfo;
 
 class HeaderViewModel {
-    private BrandInfo $brand;
+	private BrandInfo $brand;
 
-    public function __construct(ContentRepositoryInterface $repo) {
-        $this->brand = $repo->getBrandInfo();
-    }
+	public function __construct( ContentRepositoryInterface $repo ) {
+		$this->brand = $repo->getBrandInfo();
+	}
 
-    public function getSiteName(): string {
-        return $this->brand->getName();
-    }
+	public function getSiteName(): string {
+		return $this->brand->getName();
+	}
 
-    public function getNavigation(): array {
-        return $this->brand->getNavigation();
-    }
+	public function getNavigation(): array {
+		return $this->brand->getNavigation();
+	}
 
-    public function getContactUrl(): string {
-        return $this->brand->getContactUrl();
-    }
+	public function getContactUrl(): string {
+		return $this->brand->getContactUrl();
+	}
 
-    public function getTrainingUrl(): string {
-        return $this->brand->getTrainingUrl();
-    }
+	public function getTrainingUrl(): string {
+		return $this->brand->getTrainingUrl();
+	}
 
-    public function getProductsUrl(): string {
-        return $this->brand->getProductsUrl();
-    }
+	public function getProductsUrl(): string {
+		return $this->brand->getProductsUrl();
+	}
 
-    public function getRelevamientoUrl(): string {
-        return $this->brand->getRelevamientoUrl();
-    }
+	public function getRelevamientoUrl(): string {
+		return $this->brand->getRelevamientoUrl();
+	}
 
-    public function getAutomatizacionUrl(): string {
-        return $this->brand->getAutomatizacionUrl();
-    }
+	public function getAutomatizacionUrl(): string {
+		return $this->brand->getAutomatizacionUrl();
+	}
 
-    public function getHomeUrl(): string {
-        return home_url('/');
-    }
+	public function getHomeUrl(): string {
+		return home_url( '/' );
+	}
 }

@@ -3,7 +3,9 @@
  * DataMaq Theme functions and definitions
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 require get_template_directory() . '/inc/autoloader.php';
 
 // 1. Data Layer
@@ -19,36 +21,39 @@ require_once get_template_directory() . '/inc/admin-settings.php';
 /**
  * Injection Controller
  */
-function datamaq_inject_section($slug) {
-    get_template_part('template-parts/content', $slug);
+function datamaq_inject_section( $slug ) {
+	get_template_part( 'template-parts/content', $slug );
 }
 
 /**
  * Communication System Initialization (Hexagonal Architecture)
  */
-add_action('wp_enqueue_scripts', function() {
-    wp_enqueue_script('datamaq-chat-bridge', get_template_directory_uri() . '/assets/js/chat-bridge.js', [], '1.0.0', true);
-});
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		wp_enqueue_script( 'datamaq-chat-bridge', get_template_directory_uri() . '/assets/js/chat-bridge.js', array(), '1.0.0', true );
+	}
+);
 
 $chatProvider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter();
-$chatManager = new \DataMaq\Application\Communication\ChatManager($chatProvider);
+$chatManager  = new \DataMaq\Application\Communication\ChatManager( $chatProvider );
 $chatManager->boot();
 
 /**
  * DataMaq Repository Factory
  */
 function dm_content_repo() {
-    static $repo = null;
-    if ($repo === null) {
-        $repo = new \DataMaq\Infrastructure\Content\StaticContentRepository();
-    }
-    return $repo;
+	static $repo = null;
+	if ( $repo === null ) {
+		$repo = new \DataMaq\Infrastructure\Content\StaticContentRepository();
+	}
+	return $repo;
 }
 
 /**
  * Initialize SEO Service
  */
-(new \DataMaq\Infrastructure\Seo\SeoService())->registerHooks();
+( new \DataMaq\Infrastructure\Seo\SeoService() )->registerHooks();
 
 /**
  * WooCommerce Clean Up
@@ -61,30 +66,44 @@ remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 3
  * Personalización de botones de WooCommerce
  */
 // 1. Cambiar texto del botón en el catálogo
-add_filter( 'woocommerce_product_add_to_cart_text', function() {
-    return 'Ver más';
-});
+add_filter(
+	'woocommerce_product_add_to_cart_text',
+	function () {
+		return 'Ver más';
+	}
+);
 
 // 2. Hacer que el botón redirija a la página del producto en lugar de añadir al carrito por AJAX
-add_filter( 'woocommerce_loop_add_to_cart_link', function( $html, $product ) {
-    return sprintf(
-        '<div class="tw:text-center tw:mt-6 tw:mb-2">
+add_filter(
+	'woocommerce_loop_add_to_cart_link',
+	function ( $html, $product ) {
+		return sprintf(
+			'<div class="tw:text-center tw:mt-6 tw:mb-2">
             <a href="%s" class="tw:btn-primary c-ui-btn">%s</a>
         </div>',
-        esc_url( $product->get_permalink() ),
-        'Ver más'
-    );
-}, 10, 2 );
+			esc_url( $product->get_permalink() ),
+			'Ver más'
+		);
+	},
+	10,
+	2
+);
 
 /**
  * Flujo de Compra Directa (DataMaq Audit)
  */
 // 1. Redirigir directamente al Checkout al añadir al carrito
-add_filter( 'woocommerce_add_to_cart_redirect', function() {
-    return wc_get_checkout_url();
-});
+add_filter(
+	'woocommerce_add_to_cart_redirect',
+	function () {
+		return wc_get_checkout_url();
+	}
+);
 
 // 2. Cambiar texto del botón en la página de producto individual
-add_filter( 'woocommerce_product_single_add_to_cart_text', function() {
-    return 'Contratar ahora';
-});
+add_filter(
+	'woocommerce_product_single_add_to_cart_text',
+	function () {
+		return 'Contratar ahora';
+	}
+);

@@ -9,26 +9,26 @@ get_header();
 
 <main id="contenido-principal" class="c-home-main with-floating-cta">
 
-    <?php 
-    // Hero Section
-    get_template_part('template-parts/content', 'hero'); 
+	<?php
+	// Hero Section
+	get_template_part( 'template-parts/content', 'hero' );
 
-    // Profile Section
-    get_template_part('template-parts/content', 'profile'); 
+	// Profile Section
+	get_template_part( 'template-parts/content', 'profile' );
 
-    // Services Section
-    get_template_part('template-parts/content', 'services'); 
+	// Services Section
+	get_template_part( 'template-parts/content', 'services' );
 
-    // Process Section
-    get_template_part('template-parts/content', 'process'); 
+	// Process Section
+	get_template_part( 'template-parts/content', 'process' );
 
 
-    // FAQ Section
-    get_template_part('template-parts/content', 'faq'); 
+	// FAQ Section
+	get_template_part( 'template-parts/content', 'faq' );
 
-    // Contact Section
-    get_template_part('template-parts/content', 'contact'); 
-    ?>
+	// Contact Section
+	get_template_part( 'template-parts/content', 'contact' );
+	?>
 
 </main>
 

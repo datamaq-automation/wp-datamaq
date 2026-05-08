@@ -69,44 +69,54 @@ function dm_openclaw_rest_permission( WP_REST_Request $request ) {
 
 add_action( 'rest_api_init', 'dm_openclaw_register_rest_routes' );
 function dm_openclaw_register_rest_routes() {
-	register_rest_route( DM_OPENCLAW_REST_NAMESPACE, '/status', array(
-		'methods'             => 'GET',
-		'callback'            => 'dm_openclaw_rest_status',
-		'permission_callback' => 'dm_openclaw_rest_permission',
-	) );
+	register_rest_route(
+		DM_OPENCLAW_REST_NAMESPACE,
+		'/status',
+		array(
+			'methods'             => 'GET',
+			'callback'            => 'dm_openclaw_rest_status',
+			'permission_callback' => 'dm_openclaw_rest_permission',
+		)
+	);
 
-	register_rest_route( DM_OPENCLAW_REST_NAMESPACE, '/chat', array(
-		'methods'             => 'POST',
-		'callback'            => 'dm_openclaw_rest_chat',
-		'permission_callback' => 'dm_openclaw_rest_permission',
-		'args'                => array(
-			'message' => array(
-				'required'          => true,
-				'sanitize_callback' => 'sanitize_textarea_field',
+	register_rest_route(
+		DM_OPENCLAW_REST_NAMESPACE,
+		'/chat',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'dm_openclaw_rest_chat',
+			'permission_callback' => 'dm_openclaw_rest_permission',
+			'args'                => array(
+				'message' => array(
+					'required'          => true,
+					'sanitize_callback' => 'sanitize_textarea_field',
+				),
 			),
-		),
-	) );
+		)
+	);
 }
 
 function dm_openclaw_rest_status() {
-	$url = dm_openclaw_gateway_url();
+	$url   = dm_openclaw_gateway_url();
 	$parts = wp_parse_url( $url );
-	$tcp = array(
+	$tcp   = array(
 		'checked' => false,
 		'ok'      => false,
 	);
 
 	if ( ! empty( $parts['host'] ) ) {
 		$scheme = empty( $parts['scheme'] ) ? 'ws' : $parts['scheme'];
-		$port = empty( $parts['port'] ) ? dm_openclaw_default_port( $scheme ) : intval( $parts['port'] );
-		$tcp = dm_openclaw_tcp_check( $parts['host'], $port, in_array( $scheme, array( 'wss', 'https' ), true ) );
+		$port   = empty( $parts['port'] ) ? dm_openclaw_default_port( $scheme ) : intval( $parts['port'] );
+		$tcp    = dm_openclaw_tcp_check( $parts['host'], $port, in_array( $scheme, array( 'wss', 'https' ), true ) );
 	}
 
-	return rest_ensure_response( array(
-		'configured' => (bool) dm_openclaw_gateway_token(),
-		'gateway'    => dm_openclaw_redact_url( $url ),
-		'tcp'        => $tcp,
-	) );
+	return rest_ensure_response(
+		array(
+			'configured' => (bool) dm_openclaw_gateway_token(),
+			'gateway'    => dm_openclaw_redact_url( $url ),
+			'tcp'        => $tcp,
+		)
+	);
 }
 
 function dm_openclaw_rest_chat( WP_REST_Request $request ) {
@@ -139,8 +149,8 @@ function dm_openclaw_rest_chat( WP_REST_Request $request ) {
 
 function dm_openclaw_rate_limit_check() {
 	$user_id = get_current_user_id();
-	$key = 'dm_openclaw_rate_' . $user_id;
-	$hits = (int) get_transient( $key );
+	$key     = 'dm_openclaw_rate_' . $user_id;
+	$hits    = (int) get_transient( $key );
 
 	if ( $hits >= 10 ) {
 		return new WP_Error( 'dm_openclaw_rate_limited', 'Demasiadas consultas. Espera un minuto y volve a intentar.', array( 'status' => 429 ) );
@@ -151,17 +161,21 @@ function dm_openclaw_rate_limit_check() {
 }
 
 function dm_openclaw_send_message( $message, $token ) {
-	$url = dm_openclaw_gateway_url();
-	$parts = wp_parse_url( $url );
+	$url    = dm_openclaw_gateway_url();
+	$parts  = wp_parse_url( $url );
 	$scheme = empty( $parts['scheme'] ) ? 'ws' : strtolower( $parts['scheme'] );
 
-	$payload = apply_filters( 'dm_openclaw_payload', array(
-		'type'    => 'chat',
-		'message' => $message,
-		'source'  => 'wordpress-admin',
-		'site'    => home_url(),
-		'user'    => wp_get_current_user()->user_login,
-	), $message );
+	$payload = apply_filters(
+		'dm_openclaw_payload',
+		array(
+			'type'    => 'chat',
+			'message' => $message,
+			'source'  => 'wordpress-admin',
+			'site'    => home_url(),
+			'user'    => wp_get_current_user()->user_login,
+		),
+		$message
+	);
 
 	if ( in_array( $scheme, array( 'http', 'https' ), true ) ) {
 		return dm_openclaw_http_request( $url, $token, $payload );
@@ -175,14 +189,17 @@ function dm_openclaw_send_message( $message, $token ) {
 }
 
 function dm_openclaw_http_request( $url, $token, $payload ) {
-	$result = wp_remote_post( $url, array(
-		'timeout' => 45,
-		'headers' => array(
-			'Authorization' => 'Bearer ' . $token,
-			'Content-Type'  => 'application/json',
-		),
-		'body' => wp_json_encode( $payload ),
-	) );
+	$result = wp_remote_post(
+		$url,
+		array(
+			'timeout' => 45,
+			'headers' => array(
+				'Authorization' => 'Bearer ' . $token,
+				'Content-Type'  => 'application/json',
+			),
+			'body'    => wp_json_encode( $payload ),
+		)
+	);
 
 	if ( is_wp_error( $result ) ) {
 		return new WP_Error( 'dm_openclaw_http_error', $result->get_error_message(), array( 'status' => 502 ) );
@@ -205,15 +222,15 @@ function dm_openclaw_websocket_request( $url, $token, $payload ) {
 
 	$scheme = empty( $parts['scheme'] ) ? 'ws' : strtolower( $parts['scheme'] );
 	$secure = 'wss' === $scheme;
-	$host = $parts['host'];
-	$port = empty( $parts['port'] ) ? dm_openclaw_default_port( $scheme ) : intval( $parts['port'] );
-	$path = empty( $parts['path'] ) ? '/' : $parts['path'];
+	$host   = $parts['host'];
+	$port   = empty( $parts['port'] ) ? dm_openclaw_default_port( $scheme ) : intval( $parts['port'] );
+	$path   = empty( $parts['path'] ) ? '/' : $parts['path'];
 	if ( ! empty( $parts['query'] ) ) {
 		$path .= '?' . $parts['query'];
 	}
 
 	$target = ( $secure ? 'ssl://' : 'tcp://' ) . $host . ':' . $port;
-	$errno = 0;
+	$errno  = 0;
 	$errstr = '';
 	$socket = @stream_socket_client( $target, $errno, $errstr, 10 );
 	if ( ! $socket ) {
@@ -221,8 +238,8 @@ function dm_openclaw_websocket_request( $url, $token, $payload ) {
 	}
 
 	stream_set_timeout( $socket, 45 );
-	$key = base64_encode( wp_generate_password( 16, false, false ) );
-	$headers = "GET {$path} HTTP/1.1\r\n";
+	$key      = base64_encode( wp_generate_password( 16, false, false ) );
+	$headers  = "GET {$path} HTTP/1.1\r\n";
 	$headers .= "Host: {$host}:{$port}\r\n";
 	$headers .= "Upgrade: websocket\r\n";
 	$headers .= "Connection: Upgrade\r\n";
@@ -233,7 +250,7 @@ function dm_openclaw_websocket_request( $url, $token, $payload ) {
 	fwrite( $socket, $headers );
 	$response_headers = '';
 	while ( ! feof( $socket ) ) {
-		$line = fgets( $socket, 4096 );
+		$line              = fgets( $socket, 4096 );
 		$response_headers .= $line;
 		if ( "\r\n" === $line || "\n" === $line ) {
 			break;
@@ -261,22 +278,28 @@ function dm_openclaw_default_port( $scheme ) {
 }
 
 function dm_openclaw_tcp_check( $host, $port, $secure ) {
-	$errno = 0;
+	$errno  = 0;
 	$errstr = '';
 	$target = ( $secure ? 'ssl://' : 'tcp://' ) . $host . ':' . $port;
 	$socket = @stream_socket_client( $target, $errno, $errstr, 3 );
 	if ( $socket ) {
 		fclose( $socket );
-		return array( 'checked' => true, 'ok' => true );
+		return array(
+			'checked' => true,
+			'ok'      => true,
+		);
 	}
 
-	return array( 'checked' => true, 'ok' => false );
+	return array(
+		'checked' => true,
+		'ok'      => false,
+	);
 }
 
 function dm_openclaw_ws_encode( $payload ) {
 	$length = strlen( $payload );
 	$header = chr( 129 );
-	$mask = wp_generate_password( 4, false, false );
+	$mask   = wp_generate_password( 4, false, false );
 
 	if ( $length <= 125 ) {
 		$header .= chr( 128 | $length );
@@ -300,17 +323,17 @@ function dm_openclaw_ws_read_text( $socket ) {
 		return new WP_Error( 'dm_openclaw_ws_empty', 'OpenClaw no envio respuesta.', array( 'status' => 502 ) );
 	}
 
-	$bytes = unpack( 'Cfirst/Csecond', $header );
+	$bytes  = unpack( 'Cfirst/Csecond', $header );
 	$opcode = $bytes['first'] & 15;
 	$length = $bytes['second'] & 127;
 
 	if ( 126 === $length ) {
 		$extended = fread( $socket, 2 );
-		$length = current( unpack( 'n', $extended ) );
+		$length   = current( unpack( 'n', $extended ) );
 	} elseif ( 127 === $length ) {
 		$extended = fread( $socket, 8 );
-		$parts = unpack( 'Nhigh/Nlow', $extended );
-		$length = $parts['low'];
+		$parts    = unpack( 'Nhigh/Nlow', $extended );
+		$length   = $parts['low'];
 	}
 
 	$payload = '';

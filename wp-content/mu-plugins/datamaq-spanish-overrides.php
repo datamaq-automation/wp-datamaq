@@ -10,13 +10,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function datamaq_lp_translate_string( $translated, $text, $domain ) {
 	$map = array(
-		'Home' => 'Inicio',
-		'Last updated:' => '&Uacute;ltima actualizaci&oacute;n:',
-		'Start Learning' => 'Comenzar curso',
-		'Featured Review' => 'Rese&ntilde;a destacada',
-		'Related Course' => 'Curso relacionado',
-		'Related Courses' => 'Cursos relacionados',
-		'User Avatar' => 'Avatar de usuario',
+		'Home'             => 'Inicio',
+		'Last updated:'    => '&Uacute;ltima actualizaci&oacute;n:',
+		'Start Learning'   => 'Comenzar curso',
+		'Featured Review'  => 'Rese&ntilde;a destacada',
+		'Related Course'   => 'Curso relacionado',
+		'Related Courses'  => 'Cursos relacionados',
+		'User Avatar'      => 'Avatar de usuario',
 		'Course thumbnail' => 'Miniatura del curso',
 		'course thumbnail' => 'miniatura del curso',
 	);
@@ -99,7 +99,7 @@ function datamaq_lp_theme_bridge_styles() {
 		return;
 	}
 
-	$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
+	$request_uri   = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '';
 	$is_lp_surface = is_post_type_archive( 'lp_course' ) || is_singular( 'lp_course' ) || is_page( 'courses' ) || is_page( 'instructor' ) || is_page( 'instructors' ) || strpos( $request_uri, '/instructor/' ) !== false;
 	if ( ! $is_lp_surface ) {
 		return;
@@ -332,7 +332,7 @@ function datamaq_lp_force_instructor_avatar_src( $uploaded_avatar_src, $user ) {
 	}
 
 	if ( 2 === (int) $user->get_id() ) {
-		return content_url('/uploads/2026/04/agustinbustos-avatar-250.webp');
+		return content_url( '/uploads/2026/04/agustinbustos-avatar-250.webp' );
 	}
 
 	return $uploaded_avatar_src;

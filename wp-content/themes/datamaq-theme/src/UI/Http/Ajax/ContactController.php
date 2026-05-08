@@ -8,60 +8,65 @@ use DataMaq\Domain\Shared\Exceptions\ValidationException;
 use DataMaq\Domain\Shared\Exceptions\DomainException;
 
 class ContactController {
-    public function handleRequest() {
-        try {
-            check_ajax_referer('datamaq_contact_nonce', 'security');
+	public function handleRequest() {
+		try {
+			check_ajax_referer( 'datamaq_contact_nonce', 'security' );
 
-            // Map frontend fields (prefix dm_) to domain entity
-            $name = sanitize_text_field($_POST['dm_name'] ?? '');
-            $email = sanitize_email($_POST['dm_email'] ?? '');
-            $company = sanitize_text_field($_POST['dm_company'] ?? '');
-            $message = sanitize_text_field($_POST['dm_message'] ?? '');
-            $channel = sanitize_text_field($_POST['dm_channel'] ?? 'whatsapp');
-            $phone = sanitize_text_field($_POST['dm_phone'] ?? '');
+			// Map frontend fields (prefix dm_) to domain entity
+			$name    = sanitize_text_field( $_POST['dm_name'] ?? '' );
+			$email   = sanitize_email( $_POST['dm_email'] ?? '' );
+			$company = sanitize_text_field( $_POST['dm_company'] ?? '' );
+			$message = sanitize_text_field( $_POST['dm_message'] ?? '' );
+			$channel = sanitize_text_field( $_POST['dm_channel'] ?? 'whatsapp' );
+			$phone   = sanitize_text_field( $_POST['dm_phone'] ?? '' );
 
-            $errors = [];
+			$errors = array();
 
-            if (empty($name)) {
-                $errors['dm_name'] = 'El nombre es obligatorio';
-            }
+			if ( empty( $name ) ) {
+				$errors['dm_name'] = 'El nombre es obligatorio';
+			}
 
-            if (empty($email) && empty($phone)) {
-                $errors['dm_contact'] = 'Indica un email o teléfono de contacto';
-            }
+			if ( empty( $email ) && empty( $phone ) ) {
+				$errors['dm_contact'] = 'Indica un email o teléfono de contacto';
+			}
 
-            if (!empty($errors)) {
-                throw new ValidationException($errors);
-            }
+			if ( ! empty( $errors ) ) {
+				throw new ValidationException( $errors );
+			}
 
-            // Infrastructure Injection
-            $repository = new N8nLeadRepository(); 
-            $useCase = new SubmitLeadUseCase($repository);
-            
-            $lead = new LeadEntity($name, $email, $company, $message, $channel, $phone);
+			// Infrastructure Injection
+			$repository = new N8nLeadRepository();
+			$useCase    = new SubmitLeadUseCase( $repository );
 
-            if ($useCase->execute($lead)) {
-                wp_send_json_success(['message' => '¡Gracias! Tu consulta ha sido enviada con éxito.']);
-            } else {
-                throw new DomainException('Error al conectar con el servicio de mensajería');
-            }
+			$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone );
 
-        } catch (ValidationException $e) {
-            wp_send_json_error([
-                'message' => $e->getMessage(),
-                'errors' => $e->getErrors(),
-                'status' => 422
-            ]);
-        } catch (DomainException $e) {
-            wp_send_json_error([
-                'message' => $e->getMessage(),
-                'status' => 500
-            ]);
-        } catch (\Throwable $e) {
-            wp_send_json_error([
-                'message' => 'Error crítico: ' . $e->getMessage(),
-                'status' => 500
-            ]);
-        }
-    }
+			if ( $useCase->execute( $lead ) ) {
+				wp_send_json_success( array( 'message' => '¡Gracias! Tu consulta ha sido enviada con éxito.' ) );
+			} else {
+				throw new DomainException( 'Error al conectar con el servicio de mensajería' );
+			}
+		} catch ( ValidationException $e ) {
+			wp_send_json_error(
+				array(
+					'message' => $e->getMessage(),
+					'errors'  => $e->getErrors(),
+					'status'  => 422,
+				)
+			);
+		} catch ( DomainException $e ) {
+			wp_send_json_error(
+				array(
+					'message' => $e->getMessage(),
+					'status'  => 500,
+				)
+			);
+		} catch ( \Throwable $e ) {
+			wp_send_json_error(
+				array(
+					'message' => 'Error crítico: ' . $e->getMessage(),
+					'status'  => 500,
+				)
+			);
+		}
+	}
 }

@@ -4,16 +4,18 @@
  * Version: 1.9
  * Description: Full 32+ variable design system, sticky header fix (increased specificity), cross-selector compatibility, and dock styling.
  */
-add_action('wp_enqueue_scripts', function() {
-    // Enqueue Inter Font
-    wp_enqueue_style('dm-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap', [], null);
-    // Enqueue Bootstrap Icons
-    wp_enqueue_style('bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css', [], null);
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		// Enqueue Inter Font
+		wp_enqueue_style( 'dm-font-inter', 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap', array(), null );
+		// Enqueue Bootstrap Icons
+		wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css', array(), null );
 
-    // Try multiple handles for inline style injection
-    $handles = ['ct-main-styles', 'blocksy-dynamic-global', 'blocksy-style', 'learnpress'];
+		// Try multiple handles for inline style injection
+		$handles = array( 'ct-main-styles', 'blocksy-dynamic-global', 'blocksy-style', 'learnpress' );
 
-    $css = '
+		$css = '
         :root {
             /* Full set of 29 variables from Audit VM439 / Staging Bridge */
             --dm-bg-0: #0c092f;
@@ -101,16 +103,22 @@ add_action('wp_enqueue_scripts', function() {
         .c-contact { background: var(--dm-bg-solid) !important; padding: 40px 0 !important; }
     ';
 
-    $injected = false;
-    foreach ($handles as $handle) {
-        if (wp_style_is($handle, 'registered')) {
-            wp_add_inline_style($handle, $css);
-            $injected = true;
-        }
-    }
+		$injected = false;
+		foreach ( $handles as $handle ) {
+			if ( wp_style_is( $handle, 'registered' ) ) {
+				wp_add_inline_style( $handle, $css );
+				$injected = true;
+			}
+		}
 
-    // Always inject in head as well to be absolutely sure
-    add_action('wp_head', function() use ($css) {
-        echo '<style id="dm-design-system-core">' . $css . '</style>';
-    }, 999);
-}, 20);
+		// Always inject in head as well to be absolutely sure
+		add_action(
+			'wp_head',
+			function () use ( $css ) {
+				echo '<style id="dm-design-system-core">' . $css . '</style>';
+			},
+			999
+		);
+	},
+	20
+);
