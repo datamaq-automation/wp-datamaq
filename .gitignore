@@ -25,6 +25,24 @@ Thumbs.db
 .vscode/
 .idea/
 
+# WordPress Core
+wp-admin/
+wp-includes/
+index.php
+xmlrpc.php
+wp-activate.php
+wp-blog-header.php
+wp-comments-post.php
+wp-cron.php
+wp-links-opml.php
+wp-load.php
+wp-login.php
+wp-mail.php
+wp-settings.php
+wp-signup.php
+wp-trackback.php
+!wp-config.php
+
 # Generated translation files
 wp-content/languages/
 
