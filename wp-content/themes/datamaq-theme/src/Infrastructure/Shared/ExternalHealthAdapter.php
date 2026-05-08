@@ -20,9 +20,9 @@ class ExternalHealthAdapter implements HealthRepositoryInterface {
 		);
 	}
 
-	public function checkStatus( string $service_key ): array {
+	public function checkStatus( string $service_key ): \DataMaq\Domain\Shared\Health\HealthStatus {
 		if ( ! isset( $this->endpoints[ $service_key ] ) ) {
-			return array( 'status' => 'unknown', 'message' => 'Service not configured' );
+			return new \DataMaq\Domain\Shared\Health\HealthStatus( 'unknown', 'Service not configured', 0 );
 		}
 
 		$start_time = microtime( true );
@@ -34,7 +34,7 @@ class ExternalHealthAdapter implements HealthRepositoryInterface {
 				'error' => $response->get_error_message(),
 				'latency' => $latency
 			) );
-			return array( 'status' => 'down', 'message' => $response->get_error_message(), 'latency' => $latency );
+			return new \DataMaq\Domain\Shared\Health\HealthStatus( 'down', $response->get_error_message(), $latency );
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
@@ -44,9 +44,9 @@ class ExternalHealthAdapter implements HealthRepositoryInterface {
 				'code' => $code,
 				'latency' => $latency
 			) );
-			return array( 'status' => 'unstable', 'message' => "HTTP Code $code", 'latency' => $latency );
+			return new \DataMaq\Domain\Shared\Health\HealthStatus( 'unstable', "HTTP Code $code", $latency );
 		}
 
-		return array( 'status' => 'ok', 'message' => 'Service operational', 'latency' => $latency );
+		return new \DataMaq\Domain\Shared\Health\HealthStatus( 'ok', 'Service operational', $latency );
 	}
 }

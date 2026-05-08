@@ -10,7 +10,7 @@ interface HealthRepositoryInterface {
 	 * Verifica si un servicio específico está respondiendo.
 	 * 
 	 * @param string $service_key Identificador del servicio (ej: 'orchestrator').
-	 * @return array{status: string, message: string, latency: float}
+	 * @return HealthStatus
 	 */
-	public function checkStatus( string $service_key ): array;
+	public function checkStatus( string $service_key ): HealthStatus;
 }
