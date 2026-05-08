@@ -3,24 +3,35 @@
 namespace DataMaq\Infrastructure\Communication;
 
 use DataMaq\Domain\Communication\ChatProvider;
+use DataMaq\Domain\Shared\ConfigProvider;
+use DataMaq\Domain\Shared\Logger;
 
 /**
  * Adapter para la integración con Chatwoot.
  */
 class ChatwootAdapter implements ChatProvider {
 
+	private ConfigProvider $config;
+	private Logger $logger;
+
+	public function __construct( ConfigProvider $config, Logger $logger ) {
+		$this->config = $config;
+		$this->logger = $logger;
+	}
+
 	public function getIdentifier(): string {
 		return 'chatwoot';
 	}
 
 	public function isEnabled(): bool {
-		// 1. Verificar si está habilitado en los ajustes (hardcoded por ahora como estaba en functions.php)
-		if ( ! get_option( 'datamaq_costs_chatwoot_enabled', true ) ) {
+		// 1. Verificar si está habilitado en los ajustes
+		if ( ! $this->config->isEnabled( 'costs_chatwoot' ) ) {
 			return false;
 		}
 
 		// 2. Deshabilitar en entorno local para evitar errores 429
 		if ( strpos( $_SERVER['HTTP_HOST'] ?? '', 'localhost' ) !== false ) {
+			$this->logger->info( 'Chatwoot disabled on localhost to prevent 429 errors.' );
 			return false;
 		}
 
@@ -28,6 +39,7 @@ class ChatwootAdapter implements ChatProvider {
 	}
 
 	public function renderWidget(): void {
+		$this->logger->info( 'Rendering Chatwoot widget.' );
 		?>
 		<script>
 			(function(d,t) {

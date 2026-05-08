@@ -35,7 +35,10 @@ add_action(
 	}
 );
 
-$chat_provider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter();
+$config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
+$logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
+
+$chat_provider = new \DataMaq\Infrastructure\Communication\ChatwootAdapter( $config_provider, $logger );
 $chat_manager  = new \DataMaq\Application\Communication\ChatManager( $chat_provider );
 $chat_manager->boot();
 
