@@ -15,10 +15,10 @@ Este documento define las reglas operativas y el estado técnico para los Agente
 - **Servidor:** VPS vía SSH (Puerto 5932).
 - **Importante:** No usar `git add .`. Agregar archivos de forma selectiva para evitar trackear el núcleo de WP.
 
-## 🤖 Misión Actual: Integración de BotMan
+## 🤖 Misión Actual: Integración de BotMan (COMPLETADA)
 - **Estado:** Backend operativo (REST API: `/wp-json/datamaq/v1/chat`).
-- **Adaptador:** `BotmanAdapter` actualizado para usar `LoggerInterface` unificado.
-- **UI:** Widget nativo PHP/JS en desarrollo.
+- **Adaptador:** `BotmanAdapter` integrado con `ChatManager`.
+- **UI:** Widget inyectado en SPA (Sidecar Pattern) con unificación responsiva para escritorio y móvil.
 
 ## 🏥 Observabilidad y Salud (NUEVO)
 - **Health Check:** `/wp-json/v1/health` (Alias nativo para SPA).

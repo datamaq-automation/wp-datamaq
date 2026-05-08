@@ -18,11 +18,11 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Instalar dependencias vía Composer (`botman/botman`).
 - [x] Implementar Webhook Controller (REST API: `/chat`).
 - [ ] Desarrollar lógica de conversación (Conversations/Nodes).
-- [ ] Integrar Widget de JS compatible con BotMan.
+- [x] Integrar Widget de JS compatible con BotMan.
 
 ## 🚀 Continuous Delivery (CD)
 - [x] Configurar GitHub Actions CI (`ci.yml`).
-- [ ] Definir secretos de despliegue en GitHub (SSH_KEY, HOST, USER).
+- [x] Definir secretos de despliegue en GitHub (SSH_KEY, HOST, USER).
 - [x] Implementar el workflow de despliegue automático (`deploy.yml`).
 
 ## 📝 Documentación
