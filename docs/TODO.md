@@ -11,7 +11,7 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 
 ## 🏗️ Desarrollo del Tema (`datamaq-theme`)
 - [x] Implementar la sección "Process" en `front-page.php` (actualmente vacía).
-- [ ] Revisar y optimizar `template-parts/content-hero.php`.
+- [x] Revisar y optimizar `template-parts/content-hero.php`.
 - [ ] Validar la visualización del "Dock" móvil inferior.
 
 ## 📝 Documentación
