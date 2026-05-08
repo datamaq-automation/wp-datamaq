@@ -38,7 +38,7 @@
               let [resource, config] = arguments;
               if (typeof resource === 'string' && resource.includes('api.datamaq.com.ar/v1/health')) {
                   console.log('🔄 [SPA] Intercepted health check. Redirecting to local proxy...');
-                  resource = '/wp-json/datamaq/v1/observability/health';
+                  resource = '/index.php?rest_route=/datamaq/v1/observability/health';
               }
               return originalFetch.apply(this, [resource, config]);
           };
