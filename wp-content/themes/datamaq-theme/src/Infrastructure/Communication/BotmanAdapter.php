@@ -20,11 +20,13 @@ class BotmanAdapter implements ChatProvider, BotEngine {
 
 	private ConfigProvider $config;
 	private Logger $logger;
+	private \DataMaq\Domain\Chat\ChatbotService $chatbot_service;
 	private ?BotMan $botman = null;
 
-	public function __construct( ConfigProvider $config, Logger $logger ) {
-		$this->config = $config;
-		$this->logger = $logger;
+	public function __construct( ConfigProvider $config, Logger $logger, \DataMaq\Domain\Chat\ChatbotService $chatbot_service ) {
+		$this->config          = $config;
+		$this->logger          = $logger;
+		$this->chatbot_service = $chatbot_service;
 	}
 
 	public function getIdentifier(): string {
@@ -63,14 +65,17 @@ class BotmanAdapter implements ChatProvider, BotEngine {
 			return;
 		}
 
-		// Respuesta simple de saludo
-		$this->botman->hears( 'hola|buen(as|os) (dias|tardes|noches)', function( BotMan $bot ) {
-			$bot->reply( '¡Hola! Soy el asistente virtual de DataMaq. ¿En qué puedo ayudarte hoy?' );
-		} );
+		// Registrar reglas desde el dominio
+		foreach ( $this->chatbot_service->getStaticRules() as $pattern => $response ) {
+			$this->botman->hears( $pattern, function( BotMan $bot ) use ( $response ) {
+				$bot->reply( $response );
+			} );
+		}
 
-		// Fallback para mensajes no entendidos
-		$this->botman->fallback( function( BotMan $bot ) {
-			$bot->reply( 'Lo siento, todavía estoy aprendiendo. Puedes preguntarme sobre nuestros cursos o servicios.' );
+		// Fallback desde el dominio
+		$fallback = $this->chatbot_service->getFallbackMessage();
+		$this->botman->fallback( function( BotMan $bot ) use ( $fallback ) {
+			$bot->reply( $fallback );
 		} );
 	}
 

@@ -39,8 +39,9 @@ $config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
 $logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
 
 // Inicialización de BotMan (Motor + UI)
-$botman_adapter = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger );
-$chat_manager   = new \DataMaq\Application\Communication\ChatManager( $botman_adapter );
+$chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
+$botman_adapter  = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
+$chat_manager    = new \DataMaq\Application\Communication\ChatManager( $botman_adapter );
 $chat_manager->boot();
 
 // Registro de API REST para el Chat
