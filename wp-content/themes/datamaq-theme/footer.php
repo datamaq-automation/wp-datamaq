@@ -63,10 +63,14 @@ try {
     </div>
 </footer>
 
-<nav class="c-home-dock tw:lg:hidden c-home-dock--direct" aria-label="Navegación rápida" style="--dock-columns: 2;">
-    <a aria-current="page" href="<?php echo $viewModel ? esc_url($viewModel->getHomeUrl()) : '/'; ?>" class="c-home-dock__link">
+<nav class="c-home-dock tw:lg:hidden c-home-dock--direct" aria-label="Navegación rápida" style="--dock-columns: 3;">
+    <a <?php echo is_front_page() ? 'aria-current="page"' : ''; ?> href="<?php echo $viewModel ? esc_url($viewModel->getHomeUrl()) : '/'; ?>" class="c-home-dock__link">
         <i class="bi bi-house-door-fill" aria-hidden="true"></i>
         <span>Inicio</span>
+    </a>
+    <a href="<?php echo $viewModel ? esc_url($viewModel->getWhatsAppUrl()) : '#'; ?>" class="c-home-dock__link">
+        <i class="bi bi-whatsapp" aria-hidden="true"></i>
+        <span>WhatsApp</span>
     </a>
     <a href="<?php echo $viewModel ? esc_url($viewModel->getContactUrl()) : '/contacto'; ?>" class="c-home-dock__link c-home-dock__link--emergency">
         <i class="bi bi-telephone-forward-fill" aria-hidden="true"></i>
