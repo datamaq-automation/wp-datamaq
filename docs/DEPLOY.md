@@ -16,7 +16,7 @@ Para garantizar la estabilidad sin consumir créditos de GitHub, utilizamos un s
 | Nivel | Validación | Herramienta | Estado |
 | :--- | :--- | :--- | :--- |
 | **L1** | **Sintaxis** | `php -l` | ✅ Activo |
-| **L2** | **Estándares (WPCS)** | `phpcs` | ⏳ Pendiente |
+| **L2** | **Estándares (WPCS)** | `phpcs` | ✅ Activo |
 | **L3** | **Análisis Estático** | `phpstan` | ⏳ Pendiente |
 | **L4** | **Tests Funcionales** | `phpunit` | ⏳ Pendiente |
 

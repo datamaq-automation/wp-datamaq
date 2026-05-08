@@ -80,3 +80,5 @@ wp-content/advanced-cache.php
 .maintenance
 php_errorlog
 error_log
+vendor/
+composer.phar

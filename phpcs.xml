@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="DataMaq Custom Standard">
+    <description>WordPress Coding Standards for DataMaq project.</description>
+
+    <!-- Paths to check -->
+    <file>wp-content/themes/datamaq-theme/</file>
+    <file>wp-content/mu-plugins/</file>
+
+    <!-- Exclude third-party / generated files -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/assets/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+
+    <!-- Ruleset: WordPress Core (minimal for now to avoid too many alerts) -->
+    <rule ref="WordPress-Core" />
+    <rule ref="WordPress-Security" />
+
+    <!-- Config -->
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg value="p"/> <!-- Show progress -->
+
+    <!-- Minimum WP version -->
+    <config name="minimum_supported_wp_version" value="6.0"/>
+</ruleset>

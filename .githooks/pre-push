@@ -43,6 +43,27 @@ if [ $ERROR_COUNT -gt 0 ]; then
 fi
 
 echo "✅ Excelente: Todos los archivos PHP son válidos."
+
+# ==============================================================================
+# NIVEL 2: PHP CODE SNIFFER (WordPress Standards)
+# ==============================================================================
+echo ""
+echo "🎨 Ejecutando CI Local: Validando Estándares WP (Nivel 2)..."
+echo "-----------------------------------------------------------"
+
+if [ -f "./vendor/bin/phpcs" ]; then
+    ./vendor/bin/phpcs --standard=phpcs.xml
+    if [ $? -ne 0 ]; then
+        echo "🛑 Violaciones de estándares detectadas."
+        echo "❌ PUSH ABORTADO. Por favor, corregí el estilo del código."
+        echo ""
+        exit 1
+    fi
+    echo "✅ El código cumple con los estándares de WordPress."
+else
+    echo "⚠️ PHPCS no encontrado. Saltando Nivel 2."
+fi
+
 echo "📤 Procediendo con el push..."
 echo ""
 exit 0
