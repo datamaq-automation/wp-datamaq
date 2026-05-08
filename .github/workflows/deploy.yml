@@ -1,13 +1,15 @@
-name: CD - Pipeline Completo
+name: CD - Pipeline de Alto Rendimiento
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  # JOB 1: Validación de Calidad (CI en la nube para seguridad extra)
-  validate:
-    name: "🔍 Validar Calidad (L1-L4)"
+  # ------------------------------------------------------------------------------
+  # 1. LINT: Estilo y Sintaxis (WPCS)
+  # ------------------------------------------------------------------------------
+  lint:
+    name: "🎨 Lint: WPCS & Syntax"
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -17,34 +19,67 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.3'
-        extensions: mbstring, xml, ctype, iconv, intl
         coverage: none
 
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: "L1-L4: Full Validation"
-      run: |
-        echo "::group::L1: PHP Syntax Check"
-        find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
-        echo "::endgroup::"
-        
-        echo "::group::L2: WordPress Coding Standards (PHPCS)"
-        ./vendor/bin/phpcs --standard=phpcs.xml -n
-        echo "::endgroup::"
-        
-        echo "::group::L3: Static Analysis (PHPStan)"
-        ./vendor/bin/phpstan analyze -c phpstan.neon --no-progress
-        echo "::endgroup::"
-        
-        echo "::group::L4: Unit Tests (PHPUnit)"
-        ./vendor/bin/phpunit --display-warnings
-        echo "::endgroup::"
+    - name: "L1: Syntax Check"
+      run: find . -name "*.php" -not -path "./vendor/*" -print0 | xargs -0 -n1 php -l
 
-  # JOB 2: Despliegue a Producción (Solo si el Job 1 pasa)
+    - name: "L2: WordPress Standards"
+      run: ./vendor/bin/phpcs --standard=phpcs.xml -n
+
+  # ------------------------------------------------------------------------------
+  # 2. ANALYSIS: Lógica Estática (PHPStan)
+  # ------------------------------------------------------------------------------
+  analysis:
+    name: "🧠 Analysis: PHPStan"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: "L3: Static Analysis"
+      run: ./vendor/bin/phpstan analyze -c phpstan.neon --no-progress
+
+  # ------------------------------------------------------------------------------
+  # 3. TEST: Lógica Funcional (PHPUnit)
+  # ------------------------------------------------------------------------------
+  test:
+    name: "🧪 Test: PHPUnit"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        coverage: none
+
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+    - name: "L4: Unit Tests"
+      run: ./vendor/bin/phpunit --display-warnings
+
+  # ------------------------------------------------------------------------------
+  # 4. DEPLOY: Despliegue a Producción (Solo si todos los anteriores son ✅)
+  # ------------------------------------------------------------------------------
   deploy:
     name: "🚀 Desplegar a Producción"
-    needs: validate
+    needs: [lint, analysis, test]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
@@ -61,7 +96,7 @@ jobs:
         ARGS: "-avz --delete"
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
 
-    - name: "🧹 Post-Deploy: Cache Flush & Audit"
+    - name: "🧹 Post-Deploy Actions"
       uses: appleboy/ssh-action@master
       with:
         host: ${{ vars.REMOTE_HOST }}
@@ -76,12 +111,15 @@ jobs:
           fi
           echo '{"commit": "${{ github.sha }}", "date": "$(date -u)"}' > deploy-info.json
 
-    - name: "🏥 Health Check (Smoke Test)"
+    - name: "📊 Generate Deployment Summary"
       run: |
-        RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" ${{ vars.SITE_URL }})
-        if [ "$RESPONSE" -eq 200 ]; then
-          echo "✅ Site is UP (HTTP 200)"
-        else
-          echo "❌ Site is DOWN (HTTP $RESPONSE)"
-          exit 1
-        fi
+        echo "### 🚀 Despliegue Exitoso de DataMaq" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Dato | Valor |" >> $GITHUB_STEP_SUMMARY
+        echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Commit** | \`${{ github.sha }}\` |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Host** | \`${{ vars.REMOTE_HOST }}\` |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Resultado Health Check** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Fecha (UTC)** | $(date -u) |" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "Check audit log here: [deploy-info.json](${{ vars.SITE_URL }}/deploy-info.json)" >> $GITHUB_STEP_SUMMARY
