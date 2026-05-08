@@ -7,11 +7,12 @@ Este repositorio utiliza un modelo de **Integración Continua (CI) Local** y **D
 ### 1. CI Local (Validación Pre-Push)
 Para maximizar el ahorro de recursos, la validación (L1-L4) ocurre **exclusivamente en local** mediante Git Hooks. GitHub Actions no realiza tareas de validación de código.
 
-### 2. CD en 4 Etapas (GitHub Actions)
+### 2. CD en 5 Etapas (GitHub Actions)
 El flujo en `.github/workflows/deploy.yml` se activa al hacer push a `main` y se divide en:
 - **🔐 Audit Secrets:** Verifica la presencia de claves privadas SSH.
 - **📋 Audit Variables:** Verifica la configuración del entorno (Host, User, Path).
-- **🚀 Deploy:** Sincroniza los archivos mediante `rsync` vía SSH (depende de los audits).
+- **🔌 Connectivity Test:** Realiza un "ping" SSH para asegurar que el servidor es alcanzable.
+- **🚀 Deploy:** Sincroniza los archivos mediante `rsync` vía SSH.
 - **🏥 Verify:** Tareas post-despliegue y validación final de salud.
 1. **Sincronización:** Usa `rsync` para subir solo archivos necesarios, excluyendo tests y configs locales.
 2. **Post-Deploy:**

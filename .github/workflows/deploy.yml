@@ -44,15 +44,33 @@ jobs:
           echo "::error::❌ Faltan configurar las siguientes Variables: ${MISSING[*]}"
           exit 1
         else
-          echo "✅ Variables validadas."
+          echo "✅ Variables validadas: ${{ vars.REMOTE_HOST }}"
         fi
 
   # ------------------------------------------------------------------------------
-  # 3. DEPLOY: Sincronización de archivos (Solo si 1 y 2 son ✅)
+  # 3. CONNECTIVITY: Probar conexión antes de subir nada
+  # ------------------------------------------------------------------------------
+  connectivity_test:
+    name: "🔌 Test: Connectivity"
+    needs: [audit_secrets, audit_variables]
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: "SSH Ping"
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ vars.REMOTE_HOST }}
+        username: ${{ vars.REMOTE_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ vars.REMOTE_PORT || '22' }}
+        script: echo "🚀 Conexión establecida con éxito en ${{ vars.REMOTE_HOST }}"
+
+  # ------------------------------------------------------------------------------
+  # 4. DEPLOY: Sincronización de archivos
   # ------------------------------------------------------------------------------
   deploy:
     name: "🚀 Sincronizar Archivos"
-    needs: [audit_secrets, audit_variables]
+    needs: connectivity_test
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -71,7 +89,7 @@ jobs:
         EXCLUDE: "/.git/, /.github/, /node_modules/, /tests/, /phpunit.xml, /phpstan.neon, /phpcs.xml"
 
   # ------------------------------------------------------------------------------
-  # 4. VERIFY: Post-despliegue y Salud
+  # 5. VERIFY: Post-despliegue y Salud
   # ------------------------------------------------------------------------------
   verify:
     name: "🏥 Verificar Salud"
@@ -106,10 +124,11 @@ jobs:
 
     - name: "📊 Summary"
       run: |
-        echo "### 🚀 Despliegue Exitoso" >> $GITHUB_STEP_SUMMARY
+        echo "### 🚀 Despliegue Exitoso de DataMaq" >> $GITHUB_STEP_SUMMARY
         echo "| Etapa | Resultado |" >> $GITHUB_STEP_SUMMARY
         echo "| :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Secrets** | ✅ Validados |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Variables** | ✅ Validadas |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Sincronización** | ✅ Completada |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Salud del Sitio** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Secrets** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Variables** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Conectividad** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Sincronización** | ✅ OK |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Salud Final** | ✅ HTTP 200 |" >> $GITHUB_STEP_SUMMARY
