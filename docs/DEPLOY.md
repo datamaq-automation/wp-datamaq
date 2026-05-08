@@ -32,10 +32,10 @@ Debés cargar estos valores en `Settings > Secrets and variables > Actions`:
 ### Variables (Pestaña "Variables" - Texto Plano)
 | Variable | Descripción | Ejemplo |
 | :--- | :--- | :--- |
-| `REMOTE_HOST` | IP o Dominio del servidor. | `123.45.67.89` |
-| `REMOTE_USER` | Usuario SSH. | `agustin` |
+| `REMOTE_HOST` | IP o Dominio del servidor. | `168.181.184.103` |
+| `REMOTE_USER` | Usuario SSH. | `root` |
 | `REMOTE_PORT` | Puerto SSH (si no es el 22). | `5932` |
-| `REMOTE_TARGET` | Ruta absoluta en el servidor. | `/var/www/public_html/` |
+| `REMOTE_TARGET` | Ruta absoluta en el servidor. | `/home/datamaq/public_html/` |
 | `SITE_URL` | URL pública para el Health Check. | `https://datamaq.com.ar` |
 
 ### Procedimiento para generar la Key:
