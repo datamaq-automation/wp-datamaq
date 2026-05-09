@@ -40,6 +40,7 @@ class ConfigRestController {
 		return new WP_REST_Response( array(
 			'baseUrl'      => $this->config_provider->get( 'CHATWOOT_BASE_URL' ),
 			'websiteToken' => $this->config_provider->get( 'CHATWOOT_WEBSITE_TOKEN' ),
+			'appSecret'    => $this->config_provider->get( 'DATAMAQ_APP_SECRET' ),
 			'traceId'      => \DataMaq\Domain\Shared\Observability\TraceContext::get(),
 		), 200 );
 	}

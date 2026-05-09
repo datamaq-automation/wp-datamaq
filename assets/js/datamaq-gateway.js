@@ -98,8 +98,9 @@ class ChatwootAdapter extends ChatProvider {
 // --- [ INFRASTRUCTURE - NETWORK ] ---
 
 class NetworkInterceptor {
-    constructor(chatService) {
+    constructor(chatService, appSecret) {
         this.chatService = chatService;
+        this.appSecret = appSecret;
         this.originalFetch = window.fetch;
     }
 
@@ -136,6 +137,7 @@ class NetworkInterceptor {
             headers: {
                 ...(config?.headers || {}),
                 'X-DataMaq-Trace-ID': traceId,
+                'X-DataMaq-Secret': this.appSecret,
                 'X-DataMaq-Source': 'Unified-Gateway'
             }
         };
@@ -233,7 +235,8 @@ class DataMaqGateway {
                     const data = await response.json();
                     config = {
                         baseUrl: data.baseUrl,
-                        token: data.websiteToken
+                        token: data.websiteToken,
+                        appSecret: data.appSecret
                     };
                 }
             } catch (e) {
@@ -244,11 +247,12 @@ class DataMaqGateway {
         // 2. Fallback de emergencia (Hardcoded)
         const finalConfig = config || {
             baseUrl: "https://chatwoot.datamaq.com.ar",
-            token: "EaFpQ65unLmqzYshTRLS8R2E"
+            token: "EaFpQ65unLmqzYshTRLS8R2E",
+            appSecret: "" // Sin secreto por defecto en fallback
         };
 
         const chatService = new ChatwootAdapter(finalConfig);
-        const network = new NetworkInterceptor(chatService);
+        const network = new NetworkInterceptor(chatService, finalConfig.appSecret);
         const ui = new DOMSentinel(chatService);
 
         chatService.initialize();

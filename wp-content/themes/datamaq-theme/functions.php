@@ -77,10 +77,10 @@ function dm_chat_manager() {
 dm_chat_manager()->boot();
 
 // REST API: Chat & Lead
-add_action( 'rest_api_init', function () {
+add_action( 'rest_api_init', function () use ( $config_provider ) {
 	// REST API: Lead (Interception)
 	$use_case = dm_submit_lead_use_case();
-	$lead_controller = new \DataMaq\Infrastructure\WordPress\LeadRestController( $use_case );
+	$lead_controller = new \DataMaq\Infrastructure\WordPress\LeadRestController( $use_case, $config_provider );
 	$lead_controller->register_routes();
 } );
 

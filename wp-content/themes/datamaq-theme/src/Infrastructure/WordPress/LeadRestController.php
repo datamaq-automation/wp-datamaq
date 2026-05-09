@@ -17,11 +17,13 @@ use WP_REST_Server;
 class LeadRestController {
 
 	private SubmitLeadUseCase $use_case;
+	private \DataMaq\Domain\Shared\ConfigProvider $config;
 	private string $namespace = 'datamaq/v1';
 	private string $rest_base = 'lead';
 
-	public function __construct( SubmitLeadUseCase $use_case ) {
+	public function __construct( SubmitLeadUseCase $use_case, \DataMaq\Domain\Shared\ConfigProvider $config ) {
 		$this->use_case = $use_case;
+		$this->config   = $config;
 	}
 
 	/**
@@ -35,10 +37,24 @@ class LeadRestController {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'create_lead' ),
-					'permission_callback' => '__return_true', // Permitir envíos públicos
+					'permission_callback' => array( $this, 'validate_request' ),
 				),
 			)
 		);
+	}
+
+	/**
+	 * Valida que la petición venga de una fuente autorizada.
+	 */
+	public function validate_request( WP_REST_Request $request ): bool {
+		// En desarrollo local o si no hay secreto definido, permitir (con precaución)
+		$secret = $this->config->get( 'DATAMAQ_APP_SECRET' );
+		if ( empty( $secret ) ) {
+			return true; 
+		}
+
+		$provided_secret = $request->get_header( 'X-DataMaq-Secret' );
+		return hash_equals( $secret, (string) $provided_secret );
 	}
 
 	/**
