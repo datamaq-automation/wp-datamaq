@@ -96,6 +96,36 @@ function dm_content_repo() {
 }
 
 /**
+ * Lead Submission Use Case Factory
+ */
+function dm_submit_lead_use_case() {
+	static $use_case = null;
+	if ( null === $use_case ) {
+		$logger = new \DataMaq\Infrastructure\Shared\WPLogger();
+		
+		// 1. SuiteCRM Repository
+		$crm_service = new \DataMaq\Infrastructure\CRM\SuiteCrmService(
+			defined('SUITECRM_BASE_URL') ? SUITECRM_BASE_URL : '',
+			defined('SUITECRM_CLIENT_ID') ? SUITECRM_CLIENT_ID : '',
+			defined('SUITECRM_CLIENT_SECRET') ? SUITECRM_CLIENT_SECRET : '',
+			defined('SUITECRM_USERNAME') ? SUITECRM_USERNAME : '',
+			defined('SUITECRM_PASSWORD') ? SUITECRM_PASSWORD : '',
+			$logger
+		);
+		$crm_repo = new \DataMaq\Infrastructure\Lead\SuiteCrmLeadRepository( $crm_service );
+
+		// 2. n8n Repository (Existing)
+		$n8n_repo = new \DataMaq\Infrastructure\Lead\N8nLeadRepository();
+
+		// Composite: Send to both
+		$composite_repo = new \DataMaq\Infrastructure\Lead\CompositeLeadRepository( array( $crm_repo, $n8n_repo ) );
+
+		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $composite_repo );
+	}
+	return $use_case;
+}
+
+/**
  * Initialize SEO Service
  */
 ( new \DataMaq\Infrastructure\Seo\SeoService() )->registerHooks();

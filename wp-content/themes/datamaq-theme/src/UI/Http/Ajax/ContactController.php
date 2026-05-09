@@ -34,9 +34,8 @@ class ContactController {
 				throw new ValidationException( $errors );
 			}
 
-			// Infrastructure Injection
-			$repository = new N8nLeadRepository();
-			$useCase    = new SubmitLeadUseCase( $repository );
+			// Infrastructure Injection via Factory
+			$useCase = dm_submit_lead_use_case();
 
 			$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone );
 

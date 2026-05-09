@@ -14,17 +14,19 @@ class SuiteCrmService implements CrmProviderInterface {
 	private string $client_secret;
 	private string $username;
 	private string $password;
+	private \DataMaq\Domain\Shared\Observability\LoggerInterface $logger;
 	private ?string $token = null;
 
 	/**
 	 * Constructor. Las credenciales se inyectan idealmente desde un ConfigProvider.
 	 */
-	public function __construct( string $base_url, string $client_id, string $client_secret, string $username, string $password ) {
+	public function __construct( string $base_url, string $client_id, string $client_secret, string $username, string $password, \DataMaq\Domain\Shared\Observability\LoggerInterface $logger ) {
 		$this->base_url      = rtrim( $base_url, '/' );
 		$this->client_id     = $client_id;
 		$this->client_secret = $client_secret;
 		$this->username      = $username;
 		$this->password      = $password;
+		$this->logger        = $logger;
 	}
 
 	/**
@@ -64,13 +66,13 @@ class SuiteCrmService implements CrmProviderInterface {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			error_log( 'SuiteCRM API Error (Create Lead): ' . $response->get_error_message() );
+			$this->logger->error( 'SuiteCRM API Error (Create Lead): ' . $response->get_error_message() );
 			return false;
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
 		if ( 201 !== $code ) {
-			error_log( 'SuiteCRM API Error (Create Lead HTTP ' . $code . '): ' . wp_remote_retrieve_body( $response ) );
+			$this->logger->error( 'SuiteCRM API Error (Create Lead HTTP ' . $code . '): ' . wp_remote_retrieve_body( $response ) );
 			return false;
 		}
 
@@ -109,7 +111,7 @@ class SuiteCrmService implements CrmProviderInterface {
 		);
 
 		if ( is_wp_error( $response ) ) {
-			error_log( 'SuiteCRM Auth Error: ' . $response->get_error_message() );
+			$this->logger->error( 'SuiteCRM Auth Error: ' . $response->get_error_message() );
 			return false;
 		}
 
@@ -117,7 +119,7 @@ class SuiteCrmService implements CrmProviderInterface {
 		$body = wp_remote_retrieve_body( $response );
 
 		if ( 200 !== $code ) {
-			error_log( 'SuiteCRM Auth Error HTTP ' . $code . ': ' . $body );
+			$this->logger->error( 'SuiteCRM Auth Error HTTP ' . $code . ': ' . $body );
 			return false;
 		}
 

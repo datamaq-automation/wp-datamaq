@@ -50,18 +50,25 @@ class LeadCaptureConversation extends Conversation {
 	}
 
 	/**
-	 * Envío de datos a SuiteCRM vía API v8.
+	 * Envío de datos al ecosistema de persistencia vía Use Case.
 	 */
 	protected function dispatchToCrm(): void {
-		$crm = new \DataMaq\Infrastructure\CRM\SuiteCrmService(
-			defined('SUITECRM_BASE_URL') ? SUITECRM_BASE_URL : '',
-			defined('SUITECRM_CLIENT_ID') ? SUITECRM_CLIENT_ID : '',
-			defined('SUITECRM_CLIENT_SECRET') ? SUITECRM_CLIENT_SECRET : '',
-			defined('SUITECRM_USERNAME') ? SUITECRM_USERNAME : '',
-			defined('SUITECRM_PASSWORD') ? SUITECRM_PASSWORD : ''
+		$use_case = dm_submit_lead_use_case();
+		
+		// Determinamos si es email o teléfono lo que proporcionó
+		$email = str_contains( $this->contact_info, '@' ) ? $this->contact_info : '';
+		$phone = empty( $email ) ? $this->contact_info : '';
+
+		$lead = new \DataMaq\Domain\Lead\LeadEntity(
+			$this->name,
+			$email,
+			'', // Empresa (no solicitada en chat simplificado)
+			$this->reason,
+			'botman',
+			$phone
 		);
 
-		$success = $crm->createLead( $this->name, $this->contact_info, $this->reason );
+		$success = $use_case->execute( $lead );
 
 		if ( $success ) {
 			$this->say( '✅ Tu solicitud fue registrada con éxito en nuestro sistema.' );
