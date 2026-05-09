@@ -74,10 +74,11 @@ class LeadRestController {
 
 		// Aplanar metadatos para evitar anidamiento en Chatwoot (DDD: Preparación de datos)
 		$metadata = array(
-			'company'     => $company,
-			'description' => $message,
-			'channel'     => $channel,
-			'source'      => 'WordPress SPA',
+			'company'            => $company,
+			'description'        => $message,
+			'channel'            => $channel,
+			'whatsapp_preferred' => ( $channel === 'whatsapp' ), // Transformación a booleano
+			'source'             => 'WordPress SPA',
 		);
 
 		try {
