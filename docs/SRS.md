@@ -25,6 +25,10 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - `ChatwootProvider`: Inyección y control del widget oficial.
   - `WPConfigProvider`: Acceso a `.env` y configuración de WP.
   - `WPLogger`: Registro de eventos con prefijo `[Chatwoot]`.
+- **Observabilidad (Traceability):**
+-   - `TraceContext`: Almacén global de trazabilidad en PHP.
+-   - `X-DataMaq-Trace-ID`: Encabezado estándar para propagación de contexto desde el cliente.
+-   - **Correlación**: Los logs del servidor incluyen automáticamente el ID de seguimiento generado por el gateway JS.
 
 ## 🛠️ Infraestructura Verificada
 - **WP-CLI:** Disponible y funcional.

@@ -14,12 +14,15 @@ Este documento define la especificación técnica y las certezas para la integra
 - **Intercepción de SPA:** Existe un "Debug Gateway" en `index.html` que intercepta llamadas de la SPA compilada. Su uso será adaptado a ChatWoot si se requiere.
 - **Respeto por el Código Existente**: No se realizarán cambios en los archivos PHP, JS o HTML hasta no agotar las dudas del `DISCOVERY.md`.
 
-## 3. Certezas de Implementación Técnica (Ejecutadas)
-1. **Interfaz (Frontend):** Se utiliza el **SDK oficial de Chatwoot** inyectado vía `ChatwootProvider`. 
-2. **Control de Apertura:** Se interceptan las interacciones de la SPA y del tema (enlaces `#chat`, botones de WhatsApp) mediante un **Debug Gateway** en `index.html` que dispara `window.$chatwoot.toggle()`.
-3. **Entidades en Chatwoot:** El `ChatWootLeadRepository` utiliza la API para buscar/crear contactos y abrir conversaciones automáticas ante cada envío de lead.
-4. **Automatización:** La lógica de respuestas se gestiona **100% dentro de Chatwoot**.
-5. **Flujo de Datos:** El **`LeadRestController` actúa como Proxy Seguro**, delegando la persistencia al repositorio hexagonal de Chatwoot.
+3. **Certezas de Implementación Técnica (Ejecutadas)**
+1. **Interfaz (Frontend):** Se utiliza el **SDK oficial de Chatwoot** inyectado y orquestado por `datamaq-gateway.js`.
+2. **Control de Apertura:** Se interceptan las interacciones de la SPA y del tema (enlaces `#chat`, botones de WhatsApp) mediante un **NetworkInterceptor** y un **DOMSentinel**.
+3. **Persistencia de Leads (Backend):** El `ChatWootLeadRepository` se enfoca en la **Sincronización de Contactos**. No se crean conversaciones automáticas para evitar ruido en la Inbox.
+4. **Mapeo de Datos (E.164 & Flat):** 
+    - Los teléfonos se sanitizan al formato estricto E.164.
+    - Los metadatos se envían como `custom_attributes` planos (sin anidamiento).
+    - Se incluye el booleano `whatsapp_preferred` para segmentación visual en el panel.
+5. **Proxy Seguro:** El **`LeadRestController` actúa como punto de entrada único**, inyectando trazabilidad (`traceId`) mediante el encabezado `X-DataMaq-Trace-ID`.
 
 ## 4. Definición del Servicio (PHP Interface)
 

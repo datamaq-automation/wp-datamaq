@@ -2,20 +2,16 @@
 
 Este documento registra todas las misiones y tareas finalizadas en el proyecto DataMaq WordPress.
 
-## 🤖 Consolidación en Chatwoot (Mayo 2026)
-- **Estado:** Finalizado con éxito.
-- **Logros:**
-    - [x] **Eliminación de Middleware (Sistemas Legados)**: Reducción de latencia y puntos de falla.
-    - [x] **Remoción de Sistemas Legados**: Simplificación del stack de leads.
-    - [x] **Remoción de Sistemas Legados**: Sustitución del motor de chat local por el SDK oficial de Chatwoot.
-    - [x] **Implementación de `ChatWootLeadRepository`**: Sincronización robusta vía API REST con depuración detallada.
-    - [x] **Refactorización de `LeadRestController`**: Puente seguro entre la SPA y Chatwoot.
-    - [x] **Debug Gateway (index.html)**: Intercepción unificada de interacciones de la SPA para derivar a Chatwoot.
-    - [x] **UI Sync**: Actualización de Footers y Heros para usar el nuevo sistema de comunicación.
-    - [x] **Limpieza de Código Muerto**: Eliminadas referencias a Sistemas Legados, Sistemas Legados y Sistemas Legados en controladores y servicios PHP.
-    - [x] **Purga de Assets JS**: `datamaq-chat.js` limpiado para evitar errores 404.
-    - [x] **Auditoría de Dependencias**: Verificado que el `vendor` y `composer.json` están libres de paquetes legados.
-    - [x] **Documentación Técnica**: Actualización de `README.md`, `SRS.md`, `AGENT.md` y creación de `CHATWOOT_CONTRACT.md`.
+## 🤖 Estabilización y Observabilidad Hexagonal (Mayo 2026)
+- **Estado:** Finalizado.
+- **Hitos:**
+    - [x] **Arquitectura Hexagonal (Lead Sync)**: Implementado `ChatWootLeadRepository` con sincronización nativa de contactos.
+    - [x] **Observabilidad de Leads**: Trazabilidad completa con `traceId` y `TraceContext` entre SPA y WordPress.
+    - [x] **E.164 & Sanitización**: Implementada normalización estricta de teléfonos y metadatos planos para Chatwoot.
+    - [x] **Configuración de Producción**: Alineación de `.env` y creación de atributos personalizados (`whatsapp_preferred`, `company`) en el VPS.
+    - [x] **Pipeline de CI/CD**: Validación local L1-L4 y despliegue automático mediante GitHub Actions operativo.
+    - [x] **Limpieza de Assets**: Vaciado `assets/js/datamaq-chat.js` para eliminar lógica de Sistemas Legados.
+    - [x] **Remoción de Archivos Legados**: Purga de referencias a Sistemas Legados en `src/` y controladores.
 
 ## 🏗️ Desarrollo Base del Tema
 - [x] Implementar la sección "Process" en `front-page.php`.
