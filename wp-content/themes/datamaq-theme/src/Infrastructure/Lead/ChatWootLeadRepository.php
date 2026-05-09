@@ -24,10 +24,10 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 		$token      = $this->config->get( 'CHATWOOT_ACCESS_TOKEN' );
 		$inbox_id   = $this->config->get( 'CHATWOOT_INBOX_ID' );
 
-		$this->logger->info( sprintf( '[Chatwoot] 🚀 Initiating lead sync for email: %s', $lead->getEmail() ) );
+		$this->logger->info( sprintf( '[Chatwoot] 🚀 Lead sync initiated for %s', $lead->getEmail() ?: $lead->getPhone() ) );
 
 		if ( ! $account_id || ! $base_url || ! $token || ! $inbox_id ) {
-			$this->logger->error( '[Chatwoot] ❌ CRITICAL: Configuration missing in .env. Needed: ACCOUNT_ID, BASE_URL, ACCESS_TOKEN, INBOX_ID' );
+			$this->logger->error( '[Chatwoot] ❌ Configuration missing in .env' );
 			return false;
 		}
 
@@ -37,57 +37,48 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 		);
 
 		// 1. Search or Create Contact
-		$this->logger->info( '[Chatwoot] [Step 1/3] Resolving Contact...' );
 		$contact_id = $this->get_or_create_contact( $lead, $base_url, $account_id, $headers );
-		if ( ! $contact_id ) {
-			$this->logger->error( '[Chatwoot] ❌ Failed to resolve contact ID. Aborting sync.' );
-			return false;
-		}
-		$this->logger->info( sprintf( '[Chatwoot] ✅ Contact resolved successfully: ID %d', $contact_id ) );
+		if ( ! $contact_id ) return false;
 
 		// 2. Create Conversation
-		$this->logger->info( '[Chatwoot] [Step 2/3] Creating/Verifying Conversation...' );
 		$conversation_id = $this->create_conversation( $contact_id, $inbox_id, $base_url, $account_id, $headers );
-		if ( ! $conversation_id ) {
-			$this->logger->error( '[Chatwoot] ❌ Failed to create conversation. Aborting sync.' );
-			return false;
-		}
-		$this->logger->info( sprintf( '[Chatwoot] ✅ Conversation created/resolved: ID %d', $conversation_id ) );
+		if ( ! $conversation_id ) return false;
 
 		// 3. Send Message
-		$this->logger->info( '[Chatwoot] [Step 3/3] Sending lead data as message...' );
 		$success = $this->send_message( $conversation_id, $lead->toArray()['message'], $base_url, $account_id, $headers );
 		
 		if ( $success ) {
-			$this->logger->info( '[Chatwoot] ✨ SYNC COMPLETE: Lead successfully posted to Chatwoot.' );
-		} else {
-			$this->logger->error( '[Chatwoot] ❌ SYNC FAILED: Could not send final message to conversation.' );
+			$this->logger->info( '[Chatwoot] ✅ Lead successfully synced.' );
 		}
 
 		return $success;
 	}
 
 	private function get_or_create_contact( LeadEntity $lead, string $base_url, string $account_id, array $headers ): ?int {
-		$search_url = sprintf( '%s/api/v1/accounts/%s/contacts/search?q=%s', $base_url, $account_id, $lead->getEmail() );
-		$this->logger->info( '[Chatwoot] Searching for existing contact: ' . $lead->getEmail() );
+		$email = $lead->getEmail();
+		$phone = $lead->getPhone();
+
+		// Asegurar formato E.164 para Chatwoot
+		if ( ! empty( $phone ) && strpos( $phone, '+' ) !== 0 ) {
+			$phone = '+' . $phone;
+		}
+
+		$search_url = sprintf( '%s/api/v1/accounts/%s/contacts/search?q=%s', $base_url, $account_id, !empty($email) ? $email : $phone );
 		
 		$response   = wp_remote_get( $search_url, array( 'headers' => $headers ) );
 
 		if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
 			$body = json_decode( wp_remote_retrieve_body( $response ), true );
 			if ( ! empty( $body['payload'] ) ) {
-				$id = $body['payload'][0]['id'];
-				$this->logger->info( sprintf( '[Chatwoot] Existing contact found: ID %d', $id ) );
-				return $id;
+				return $body['payload'][0]['id'];
 			}
 		}
 
-		$this->logger->info( '[Chatwoot] Contact not found. Creating new contact profile...' );
 		$create_url = sprintf( '%s/api/v1/accounts/%s/contacts', $base_url, $account_id );
 		$payload    = array(
 			'name'         => $lead->getName(),
-			'email'        => $lead->getEmail(),
-			'phone_number' => $lead->getPhone(),
+			'email'        => $email,
+			'phone_number' => $phone,
 			'custom_attributes' => array(
 				'source' => 'WordPress Website',
 				'synced_at' => current_time('mysql')
@@ -110,10 +101,9 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 		}
 
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		$id = $body['payload']['contact']['id'] ?? null;
-		$this->logger->info( sprintf( '[Chatwoot] New contact created: ID %s', $id ) );
-		return $id;
+		return $body['payload']['contact']['id'] ?? null;
 	}
+
 
 	private function create_conversation( int $contact_id, int $inbox_id, string $base_url, string $account_id, array $headers ): ?int {
 		$url     = sprintf( '%s/api/v1/accounts/%s/conversations', $base_url, $account_id );
@@ -123,7 +113,6 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 			'status'     => 'open',
 		);
 
-		$this->logger->info( sprintf( '[Chatwoot] POSTing new conversation for contact %d...', $contact_id ) );
 		$response = wp_remote_post(
 			$url,
 			array(
@@ -150,7 +139,6 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 			'message_type' => 'incoming',
 		);
 
-		$this->logger->info( sprintf( '[Chatwoot] POSTing message to conversation %d...', $conversation_id ) );
 		$response = wp_remote_post(
 			$url,
 			array(
