@@ -119,7 +119,7 @@ class NetworkInterceptor {
 
         // Proxy API
         if (url.includes('api.datamaq.com.ar')) {
-            url = url.replace('https://api.datamaq.com.ar', '/index.php?rest_route=');
+            url = url.replace('https://api.datamaq.com.ar', '/index.php?rest_route=/datamaq');
         }
 
         // Intercepción de Leads
