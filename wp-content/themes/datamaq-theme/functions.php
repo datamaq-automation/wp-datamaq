@@ -106,8 +106,11 @@ function dm_submit_lead_use_case() {
 		
 		// 1. ChatWoot Repository
 		$chatwoot_repo = new \DataMaq\Infrastructure\Lead\ChatWootLeadRepository( $config_provider, $logger );
+		
+		// 2. Observability Repository
+		$log_repo = new \DataMaq\Infrastructure\Lead\WPLeadLogRepository();
 
-		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $chatwoot_repo );
+		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $chatwoot_repo, $log_repo );
 	}
 	return $use_case;
 }

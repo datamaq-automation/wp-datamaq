@@ -19,6 +19,15 @@ add_action( 'admin_menu', function () {
 		'chatwoot-settings',
 		'datamaq_render_chatwoot_settings'
 	);
+
+	add_submenu_page(
+		'datamaq-costs',
+		'Observabilidad de Leads',
+		'Observabilidad',
+		'manage_options',
+		'datamaq-leads-log',
+		'datamaq_render_leads_log'
+	);
 } );
 
 /**
@@ -165,6 +174,83 @@ function datamaq_render_chatwoot_settings() {
 			submit_button( 'Guardar Cambios Configuración' );
 			?>
 		</form>
+	</div>
+	<?php
+}
+
+/**
+ * Render the Leads Log Dashboard
+ */
+function datamaq_render_leads_log() {
+	$log_repo = new \DataMaq\Infrastructure\Lead\WPLeadLogRepository();
+	$logs = $log_repo->getLastLogs( 50 );
+	?>
+	<div class="wrap datamaq-admin-page">
+		<style>
+			.datamaq-log-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+			.datamaq-log-table th { background: #0c092f; color: #fff; text-align: left; padding: 15px; font-weight: 600; }
+			.datamaq-log-table td { padding: 12px 15px; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+			.datamaq-log-table tr:last-child td { border-bottom: none; }
+			.status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+			.status-success { background: #d4edda; color: #155724; }
+			.status-error { background: #f8d7da; color: #721c24; }
+			.utm-tag { display: inline-block; background: #e9ecef; color: #495057; padding: 2px 6px; border-radius: 3px; margin: 2px; font-size: 0.7rem; }
+			.trace-id { font-family: monospace; color: #888; font-size: 0.8rem; }
+		</style>
+
+		<h1>Observabilidad de Leads - Últimos 50 eventos</h1>
+		<p>Listado en tiempo real de los leads procesados por el sistema unificado.</p>
+
+		<table class="datamaq-log-table">
+			<thead>
+				<tr>
+					<th>Fecha/Hora</th>
+					<th>Contacto</th>
+					<th>Estado</th>
+					<th>Atribución / UTMs</th>
+					<th>ID de Trazabilidad</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if ( empty( $logs ) ) : ?>
+					<tr>
+						<td colspan="5" style="text-align:center; padding: 40px;">No hay eventos registrados aún.</td>
+					</tr>
+				<?php else : ?>
+					<?php foreach ( $logs as $log ) : ?>
+						<tr>
+							<td><?php echo esc_html( $log['timestamp'] ); ?></td>
+							<td>
+								<strong><?php echo esc_html( $log['name'] ); ?></strong><br>
+								<span style="color: #666;"><?php echo esc_html( $log['email'] ); ?></span>
+							</td>
+							<td>
+								<?php if ( $log['success'] ) : ?>
+									<span class="status-badge status-success">Sincronizado</span>
+								<?php else : ?>
+									<span class="status-badge status-error">Error Sync</span>
+								<?php endif; ?>
+							</td>
+							<td>
+								<?php 
+								$mkt = $log['marketing'] ?? array();
+								$utm_keys = array( 'utm_source', 'utm_medium', 'utm_campaign' );
+								foreach ( $utm_keys as $key ) {
+									if ( ! empty( $mkt[$key] ) ) {
+										echo '<span class="utm-tag">' . esc_html( $key . ': ' . $mkt[$key] ) . '</span>';
+									}
+								}
+								if ( ! empty( $mkt['landing_page'] ) ) {
+									echo '<br><small style="color: #999;">Landing: ' . esc_html( parse_url( $mkt['landing_page'], PHP_URL_PATH ) ) . '</small>';
+								}
+								?>
+							</td>
+							<td class="trace-id"><?php echo esc_html( $log['id'] ); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</tbody>
+		</table>
 	</div>
 	<?php
 }
