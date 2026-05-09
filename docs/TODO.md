@@ -14,20 +14,16 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Refactorizar a Arquitectura Hexagonal (Logger, ConfigProvider, HealthStatus).
 - [x] Normalizar Observabilidad (Unificación de Interfaces de Log).
 
-## 🤖 Migración a BotMan (PHP)
-- [x] Instalar dependencias vía Composer (`botman/botman`).
-- [x] Implementar Webhook Controller (REST API: `/chat`).
-- [x] Desarrollar clase `LeadCaptureConversation` para calificar contactos.
-- [ ] Desarrollar clase `SupportConversation` para soporte técnico guiado.
-- [x] Desarrollar servicio HTTP Client (`SuiteCrmService`) para la REST API v8.
-- [x] Implementar autenticación OAuth2 (obtención y renovación de tokens).
-- [x] Mapear y enviar payload JSON de LeadCaptureConversation hacia `/api/v8/module/Leads`.
-- [ ] Desarrollar Panel de Ajustes / CPT en WordPress para editar reglas de Regex sin tocar código.
-- [x] Integrar Widget de JS compatible con BotMan.
-- [ ] Interceptar llamadas a `n8n.datamaq.com.ar` en el Debug Gateway para redirigirlas a WP.
-- [ ] Implementar Telemetría de Errores JS -> PHP para centralizar logs del frontend.
-- [ ] Añadir Health Check específico para la API de SuiteCRM en el monitor de salud.
-- [ ] Implementar Correlation IDs para trazabilidad de leads entre Frontend y Backend.
+## 🤖 Migración a ChatWoot Directo (Volantazo)
+- [ ] Definir certezas arquitectónicas (Frontend, Entidades, Automatización, Credenciales).
+- [ ] Eliminar dependencias de `botman/botman` vía Composer.
+- [ ] Eliminar clases y servicios relacionados a BotMan (`ChatbotService`, `BotmanAdapter`).
+- [ ] Eliminar clases y servicios relacionados a SuiteCRM (`SuiteCrmService`, `SuiteCrmLeadRepository`).
+- [ ] Eliminar archivos de integración de n8n.
+- [ ] Implementar `ChatWootLeadRepository` (o similar) para enviar datos a la API de ChatWoot.
+- [ ] Adaptar o remover el "Debug Gateway" de interceptación SPA según la decisión sobre el widget frontend.
+- [ ] Refactorizar `LeadRestController` para utilizar el nuevo proveedor de ChatWoot.
+- [ ] Eliminar tests de SuiteCRM, BotMan y n8n, y crear nuevos para ChatWoot.
 
 ## 🚀 Continuous Delivery (CD)
 - [x] Configurar GitHub Actions CI (`ci.yml`).

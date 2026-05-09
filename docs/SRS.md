@@ -16,11 +16,11 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
 ## 🏗️ Arquitectura de Software
 - **Patrón:** Arquitectura Hexagonal (Ports & Adapters).
 - **Abstracciones (Ports):**
-  - `ChatProvider`: Abstrae el motor de comunicación.
+  - `ChatPlatformProviderInterface`: Abstrae el motor de comunicación y CRM (ChatWoot).
   - `ConfigProvider`: Desacopla la lógica de negocio de la base de datos de opciones de WP.
   - `Logger`: Interfaz única para observabilidad y registro de errores.
 - **Implementaciones (Adapters):**
-  - `SuiteCrmLeadRepository`: Entrega de leads vía REST API v8.
+  - `ChatWootAdapter`: Entrega de leads y gestión de conversaciones vía REST API de ChatWoot.
   - `WPConfigProvider`: Acceso seguro a `get_option` y constantes.
   - `WPLogger`: Registro de eventos mediante `error_log` de WordPress.
 

@@ -1,19 +1,22 @@
-## 🏥 Auditoría de Infraestructura y Observabilidad (Mayo 2026)
-- **Unificación de Leads:** Se eliminó la fragmentación entre n8n y SuiteCRM. Ahora tanto el formulario como el chatbot usan el mismo Use Case (`SubmitLeadUseCase`).
-- **Eliminación de Middleware:** Se descartó n8n para reducir la latencia (ahorro de ~500ms) y eliminar puntos de falla externos.
-- **Remoción de Chatwoot:** Se eliminó el SDK de Chatwoot para reducir el peso del frontend y centralizar la comunicación en el bot nativo PHP.
-- **Normalización de Loggers:** Se inyectó `LoggerInterface` en `SuiteCrmService`, eliminando el uso de `error_log` nativo y centralizando la observabilidad en `WPLogger`.
-- **Arquitectura Hexagonal:** Se validó la correcta separación de capas (Domain, Application, Infrastructure, UI).
-- **Intercepción de SPA:** Se identificó un "Debug Gateway" en `index.html` que intercepta llamadas de la SPA para redirigirlas a WordPress.
+# 🔍 Discovery (Dudas y Definiciones Pendientes)
 
-## 🤖 Integración de BotMan (Fase 2: Lógica Conversacional)
-### Certezas Arquitectónicas
-- **Aislamiento de Lógica:** Las reglas de conversación (intenciones/respuestas) están aisladas en `ChatbotService.php` (Domain Layer), abstraídas del framework BotMan.
-- **Sidecar Pattern (SPA):** El widget Vanilla JS se inyectó en `index.html` secuestrando los enlaces de WhatsApp, unificando responsivamente el contacto sin alterar la SPA compilada.
-- **Captura de Leads (SuiteCRM Unificado):** Se utiliza el `SuiteCrmLeadRepository` como único punto de salida para leads, garantizando consistencia.
+Este documento centraliza exclusivamente las dudas arquitectónicas, técnicas o de negocio que necesitan ser resueltas por el equipo antes de proceder con el código.
 
-### Decisiones Arquitectónicas Consolidadas
-- **Motor de Inteligencia:** Se eligió el **Árbol Clásico (Regex / Palabras clave)** en lugar de un LLM. Prioriza velocidad, control estricto del flujo comercial, previsibilidad total y cero costos recurrentes de API.
-- **Flujos Conversacionales:** Se implementarán `Conversation` classes de BotMan para guiar al usuario paso a paso (ej. Soporte Técnico / Captación de Datos).
-- **Captura de Leads (SuiteCRM Directo):** Se decidió descartar n8n en favor de una integración directa (Punto a Punto). El chatbot recogerá los datos e interactuará con la REST API v8 de SuiteCRM (`/Api/access_token` y `/api/v8/module/Leads`) usando OAuth2. Esto reduce infraestructura externa pero requiere manejar la lógica de autenticación y reintentos dentro de PHP.
-- **Gestión de Contenido:** Se desarrollará posteriormente una interfaz de WordPress (Ajustes o CPT) para que el equipo comercial pueda gestionar el diccionario de intenciones y respuestas de manera autónoma.
+## Transición a ChatWoot Directo (Fase 3)
+
+### A. Interfaz de Usuario (Frontend)
+¿Se inyectará el **Widget oficial de ChatWoot** (el script estándar en JS) o se mantendrá la **SPA de React/Vue interceptada** enviando peticiones silenciosas a la API de ChatWoot (como Contactos y Conversaciones)?
+
+### B. Tratamiento del Lead (Entidades en ChatWoot)
+Cuando se capture un lead desde un formulario, ¿qué se debe crear en ChatWoot?
+- **Opción 1:** Crear un nuevo `Contact` (Contacto) y asignarle una nueva `Conversation` (Conversación) en un Inbox específico.
+- **Opción 2:** Simplemente inyectar los datos como un mensaje suelto en la bandeja general.
+
+### C. Automatización y Flujos Conversacionales
+Dado que se elimina BotMan (motor de respuestas local PHP), ¿la lógica de saludos iniciales, recolección de datos y derivación será delegada **100% a las herramientas nativas de ChatWoot** (AgentBot, Dialogflow integrado)?
+
+### D. Gestión de Credenciales
+La API de ChatWoot requiere `Account ID`, `Inbox ID` y un `Access Token`. ¿Debemos exponer estos parámetros en una **página de opciones en el Admin de WordPress** o definirlos estáticamente en `wp-config.php` por seguridad?
+
+### E. Flujo de Datos desde la SPA
+Actualmente `LeadRestController` recibe los leads. ¿Debe ser este controlador el encargado de comunicarse vía cURL/Guzzle con la API de ChatWoot (recomendado para ocultar los tokens) o el frontend lo hará directamente?

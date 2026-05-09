@@ -59,13 +59,19 @@ class LeadCaptureConversation extends Conversation {
 		$email = str_contains( $this->contact_info, '@' ) ? $this->contact_info : '';
 		$phone = empty( $email ) ? $this->contact_info : '';
 
+		$name_parts = explode( ' ', trim( $this->name ), 2 );
+		$firstName  = $name_parts[0];
+		$lastName   = $name_parts[1] ?? '';
+
 		$lead = new \DataMaq\Domain\Lead\LeadEntity(
 			$this->name,
 			$email,
 			'', // Empresa (no solicitada en chat simplificado)
 			$this->reason,
 			'botman',
-			$phone
+			$phone,
+			$firstName,
+			$lastName
 		);
 
 		$success = $use_case->execute( $lead );
