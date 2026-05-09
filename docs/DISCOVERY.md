@@ -1,14 +1,16 @@
 ## 🏥 Auditoría de Infraestructura y Observabilidad (Mayo 2026)
-- **Estado de Configuración:** Se detectó que el sitio estaba redirigiendo al instalador por falta de `wp-config.php`. Se recuperaron las credenciales reales (`datamaq_local`) desde la papelera del sistema.
-- **Normalización de Loggers:** Se detectó duplicidad de interfaces de Logger. Se unificó todo bajo `LoggerInterface` en el namespace `Observability`.
-- **Health Check DDD:** Se implementó el Value Object `HealthStatus` para profesionalizar el monitoreo de servicios externos (ej: Orchestrator).
-- **Compatibilidad SPA:** Se registró el alias `/v1/health` para evitar hacks de interceptación en el frontend.
+- **Unificación de Leads:** Se eliminó la fragmentación entre n8n y SuiteCRM. Ahora tanto el formulario como el chatbot usan el mismo Use Case (`SubmitLeadUseCase`).
+- **Eliminación de Middleware:** Se descartó n8n para reducir la latencia (ahorro de ~500ms) y eliminar puntos de falla externos.
+- **Remoción de Chatwoot:** Se eliminó el SDK de Chatwoot para reducir el peso del frontend y centralizar la comunicación en el bot nativo PHP.
+- **Normalización de Loggers:** Se inyectó `LoggerInterface` en `SuiteCrmService`, eliminando el uso de `error_log` nativo y centralizando la observabilidad en `WPLogger`.
+- **Arquitectura Hexagonal:** Se validó la correcta separación de capas (Domain, Application, Infrastructure, UI).
+- **Intercepción de SPA:** Se identificó un "Debug Gateway" en `index.html` que intercepta llamadas de la SPA para redirigirlas a WordPress.
 
 ## 🤖 Integración de BotMan (Fase 2: Lógica Conversacional)
 ### Certezas Arquitectónicas
 - **Aislamiento de Lógica:** Las reglas de conversación (intenciones/respuestas) están aisladas en `ChatbotService.php` (Domain Layer), abstraídas del framework BotMan.
 - **Sidecar Pattern (SPA):** El widget Vanilla JS se inyectó en `index.html` secuestrando los enlaces de WhatsApp, unificando responsivamente el contacto sin alterar la SPA compilada.
-- **Mecanismos Base:** Existen configuraciones operativas para Fallbacks (respuestas no mapeadas) y conectividad REST bidireccional lista con `/wp-json/datamaq/v1/chat`.
+- **Captura de Leads (SuiteCRM Unificado):** Se utiliza el `SuiteCrmLeadRepository` como único punto de salida para leads, garantizando consistencia.
 
 ### Decisiones Arquitectónicas Consolidadas
 - **Motor de Inteligencia:** Se eligió el **Árbol Clásico (Regex / Palabras clave)** en lugar de un LLM. Prioriza velocidad, control estricto del flujo comercial, previsibilidad total y cero costos recurrentes de API.

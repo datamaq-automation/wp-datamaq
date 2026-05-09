@@ -4,7 +4,9 @@ Este repositorio contiene la implementación nativa en WordPress para el sitio d
 
 ## 🚀 Arquitectura
 - **Core:** WordPress (gestionado localmente).
-- **Theme:** `datamaq-theme` (Tema personalizado, arquitectura modular).
+- **Theme:** `datamaq-theme` (Tema personalizado, arquitectura modular y hexagonal).
+- **CRM Integration:** Integración directa con SuiteCRM v8 (OAuth2) para todos los leads.
+- **Bot:** Asistente conversacional nativo en PHP (BotMan).
 - **Design:** Sistema de diseño basado en Design Tokens y CSS Vanilla.
 - **Integración:** Equipos IoT para energía y producción.
 

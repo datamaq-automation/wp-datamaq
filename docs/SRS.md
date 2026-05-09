@@ -20,9 +20,9 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - `ConfigProvider`: Desacopla la lógica de negocio de la base de datos de opciones de WP.
   - `Logger`: Interfaz única para observabilidad y registro de errores.
 - **Implementaciones (Adapters):**
-  - `ChatwootAdapter`: Integración actual vía script.
-  - `WPConfigProvider`: Acceso seguro a `get_option`.
-  - `WPLogger`: Registro de eventos mediante `error_log`.
+  - `SuiteCrmLeadRepository`: Entrega de leads vía REST API v8.
+  - `WPConfigProvider`: Acceso seguro a `get_option` y constantes.
+  - `WPLogger`: Registro de eventos mediante `error_log` de WordPress.
 
 ## 🛠️ Infraestructura Verificada
 - **WP-CLI:** Disponible y funcional.
