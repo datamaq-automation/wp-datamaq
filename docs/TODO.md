@@ -4,7 +4,7 @@ Este documento contiene las tareas planificadas para el mantenimiento y mejora d
 Para consultar las tareas ya finalizadas, ver [TODO.done.md](./TODO.done.md).
 
 ## 🧹 Limpieza Técnica y Refactorización
-- [ ] **Dinamización de Configuración**: Eliminar valores hardcodeados en `datamaq-gateway.js` e inyectarlos vía `wp_localize_script`.
+- [x] **Dinamización de Configuración**: Eliminados valores hardcodeados en `datamaq-gateway.js` e inyectados vía API REST (`/datamaq/v1/config`).
 - [ ] **Seguridad de API**: Implementar validación de token/nonce para el endpoint de leads de WordPress.
 - [ ] **Auditoría de Performance**: Verificar impacto del SDK de Chatwoot en la carga inicial y optimizar si es necesario (Lazy loading).
 

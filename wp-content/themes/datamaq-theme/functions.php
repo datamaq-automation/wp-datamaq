@@ -45,9 +45,11 @@ $content_repo    = dm_content_repo();
 // 1. Observabilidad y Salud
 $health_repo     = new \DataMaq\Infrastructure\Shared\ExternalHealthAdapter( $logger );
 $obs_controller  = new \DataMaq\Infrastructure\WordPress\ObservabilityController( $logger, $health_repo );
+$config_controller = new \DataMaq\Infrastructure\WordPress\ConfigRestController( $config_provider );
 
-add_action( 'rest_api_init', function() use ( $obs_controller ) {
+add_action( 'rest_api_init', function() use ( $obs_controller, $config_controller ) {
 	$obs_controller->register_routes();
+	$config_controller->register_routes();
 } );
 
 /**

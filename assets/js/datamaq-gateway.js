@@ -103,7 +103,8 @@ class NetworkInterceptor {
         this.originalFetch = window.fetch;
     }
 
-    activate() {
+    activate(apiDomain) {
+        this.apiDomain = apiDomain;
         window.fetch = (...args) => this.intercept(...args);
         
         // Monitor de errores de carga de recursos
@@ -118,8 +119,8 @@ class NetworkInterceptor {
         let url = typeof resource === 'string' ? resource : resource.url;
 
         // Proxy API
-        if (url.includes('api.datamaq.com.ar')) {
-            url = url.replace('https://api.datamaq.com.ar', '/index.php?rest_route=/datamaq');
+        if (this.apiDomain && url.includes(this.apiDomain)) {
+            url = url.replace(`https://${this.apiDomain}`, '/index.php?rest_route=/datamaq');
         }
 
         // Intercepción de Leads
@@ -227,18 +228,39 @@ class DOMSentinel {
 // --- [ APPLICATION ORCHESTRATOR ] ---
 
 class DataMaqGateway {
-    static start() {
-        const config = {
+    static async start() {
+        // 1. Intentar obtener configuración inyectada o vía API
+        let config = window.DataMaqConfig || null;
+
+        if (!config) {
+            try {
+                const response = await fetch('/index.php?rest_route=/datamaq/v1/config');
+                if (response.ok) {
+                    const data = await response.json();
+                    config = {
+                        baseUrl: data.baseUrl,
+                        token: data.websiteToken,
+                        apiDomain: data.apiDomain
+                    };
+                }
+            } catch (e) {
+                // Silencio: Usar fallback
+            }
+        }
+
+        // 2. Fallback de emergencia (Hardcoded)
+        const finalConfig = config || {
             baseUrl: "https://chatwoot.datamaq.com.ar",
-            token: "EaFpQ65unLmqzYshTRLS8R2E"
+            token: "EaFpQ65unLmqzYshTRLS8R2E",
+            apiDomain: "api.datamaq.com.ar"
         };
 
-        const chatService = new ChatwootAdapter(config);
+        const chatService = new ChatwootAdapter(finalConfig);
         const network = new NetworkInterceptor(chatService);
         const ui = new DOMSentinel(chatService);
 
         chatService.initialize();
-        network.activate();
+        network.activate(finalConfig.apiDomain);
         ui.watch();
     }
 }
