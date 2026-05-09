@@ -37,10 +37,20 @@
       const originalFetch = window.fetch;
       window.fetch = function () {
         let [resource, config] = arguments;
+        
+        // Proxy para API de DataMaq (PHP/REST)
         if (typeof resource === 'string' && resource.includes('api.datamaq.com.ar')) {
           console.log('🔌 [DataMaq] API Proxy:', resource);
           resource = resource.replace('https://api.datamaq.com.ar', '/index.php?rest_route=');
         }
+
+        // Intercepción de n8n (Redirección a WordPress REST)
+        if (typeof resource === 'string' && resource.includes('n8n.datamaq.com.ar')) {
+          console.warn('🛡️ [DataMaq] n8n Call Intercepted! Redirecting to local Lead API...');
+          resource = '/wp-json/datamaq/v1/lead';
+          // El LeadRestController en WP se encargará de mapear el JSON de n8n a SuiteCRM.
+        }
+
         return originalFetch.apply(this, [resource, config]);
       };
 

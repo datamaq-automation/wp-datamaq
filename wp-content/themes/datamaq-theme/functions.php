@@ -76,12 +76,18 @@ function dm_chat_manager() {
 // Inicialización
 dm_chat_manager()->boot();
 
-// Registro de API REST para el Chat (BotMan)
-add_action( 'rest_api_init', function() {
+// REST API: Chat & Lead
+add_action( 'rest_api_init', function () {
+	// REST API: Chat
 	$botman = dm_chat_manager()->getProvider( 'botman' );
 	if ( $botman ) {
 		( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman ) )->register_routes();
 	}
+
+	// REST API: Lead (Interception)
+	$use_case = dm_submit_lead_use_case();
+	$lead_controller = new \DataMaq\Infrastructure\WordPress\LeadRestController( $use_case );
+	$lead_controller->register_routes();
 } );
 
 /**
