@@ -74,6 +74,7 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 			) )
 		);
 
+
 		if ( ! empty( $search['payload'] ) ) {
 			$id = (int) $search['payload'][0]['id'];
 			// Update existing contact to ensure latest lead data is persisted

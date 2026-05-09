@@ -131,9 +131,14 @@ class NetworkInterceptor {
         const startTime = performance.now();
         
 
+        const tracker = new MarketingTracker();
+        const marketingData = tracker.getStoredData();
+
         const targetUrl = '/index.php?rest_route=/datamaq/v1/lead';
         const enhancedConfig = {
             ...config,
+            // Inyectar datos de marketing en el body si es un JSON
+            body: this.enhanceBody(config.body, marketingData),
             headers: {
                 ...(config?.headers || {}),
                 'X-DataMaq-Trace-ID': traceId,
@@ -154,6 +159,19 @@ class NetworkInterceptor {
         } catch (err) {
             Logger.log(LogLevel.ERROR, 'Lead Sync Network Failure', { error: err.message });
             throw err;
+        }
+    }
+
+    enhanceBody(body, marketingData) {
+        if (!body) return body;
+        try {
+            const data = JSON.parse(body);
+            return JSON.stringify({
+                ...data,
+                marketing: marketingData
+            });
+        } catch (e) {
+            return body; // Si no es JSON, devolver original
         }
     }
 }
@@ -221,6 +239,51 @@ class DOMSentinel {
     }
 }
 
+// --- [ INFRASTRUCTURE - MARKETING ] ---
+
+class MarketingTracker {
+    constructor() {
+        this.storageKey = 'dm_marketing_data';
+    }
+
+    capture() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utms = {};
+        const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+        
+        let hasUtms = false;
+        utmKeys.forEach(key => {
+            if (urlParams.has(key)) {
+                utms[key] = urlParams.get(key);
+                hasUtms = true;
+            }
+        });
+
+        const currentData = this.getStoredData();
+        
+        // Si hay nuevos UTMs, o si no hay datos previos, capturamos
+        if (hasUtms || !currentData.landing_page) {
+            const data = {
+                ...utms,
+                referrer: document.referrer || currentData.referrer || 'direct',
+                landing_page: window.location.href,
+                timestamp: new Date().toISOString()
+            };
+            sessionStorage.setItem(this.storageKey, JSON.stringify(data));
+            if (hasUtms) Logger.log(LogLevel.DEBUG, 'Marketing UTMs Captured', utms);
+        }
+    }
+
+    getStoredData() {
+        try {
+            const stored = sessionStorage.getItem(this.storageKey);
+            return stored ? JSON.parse(stored) : {};
+        } catch (e) {
+            return {};
+        }
+    }
+}
+
 // --- [ APPLICATION ORCHESTRATOR ] ---
 
 class DataMaqGateway {
@@ -254,7 +317,9 @@ class DataMaqGateway {
         const chatService = new ChatwootAdapter(finalConfig);
         const network = new NetworkInterceptor(chatService, finalConfig.appSecret);
         const ui = new DOMSentinel(chatService);
+        const tracker = new MarketingTracker();
 
+        tracker.capture(); // Capturar atribución actual
         chatService.initialize();
         network.activate();
         ui.watch();

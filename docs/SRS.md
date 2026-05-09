@@ -26,8 +26,8 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - `WPConfigProvider`: Acceso a `.env` y configuración de WP.
   - `WPLogger`: Registro de eventos con prefijo `[Chatwoot]`.
 - **Configuración Dinámica (Client-Side):**
-  - `DataMaqConfig`: Objeto global inyectado vía `wp_localize_script`.
-  - **Campos Expuestos**: Solo `baseUrl` y `websiteToken` de Chatwoot.
+  - `DataMaqConfig`: Objeto de configuración obtenido dinámicamente vía API REST (`/datamaq/v1/config`) o inyectado en el DOM.
+  - **Campos Expuestos**: `baseUrl`, `websiteToken`, `appSecret` y `traceId`.
 - **Seguridad de API (Leads):**
   - **Estrategia Híbrida**: Shared Application Token (`X-DataMaq-Secret`) + CORS estricto + Rate Limiting por IP.
 - **Observabilidad (Traceability):**
