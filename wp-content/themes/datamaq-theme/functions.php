@@ -31,8 +31,8 @@ function datamaq_inject_section( $slug ) {
 add_action(
 	'wp_enqueue_scripts',
 	function () {
-		// Cargamos en el header (false) para interceptar peticiones tempranas
-		wp_enqueue_script( 'datamaq-chat', get_template_directory_uri() . '/assets/js/datamaq-chat.js', array(), '1.0.2', false );
+		// Cargamos en el footer (true) para optimizar el performance inicial
+		wp_enqueue_script( 'datamaq-gateway', get_template_directory_uri() . '/assets/js/datamaq-gateway.js', array(), '1.1.0', true );
 	},
 	1
 );

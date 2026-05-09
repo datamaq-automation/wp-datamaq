@@ -59,11 +59,27 @@ class ChatwootAdapter extends ChatProvider {
     }
 
     initialize() {
+        // Solo preparamos el listener de ready
+        window.addEventListener('chatwoot:ready', () => {
+            Logger.log(LogLevel.INFO, 'Chatwoot SDK Ready (Lazy Loaded)');
+            this.isLoaded = true;
+            if (this.pendingOpen) {
+                this.open();
+                this.pendingOpen = false;
+            }
+        });
+    }
+
+    loadSDK() {
+        if (this.isLoaded || document.getElementById('chatwoot-sdk')) return;
+
+        Logger.log(LogLevel.INFO, 'Lazy loading Chatwoot SDK...');
         const d = document;
         const t = "script";
         const g = d.createElement(t);
         const s = d.getElementsByTagName(t)[0];
 
+        g.id = 'chatwoot-sdk';
         g.src = `${this.baseUrl}/packs/js/sdk.js`;
         g.async = true;
         s.parentNode.insertBefore(g, s);
@@ -74,17 +90,13 @@ class ChatwootAdapter extends ChatProvider {
                 baseUrl: this.baseUrl
             });
         };
-
-        window.addEventListener('chatwoot:ready', () => {
-            this.isLoaded = true;
-            if (this.pendingOpen) {
-                this.open();
-                this.pendingOpen = false;
-            }
-        });
     }
 
     open() {
+        if (!this.isLoaded && !this.pendingOpen) {
+            this.loadSDK(); // Cargar bajo demanda si se intenta abrir
+        }
+
         if (window.$chatwoot) {
             window.$chatwoot.toggle();
             return true;
@@ -323,6 +335,20 @@ class DataMaqGateway {
         chatService.initialize();
         network.activate();
         ui.watch();
+
+        // --- LAZY LOADING STRATEGY ---
+        const lazyEvents = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'];
+        const loadChat = () => {
+            chatService.loadSDK();
+            lazyEvents.forEach(e => window.removeEventListener(e, loadChat));
+            clearTimeout(fallbackTimeout);
+        };
+
+        // Fallback: Cargar después de 6 segundos si no hay interacción
+        const fallbackTimeout = setTimeout(loadChat, 6000);
+
+        // Cargar ante cualquier interacción
+        lazyEvents.forEach(e => window.addEventListener(e, loadChat, { passive: true, once: true }));
     }
 }
 

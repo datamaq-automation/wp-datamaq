@@ -28,3 +28,10 @@ Este documento registra todas las misiones y tareas finalizadas en el proyecto D
 - [x] Configurar GitHub Actions CI (`ci.yml`).
 - [x] Definir secretos y variables de entorno en GitHub.
 - [x] Implementar el workflow de despliegue automático (`deploy.yml`).
+
+### 🧪 Testing y Calidad
+- **Dashboard de Observabilidad**: Creada interfaz premium para auditoría de leads en tiempo real con Trace IDs.
+- **Tests de Integración**: Suite de pruebas automatizada vía WP-CLI que valida el contrato completo de leads.
+
+### 🧹 Limpieza Técnica y Refactorización
+- **Lazy Loading (Performance)**: Implementada carga diferida del SDK de Chatwoot activada por interacción del usuario o timeout de 6s, mejorando significativamente el PageSpeed inicial.
