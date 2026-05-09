@@ -114,13 +114,7 @@ function dm_submit_lead_use_case() {
 		);
 		$crm_repo = new \DataMaq\Infrastructure\Lead\SuiteCrmLeadRepository( $crm_service );
 
-		// 2. n8n Repository (Existing)
-		$n8n_repo = new \DataMaq\Infrastructure\Lead\N8nLeadRepository();
-
-		// Composite: Send to both
-		$composite_repo = new \DataMaq\Infrastructure\Lead\CompositeLeadRepository( array( $crm_repo, $n8n_repo ) );
-
-		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $composite_repo );
+		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $crm_repo );
 	}
 	return $use_case;
 }
