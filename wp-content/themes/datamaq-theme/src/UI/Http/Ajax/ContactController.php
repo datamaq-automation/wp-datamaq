@@ -36,7 +36,16 @@ class ContactController {
 			// Infrastructure Injection via Factory
 			$useCase = dm_submit_lead_use_case();
 
-			$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone );
+			$lead = new LeadEntity(
+				$name,
+				$email,
+				$phone,
+				array(
+					'company'     => $company,
+					'description' => $message,
+					'channel'     => $channel,
+				)
+			);
 
 			if ( $useCase->execute( $lead ) ) {
 				wp_send_json_success( array( 'message' => '¡Gracias! Tu consulta ha sido enviada con éxito.' ) );
