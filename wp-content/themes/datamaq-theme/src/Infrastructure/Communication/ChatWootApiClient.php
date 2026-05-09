@@ -38,7 +38,6 @@ class ChatWootApiClient {
 
 		if ( ! empty( $data ) ) {
 			$args['body'] = json_encode( $data );
-			$this->logger->info( TraceContext::format( "Chatwoot API Payload [{$method} {$endpoint}]: " . $args['body'] ) );
 		}
 
 

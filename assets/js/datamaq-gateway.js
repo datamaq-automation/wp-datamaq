@@ -59,7 +59,6 @@ class ChatwootAdapter extends ChatProvider {
     }
 
     initialize() {
-        Logger.log(LogLevel.DEBUG, 'Initializing Chatwoot SDK loader...');
         const d = document;
         const t = "script";
         const g = d.createElement(t);
@@ -70,7 +69,6 @@ class ChatwootAdapter extends ChatProvider {
         s.parentNode.insertBefore(g, s);
 
         g.onload = () => {
-            Logger.log(LogLevel.INFO, 'SDK Script loaded.');
             window.chatwootSDK.run({
                 websiteToken: this.token,
                 baseUrl: this.baseUrl
@@ -79,7 +77,6 @@ class ChatwootAdapter extends ChatProvider {
 
         window.addEventListener('chatwoot:ready', () => {
             this.isLoaded = true;
-            Logger.log(LogLevel.INFO, 'Widget is READY.');
             if (this.pendingOpen) {
                 this.open();
                 this.pendingOpen = false;
@@ -137,7 +134,6 @@ class NetworkInterceptor {
         const traceId = `cw-${Math.random().toString(36).substr(2, 9)}`;
         const startTime = performance.now();
         
-        Logger.log(LogLevel.DEBUG, `Lead Capture Detected [${traceId}]`, { url });
 
         const targetUrl = '/index.php?rest_route=/datamaq/v1/lead';
         const enhancedConfig = {
@@ -155,9 +151,6 @@ class NetworkInterceptor {
 
             if (!response.ok) {
                 Logger.log(LogLevel.ERROR, `API Error [${response.status}]`, { traceId, status: response.status });
-                if (response.status === 429) Logger.log(LogLevel.WARN, 'Rate Limit Active. Please wait.');
-            } else {
-                Logger.log(LogLevel.INFO, `Lead synced successfully [${duration}ms]`, { traceId });
             }
 
             return response;
