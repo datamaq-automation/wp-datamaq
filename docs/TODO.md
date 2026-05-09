@@ -1,36 +1,20 @@
-# TODO - Backlog y Tareas Pendientes
+# TODO - Backlog de Tareas Pendientes
 
-Listado de tareas para la optimización y finalización de la réplica Vue -> WordPress.
+Este documento contiene las tareas planificadas para el mantenimiento y mejora del sitio DataMaq WordPress.
+Para consultar las tareas ya finalizadas, ver [TODO.done.md](./TODO.done.md).
 
-## 🧹 Limpieza y Optimización (Slimming)
-- [x] Dejar de trackear el núcleo de WordPress (`wp-admin`, `wp-includes`, archivos raíz).
-- [x] Eliminar `learnpress` del índice de Git (mantener archivos físicos).
-- [x] Eliminar archivos redundantes: `readme.html`, `license.txt`, `wp-config-sample.php`.
-- [x] Eliminar archivos `.bak` en `wp-content/mu-plugins/`.
-- [x] Consolidar la carpeta `media/` raíz dentro del tema o `uploads/`.
+## 🧹 Limpieza Técnica (Próximos Pasos)
+- [ ] **Purga de Dependencias**: Eliminar `botman/botman` y `suitecrm/php-sdk` (si existe) de `composer.json` y ejecutar `composer update`.
+- [ ] **Limpieza de Assets**: Eliminar el código muerto de BotMan en `assets/js/datamaq-chat.js` o eliminar el archivo si ya no tiene uso residual.
+- [ ] **Remoción de Archivos Legados**: Eliminar adaptadores e interfaces de SuiteCRM y BotMan en `src/Infrastructure` y `src/Domain` que ya no se utilicen.
 
-## 🏗️ Desarrollo del Tema (`datamaq-theme`)
-- [x] Implementar la sección "Process" en `front-page.php`.
-- [x] Refactorizar a Arquitectura Hexagonal (Logger, ConfigProvider, HealthStatus).
-- [x] Normalizar Observabilidad (Unificación de Interfaces de Log).
+## 🧪 Testing y Calidad
+- [ ] **Nuevos Tests Unitarios**: Implementar tests para `ChatWootLeadRepository` y `ChatwootProvider`.
+- [ ] **Auditoría de Performance**: Verificar impacto del SDK de Chatwoot en la carga inicial y optimizar si es necesario (Lazy loading).
 
-## 🤖 Migración a ChatWoot Directo (Volantazo)
-- [x] Definir certezas arquitectónicas (Frontend, Entidades, Automatización, Credenciales).
-- [x] Eliminar dependencias de `botman/botman` vía Composer.
-- [x] Eliminar clases y servicios relacionados a BotMan (`ChatbotService`, `BotmanAdapter`).
-- [x] Eliminar clases y servicios relacionados a SuiteCRM (`SuiteCrmService`, `SuiteCrmLeadRepository`).
-- [x] Eliminar archivos de integración de n8n.
-- [ ] Implementar `ChatWootLeadRepository` (o similar) para enviar datos a la API de ChatWoot.
-- [ ] Adaptar o remover el "Debug Gateway" de interceptación SPA según la decisión sobre el widget frontend.
-- [x] Refactorizar `LeadRestController` para utilizar el nuevo proveedor de ChatWoot.
-- [ ] Eliminar tests de SuiteCRM, BotMan y n8n, y crear nuevos para ChatWoot.
+## ✨ Mejoras de Funcionalidad
+- [ ] **Página de Ajustes WP**: Implementar una interfaz en el admin de WordPress para cambiar las credenciales de Chatwoot sin tocar el `.env`.
+- [ ] **Sincronización de Atributos**: Enviar metadatos adicionales del navegador (UTM parameters, URL actual) a Chatwoot durante la captura de leads.
 
-## 🚀 Continuous Delivery (CD)
-- [x] Configurar GitHub Actions CI (`ci.yml`).
-- [x] Definir secretos de despliegue en GitHub (SSH_KEY, HOST, USER).
-- [x] Implementar el workflow de despliegue automático (`deploy.yml`).
-
-## 📝 Documentación
-- [x] Crear estructura base de documentación (`docs/`).
-- [x] Separar dudas (`DISCOVERY.md`) de certezas (`SRS.md`).
-- [x] Actualizar `README.md`.
+## 🚀 Despliegue
+- [ ] Realizar un despliegue de prueba completo tras la purga de dependencias para verificar integridad en producción.

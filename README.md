@@ -4,9 +4,9 @@ Este repositorio contiene la implementación nativa en WordPress para el sitio d
 
 ## 🚀 Arquitectura
 - **Core:** WordPress (gestionado localmente).
-- **Theme:** `datamaq-theme` (Tema personalizado, arquitectura modular y hexagonal).
-- **CRM & Chat:** Integración directa con ChatWoot para la gestión de leads y mensajería omnicanal.
-- **Design:** Sistema de diseño basado en Design Tokens y CSS Vanilla.
+- **Theme:** `datamaq-theme` (Arquitectura modular y hexagonal).
+- **CRM & Chat:** **Chatwoot** unificado (Reemplaza a SuiteCRM, n8n y BotMan).
+- **Frontend:** Debug Gateway en `index.html` para trazabilidad y captura de leads.
 - **Integración:** Equipos IoT para energía y producción.
 
 ## 📁 Estructura de Documentación

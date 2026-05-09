@@ -63,7 +63,10 @@ function dm_chat_manager() {
 		$whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
 		$whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
 
-		$manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider ) );
+		// 2. Chatwoot
+		$chatwoot_provider = new \DataMaq\Infrastructure\Communication\ChatwootProvider( $config_provider );
+
+		$manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $chatwoot_provider ) );
 	}
 	return $manager;
 }

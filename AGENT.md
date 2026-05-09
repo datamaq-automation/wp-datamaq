@@ -22,35 +22,35 @@ Todo agente debe seguir este flujo lógico exacto ante cualquier solicitud o tar
 ---
 
 ## 🏛️ Arquitectura y Estándares Técnicos
-- **Patrón:** Arquitectura Hexagonal (Domain, Application, Infrastructure, UI) guiada por DDD y SOLID.
+- **Patrón:** Arquitectura Hexagonal (Domain, Application, Infrastructure, UI).
 - **PHP:** 8.3+.
 - **Estándares:** WordPress Coding Standards (WPCS) obligatorios.
-- **Análisis Estático:** PHPStan Nivel 3+ (Sin errores permitidos en `src/`).
-- **Validación Local:** Prohibido hacer `git push` si el `pre-push` hook falla (L1-L4).
+- **Análisis Estático:** PHPStan Nivel 3+.
+- **Validación Local:** Prohibido hacer `git push` si el `pre-push` hook falla.
 
 ## 🚀 Pipeline de Despliegue (CD)
-- **Estrategia:** Zero-Cost CI/CD vía GitHub Actions.
-- **Jobs (8):** Audit Secrets -> Audit Vars -> Host Detection -> DNS Syntax -> DNS Res -> SSH Auth -> Deploy -> Verify.
-- **Servidor:** VPS vía SSH (Puerto 5932).
-- **Importante:** No usar `git add .`. Agregar archivos de forma selectiva para evitar trackear el núcleo de WP.
+- **Estrategia:** Zero-Cost CI/CD vía GitHub Actions -> VPS (Puerto 5932).
 
-## 🤖 Misión Actual: Integración de BotMan (COMPLETADA)
-- **Estado:** Backend operativo (REST API: `/wp-json/datamaq/v1/chat`).
-- **Adaptador:** `BotmanAdapter` integrado con `ChatManager`.
-- **UI:** Widget inyectado en SPA (Sidecar Pattern) con unificación responsiva para escritorio y móvil.
+## 🤖 Misión Actual: Consolidación en Chatwoot (COMPLETADA)
+- **Estado:** Sistemas legados (BotMan, n8n, SuiteCRM) totalmente purgados.
+- **Canal Único:** Chatwoot centraliza toda la comunicación y captación de leads.
+- **Infraestructura:** 
+  - `ChatWootLeadRepository`: Sincroniza leads capturados vía REST API.
+  - `ChatwootProvider`: Gestiona el widget oficial de Chatwoot.
+- **UI:** Intercepción unificada en `index.html` (Debug Gateway) que desvía interacciones (WhatsApp, #chat) hacia Chatwoot.
 
 ## 🏥 Observabilidad y Salud
-- **Health Check:** `/wp-json/v1/health` (Alias nativo para SPA).
-- **Loggers:** Uso obligatorio de `DataMaq\Domain\Shared\Observability\LoggerInterface`.
-- **Value Objects:** Las respuestas de salud deben usar `HealthStatus` para garantizar tipado fuerte.
+- **Health Check:** `/wp-json/v1/health`.
+- **Debug Gateway:** Inyecta logs con estilo en la consola del navegador para trazabilidad de leads.
+- **Server Logs:** Uso de `DataMaq\Infrastructure\Shared\WPLogger` con prefijo `[Chatwoot]`.
 
 ## ⚠️ Restricciones Críticas
-1. **No tocar el Core:** No modificar archivos de WordPress fuera de `wp-content/themes/datamaq-theme/`.
-2. **Seguridad Absoluta:** Nunca incluir tokens, contraseñas o datos sensibles en el código, ni siquiera en `docs/DISCOVERY.md`. Usar siempre `ConfigProvider`.
-3. **Slim Repo:** Mantener el repositorio liviano. No subir imágenes pesadas o dependencias fuera de `composer.json`.
+1. **No tocar el Core:** Modificaciones solo en `wp-content/themes/datamaq-theme/` o `index.html`.
+2. **Seguridad:** Usar `ConfigProvider` para credenciales.
+3. **Slim Repo:** Sin imágenes pesadas ni dependencias fuera de `composer.json`.
 
-## 📂 Estructura de Directorios (Source)
-- `src/Domain`: Entidades, interfaces de motor, value objects y lógica pura del negocio (DDD).
-- `src/Application`: Servicios de aplicación y casos de uso.
-- `src/Infrastructure`: Adaptadores (WordPress, Botman, Loggers, Config). Implementación de interfaces.
-- `src/UI`: Templates y lógica de visualización del tema.
+## 📂 Estructura de Directorios
+- `src/Domain`: Lógica pura del negocio.
+- `src/Application`: Servicios y Casos de Uso.
+- `src/Infrastructure`: Adaptadores (WordPress, Chatwoot, Loggers).
+- `src/UI`: Templates y Lógica de visualización.

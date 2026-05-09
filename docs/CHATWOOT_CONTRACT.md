@@ -14,31 +14,18 @@ Este documento define la especificación técnica y las certezas para la integra
 - **Intercepción de SPA:** Existe un "Debug Gateway" en `index.html` que intercepta llamadas de la SPA compilada. Su uso será adaptado a ChatWoot si se requiere.
 - **Respeto por el Código Existente**: No se realizarán cambios en los archivos PHP, JS o HTML hasta no agotar las dudas del `DISCOVERY.md`.
 
-## 3. Certezas de Implementación Técnica (Definidas)
-Tras el proceso de Discovery, se han tomado las siguientes decisiones finales:
-
-1. **Interfaz (Frontend):** Se **mantiene la SPA actual** (diseño personalizado). No se usará el widget oficial de ChatWoot para no romper la estética premium.
-2. **Entidades en ChatWoot:** Se utilizará la API para **Crear/Actualizar Contacto** y **Abrir una Conversación** por cada lead enviado.
-3. **Automatización:** La lógica de respuestas, saludos y derivaciones se gestionará **100% dentro de ChatWoot** (AgentBots / Automation Rules).
-4. **Gestión de Credenciales:** Se implementará una **Página de Ajustes en WordPress** para gestionar el Account ID, Inbox ID y Access Token de forma dinámica.
-5. **Flujo de Datos:** El **`LeadRestController` actuará como Proxy Seguro**. Recibirá los datos de la SPA y hará la llamada HTTP a ChatWoot desde el servidor para proteger los tokens de acceso.
+## 3. Certezas de Implementación Técnica (Ejecutadas)
+1. **Interfaz (Frontend):** Se utiliza el **SDK oficial de Chatwoot** inyectado vía `ChatwootProvider`. 
+2. **Control de Apertura:** Se interceptan las interacciones de la SPA y del tema (enlaces `#chat`, botones de WhatsApp) mediante un **Debug Gateway** en `index.html` que dispara `window.$chatwoot.toggle()`.
+3. **Entidades en Chatwoot:** El `ChatWootLeadRepository` utiliza la API para buscar/crear contactos y abrir conversaciones automáticas ante cada envío de lead.
+4. **Automatización:** La lógica de respuestas se gestiona **100% dentro de Chatwoot**.
+5. **Flujo de Datos:** El **`LeadRestController` actúa como Proxy Seguro**, delegando la persistencia al repositorio hexagonal de Chatwoot.
 
 ## 4. Definición del Servicio (PHP Interface)
 
-Se implementará la siguiente abstracción en la Arquitectura Hexagonal:
+Se ha implementado la siguiente abstracción en la Arquitectura Hexagonal:
 
-```php
-namespace DataMaq\Domain\CRM;
+- **Puerto:** `LeadRepositoryInterface` (Domain)
+- **Adaptador:** `ChatWootLeadRepository` (Infrastructure)
 
-interface ChatPlatformProviderInterface {
-    /**
-     * Registra un Lead y/o mensaje en la plataforma de Chat.
-     * 
-     * @param array $leadData Datos estructurados del contacto.
-     * @return bool True si se procesó correctamente.
-     */
-    public function captureLead(array $leadData): bool;
-}
-```
-
-La implementación concreta será `ChatWootAdapter`, responsable de la comunicación HTTP RESTful.
+La implementación se apoya en `WPLogger` para garantizar la observabilidad de cada paso de la sincronización con la API REST de Chatwoot.

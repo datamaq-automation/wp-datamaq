@@ -37,7 +37,9 @@ try {
 				<p class="c-home-footer__title tw:text-white tw:font-bold tw:mb-6">Servicio</p>
 				<nav class="tw:flex tw:flex-col tw:gap-4">
 					<a href="<?php echo esc_url( $view_model->getContactUrl() ); ?>" class="c-home-footer__link">Contacto</a>
-					<?php if ( isset( $botman ) && $botman->isEnabled() ) : ?>
+					<?php 
+					$chatwoot = dm_chat_manager()->getProvider('chatwoot');
+					if ( $chatwoot && $chatwoot->isEnabled() ) : ?>
 						<a href="#chat" class="c-home-footer__link">Consultar Asistente</a>
 					<?php else : ?>
 						<a href="<?php echo esc_url( $view_model->getWhatsAppUrl() ); ?>" class="c-home-footer__link">Soporte Técnico</a>
@@ -48,7 +50,9 @@ try {
 			<!-- Columna 4: Acción -->
 			<div class="c-home-footer__cta-col tw:flex tw:flex-col tw:items-start tw:lg:items-end">
 				<?php if ( $view_model ) : ?>
-					<?php if ( isset( $botman ) && $botman->isEnabled() ) : ?>
+					<?php 
+					$chatwoot = dm_chat_manager()->getProvider('chatwoot');
+					if ( $chatwoot && $chatwoot->isEnabled() ) : ?>
 						<a class="tw:btn-primary c-ui-btn tw:w-full tw:lg:w-auto" href="#chat">
 							<i class="bi bi-chat-dots-fill tw:mr-2"></i> Hablar con Asistente
 						</a>
@@ -79,8 +83,8 @@ try {
 		<span>Inicio</span>
 	</a>
 	<?php 
-	$botman = dm_chat_manager()->getProvider('botman');
-	if ( $botman && $botman->isEnabled() ) : ?>
+	$chatwoot = dm_chat_manager()->getProvider('chatwoot');
+	if ( $chatwoot && $chatwoot->isEnabled() ) : ?>
 		<a href="#chat" class="c-home-dock__link" id="dm-dock-chat">
 			<i class="bi bi-chat-dots-fill" aria-hidden="true"></i>
 			<span>Asistente</span>
@@ -101,5 +105,16 @@ try {
 </div><!-- /.app-shell -->
 </div><!-- /#app -->
 	<?php wp_footer(); ?>
+	<script>
+		// Interceptar clics en enlaces #chat para abrir Chatwoot
+		document.addEventListener('click', function(e) {
+			if (e.target.closest('a[href="#chat"]')) {
+				e.preventDefault();
+				if (window.$chatwoot) {
+					window.$chatwoot.toggle();
+				}
+			}
+		});
+	</script>
 </body>
 </html>

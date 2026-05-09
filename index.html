@@ -29,8 +29,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DataMaq | Automatización Industrial</title>
   <script>
-    // --- DataMaq Debug Gateway ---
+    // --- DataMaq Unified Debug Gateway (Chatwoot Edition) ---
     (function () {
+      console.log('%c🚀 [DataMaq] Debug Gateway Active', 'color: #ff6a00; font-weight: bold; background: #1a1a1a; padding: 2px 5px; border-radius: 3px;');
+
       // 1. Interceptar Fetch
       const originalFetch = window.fetch;
       window.fetch = function () {
@@ -41,21 +43,21 @@
           resource = resource.replace('https://api.datamaq.com.ar', '/index.php?rest_route=');
         }
 
-        // Intercepción de n8n (Redirección a WordPress REST)
-        if (typeof resource === 'string' && resource.includes('n8n.datamaq.com.ar')) {
-          const traceId = 'req-' + Math.random().toString(36).substr(2, 9);
+        // Intercepción de Leads (Unificada hacia Chatwoot vía WP)
+        if (typeof resource === 'string' && (resource.includes('n8n.datamaq.com.ar') || resource.includes('/datamaq/v1/lead'))) {
+          const traceId = 'cw-' + Math.random().toString(36).substr(2, 9);
           const startTime = performance.now();
-          const payload = config.body ? JSON.parse(config.body) : 'No body';
-
-          console.groupCollapsed(`🚀 [DataMaq] Intercepted Lead -> ChatWoot [${traceId}]`);
-          console.log('📦 Original Payload:', payload);
-          console.log('🔌 Redirecting to: /datamaq/v1/lead');
-
+          
+          console.groupCollapsed(`📬 [DataMaq] Lead Capture -> Chatwoot [${traceId}]`);
+          console.log('🔗 Source URL:', resource);
+          
+          // Forzamos la ruta al puente de WordPress que ahora usa ChatWootLeadRepository
           resource = '/index.php?rest_route=/datamaq/v1/lead';
 
           config.headers = {
             ...config.headers,
-            'X-DataMaq-Trace-ID': traceId
+            'X-DataMaq-Trace-ID': traceId,
+            'X-DataMaq-Source': 'Unified-Gateway'
           };
 
           return originalFetch.apply(this, [resource, config]).then(async (response) => {
@@ -63,15 +65,14 @@
             const duration = (performance.now() - startTime).toFixed(2);
             try {
               const data = await clone.json();
-              console.log(`📥 WP REST Response (${response.status}) [${duration}ms]:`, data);
+              console.log(`✅ [${duration}ms] Response:`, data);
             } catch (e) {
-              console.error(`📥 Error reading WP REST Response [${duration}ms]:`, e);
+              console.warn(`⚠️ [${duration}ms] Could not parse response JSON`);
             }
             console.groupEnd();
             return response;
           }).catch(err => {
-            const duration = (performance.now() - startTime).toFixed(2);
-            console.error(`❌ Fetch Error [${duration}ms]:`, err);
+            console.error('❌ Lead Sync Error:', err);
             console.groupEnd();
             throw err;
           });
@@ -80,80 +81,62 @@
         return originalFetch.apply(this, [resource, config]);
       };
 
-      // 2. Función para abrir el chat
+      // 2. Función Unificada para abrir el chat
       const openChat = function () {
-        const chatContainer = document.getElementById('dm-chat-container');
-        if (chatContainer) {
-          chatContainer.classList.remove('tw:hidden');
-          console.log('✨ [DataMaq] Chat container opened via interceptor');
-          const chatInput = document.getElementById('dm-chat-input');
-          if (chatInput) chatInput.focus();
+        console.log('%c💬 [DataMaq] Attempting to open Chatwoot...', 'color: #00A8E8; font-weight: bold;');
+        if (window.$chatwoot) {
+          window.$chatwoot.toggle();
           return true;
         }
-        console.error('❌ [DataMaq] Chat container NOT FOUND');
+        console.warn('⚠️ [DataMaq] Chatwoot SDK not loaded yet.');
         return false;
       };
 
-      // 3. Interceptar window.open (usado por Vue/SPA frecuentemente)
+      // 3. Interceptar window.open (WhatsApp)
       const originalOpen = window.open;
       window.open = function (url, target, features) {
         if (typeof url === 'string' && (url.includes('wa.me') || url.includes('whatsapp.com'))) {
-          console.log('🛑 [DataMaq] window.open intercepted!');
+          console.info('🛑 [DataMaq] WhatsApp window.open intercepted. Diverting to Chatwoot.');
           if (openChat()) return null;
         }
         return originalOpen.apply(this, arguments);
       };
 
-      // 4. Interceptar clics tradicionales (Captura)
+      // 4. Interceptar clics (Captura)
       document.addEventListener('click', (e) => {
         const link = e.target.closest('a');
-        if (link) {
-          if (link.href.includes('wa.me') || link.href.includes('whatsapp.com')) {
-            console.log('🛑 [DataMaq] WhatsApp click intercepted!');
-            e.preventDefault();
-            e.stopPropagation();
-            openChat();
-          }
+        if (link && (link.href.includes('wa.me') || link.href.includes('whatsapp.com') || link.getAttribute('href') === '#chat')) {
+          console.info('🛑 [DataMaq] Interaction intercepted. Opening Chatwoot.');
+          e.preventDefault();
+          e.stopPropagation();
+          openChat();
         }
       }, true);
 
       window.addEventListener('load', () => {
-        const toggle = document.getElementById('dm-chat-toggle');
-        // Modificar la UI de Vue sobre la marcha
-        const modifyVueUI = () => {
+        // Modificar la UI de la SPA (Eliminar rastros de WhatsApp viejo)
+        const cleanupUI = () => {
           const oldElements = document.querySelectorAll('.c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp');
-          oldElements.forEach(el => el.remove());
+          oldElements.forEach(el => {
+            console.log('🧹 [DataMaq] Removing legacy WhatsApp element');
+            el.remove();
+          });
 
-          // Unificar el enlace "Contacto" del Dock
+          // Hack para el Dock de la SPA
           const dockEmergencyLink = document.querySelector('.c-home-dock__link--emergency');
-          if (dockEmergencyLink) {
-            if (!dockEmergencyLink.dataset.chatHijacked) {
-              dockEmergencyLink.dataset.chatHijacked = "true";
-              dockEmergencyLink.addEventListener('click', (e) => {
+          if (dockEmergencyLink && !dockEmergencyLink.dataset.chatHijacked) {
+             dockEmergencyLink.dataset.chatHijacked = "true";
+             dockEmergencyLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('🛑 [DataMaq] Dock Contact link hijacked!');
                 openChat();
-              }, true);
-            }
-            if (!dockEmergencyLink.innerHTML.includes('bi-whatsapp')) {
-              dockEmergencyLink.innerHTML = '<i class="bi bi-whatsapp" aria-hidden="true" style="font-size: 1.3rem; margin-bottom: 2px;"></i><span>Asistente</span>';
-            }
+             }, true);
+             dockEmergencyLink.innerHTML = '<i class="bi bi-chat-dots-fill" aria-hidden="true" style="font-size: 1.3rem; margin-bottom: 2px;"></i><span>Asistente</span>';
           }
         };
-        modifyVueUI();
+        cleanupUI();
 
-        // Observar mutaciones por si Vue lo renderiza de forma asíncrona
-        const observer = new MutationObserver((mutations) => {
-          let shouldRun = false;
-          for (const mutation of mutations) {
-            if (mutation.addedNodes.length) {
-              shouldRun = true;
-              break;
-            }
-          }
-          if (shouldRun) modifyVueUI();
-        });
+        const observer = new MutationObserver(cleanupUI);
         observer.observe(document.body, { childList: true, subtree: true });
       });
     })();
@@ -161,190 +144,12 @@
   <script type="module" crossorigin src="/assets/index-33xPpqpC.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-CYmC4thG.css">
 
-  <!-- Cargar estilos y lógica del Chatbot desde WordPress -->
+  <!-- Estilos base del tema -->
   <link rel="stylesheet" href="/wp-content/themes/datamaq-theme/assets/css/tailwind-dist.css">
-  <script src="/wp-content/themes/datamaq-theme/assets/js/datamaq-chat.js" defer></script>
 </head>
 
 <body>
   <div id="app"></div>
-
-  <!-- Inyectamos manualmente el HTML y CSS del chatbot -->
-  <style id="dm-chat-styles">
-    /* Ocultamos los botones y enlaces originales de WhatsApp de la SPA */
-    .c-whatsapp-fab,
-    .c-contact-page-footer__whatsapp,
-    .c-home-footer__whatsapp {
-      display: none !important;
-    }
-
-    #dm-chatbot {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      z-index: 999999;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-    }
-
-    /* En móviles, ocultamos el botón flotante para delegar la acción al Dock inferior */
-    @media (max-width: 768px) {
-      #dm-chat-toggle {
-        display: none !important;
-      }
-    }
-
-    #dm-chat-container {
-      width: 320px;
-      height: 450px;
-      background-color: #ffffff;
-      border-radius: 1rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-      margin-bottom: 1rem;
-      transition: opacity 0.2s, transform 0.2s;
-    }
-
-    #dm-chat-container.tw\:hidden {
-      display: none !important;
-    }
-
-    .dm-chat-header {
-      background-color: #ff6a00;
-      padding: 1rem;
-      color: #ffffff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .dm-chat-header button {
-      background: transparent;
-      border: none;
-      color: rgba(255, 255, 255, 0.8);
-      cursor: pointer;
-    }
-
-    .dm-chat-header button:hover {
-      color: #ffffff;
-    }
-
-    #dm-chat-messages {
-      flex: 1;
-      padding: 1rem;
-      overflow-y: auto;
-      background-color: #f9fafb;
-      font-size: 0.875rem;
-    }
-
-    .dm-chat-msg-bot {
-      background-color: #e5e7eb;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      margin-bottom: 0.75rem;
-      margin-right: auto;
-      max-width: 80%;
-      color: #111827;
-      border-bottom-left-radius: 0;
-    }
-
-    .dm-chat-msg-user {
-      background-color: #ff6a00;
-      color: #ffffff;
-      padding: 0.75rem;
-      border-radius: 0.5rem;
-      margin-bottom: 0.75rem;
-      margin-left: auto;
-      max-width: 80%;
-      border-bottom-right-radius: 0;
-    }
-
-    #dm-chat-form {
-      padding: 1rem;
-      border-top: 1px solid #e5e7eb;
-      background-color: #ffffff;
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    #dm-chat-input {
-      flex: 1;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid #d1d5db;
-      border-radius: 0.5rem;
-      font-size: 0.875rem;
-      outline: none;
-    }
-
-    #dm-chat-input:focus {
-      border-color: #ff6a00;
-    }
-
-    #dm-chat-form button {
-      background-color: #ff6a00;
-      color: #ffffff;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* El botón del chatbot ahora imita el estilo de WhatsApp */
-    #dm-chat-toggle {
-      background-color: #25d366;
-      color: #ffffff;
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 9999px;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    #dm-chat-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    #dm-chat-toggle:active {
-      transform: scale(0.95);
-    }
-  </style>
-  <div id="dm-chatbot">
-    <div id="dm-chat-container" class="tw:hidden">
-      <div class="dm-chat-header">
-        <span>Asistente DataMaq</span>
-        <button onclick="document.getElementById('dm-chat-container').classList.add('tw:hidden')">
-          <i class="bi bi-x-lg"></i>
-        </button>
-      </div>
-      <div id="dm-chat-messages">
-        <div class="dm-chat-msg-bot">
-          ¡Hola! Soy el asistente virtual de DataMaq. ¿En qué puedo ayudarte hoy?
-        </div>
-      </div>
-      <form id="dm-chat-form">
-        <input type="text" id="dm-chat-input" placeholder="Escribí tu mensaje...">
-        <button type="submit">
-          <i class="bi bi-send"></i>
-        </button>
-      </form>
-    </div>
-    <button id="dm-chat-toggle">
-      <i class="bi bi-whatsapp" style="font-size: 1.8rem;"></i>
-    </button>
-  </div>
 </body>
 
 </html>
