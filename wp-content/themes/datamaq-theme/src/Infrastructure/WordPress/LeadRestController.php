@@ -74,13 +74,13 @@ class LeadRestController {
 		$success = $this->use_case->execute( $lead );
 
 		if ( $success ) {
-			return new WP_REST_Response( array( 'success' => true, 'id' => 'crm_synced' ), 200 );
+			return new WP_REST_Response( array( 'success' => true, 'id' => 'chatwoot_synced' ), 200 );
 		}
 
-		error_log( "[DataMaq Error] [$trace_id] Fallo al persistir el Lead en SuiteCRM." );
+		error_log( "[DataMaq Error] [$trace_id] Fallo al persistir el Lead en ChatWoot." );
 		return new WP_REST_Response( array( 
 			'success' => false, 
-			'message' => 'Error al persistir en SuiteCRM.' 
+			'message' => 'Error al persistir en ChatWoot.' 
 		), 500 );
 	}
 }

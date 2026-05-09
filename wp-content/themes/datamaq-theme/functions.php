@@ -57,18 +57,13 @@ function dm_chat_manager() {
 	static $manager = null;
 	if ( null === $manager ) {
 		$config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
-		$logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
 		$content_repo    = dm_content_repo();
 
 		// 1. WhatsApp
 		$whatsapp_url = $content_repo->getFooterSection()->getWhatsappUrl();
 		$whatsapp_provider = new \DataMaq\Infrastructure\Communication\WhatsAppAdapter( $config_provider, $whatsapp_url );
 
-		// 2. BotMan
-		$chatbot_service = new \DataMaq\Domain\Chat\ChatbotService();
-		$botman_provider = new \DataMaq\Infrastructure\Communication\BotmanAdapter( $config_provider, $logger, $chatbot_service );
-
-		$manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider, $botman_provider ) );
+		$manager = new \DataMaq\Application\Communication\ChatManager( array( $whatsapp_provider ) );
 	}
 	return $manager;
 }
@@ -78,12 +73,6 @@ dm_chat_manager()->boot();
 
 // REST API: Chat & Lead
 add_action( 'rest_api_init', function () {
-	// REST API: Chat
-	$botman = dm_chat_manager()->getProvider( 'botman' );
-	if ( $botman ) {
-		( new \DataMaq\Infrastructure\WordPress\ChatRestController( $botman ) )->register_routes();
-	}
-
 	// REST API: Lead (Interception)
 	$use_case = dm_submit_lead_use_case();
 	$lead_controller = new \DataMaq\Infrastructure\WordPress\LeadRestController( $use_case );
@@ -107,20 +96,13 @@ function dm_content_repo() {
 function dm_submit_lead_use_case() {
 	static $use_case = null;
 	if ( null === $use_case ) {
-		$logger = new \DataMaq\Infrastructure\Shared\WPLogger();
+		$config_provider = new \DataMaq\Infrastructure\Shared\WPConfigProvider();
+		$logger          = new \DataMaq\Infrastructure\Shared\WPLogger();
 		
-		// 1. SuiteCRM Repository
-		$crm_service = new \DataMaq\Infrastructure\CRM\SuiteCrmService(
-			defined('SUITECRM_BASE_URL') ? SUITECRM_BASE_URL : '',
-			defined('SUITECRM_CLIENT_ID') ? SUITECRM_CLIENT_ID : '',
-			defined('SUITECRM_CLIENT_SECRET') ? SUITECRM_CLIENT_SECRET : '',
-			defined('SUITECRM_USERNAME') ? SUITECRM_USERNAME : '',
-			defined('SUITECRM_PASSWORD') ? SUITECRM_PASSWORD : '',
-			$logger
-		);
-		$crm_repo = new \DataMaq\Infrastructure\Lead\SuiteCrmLeadRepository( $crm_service );
+		// 1. ChatWoot Repository
+		$chatwoot_repo = new \DataMaq\Infrastructure\Lead\ChatWootLeadRepository( $config_provider, $logger );
 
-		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $crm_repo );
+		$use_case = new \DataMaq\Application\Lead\SubmitLeadUseCase( $chatwoot_repo );
 	}
 	return $use_case;
 }

@@ -6,7 +6,7 @@ namespace DataMaq\Domain\Lead;
  */
 interface LeadRepositoryInterface {
 	/**
-	 * Send the lead to the CRM (SuiteCRM)
+	 * Send the lead to ChatWoot
 	 * @param LeadEntity $lead
 	 * @return bool
 	 */
