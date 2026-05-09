@@ -1,0 +1,90 @@
+<?php
+/**
+ * Partial: WhatsApp FAB (Native-First)
+ * 1:1 Parity with legacy WhatsAppFab.vue
+ */
+$repo = dm_content_repo();
+$footer_vm = new \DataMaq\UI\ViewModels\FooterViewModel( $repo );
+$whatsapp_url = $footer_vm->getWhatsAppUrl();
+
+if ( ! $whatsapp_url ) {
+	return;
+}
+?>
+
+<a href="<?php echo esc_url( $whatsapp_url ); ?>"
+   id="whatsapp-fab"
+   class="c-whatsapp-fab"
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="Abrir WhatsApp para pedir coordinación"
+   title="Abrir WhatsApp">
+	<svg class="c-whatsapp-fab__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+		<path fill="currentColor" d="M12 2a9.8 9.8 0 0 0-8.38 14.87L2 22l5.28-1.57A9.8 9.8 0 1 0 12 2Zm0 17.65a7.9 7.9 0 0 1-4.03-1.1l-.3-.18-3.14.94.97-3.06-.2-.31A7.9 7.9 0 1 1 12 19.65Zm4.34-5.91c-.24-.12-1.4-.7-1.62-.77-.22-.08-.38-.12-.54.12-.16.23-.62.77-.76.92-.14.15-.28.18-.52.06-.24-.12-1-.38-1.92-1.2a7.2 7.2 0 0 1-1.33-1.64c-.14-.23 0-.36.1-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.38.08-.15.04-.29-.02-.41-.06-.12-.54-1.31-.74-1.79-.2-.48-.41-.41-.56-.42h-.48a.92.92 0 0 0-.66.31c-.22.24-.84.82-.84 2s.86 2.31.98 2.47c.12.16 1.69 2.57 4.09 3.6.57.25 1.01.4 1.36.51.57.18 1.08.16 1.49.1.46-.07 1.4-.57 1.6-1.12.2-.55.2-1.02.14-1.12-.06-.09-.22-.15-.46-.27Z" />
+	</svg>
+</a>
+
+<style>
+.c-whatsapp-fab {
+	position: fixed;
+	right: 1rem;
+	bottom: calc(env(safe-area-inset-bottom, 0px) + 5.5rem);
+	z-index: 1050;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3.5rem;
+	height: 3.5rem;
+	color: #fff;
+	background: #25d366;
+	border-radius: 999px;
+	box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+	transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.c-whatsapp-fab:hover {
+	transform: scale(1.1);
+	background: #20ba5a;
+}
+
+.c-whatsapp-fab:active {
+	transform: scale(0.95);
+}
+
+.c-whatsapp-fab__icon {
+	width: 1.6rem;
+	height: 1.6rem;
+}
+
+@media (min-width: 1024px) {
+	.c-whatsapp-fab {
+		bottom: 1.5rem;
+		right: 1.5rem;
+	}
+}
+</style>
+
+<script>
+/**
+ * WhatsApp FAB Engagement Tracking
+ */
+(function() {
+	const fab = document.getElementById('whatsapp-fab');
+	if (!fab) return;
+
+	fab.addEventListener('click', function(e) {
+		const urlParams = new URLSearchParams(window.location.search);
+		const utmSource = urlParams.get('utm_source');
+		const trafficSource = utmSource || document.referrer || 'direct';
+
+		if (window.datamaq_tracker) {
+			window.datamaq_tracker.trackChat('whatsapp-fab', trafficSource);
+		}
+
+		// Google Ads Conversion Tracking if available
+		if (typeof window.gtag_report_conversion === 'function') {
+			window.gtag_report_conversion(fab.href);
+		}
+	});
+})();
+</script>
