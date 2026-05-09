@@ -22,7 +22,7 @@ Este documento define la especificación técnica y las certezas para la integra
     - Los teléfonos se sanitizan al formato estricto E.164.
     - Los metadatos se envían como `custom_attributes` planos (sin anidamiento).
     - Se incluye el booleano `whatsapp_preferred` para segmentación visual en el panel.
-5. **Proxy Seguro:** El **`LeadRestController` actúa como punto de entrada único**, inyectando trazabilidad (`traceId`) mediante el encabezado `X-DataMaq-Trace-ID`.
+5. **Proxy Seguro:** El **`LeadRestController` actúa como punto de entrada único**, inyectando trazabilidad (`traceId`) y validando la identidad de la SPA mediante el header `X-DataMaq-Secret`.
 
 ## 4. Definición del Servicio (PHP Interface)
 

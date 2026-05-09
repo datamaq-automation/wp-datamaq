@@ -25,10 +25,19 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - `ChatwootProvider`: Inyección y control del widget oficial.
   - `WPConfigProvider`: Acceso a `.env` y configuración de WP.
   - `WPLogger`: Registro de eventos con prefijo `[Chatwoot]`.
+- **Configuración Dinámica (Client-Side):**
+  - `DataMaqConfig`: Objeto global inyectado vía `wp_localize_script`.
+  - **Campos Expuestos**: Solo `baseUrl` y `websiteToken` de Chatwoot.
+- **Seguridad de API (Leads):**
+  - **Estrategia Híbrida**: Shared Application Token (`X-DataMaq-Secret`) + CORS estricto + Rate Limiting por IP.
 - **Observabilidad (Traceability):**
--   - `TraceContext`: Almacén global de trazabilidad en PHP.
--   - `X-DataMaq-Trace-ID`: Encabezado estándar para propagación de contexto desde el cliente.
--   - **Correlación**: Los logs del servidor incluyen automáticamente el ID de seguimiento generado por el gateway JS.
+  - `TraceContext`: Almacén global de trazabilidad en PHP.
+  - `X-DataMaq-Trace-ID`: Encabezado estándar para propagación de contexto desde el cliente.
+  - **Correlación**: Los logs del servidor incluyen automáticamente el ID de seguimiento generado por el gateway JS.
+- **Estrategia de Ajustes (Backend):**
+  - **Persistencia**: Los ajustes en `wp_options` tienen prioridad sobre las constantes del `.env`.
+- **Marketing & Tracking:**
+  - **Atributos Capturados**: `utm_source`, `utm_medium`, `utm_campaign`, `landing_page`, `referrer`.
 
 ## 🛠️ Infraestructura Verificada
 - **WP-CLI:** Disponible y funcional.
