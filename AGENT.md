@@ -31,13 +31,13 @@ Todo agente debe seguir este flujo lógico exacto ante cualquier solicitud o tar
 ## 🚀 Pipeline de Despliegue (CD)
 - **Estrategia:** Zero-Cost CI/CD vía GitHub Actions -> VPS (Puerto 5932).
 
-## 🤖 Misión Actual: Consolidación en Chatwoot (COMPLETADA)
-- **Estado:** Sistemas legados (Sistemas Legados, Sistemas Legados, Sistemas Legados) totalmente purgados.
-- **Canal Único:** Chatwoot centraliza toda la comunicación y captación de leads.
-- **Infraestructura:** 
-  - `ChatWootLeadRepository`: Sincroniza leads capturados vía REST API.
-  - `ChatwootProvider`: Gestiona el widget oficial de Chatwoot.
-- **UI:** Intercepción unificada en `index.html` (Debug Gateway) que desvía interacciones (WhatsApp, #chat) hacia Chatwoot.
+## 🚀 Misión Actual: Fase 4 - Soberanía del Código (Native-First)
+- **Objetivo:** Migrar la experiencia de usuario de la Vue SPA compilada hacia plantillas de WordPress nativas (PHP/Vanilla JS).
+- **Prioridad:** Eliminar la opacidad de los archivos `dist/` y recuperar el control total del DOM.
+- **Estado de Infraestructura:** La consolidación de **Chatwoot** está **COMPLETADA** y operativa como único canal de leads.
+- **Hitos Próximos:**
+  - Migración de `ThanksView` y `WhatsAppFab` a componentes nativos.
+  - Implementación de `HomeContentProvider` para desacoplar el contenido de la UI.
 
 ## 🏥 Observabilidad y Salud
 - **Health Check:** `/wp-json/v1/health`.
