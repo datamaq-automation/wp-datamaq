@@ -51,6 +51,8 @@ class LeadRestController {
 		$params = $request->get_json_params();
 		$trace_id = $request->get_header('x_datamaq_trace_id') ?? uniqid('wp-req-');
 
+		error_log( "[DataMaq Debug] [$trace_id] 📥 Incoming Lead Request. Raw params: " . json_encode($params) );
+
 		// Mapeo flexible para soportar el formato de la SPA
 		$name      = $params['name'] ?? $params['nombre'] ?? '';
 		$firstName = $params['first_name'] ?? '';
@@ -61,8 +63,10 @@ class LeadRestController {
 		$company   = $params['company'] ?? $params['empresa'] ?? ( $params['custom_attributes']['company'] ?? '' );
 		$channel   = $params['preferred_contact_channel'] ?? 'contact-spa';
 
+		error_log( "[DataMaq Debug] [$trace_id] Normalized: Name=$name, Email=$email, Phone=$phone, Channel=$channel" );
+
 		if ( empty( $name ) || ( empty( $email ) && empty( $phone ) ) ) {
-			error_log( "[DataMaq Error] [$trace_id] Faltan datos obligatorios. Nombre: {$name}, Email: {$email}, Teléfono: {$phone}" );
+			error_log( "[DataMaq Error] [$trace_id] ⚠️ Validation Failed: Missing required data. Name: '{$name}', Email: '{$email}', Phone: '{$phone}'" );
 			return new WP_REST_Response( array( 
 				'success' => false, 
 				'message' => 'Faltan datos obligatorios (nombre y al menos un contacto).' 
@@ -71,16 +75,19 @@ class LeadRestController {
 
 		$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone, $firstName, $lastName );
 		
+		error_log( "[DataMaq Debug] [$trace_id] Executing SubmitLeadUseCase..." );
 		$success = $this->use_case->execute( $lead );
 
 		if ( $success ) {
+			error_log( "[DataMaq Debug] [$trace_id] ✅ Lead successfully processed and synced." );
 			return new WP_REST_Response( array( 'success' => true, 'id' => 'chatwoot_synced' ), 200 );
 		}
 
-		error_log( "[DataMaq Error] [$trace_id] Fallo al persistir el Lead en ChatWoot." );
+		error_log( "[DataMaq Error] [$trace_id] ❌ Failure in SubmitLeadUseCase for lead: $email / $phone" );
 		return new WP_REST_Response( array( 
 			'success' => false, 
 			'message' => 'Error al persistir en ChatWoot.' 
 		), 500 );
 	}
+
 }

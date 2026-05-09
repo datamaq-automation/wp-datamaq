@@ -42,9 +42,10 @@ class ObservabilityController extends WP_REST_Controller {
 	}
 
 	public function get_health( WP_REST_Request $request ): WP_REST_Response {
-		$status = $this->health_repo->checkStatus( 'orchestrator' );
+		$status = $this->health_repo->checkStatus( 'chatwoot' );
 		return new WP_REST_Response( $status->toArray(), 200 );
 	}
+
 
 	public function post_log( WP_REST_Request $request ): WP_REST_Response {
 		$level   = $request->get_param( 'level' ) ?? 'info';

@@ -15,10 +15,12 @@ class ExternalHealthAdapter implements HealthRepositoryInterface {
 
 	public function __construct( LoggerInterface $logger ) {
 		$this->logger = $logger;
+		// Migrado de n8n/orchestrator a Chatwoot Health
 		$this->endpoints = array(
-			'orchestrator' => 'https://api.datamaq.com.ar/v1/health',
+			'chatwoot' => 'https://chatwoot.datamaq.com.ar/health',
 		);
 	}
+
 
 	public function checkStatus( string $service_key ): \DataMaq\Domain\Shared\Health\HealthStatus {
 		if ( ! isset( $this->endpoints[ $service_key ] ) ) {
