@@ -15,14 +15,14 @@ Listado de tareas para la optimización y finalización de la réplica Vue -> Wo
 - [x] Normalizar Observabilidad (Unificación de Interfaces de Log).
 
 ## 🤖 Migración a ChatWoot Directo (Volantazo)
-- [ ] Definir certezas arquitectónicas (Frontend, Entidades, Automatización, Credenciales).
-- [ ] Eliminar dependencias de `botman/botman` vía Composer.
-- [ ] Eliminar clases y servicios relacionados a BotMan (`ChatbotService`, `BotmanAdapter`).
-- [ ] Eliminar clases y servicios relacionados a SuiteCRM (`SuiteCrmService`, `SuiteCrmLeadRepository`).
-- [ ] Eliminar archivos de integración de n8n.
+- [x] Definir certezas arquitectónicas (Frontend, Entidades, Automatización, Credenciales).
+- [x] Eliminar dependencias de `botman/botman` vía Composer.
+- [x] Eliminar clases y servicios relacionados a BotMan (`ChatbotService`, `BotmanAdapter`).
+- [x] Eliminar clases y servicios relacionados a SuiteCRM (`SuiteCrmService`, `SuiteCrmLeadRepository`).
+- [x] Eliminar archivos de integración de n8n.
 - [ ] Implementar `ChatWootLeadRepository` (o similar) para enviar datos a la API de ChatWoot.
 - [ ] Adaptar o remover el "Debug Gateway" de interceptación SPA según la decisión sobre el widget frontend.
-- [ ] Refactorizar `LeadRestController` para utilizar el nuevo proveedor de ChatWoot.
+- [x] Refactorizar `LeadRestController` para utilizar el nuevo proveedor de ChatWoot.
 - [ ] Eliminar tests de SuiteCRM, BotMan y n8n, y crear nuevos para ChatWoot.
 
 ## 🚀 Continuous Delivery (CD)

@@ -19,7 +19,7 @@ Orquesta el flujo de datos desde y hacia la capa de dominio.
 ### Infrastructure (Infraestructura)
 Implementaciones concretas de los contratos del dominio que interactúan con WordPress o servicios externos.
 - **Persistence**: Repositorios de datos (`StaticContentRepository`).
-- **Services**: Envío de emails, integraciones con n8n, SEO.
+- **Services**: Envío de emails, integración directa con ChatWoot, SEO.
 
 ### UI (Interfaz de Usuario)
 Maneja la entrada del usuario y la presentación.
@@ -33,16 +33,15 @@ Maneja la entrada del usuario y la presentación.
 - **Dependency Injection (Manual)**: Los controladores instancian sus dependencias, permitiendo una futura migración a un contenedor DI.
 - **JS Componentizer**: Arquitectura modular para el frontend sin necesidad de frameworks pesados.
 
-## 3. Arquitectura del Chatbot (BotMan)
+## 3. Arquitectura de Chat y CRM (ChatWoot)
 
-- **Domain (`ChatbotService.php`)**: Contiene las reglas estáticas de conversación (intenciones y respuestas).
-- **Infrastructure (`BotmanAdapter.php`)**: Adaptador que implementa `ChatProvider` y `BotEngine`. Carga las reglas del dominio en BotMan.
-- **Sidecar Pattern (SPA)**: Debido a que la web es una SPA compilada (Vue), la inyección visual del widget se realiza en `index.html` mediante un **Interceptor de Red y DOM** (MutationObserver). Esto permite secuestrar los clics hacia WhatsApp y unificar el Chat de forma responsiva sin alterar el build de Vue.
+- **Domain (`ChatPlatformProviderInterface.php`)**: Contrato que define la captura de leads y mensajes.
+- **Infrastructure (`ChatWootAdapter.php`)**: Implementación que se comunica con la API de ChatWoot.
+- **Sidecar Pattern (SPA)**: Debido a que la web es una SPA compilada (Vue), la inyección visual del widget personalizado se realiza en `index.html` mediante un **Interceptor de Red y DOM** (MutationObserver). Esto permite secuestrar los clics hacia WhatsApp y unificar el Chat de forma responsiva sin alterar el build de Vue, redirigiendo los leads al backend de WordPress que actúa como proxy seguro hacia ChatWoot.
 
 ## 4. Integraciones
 
-- **n8n**: Sincronización automática de leads mediante webhooks.
-- **BotMan**: Motor de chatbot nativo PHP con integración REST y persistencia en memoria/cache.
+- **ChatWoot**: Gestión omnicanal de leads y mensajería mediante integración directa por API REST.
 - **SEO Técnico**: Generación dinámica de JSON-LD y metadatos de alta calidad.
 
 ## 5. Guía de Mantenimiento
@@ -52,4 +51,4 @@ Para añadir una nueva sección:
 2. Crear un `ViewModel` en `src/UI/ViewModels/`.
 3. Crear la plantilla en `template-parts/` usando el ViewModel.
 4. (Opcional) Añadir un componente JS en `assets/js/components/` si requiere interactividad.
-5. (Para el Chatbot) Modificar `ChatbotService.php` para añadir nuevas reglas de conversación.
+5. (Para el Chat) Configurar las reglas de automatización directamente en el panel de ChatWoot.
