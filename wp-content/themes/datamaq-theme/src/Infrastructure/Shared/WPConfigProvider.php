@@ -11,14 +11,21 @@ use DataMaq\Domain\Shared\ConfigProvider;
  */
 class WPConfigProvider implements ConfigProvider {
 	public function get( string $key, $default = null ) {
-		// 1. Prioridad: Constantes de PHP (definidas en wp-config.php)
-		if ( defined( $key ) ) {
-			return constant( $key );
+		// 1. Prioridad: Opciones de WordPress (Base de Datos / Panel Admin)
+		// Intentamos con prefijo datamaq_ y sin él
+		$wp_option = get_option( 'datamaq_' . strtolower( $key ) );
+		if ( false !== $wp_option && '' !== $wp_option ) {
+			return $wp_option;
 		}
 
-		// 2. Variables de Entorno (si están cargadas)
+		$wp_option_direct = get_option( $key );
+		if ( false !== $wp_option_direct && '' !== $wp_option_direct ) {
+			return $wp_option_direct;
+		}
+
+		// 2. Variables de Entorno
 		$env_val = getenv( $key );
-		if ( false !== $env_val ) {
+		if ( false !== $env_val && '' !== $env_val ) {
 			return $env_val;
 		}
 
@@ -26,8 +33,12 @@ class WPConfigProvider implements ConfigProvider {
 			return $_ENV[ $key ];
 		}
 
-		// 3. Opciones de WordPress (Base de Datos)
-		return get_option( $key, $default );
+		// 3. Constantes de PHP (wp-config.php)
+		if ( defined( $key ) ) {
+			return constant( $key );
+		}
+
+		return $default;
 	}
 
 
