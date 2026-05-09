@@ -31,24 +31,50 @@
   <script>
     // --- DataMaq Debug Gateway ---
     (function () {
-      console.log('🛡️ [DataMaq] Gateway Initializing...');
-
       // 1. Interceptar Fetch
       const originalFetch = window.fetch;
       window.fetch = function () {
         let [resource, config] = arguments;
-        
+
         // Proxy para API de DataMaq (PHP/REST)
         if (typeof resource === 'string' && resource.includes('api.datamaq.com.ar')) {
-          console.log('🔌 [DataMaq] API Proxy:', resource);
           resource = resource.replace('https://api.datamaq.com.ar', '/index.php?rest_route=');
         }
 
         // Intercepción de n8n (Redirección a WordPress REST)
         if (typeof resource === 'string' && resource.includes('n8n.datamaq.com.ar')) {
-          console.warn('🛡️ [DataMaq] n8n Call Intercepted! Redirecting to local Lead API...');
-          resource = '/wp-json/datamaq/v1/lead';
-          // El LeadRestController en WP se encargará de mapear el JSON de n8n a SuiteCRM.
+          const traceId = 'req-' + Math.random().toString(36).substr(2, 9);
+          const startTime = performance.now();
+          const payload = config.body ? JSON.parse(config.body) : 'No body';
+
+          console.groupCollapsed(`🚀 [DataMaq] Intercepted Lead -> SuiteCRM [${traceId}]`);
+          console.log('📦 Original Payload:', payload);
+          console.log('🔌 Redirecting to: /datamaq/v1/lead');
+
+          resource = '/index.php?rest_route=/datamaq/v1/lead';
+
+          config.headers = {
+            ...config.headers,
+            'X-DataMaq-Trace-ID': traceId
+          };
+
+          return originalFetch.apply(this, [resource, config]).then(async (response) => {
+            const clone = response.clone();
+            const duration = (performance.now() - startTime).toFixed(2);
+            try {
+              const data = await clone.json();
+              console.log(`📥 WP REST Response (${response.status}) [${duration}ms]:`, data);
+            } catch (e) {
+              console.error(`📥 Error reading WP REST Response [${duration}ms]:`, e);
+            }
+            console.groupEnd();
+            return response;
+          }).catch(err => {
+            const duration = (performance.now() - startTime).toFixed(2);
+            console.error(`❌ Fetch Error [${duration}ms]:`, err);
+            console.groupEnd();
+            throw err;
+          });
         }
 
         return originalFetch.apply(this, [resource, config]);
@@ -92,14 +118,7 @@
       }, true);
 
       window.addEventListener('load', () => {
-        console.log('🏁 [DataMaq] Window Load complete');
         const toggle = document.getElementById('dm-chat-toggle');
-        if (toggle) {
-          console.log('✅ [DataMaq] Chat Toggle found:', toggle);
-        } else {
-          console.error('❌ [DataMaq] Chat Toggle NOT FOUND after load');
-        }
-
         // Modificar la UI de Vue sobre la marcha
         const modifyVueUI = () => {
           const oldElements = document.querySelectorAll('.c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp');
@@ -108,18 +127,18 @@
           // Unificar el enlace "Contacto" del Dock
           const dockEmergencyLink = document.querySelector('.c-home-dock__link--emergency');
           if (dockEmergencyLink) {
-              if (!dockEmergencyLink.dataset.chatHijacked) {
-                  dockEmergencyLink.dataset.chatHijacked = "true";
-                  dockEmergencyLink.addEventListener('click', (e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log('🛑 [DataMaq] Dock Contact link hijacked!');
-                      openChat();
-                  }, true);
-              }
-              if (!dockEmergencyLink.innerHTML.includes('bi-whatsapp')) {
-                  dockEmergencyLink.innerHTML = '<i class="bi bi-whatsapp" aria-hidden="true" style="font-size: 1.3rem; margin-bottom: 2px;"></i><span>Asistente</span>';
-              }
+            if (!dockEmergencyLink.dataset.chatHijacked) {
+              dockEmergencyLink.dataset.chatHijacked = "true";
+              dockEmergencyLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🛑 [DataMaq] Dock Contact link hijacked!');
+                openChat();
+              }, true);
+            }
+            if (!dockEmergencyLink.innerHTML.includes('bi-whatsapp')) {
+              dockEmergencyLink.innerHTML = '<i class="bi bi-whatsapp" aria-hidden="true" style="font-size: 1.3rem; margin-bottom: 2px;"></i><span>Asistente</span>';
+            }
           }
         };
         modifyVueUI();
@@ -153,7 +172,9 @@
   <!-- Inyectamos manualmente el HTML y CSS del chatbot -->
   <style id="dm-chat-styles">
     /* Ocultamos los botones y enlaces originales de WhatsApp de la SPA */
-    .c-whatsapp-fab, .c-contact-page-footer__whatsapp, .c-home-footer__whatsapp {
+    .c-whatsapp-fab,
+    .c-contact-page-footer__whatsapp,
+    .c-home-footer__whatsapp {
       display: none !important;
     }
 
@@ -166,12 +187,12 @@
       flex-direction: column;
       align-items: flex-end;
     }
-    
+
     /* En móviles, ocultamos el botón flotante para delegar la acción al Dock inferior */
     @media (max-width: 768px) {
-        #dm-chat-toggle {
-            display: none !important;
-        }
+      #dm-chat-toggle {
+        display: none !important;
+      }
     }
 
     #dm-chat-container {

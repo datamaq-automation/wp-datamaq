@@ -49,34 +49,35 @@ class LeadRestController {
 	 */
 	public function handle_lead( WP_REST_Request $request ): WP_REST_Response {
 		$params = $request->get_json_params();
+		$trace_id = $request->get_header('x_datamaq_trace_id') ?? uniqid('wp-req-');
 
-		// Mapeo flexible para soportar el formato de la SPA (que iba a n8n)
-		$name    = $params['name'] ?? $params['nombre'] ?? '';
-		$email   = $params['email'] ?? '';
-		$phone   = $params['phone'] ?? $params['telefono'] ?? '';
-		$message = $params['message'] ?? $params['mensaje'] ?? '';
-		$company = $params['company'] ?? $params['empresa'] ?? '';
+		// Mapeo flexible para soportar el formato de la SPA
+		$name      = $params['name'] ?? $params['nombre'] ?? '';
+		$firstName = $params['first_name'] ?? '';
+		$lastName  = $params['last_name'] ?? '';
+		$email     = $params['email'] ?? ( $params['custom_attributes']['email'] ?? '' );
+		$phone     = $params['phone'] ?? $params['telefono'] ?? ( $params['custom_attributes']['phone'] ?? '' );
+		$message   = $params['message'] ?? $params['mensaje'] ?? '';
+		$company   = $params['company'] ?? $params['empresa'] ?? ( $params['custom_attributes']['company'] ?? '' );
+		$channel   = $params['preferred_contact_channel'] ?? 'contact-spa';
 
 		if ( empty( $name ) || ( empty( $email ) && empty( $phone ) ) ) {
+			error_log( "[DataMaq Error] [$trace_id] Faltan datos obligatorios. Nombre: {$name}, Email: {$email}, Teléfono: {$phone}" );
 			return new WP_REST_Response( array( 
 				'success' => false, 
 				'message' => 'Faltan datos obligatorios (nombre y al menos un contacto).' 
 			), 400 );
 		}
 
-		$lead = new LeadEntity( $name, $email, $phone, 'contact-spa' );
+		$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone, $firstName, $lastName );
 		
-		$success = $this->use_case->execute( $lead, array(
-			'message' => $message,
-			'company' => $company,
-			'source'  => 'SPA Intercepted',
-			'raw'     => $params,
-		) );
+		$success = $this->use_case->execute( $lead );
 
 		if ( $success ) {
 			return new WP_REST_Response( array( 'success' => true, 'id' => 'crm_synced' ), 200 );
 		}
 
+		error_log( "[DataMaq Error] [$trace_id] Fallo al persistir el Lead en SuiteCRM." );
 		return new WP_REST_Response( array( 
 			'success' => false, 
 			'message' => 'Error al persistir en SuiteCRM.' 

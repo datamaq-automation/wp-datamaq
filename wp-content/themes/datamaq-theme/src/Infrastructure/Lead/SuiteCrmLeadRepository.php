@@ -30,9 +30,13 @@ class SuiteCrmLeadRepository implements LeadRepositoryInterface {
 		}
 
 		$contact_info = ! empty( $lead->getPhone() ) ? $lead->getPhone() : $lead->getEmail();
+		
+		$firstName = ! empty( $lead->getFirstName() ) ? $lead->getFirstName() : $lead->getName();
+		$lastName  = $lead->getLastName();
 
 		return $this->crm_service->createLead(
-			$lead->getName(),
+			$firstName,
+			$lastName,
 			$contact_info,
 			$reason
 		);

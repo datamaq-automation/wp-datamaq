@@ -6,7 +6,7 @@ namespace DataMaq\Domain\Lead;
  */
 interface LeadRepositoryInterface {
 	/**
-	 * Send the lead to the external service (n8n, CRM, etc.)
+	 * Send the lead to the CRM (SuiteCRM)
 	 * @param LeadEntity $lead
 	 * @return bool
 	 */

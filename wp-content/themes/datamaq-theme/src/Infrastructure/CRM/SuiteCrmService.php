@@ -32,7 +32,7 @@ class SuiteCrmService implements CrmProviderInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function createLead( string $name, string $contact_info, string $reason ): bool {
+	public function createLead( string $firstName, string $lastName, string $contact_info, string $reason ): bool {
 		if ( ! $this->authenticate() ) {
 			return false;
 		}
@@ -42,8 +42,8 @@ class SuiteCrmService implements CrmProviderInterface {
 				'data' => array(
 					'type'       => 'Leads',
 					'attributes' => array(
-						'first_name'  => $name,
-						'last_name'   => 'Lead BotMan',
+						'first_name'  => $firstName,
+						'last_name'   => $lastName ?: 'Lead Web',
 						'phone_work'  => $contact_info,
 						'description' => 'Motivo de contacto: ' . $reason,
 						'lead_source' => 'Web Site',
@@ -67,12 +67,15 @@ class SuiteCrmService implements CrmProviderInterface {
 
 		if ( is_wp_error( $response ) ) {
 			$this->logger->error( 'SuiteCRM API Error (Create Lead): ' . $response->get_error_message() );
+			error_log( '[DataMaq CRM Error] wp_remote_post failed: ' . $response->get_error_message() );
 			return false;
 		}
 
 		$code = wp_remote_retrieve_response_code( $response );
-		if ( 201 !== $code ) {
-			$this->logger->error( 'SuiteCRM API Error (Create Lead HTTP ' . $code . '): ' . wp_remote_retrieve_body( $response ) );
+		$body = wp_remote_retrieve_body( $response );
+
+		if ( 201 !== $code && 200 !== $code ) {
+			$this->logger->error( 'SuiteCRM API Error (Create Lead HTTP ' . $code . '): ' . $body );
 			return false;
 		}
 
