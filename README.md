@@ -1,6 +1,6 @@
 # DataMaq WordPress - Technical Repository
 
-Este repositorio contiene la implementación nativa en WordPress para el sitio de DataMaq, optimizado para rendimiento y fidelidad visual respecto a su versión original en Vue.
+Este repositorio contiene la evolución del sitio DataMaq hacia una **Arquitectura Soberana** en WordPress. El objetivo es migrar la lógica y estética de la versión original (Vue SPA) hacia componentes nativos (PHP/Vanilla CSS-JS) para eliminar la dependencia de archivos compilados y garantizar el mantenimiento directo y transparente.
 
 ## 🚀 Arquitectura
 - **Core:** WordPress (gestionado localmente).

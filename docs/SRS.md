@@ -3,7 +3,7 @@
 Especificación de requisitos para la réplica y mantenimiento del sitio DataMaq.
 
 ## 🎯 Objetivo General
-Replicar la narrativa y estética de la versión original en Vue dentro de una arquitectura nativa y optimizada de WordPress.
+Lograr la **Soberanía del Código** mediante la migración de la experiencia de usuario original (Vue SPA) hacia una arquitectura **WordPress Nativa** (PHP/Vanilla CSS-JS). El objetivo es eliminar la opacidad de los archivos compilados (`dist`) y permitir el mantenimiento directo y transparente dentro del ecosistema de WordPress, manteniendo la estética premium y la trazabilidad.
 
 ## 🎨 Requisitos de Diseño
 - **Consistencia Visual:** Reutilizar la narrativa comercial: captura automática de datos, IoT, energía y producción.
@@ -19,6 +19,7 @@ Replicar la narrativa y estética de la versión original en Vue dentro de una a
   - `LeadRepositoryInterface`: Abstrae el destino de los leads.
   - `ChatProvider`: Abstrae el motor de comunicación frontend.
   - `ConfigProvider`: Desacopla la lógica de negocio.
+  - `ContentProviderInterface`: Abstrae la fuente de verdad del contenido de la UI.
   - `LoggerInterface`: Interfaz para observabilidad.
 - **Implementaciones (Adapters):**
   - `ChatWootLeadRepository`: Sincronización con ChatWoot API.
