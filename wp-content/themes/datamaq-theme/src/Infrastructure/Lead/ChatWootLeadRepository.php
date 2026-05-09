@@ -42,80 +42,50 @@ class ChatWootLeadRepository implements LeadRepositoryInterface {
 	}
 
 	public function save( LeadEntity $lead ): bool {
-		$this->logger->info( TraceContext::format( "Syncing lead: " . ( $lead->getEmail() ?: $lead->getPhone() ) ) );
+		$this->logger->info( TraceContext::format( "Syncing lead contact: " . ( $lead->getEmail() ?: $lead->getPhone() ) ) );
 
 		$client = $this->getClient();
 		if ( ! $client ) return false;
 
-		// 1. Resolve Contact
+		// Resolve/Create/Update Contact with all lead data
 		$contactId = $this->resolveContact( $client, $lead );
-		if ( ! $contactId ) return false;
-
-		// 2. Resolve Conversation
-		$inboxId = (int) $this->config->get( 'CHATWOOT_INBOX_ID' );
-		$conversationId = $this->resolveConversation( $client, $contactId, $inboxId );
-		if ( ! $conversationId ) return false;
-
-		// 3. Send Lead Data as Note (Compatible with Website Inboxes)
-		return $this->sendLeadData( $client, $conversationId, $lead );
-	}
-
-	private function resolveContact( ChatWootApiClient $client, LeadEntity $lead ): ?int {
-		$query = $lead->getEmail() ?: $lead->getPhone();
-		$search = $client->request( 'GET', "contacts/search?q={$query}" );
-
-		if ( ! empty( $search['payload'] ) ) {
-			return (int) $search['payload'][0]['id'];
-		}
-
-		// Create if not found
-		$create = $client->request( 'POST', 'contacts', array(
-			'name'         => $lead->getName(),
-			'email'        => $lead->getEmail(),
-			'phone_number' => $lead->getPhone(),
-			'custom_attributes' => array(
-				'source'    => 'WordPress-Gateway',
-				'trace_id'  => TraceContext::get(),
-				'synced_at' => current_time( 'mysql' )
-			)
-		) );
-
-		return $create ? (int) $create['payload']['contact']['id'] : null;
-	}
-
-	private function resolveConversation( ChatWootApiClient $client, int $contactId, int $inboxId ): ?int {
-		$conv = $client->request( 'POST', 'conversations', array(
-			'contact_id' => $contactId,
-			'inbox_id'   => $inboxId,
-			'status'     => 'open'
-		) );
-
-		return $conv ? (int) $conv['id'] : null;
-	}
-
-	private function sendLeadData( ChatWootApiClient $client, int $conversationId, LeadEntity $lead ): bool {
-		$message = "📬 **Nuevo Lead Capturado**\n\n";
-		$message .= "👤 **Nombre:** " . $lead->getName() . "\n";
-		$message .= "✉️ **Email:** " . ( $lead->getEmail() ?: 'N/A' ) . "\n";
-		$message .= "📞 **Teléfono:** " . ( $lead->getPhone() ?: 'N/A' ) . "\n";
 		
-		$meta = $lead->getMetadata();
-		if ( ! empty( $meta['message'] ) ) {
-			$message .= "\n💬 **Mensaje:**\n" . $meta['message'];
-		}
-
-		// Enviamos como MENSAJE PRIVADO (Nota) para evitar el error de "Website Inbox"
-		$response = $client->request( 'POST', "conversations/{$conversationId}/messages", array(
-			'content'      => $message,
-			'message_type' => 'outgoing', // 'outgoing' es permitido por agentes, 'incoming' falla en Website inboxes
-			'private'      => true        // Enviarlo como nota interna
-		) );
-
-		if ( $response ) {
-			$this->logger->info( TraceContext::format( "Lead successfully synced to Chatwoot." ) );
+		if ( $contactId ) {
+			$this->logger->info( TraceContext::format( "✅ Contact synced successfully: ID {$contactId}" ) );
 			return true;
 		}
 
 		return false;
 	}
+
+
+	private function resolveContact( ChatWootApiClient $client, LeadEntity $lead ): ?int {
+		$query = $lead->getEmail() ?: $lead->getPhone();
+		$search = $client->request( 'GET', "contacts/search?q={$query}" );
+		
+		$contactData = array(
+			'name'         => $lead->getName(),
+			'email'        => $lead->getEmail(),
+			'phone_number' => $lead->getPhone(),
+			'custom_attributes' => array_merge( $lead->getMetadata(), array(
+				'last_source'   => 'WordPress-Lead-Form',
+				'last_trace_id' => TraceContext::get(),
+				'last_sync_at'  => current_time( 'mysql' )
+			) )
+		);
+
+		if ( ! empty( $search['payload'] ) ) {
+			$id = (int) $search['payload'][0]['id'];
+			// Update existing contact to ensure latest lead data is persisted
+			$client->request( 'PUT', "contacts/{$id}", $contactData );
+			return $id;
+		}
+
+		// Create if not found
+		$create = $client->request( 'POST', 'contacts', $contactData );
+
+		return $create ? (int) $create['payload']['contact']['id'] : null;
+	}
+
+
 }

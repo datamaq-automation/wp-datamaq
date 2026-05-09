@@ -34,7 +34,7 @@ class LeadRestController {
 			array(
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'handle_lead' ),
+					'callback'            => array( $this, 'create_lead' ),
 					'permission_callback' => '__return_true', // Permitir envíos públicos
 				),
 			)
@@ -66,7 +66,6 @@ class LeadRestController {
 		$company   = $params['company'] ?? $params['empresa'] ?? ( $params['custom_attributes']['company'] ?? '' );
 		$channel   = $params['preferred_contact_channel'] ?? 'contact-spa';
 
-		error_log( "[DataMaq Debug] [$trace_id] Normalized: Name=$name, Email=$email, Phone=$phone, Channel=$channel" );
 
 		if ( empty( $name ) || ( empty( $email ) && empty( $phone ) ) ) {
 			error_log( "[DataMaq Error] [$trace_id] ⚠️ Validation Failed: Missing required data. Name: '{$name}', Email: '{$email}', Phone: '{$phone}'" );
@@ -77,11 +76,17 @@ class LeadRestController {
 			), 400 );
 		}
 
-		error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "Normalized: Name=$name, Email=$email, Phone=$phone, Channel=$channel" ) );
+		// Aplanar metadatos para evitar anidamiento en Chatwoot (DDD: Preparación de datos)
+		$metadata = array(
+			'company'     => $company,
+			'description' => $message,
+			'channel'     => $channel,
+			'source'      => 'WordPress SPA',
+		);
 
 		try {
-			// Usar el nuevo constructor DDD de LeadEntity
-			$lead = new \DataMaq\Domain\Lead\LeadEntity( $name, $email, $phone, $params );
+			// Usar el nuevo constructor DDD de LeadEntity con metadatos planos
+			$lead = new \DataMaq\Domain\Lead\LeadEntity( $name, $email, $phone, $metadata );
 			
 			error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "Executing SubmitLeadUseCase..." ) );
 			$success = $this->use_case->execute( $lead );

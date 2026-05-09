@@ -38,7 +38,9 @@ class ChatWootApiClient {
 
 		if ( ! empty( $data ) ) {
 			$args['body'] = json_encode( $data );
+			$this->logger->info( TraceContext::format( "Chatwoot API Payload [{$method} {$endpoint}]: " . $args['body'] ) );
 		}
+
 
 		$response = wp_remote_request( $url, $args );
 		$code     = wp_remote_retrieve_response_code( $response );
