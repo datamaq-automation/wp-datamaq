@@ -1,161 +1,121 @@
 <?php
+
 namespace DataMaq\Infrastructure\Lead;
 
 use DataMaq\Domain\Lead\LeadEntity;
 use DataMaq\Domain\Lead\LeadRepositoryInterface;
 use DataMaq\Domain\Shared\ConfigProvider;
 use DataMaq\Domain\Shared\Observability\LoggerInterface;
+use DataMaq\Domain\Shared\Observability\TraceContext;
+use DataMaq\Infrastructure\Communication\ChatWootApiClient;
 
 /**
- * ChatWoot implementation for Lead delivery.
+ * ChatWootLeadRepository (Infrastructure Adapter)
+ * 
+ * Implementación del repositorio de leads para Chatwoot siguiendo SOLID y Arquitectura Hexagonal.
  */
 class ChatWootLeadRepository implements LeadRepositoryInterface {
+
 	private ConfigProvider $config;
 	private LoggerInterface $logger;
+	private ?ChatWootApiClient $client = null;
 
 	public function __construct( ConfigProvider $config, LoggerInterface $logger ) {
 		$this->config = $config;
 		$this->logger = $logger;
 	}
 
-	public function save( LeadEntity $lead ): bool {
-		$account_id = $this->config->get( 'CHATWOOT_ACCOUNT_ID' );
-		$base_url   = $this->config->get( 'CHATWOOT_BASE_URL' );
-		$token      = $this->config->get( 'CHATWOOT_ACCESS_TOKEN' );
-		$inbox_id   = $this->config->get( 'CHATWOOT_INBOX_ID' );
+	private function getClient(): ?ChatWootApiClient {
+		if ( null === $this->client ) {
+			$baseUrl     = $this->config->get( 'CHATWOOT_BASE_URL' );
+			$accessToken = $this->config->get( 'CHATWOOT_ACCESS_TOKEN' );
+			$accountId   = $this->config->get( 'CHATWOOT_ACCOUNT_ID' );
 
-		$this->logger->info( sprintf( '[Chatwoot] 🚀 Lead sync initiated for %s', $lead->getEmail() ?: $lead->getPhone() ) );
-
-		if ( ! $account_id || ! $base_url || ! $token || ! $inbox_id ) {
-			$this->logger->error( '[Chatwoot] ❌ Configuration missing in .env' );
-			return false;
-		}
-
-		$headers = array(
-			'api_access_token' => $token,
-			'Content-Type'     => 'application/json',
-		);
-
-		// 1. Search or Create Contact
-		$contact_id = $this->get_or_create_contact( $lead, $base_url, $account_id, $headers );
-		if ( ! $contact_id ) return false;
-
-		// 2. Create Conversation
-		$conversation_id = $this->create_conversation( $contact_id, $inbox_id, $base_url, $account_id, $headers );
-		if ( ! $conversation_id ) return false;
-
-		// 3. Send Message
-		$success = $this->send_message( $conversation_id, $lead->toArray()['message'], $base_url, $account_id, $headers );
-		
-		if ( $success ) {
-			$this->logger->info( '[Chatwoot] ✅ Lead successfully synced.' );
-		}
-
-		return $success;
-	}
-
-	private function get_or_create_contact( LeadEntity $lead, string $base_url, string $account_id, array $headers ): ?int {
-		$email = $lead->getEmail();
-		$phone = $lead->getPhone();
-
-		// Asegurar formato E.164 para Chatwoot
-		if ( ! empty( $phone ) && strpos( $phone, '+' ) !== 0 ) {
-			$phone = '+' . $phone;
-		}
-
-		$search_url = sprintf( '%s/api/v1/accounts/%s/contacts/search?q=%s', $base_url, $account_id, !empty($email) ? $email : $phone );
-		
-		$response   = wp_remote_get( $search_url, array( 'headers' => $headers ) );
-
-		if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
-			$body = json_decode( wp_remote_retrieve_body( $response ), true );
-			if ( ! empty( $body['payload'] ) ) {
-				return $body['payload'][0]['id'];
+			if ( ! $baseUrl || ! $accessToken || ! $accountId ) {
+				$this->logger->error( TraceContext::format( "Chatwoot Configuration Missing" ) );
+				return null;
 			}
+
+			$this->client = new ChatWootApiClient( $baseUrl, $accessToken, $accountId, $this->logger );
+		}
+		return $this->client;
+	}
+
+	public function save( LeadEntity $lead ): bool {
+		$this->logger->info( TraceContext::format( "Syncing lead: " . ( $lead->getEmail() ?: $lead->getPhone() ) ) );
+
+		$client = $this->getClient();
+		if ( ! $client ) return false;
+
+		// 1. Resolve Contact
+		$contactId = $this->resolveContact( $client, $lead );
+		if ( ! $contactId ) return false;
+
+		// 2. Resolve Conversation
+		$inboxId = (int) $this->config->get( 'CHATWOOT_INBOX_ID' );
+		$conversationId = $this->resolveConversation( $client, $contactId, $inboxId );
+		if ( ! $conversationId ) return false;
+
+		// 3. Send Lead Data as Note (Compatible with Website Inboxes)
+		return $this->sendLeadData( $client, $conversationId, $lead );
+	}
+
+	private function resolveContact( ChatWootApiClient $client, LeadEntity $lead ): ?int {
+		$query = $lead->getEmail() ?: $lead->getPhone();
+		$search = $client->request( 'GET', "contacts/search?q={$query}" );
+
+		if ( ! empty( $search['payload'] ) ) {
+			return (int) $search['payload'][0]['id'];
 		}
 
-		$create_url = sprintf( '%s/api/v1/accounts/%s/contacts', $base_url, $account_id );
-		$payload    = array(
+		// Create if not found
+		$create = $client->request( 'POST', 'contacts', array(
 			'name'         => $lead->getName(),
-			'email'        => $email,
-			'phone_number' => $phone,
+			'email'        => $lead->getEmail(),
+			'phone_number' => $lead->getPhone(),
 			'custom_attributes' => array(
-				'source' => 'WordPress Website',
-				'synced_at' => current_time('mysql')
-			),
-		);
-
-		$response = wp_remote_post(
-			$create_url,
-			array(
-				'headers' => $headers,
-				'body'    => json_encode( $payload ),
+				'source'    => 'WordPress-Gateway',
+				'trace_id'  => TraceContext::get(),
+				'synced_at' => current_time( 'mysql' )
 			)
-		);
+		) );
 
-		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( is_wp_error( $response ) || ( $status_code < 200 || $status_code >= 300 ) ) {
-			$error_msg = is_wp_error( $response ) ? $response->get_error_message() : wp_remote_retrieve_body( $response );
-			$this->logger->error( sprintf( '[Chatwoot] ❌ Contact creation failed (Code %s): %s', $status_code, $error_msg ) );
-			return null;
-		}
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		return $body['payload']['contact']['id'] ?? null;
+		return $create ? (int) $create['payload']['contact']['id'] : null;
 	}
 
+	private function resolveConversation( ChatWootApiClient $client, int $contactId, int $inboxId ): ?int {
+		$conv = $client->request( 'POST', 'conversations', array(
+			'contact_id' => $contactId,
+			'inbox_id'   => $inboxId,
+			'status'     => 'open'
+		) );
 
-	private function create_conversation( int $contact_id, int $inbox_id, string $base_url, string $account_id, array $headers ): ?int {
-		$url     = sprintf( '%s/api/v1/accounts/%s/conversations', $base_url, $account_id );
-		$payload = array(
-			'contact_id' => $contact_id,
-			'inbox_id'   => $inbox_id,
-			'status'     => 'open',
-		);
-
-		$response = wp_remote_post(
-			$url,
-			array(
-				'headers' => $headers,
-				'body'    => json_encode( $payload ),
-			)
-		);
-
-		$status_code = wp_remote_retrieve_response_code( $response );
-		if ( is_wp_error( $response ) || ( $status_code < 200 || $status_code >= 300 ) ) {
-			$error_msg = is_wp_error( $response ) ? $response->get_error_message() : wp_remote_retrieve_body( $response );
-			$this->logger->error( sprintf( '[Chatwoot] ❌ Conversation creation failed (Code %s): %s', $status_code, $error_msg ) );
-			return null;
-		}
-
-		$body = json_decode( wp_remote_retrieve_body( $response ), true );
-		return $body['id'] ?? null;
+		return $conv ? (int) $conv['id'] : null;
 	}
 
-	private function send_message( int $conversation_id, string $message, string $base_url, string $account_id, array $headers ): bool {
-		$url     = sprintf( '%s/api/v1/accounts/%s/conversations/%s/messages', $base_url, $account_id, $conversation_id );
-		$payload = array(
-			'content'      => "Nuevo Lead desde la Web:\n\n" . $message,
-			'message_type' => 'incoming',
-		);
-
-		$response = wp_remote_post(
-			$url,
-			array(
-				'headers' => $headers,
-				'body'    => json_encode( $payload ),
-			)
-		);
-
-		$status_code = wp_remote_retrieve_response_code( $response );
-		$success = ! is_wp_error( $response ) && ( $status_code >= 200 && $status_code < 300 );
+	private function sendLeadData( ChatWootApiClient $client, int $conversationId, LeadEntity $lead ): bool {
+		$message = "📬 **Nuevo Lead Capturado**\n\n";
+		$message .= "👤 **Nombre:** " . $lead->getName() . "\n";
+		$message .= "✉️ **Email:** " . ( $lead->getEmail() ?: 'N/A' ) . "\n";
+		$message .= "📞 **Teléfono:** " . ( $lead->getPhone() ?: 'N/A' ) . "\n";
 		
-		if ( ! $success ) {
-			$error_msg = is_wp_error( $response ) ? $response->get_error_message() : wp_remote_retrieve_body( $response );
-			$this->logger->error( sprintf( '[Chatwoot] ❌ Message API error (Code %s): %s', $status_code, $error_msg ) );
+		$meta = $lead->getMetadata();
+		if ( ! empty( $meta['message'] ) ) {
+			$message .= "\n💬 **Mensaje:**\n" . $meta['message'];
 		}
-		
-		return $success;
-	}
 
+		// Enviamos como MENSAJE PRIVADO (Nota) para evitar el error de "Website Inbox"
+		$response = $client->request( 'POST', "conversations/{$conversationId}/messages", array(
+			'content'      => $message,
+			'message_type' => 'outgoing', // 'outgoing' es permitido por agentes, 'incoming' falla en Website inboxes
+			'private'      => true        // Enviarlo como nota interna
+		) );
+
+		if ( $response ) {
+			$this->logger->info( TraceContext::format( "Lead successfully synced to Chatwoot." ) );
+			return true;
+		}
+
+		return false;
+	}
 }

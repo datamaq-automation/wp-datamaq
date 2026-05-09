@@ -47,11 +47,14 @@ class LeadRestController {
 	 * @param WP_REST_Request $request Objeto de la petición.
 	 * @return WP_REST_Response
 	 */
-	public function handle_lead( WP_REST_Request $request ): WP_REST_Response {
-		$params = $request->get_json_params();
-		$trace_id = $request->get_header('x_datamaq_trace_id') ?? uniqid('wp-req-');
+	public function create_lead( WP_REST_Request $request ): WP_REST_Response {
+		$params   = $request->get_params();
+		$trace_id = $request->get_header( 'X-DataMaq-Trace-ID' ) ?? $params['trace_id'] ?? 'legacy-' . uniqid();
+		
+		// Registro de trazabilidad (Observabilidad)
+		\DataMaq\Domain\Shared\Observability\TraceContext::set( $trace_id );
 
-		error_log( "[DataMaq Debug] [$trace_id] 📥 Incoming Lead Request. Raw params: " . json_encode($params) );
+		error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "📥 Incoming Lead Request. Raw params: " . json_encode( $params ) ) );
 
 		// Mapeo flexible para soportar el formato de la SPA
 		$name      = $params['name'] ?? $params['nombre'] ?? '';
@@ -67,27 +70,39 @@ class LeadRestController {
 
 		if ( empty( $name ) || ( empty( $email ) && empty( $phone ) ) ) {
 			error_log( "[DataMaq Error] [$trace_id] ⚠️ Validation Failed: Missing required data. Name: '{$name}', Email: '{$email}', Phone: '{$phone}'" );
+			error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "⚠️ Validation Failed: Missing required data. Name: '{$name}', Email: '{$email}', Phone: '{$phone}'" ) );
 			return new WP_REST_Response( array( 
 				'success' => false, 
 				'message' => 'Faltan datos obligatorios (nombre y al menos un contacto).' 
 			), 400 );
 		}
 
-		$lead = new LeadEntity( $name, $email, $company, $message, $channel, $phone, $firstName, $lastName );
-		
-		error_log( "[DataMaq Debug] [$trace_id] Executing SubmitLeadUseCase..." );
-		$success = $this->use_case->execute( $lead );
+		error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "Normalized: Name=$name, Email=$email, Phone=$phone, Channel=$channel" ) );
 
-		if ( $success ) {
-			error_log( "[DataMaq Debug] [$trace_id] ✅ Lead successfully processed and synced." );
-			return new WP_REST_Response( array( 'success' => true, 'id' => 'chatwoot_synced' ), 200 );
+		try {
+			// Usar el nuevo constructor DDD de LeadEntity
+			$lead = new \DataMaq\Domain\Lead\LeadEntity( $name, $email, $phone, $params );
+			
+			error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "Executing SubmitLeadUseCase..." ) );
+			$success = $this->use_case->execute( $lead );
+
+			if ( $success ) {
+				error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "✅ Lead successfully processed and synced." ) );
+				return new WP_REST_Response( array( 'success' => true, 'id' => 'chatwoot_synced' ), 200 );
+			} else {
+				error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "❌ Failure in SubmitLeadUseCase for lead: $email / $phone" ) );
+				return new WP_REST_Response( array( 
+					'success' => false, 
+					'message' => 'Error al persistir en ChatWoot.' 
+				), 500 );
+			}
+		} catch ( \Exception $e ) {
+			error_log( \DataMaq\Domain\Shared\Observability\TraceContext::format( "❌ Exception in Lead Sync: " . $e->getMessage() ) );
+			return new WP_REST_Response( array( 
+				'success' => false, 
+				'message' => 'Error al persistir en ChatWoot.' 
+			), 500 );
 		}
-
-		error_log( "[DataMaq Error] [$trace_id] ❌ Failure in SubmitLeadUseCase for lead: $email / $phone" );
-		return new WP_REST_Response( array( 
-			'success' => false, 
-			'message' => 'Error al persistir en ChatWoot.' 
-		), 500 );
 	}
 
 }
