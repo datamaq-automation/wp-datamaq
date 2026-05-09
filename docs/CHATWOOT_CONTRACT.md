@@ -14,9 +14,18 @@ Este documento define la especificación técnica y las certezas para la integra
 - **Intercepción de SPA:** Existe un "Debug Gateway" en `index.html` que intercepta llamadas de la SPA compilada. Su uso será adaptado a ChatWoot si se requiere.
 - **Respeto por el Código Existente**: No se realizarán cambios en los archivos PHP, JS o HTML hasta no agotar las dudas del `DISCOVERY.md`.
 
-## 3. Definición del Servicio (PHP Interface Esperada)
+## 3. Certezas de Implementación Técnica (Definidas)
+Tras el proceso de Discovery, se han tomado las siguientes decisiones finales:
 
-Se espera implementar la siguiente abstracción en la Arquitectura Hexagonal para aislar a ChatWoot:
+1. **Interfaz (Frontend):** Se **mantiene la SPA actual** (diseño personalizado). No se usará el widget oficial de ChatWoot para no romper la estética premium.
+2. **Entidades en ChatWoot:** Se utilizará la API para **Crear/Actualizar Contacto** y **Abrir una Conversación** por cada lead enviado.
+3. **Automatización:** La lógica de respuestas, saludos y derivaciones se gestionará **100% dentro de ChatWoot** (AgentBots / Automation Rules).
+4. **Gestión de Credenciales:** Se implementará una **Página de Ajustes en WordPress** para gestionar el Account ID, Inbox ID y Access Token de forma dinámica.
+5. **Flujo de Datos:** El **`LeadRestController` actuará como Proxy Seguro**. Recibirá los datos de la SPA y hará la llamada HTTP a ChatWoot desde el servidor para proteger los tokens de acceso.
+
+## 4. Definición del Servicio (PHP Interface)
+
+Se implementará la siguiente abstracción en la Arquitectura Hexagonal:
 
 ```php
 namespace DataMaq\Domain\CRM;
