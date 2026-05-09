@@ -1,5 +1,13 @@
 # Historial de Tareas Completadas (TODO.done)
 
+## 👑 Fase 4: Migración Soberana (Mayo 2026)
+- **Estado:** En progreso.
+- **Hitos:**
+    - [x] **Migración de ThanksView**: Creado `template-thanks.php` con paridad 1:1, estilos BEM y lógica de tracking heredada.
+    - [x] **Migración de WhatsAppFab**: Implementado como partial nativo (`parts/whatsapp-fab.php`) con soporte para safe-areas y tracking de engagement.
+    - [x] **Activación de Permalinks**: Configurado `.htaccess` para soportar URLs nativas amigables.
+    - [x] **Purga Inicial**: Eliminados archivos compilados exclusivos de la ThanksView (`assets/ThanksView-*`).
+
 Este documento registra todas las misiones y tareas finalizadas en el proyecto DataMaq WordPress.
 
 ## 🤖 Estabilización y Observabilidad Hexagonal (Mayo 2026)

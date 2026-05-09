@@ -26,6 +26,8 @@ Lograr la **Soberanía del Código** mediante la migración de la experiencia de
   - `ChatwootProvider`: Inyección y control del widget oficial.
   - `WPConfigProvider`: Acceso a `.env` y configuración de WP.
   - `WPLogger`: Registro de eventos con prefijo `[Chatwoot]`.
+  - `NativeThanksView`: Template PHP nativo con paridad 1:1.
+  - `WhatsAppFabPartial`: Componente PHP/JS desacoplado de la SPA.
 - **Configuración Dinámica (Client-Side):**
   - `DataMaqConfig`: Objeto de configuración obtenido dinámicamente vía API REST (`/datamaq/v1/config`) o inyectado en el DOM.
   - **Campos Expuestos**: `baseUrl`, `websiteToken`, `appSecret` y `traceId`.

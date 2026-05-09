@@ -34,10 +34,14 @@ Todo agente debe seguir este flujo lógico exacto ante cualquier solicitud o tar
 ## 🚀 Misión Actual: Fase 4 - Soberanía del Código (Native-First)
 - **Objetivo:** Migrar la experiencia de usuario de la Vue SPA compilada hacia plantillas de WordPress nativas (PHP/Vanilla JS).
 - **Prioridad:** Eliminar la opacidad de los archivos `dist/` y recuperar el control total del DOM.
-- **Estado de Infraestructura:** La consolidación de **Chatwoot** está **COMPLETADA** y operativa como único canal de leads.
+- **Estado de Infraestructura:** 
+  - **Chatwoot**: COMPLETADA y operativa.
+  - **ThanksView**: MIGRADA a nativo (1:1 Parity).
+  - **WhatsAppFab**: MIGRADO a partial nativo.
 - **Hitos Próximos:**
-  - Migración de `ThanksView` y `WhatsAppFab` a componentes nativos.
-  - Implementación de `HomeContentProvider` para desacoplar el contenido de la UI.
+  - Implementación de `HomeContentProvider` y migración de la Home.
+  - Migración del Contact Wizard a PHP Nativo.
+  - Purga total de `assets/` y archivos `.js` compilados compartidos.
 
 ## 🏥 Observabilidad y Salud
 - **Health Check:** `/wp-json/v1/health`.
