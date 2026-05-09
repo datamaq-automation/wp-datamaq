@@ -10,12 +10,10 @@ use DataMaq\Domain\Content\ContentRepositoryInterface;
 class HomeViewModel {
 	private ContentRepositoryInterface $repo;
 	private string $variant;
-	private array $data;
 
 	public function __construct( ContentRepositoryInterface $repo ) {
 		$this->repo    = $repo;
 		$this->variant = $this->resolveVariant();
-		$this->data    = $this->repo->getAll();
 	}
 
 	/**
@@ -109,7 +107,6 @@ class HomeViewModel {
 	 * Get Navbar Links (filtered by variant like legacy)
 	 */
 	public function getHeaderLinks(): array {
-		$brand = $this->repo->getBrandInfo();
 		$links = array(
 			array( 'label' => 'Servicios', 'href' => '#servicios' ),
 			array( 'label' => 'Perfil', 'href' => '#perfil' ),
