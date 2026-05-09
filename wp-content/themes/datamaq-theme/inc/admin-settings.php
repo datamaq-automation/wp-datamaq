@@ -11,9 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register the settings menu
  */
 add_action( 'admin_menu', function () {
-	add_options_page(
+	add_submenu_page(
+		'datamaq-costs',
 		'ChatWoot Integration',
-		'ChatWoot Integration',
+		'ChatWoot API',
 		'manage_options',
 		'chatwoot-settings',
 		'datamaq_render_chatwoot_settings'
