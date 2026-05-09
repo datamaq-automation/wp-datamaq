@@ -3,9 +3,9 @@
 Este documento define la especificación técnica y las certezas para la integración directa entre WordPress (DataMaq) y ChatWoot.
 
 ## 1. Evolución Arquitectónica (El Volantazo)
-- **Eliminación de Middleware (n8n)**: Se descartan los webhooks y la triangulación. La latencia mejora y se reducen los puntos de falla externos.
-- **Eliminación de SuiteCRM**: Los leads ya no se guardarán en SuiteCRM.
-- **Eliminación de ChatMan (BotMan)**: El motor de chatbot local (`ChatbotService`, `BotmanAdapter`) será removido para centralizar la comunicación en ChatWoot.
+- **Eliminación de Middleware (Sistemas Legados)**: Se descartan los webhooks y la triangulación. La latencia mejora y se reducen los puntos de falla externos.
+- **Eliminación de Sistemas Legados**: Los leads ya no se guardarán en Sistemas Legados.
+- **Eliminación de sistemas legados (Sistemas Legados)**: El motor de chatbot local será removido para centralizar la comunicación en Chatwoot.
 - **ChatWoot Directo**: La plataforma principal de mensajería y gestión de leads será ChatWoot, utilizando su API de manera nativa sin intermediarios.
 
 ## 2. Certezas de Infraestructura y Observabilidad

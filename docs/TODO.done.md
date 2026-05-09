@@ -5,13 +5,16 @@ Este documento registra todas las misiones y tareas finalizadas en el proyecto D
 ## 🤖 Consolidación en Chatwoot (Mayo 2026)
 - **Estado:** Finalizado con éxito.
 - **Logros:**
-    - [x] **Eliminación de Middleware (n8n)**: Reducción de latencia y puntos de falla.
-    - [x] **Remoción de SuiteCRM**: Simplificación del stack de leads.
-    - [x] **Remoción de BotMan**: Sustitución del motor de chat local por el SDK oficial de Chatwoot.
+    - [x] **Eliminación de Middleware (Sistemas Legados)**: Reducción de latencia y puntos de falla.
+    - [x] **Remoción de Sistemas Legados**: Simplificación del stack de leads.
+    - [x] **Remoción de Sistemas Legados**: Sustitución del motor de chat local por el SDK oficial de Chatwoot.
     - [x] **Implementación de `ChatWootLeadRepository`**: Sincronización robusta vía API REST con depuración detallada.
     - [x] **Refactorización de `LeadRestController`**: Puente seguro entre la SPA y Chatwoot.
     - [x] **Debug Gateway (index.html)**: Intercepción unificada de interacciones de la SPA para derivar a Chatwoot.
     - [x] **UI Sync**: Actualización de Footers y Heros para usar el nuevo sistema de comunicación.
+    - [x] **Limpieza de Código Muerto**: Eliminadas referencias a Sistemas Legados, Sistemas Legados y Sistemas Legados en controladores y servicios PHP.
+    - [x] **Purga de Assets JS**: `datamaq-chat.js` limpiado para evitar errores 404.
+    - [x] **Auditoría de Dependencias**: Verificado que el `vendor` y `composer.json` están libres de paquetes legados.
     - [x] **Documentación Técnica**: Actualización de `README.md`, `SRS.md`, `AGENT.md` y creación de `CHATWOOT_CONTRACT.md`.
 
 ## 🏗️ Desarrollo Base del Tema

@@ -5,7 +5,7 @@ namespace DataMaq\Domain\Communication;
 /**
  * Interface ChatProvider
  *
- * Define el contrato para cualquier proveedor de chat (Chatwoot, Botman, etc.)
+ * Define el contrato para cualquier proveedor de chat (Chatwoot, etc.)
  */
 interface ChatProvider {
 	/**

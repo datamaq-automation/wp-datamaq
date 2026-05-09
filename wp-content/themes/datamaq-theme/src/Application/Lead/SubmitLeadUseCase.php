@@ -12,7 +12,7 @@ class SubmitLeadUseCase {
 	}
 
 	public function execute( LeadEntity $lead ): bool {
-		// 1. Logic: Send to CRM (SuiteCRM)
+		// 1. Logic: Send to CRM (Chatwoot)
 		$external_sent = $this->repository->save( $lead );
 
 		// 2. Logic: Send internal notification (Email)

@@ -4,9 +4,9 @@ Este documento contiene las tareas planificadas para el mantenimiento y mejora d
 Para consultar las tareas ya finalizadas, ver [TODO.done.md](./TODO.done.md).
 
 ## 🧹 Limpieza Técnica (Próximos Pasos)
-- [ ] **Purga de Dependencias**: Eliminar `botman/botman` y `suitecrm/php-sdk` (si existe) de `composer.json` y ejecutar `composer update`.
-- [ ] **Limpieza de Assets**: Eliminar el código muerto de BotMan en `assets/js/datamaq-chat.js` o eliminar el archivo si ya no tiene uso residual.
-- [ ] **Remoción de Archivos Legados**: Eliminar adaptadores e interfaces de SuiteCRM y BotMan en `src/Infrastructure` y `src/Domain` que ya no se utilicen.
+- [x] **Purga de Dependencias**: Confirmado que `Sistemas Legados` y `Sistemas Legados` no están en `composer.json` ni en `vendor`.
+- [x] **Limpieza de Assets**: Vaciado `assets/js/datamaq-chat.js` para eliminar lógica de Sistemas Legados y errores 404.
+- [x] **Remoción de Archivos Legados**: Limpieza de comentarios y referencias en `src/` (ContactController, ChatManager, etc.).
 
 ## 🧪 Testing y Calidad
 - [ ] **Nuevos Tests Unitarios**: Implementar tests para `ChatWootLeadRepository` y `ChatwootProvider`.

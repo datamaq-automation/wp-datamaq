@@ -44,7 +44,7 @@
         }
 
         // Intercepción de Leads (Unificada hacia Chatwoot vía WP)
-        if (typeof resource === 'string' && (resource.includes('n8n.datamaq.com.ar') || resource.includes('/datamaq/v1/lead'))) {
+        if (typeof resource === 'string' && resource.includes('/datamaq/v1/lead')) {
           const traceId = 'cw-' + Math.random().toString(36).substr(2, 9);
           const startTime = performance.now();
           

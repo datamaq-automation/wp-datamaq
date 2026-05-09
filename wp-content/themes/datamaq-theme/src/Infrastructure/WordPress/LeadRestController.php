@@ -12,7 +12,7 @@ use WP_REST_Server;
  * LeadRestController
  * 
  * Endpoint para recibir leads desde la SPA o integraciones externas.
- * Reemplaza funcionalmente al webhook de n8n.
+ * Puente unificado para la captura de leads.
  */
 class LeadRestController {
 

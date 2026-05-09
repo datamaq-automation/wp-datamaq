@@ -35,9 +35,9 @@ Maneja la entrada del usuario y la presentación.
 
 ## 3. Arquitectura de Chat y CRM (ChatWoot)
 
-- **Domain (`ChatPlatformProviderInterface.php`)**: Contrato que define la captura de leads y mensajes.
-- **Infrastructure (`ChatWootAdapter.php`)**: Implementación que se comunica con la API de ChatWoot.
-- **Sidecar Pattern (SPA)**: Debido a que la web es una SPA compilada (Vue), la inyección visual del widget personalizado se realiza en `index.html` mediante un **Interceptor de Red y DOM** (MutationObserver). Esto permite secuestrar los clics hacia WhatsApp y unificar el Chat de forma responsiva sin alterar el build de Vue, redirigiendo los leads al backend de WordPress que actúa como proxy seguro hacia ChatWoot.
+- **Domain (`LeadRepositoryInterface.php`)**: Contrato que define la persistencia de leads.
+- **Infrastructure (`ChatWootLeadRepository.php`)**: Implementación que se comunica con la API de Chatwoot.
+- **Sidecar Pattern (SPA)**: Debido a que la web es una SPA compilada (Vue), la unificación del chat se realiza mediante un **Debug Gateway** en `index.html` que intercepta clics y llamadas de red, disparando el widget oficial de Chatwoot (`window.$chatwoot.toggle()`) y redirigiendo los leads al backend de WordPress.
 
 ## 4. Integraciones
 

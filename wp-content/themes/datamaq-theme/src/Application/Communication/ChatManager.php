@@ -7,7 +7,7 @@ use DataMaq\Domain\Communication\ChatProvider;
 /**
  * ChatManager (Application Service / Orchestrator)
  *
- * Gestiona la inicialización de múltiples canales de comunicación (WhatsApp, BotMan, etc.)
+ * Gestiona la inicialización de múltiples canales de comunicación (WhatsApp, Chatwoot, etc.)
  */
 class ChatManager {
 	/**

@@ -1,73 +1,7 @@
 /**
- * DataMaq Chatbot - Vanilla JS Engine
+ * DataMaq Chat - Bridge for Chatwoot
+ * (Legacy chat logic removed)
  */
-
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Chat Elements ---
-    const chatToggle = document.getElementById('dm-chat-toggle');
-    const chatContainer = document.getElementById('dm-chat-container');
-    const chatForm = document.getElementById('dm-chat-form');
-    const chatInput = document.getElementById('dm-chat-input');
-    const chatMessages = document.getElementById('dm-chat-messages');
-
-    if (!chatToggle || !chatContainer) return;
-
-    // --- Chat Logic ---
-    chatToggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        chatContainer.classList.toggle('tw:hidden');
-        if (!chatContainer.classList.contains('tw:hidden')) {
-            chatInput.focus();
-        }
-    });
-
-    // Permitir disparar el chat desde cualquier enlace con href="#chat"
-    document.querySelectorAll('a[href="#chat"]').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            chatContainer.classList.remove('tw:hidden');
-            chatInput.focus();
-        });
-    });
-
-    // Handle Sending Messages
-    if (chatForm) {
-        chatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const message = chatInput.value.trim();
-            if (!message) return;
-
-            // Render User Message
-            appendMessage('user', message);
-            chatInput.value = '';
-
-            try {
-                const response = await fetch('/index.php?rest_route=/datamaq/v1/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({ 'driver': 'web', 'message': message })
-                });
-
-                const data = await response.json();
-                
-                if (data.messages) {
-                    data.messages.forEach(msg => appendMessage('bot', msg.text));
-                } else if (data.text) {
-                    appendMessage('bot', data.text);
-                }
-            } catch (error) {
-                console.error('DataMaq Chat Error:', error);
-                appendMessage('bot', 'Lo siento, hubo un error de conexión.');
-            }
-        });
-    }
-
-    function appendMessage(sender, text) {
-        if (!chatMessages) return;
-        const msgDiv = document.createElement('div');
-        msgDiv.className = sender === 'user' ? 'dm-chat-msg-user' : 'dm-chat-msg-bot';
-        msgDiv.textContent = text;
-        chatMessages.appendChild(msgDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-});
+// Este archivo se mantiene vacío para evitar errores 404 en la SPA y el tema.
+// La lógica de interceptación se encuentra ahora en el Debug Gateway (index.html) 
+// y de forma nativa en footer.php.

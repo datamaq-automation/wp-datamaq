@@ -3,7 +3,6 @@ namespace DataMaq\UI\Http\Ajax;
 
 use DataMaq\Domain\Lead\LeadEntity;
 use DataMaq\Application\Lead\SubmitLeadUseCase;
-use DataMaq\Infrastructure\Lead\N8nLeadRepository;
 use DataMaq\Domain\Shared\Exceptions\ValidationException;
 use DataMaq\Domain\Shared\Exceptions\DomainException;
 

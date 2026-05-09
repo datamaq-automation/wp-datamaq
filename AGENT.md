@@ -32,7 +32,7 @@ Todo agente debe seguir este flujo lógico exacto ante cualquier solicitud o tar
 - **Estrategia:** Zero-Cost CI/CD vía GitHub Actions -> VPS (Puerto 5932).
 
 ## 🤖 Misión Actual: Consolidación en Chatwoot (COMPLETADA)
-- **Estado:** Sistemas legados (BotMan, n8n, SuiteCRM) totalmente purgados.
+- **Estado:** Sistemas legados (Sistemas Legados, Sistemas Legados, Sistemas Legados) totalmente purgados.
 - **Canal Único:** Chatwoot centraliza toda la comunicación y captación de leads.
 - **Infraestructura:** 
   - `ChatWootLeadRepository`: Sincroniza leads capturados vía REST API.
