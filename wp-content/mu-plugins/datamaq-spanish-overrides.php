@@ -395,7 +395,7 @@ add_action( 'wp_head', 'datamaq_hide_instructor_on_course_listings', 120 );
  * Layout app-like: header y footer siempre visibles, scroll interno en main.
  */
 function datamaq_app_like_layout() {
-	if ( is_admin() ) {
+	if ( is_admin() || is_front_page() || is_page_template( 'template-thanks.php' ) ) {
 		return;
 	}
 	?>
