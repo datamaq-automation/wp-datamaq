@@ -42,6 +42,13 @@ Lograr la **Soberanía del Código** mediante la migración de la experiencia de
 - **Marketing & Tracking:**
   - **Atributos Capturados**: `utm_source`, `utm_medium`, `utm_campaign`, `landing_page`, `referrer`.
 
+## 🎨 Estrategia de Migración de UI (Fase 4)
+- **Renderizado del Servidor (SSR):** Toda la lógica de negocio y visualización debe resolverse en PHP antes de enviar el HTML al cliente.
+- **Gestión de Variantes:** La resolución de variantes de la Home (`direct` vs `authority`) se delega a un `VariantResolver` en el backend, permitiendo optimización de SEO y eliminación de CLS.
+- **Procesamiento de Contenido:** El `HomeContentProvider` es responsable de la lógica agregada (cálculo de *Trust Signals*, split de bullets con separador `·`) para que los templates reciban datos listos para mostrar.
+- **Modularidad:** Uso obligatorio de Partials (`parts/home/`) para desacoplar las secciones de la Home (Hero, Services, Profile, etc.).
+- **Mapeo de Iconos:** Implementación de un `IconMapper` centralizado para asignar clases de Bootstrap Icons basado en el contexto o palabras clave.
+
 ## 🛠️ Infraestructura Verificada
 - **WP-CLI:** Disponible y funcional.
 - **Validación Técnica (Local-First):** Para optimizar recursos y minutos de CI, todas las validaciones (L1-L4) se ejecutan localmente mediante hooks de Git antes del push. El pipeline de GitHub confía en esta validación previa para proceder directamente al despliegue.

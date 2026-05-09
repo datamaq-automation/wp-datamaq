@@ -14,8 +14,12 @@
 
 <body <?php body_class( 'has-consent-banner' ); ?>>
 <?php wp_body_open(); ?>
+<?php 
+$vm = $args['vm'] ?? null;
+$variant_class = $vm ? 'app-shell--variant-' . $vm->getVariant() : 'app-shell--variant-direct';
+?>
 <div id="app" data-v-app="">
-<div id="top" class="app-shell app-shell--home tw:min-h-screen app-shell--variant-direct">
+<div id="top" class="app-shell app-shell--home tw:min-h-screen <?php echo esc_attr( $variant_class ); ?>">
 	<a class="skip-link" href="#contenido-principal">Saltar al contenido principal</a>
 
 <header id="dm-main-header" class="c-home-header" role="banner">

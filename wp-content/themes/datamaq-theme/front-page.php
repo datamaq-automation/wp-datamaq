@@ -1,36 +1,50 @@
 <?php
 /**
  * The template for displaying the front page.
- * SOLID Refactoring - Template Fragments
+ * PHASE 4: Sovereign Migration (Native-First)
  */
 
-get_header();
+use DataMaq\UI\ViewModels\HomeViewModel;
+
+// Initialize ViewModel
+$repo = dm_content_repo();
+$vm   = new HomeViewModel( $repo );
+
+get_header( null, array( 'vm' => $vm ) ); 
 ?>
 
-<main id="contenido-principal" class="c-home-main with-floating-cta">
+<!-- Native Home Styles -->
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/assets/css/HomePage.css">
 
-	<?php
-	// Hero Section
-	get_template_part( 'template-parts/content', 'hero' );
+<div class="app-shell--home">
+	<main id="contenido-principal" class="c-home-main with-floating-cta">
 
-	// Profile Section
-	get_template_part( 'template-parts/content', 'profile' );
+		<?php
+		// 1. Hero Section
+		include locate_template( 'parts/home/hero.php' );
 
-	// Services Section
-	get_template_part( 'template-parts/content', 'services' );
+		// 2. Profile Section
+		include locate_template( 'parts/home/profile.php' );
 
-	// Process Section
-	get_template_part( 'template-parts/content', 'process' );
+		// 3. Services Section
+		include locate_template( 'parts/home/services.php' );
 
+		// 4. Process Section
+		include locate_template( 'parts/home/process.php' );
 
-	// FAQ Section
-	get_template_part( 'template-parts/content', 'faq' );
+		// 5. FAQ Section
+		include locate_template( 'parts/home/faq.php' );
 
-	// Contact Section
-	get_template_part( 'template-parts/content', 'contact' );
-	?>
+		// 6. Contact Section (Still legacy or placeholder)
+		get_template_part( 'template-parts/content', 'contact' );
+		?>
 
-</main>
+	</main>
+</div>
 
-<?php
-get_footer();
+<?php 
+// WhatsApp FAB (Native)
+get_template_part( 'parts/whatsapp-fab' );
+
+get_footer(); 
+?>
