@@ -103,8 +103,7 @@ class NetworkInterceptor {
         this.originalFetch = window.fetch;
     }
 
-    activate(apiDomain) {
-        this.apiDomain = apiDomain;
+    activate() {
         window.fetch = (...args) => this.intercept(...args);
         
         // Monitor de errores de carga de recursos
@@ -117,11 +116,6 @@ class NetworkInterceptor {
 
     async intercept(resource, config) {
         let url = typeof resource === 'string' ? resource : resource.url;
-
-        // Proxy API
-        if (this.apiDomain && url.includes(this.apiDomain)) {
-            url = url.replace(`https://${this.apiDomain}`, '/index.php?rest_route=/datamaq');
-        }
 
         // Intercepción de Leads
         if (url.includes('/datamaq/v1/lead')) {
@@ -239,8 +233,7 @@ class DataMaqGateway {
                     const data = await response.json();
                     config = {
                         baseUrl: data.baseUrl,
-                        token: data.websiteToken,
-                        apiDomain: data.apiDomain
+                        token: data.websiteToken
                     };
                 }
             } catch (e) {
@@ -251,8 +244,7 @@ class DataMaqGateway {
         // 2. Fallback de emergencia (Hardcoded)
         const finalConfig = config || {
             baseUrl: "https://chatwoot.datamaq.com.ar",
-            token: "EaFpQ65unLmqzYshTRLS8R2E",
-            apiDomain: "api.datamaq.com.ar"
+            token: "EaFpQ65unLmqzYshTRLS8R2E"
         };
 
         const chatService = new ChatwootAdapter(finalConfig);
@@ -260,7 +252,7 @@ class DataMaqGateway {
         const ui = new DOMSentinel(chatService);
 
         chatService.initialize();
-        network.activate(finalConfig.apiDomain);
+        network.activate();
         ui.watch();
     }
 }
